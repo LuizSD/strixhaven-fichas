@@ -89,7 +89,6 @@ export const GATILHOS_SEM_COBERTURA = [
   // mudar `temCobertura` para casar o id com fronteira ('#id' ou id entre
   // aspas), o que esta fora do escopo desta entrega.
   'btn-confirmar-remover-grimorio',
-  'btn-confirmar-remover-magia-custom',
   'btn-dist-sugerida',
   'btn-edit-po',
   // 'btn-editar-item-custom' saiu daqui na Tarefa 9 (issue #43):

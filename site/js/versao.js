@@ -13,13 +13,61 @@
 // ============================================================
 
 /** Versão exibida no header e marcada como atual na lista de notas. */
-export const VERSAO_ATUAL = '3.0.4';
+export const VERSAO_ATUAL = '3.0.5';
 
 // Cada entrada é uma versão. `melhorias` e `correcoes` são listas de
 // grupos, e cada grupo tem um título curto e seus itens. O emoji do
 // grupo entra no próprio título -- é o que separa visualmente melhoria
 // de correção sem depender de cor.
 export const NOTAS_VERSAO = [
+  {
+    versao: '3.0.5',
+    data: '2026-09-15',
+    rotulo: 'Vaga opcional',
+    resumo: 'A magia personalizada volta a poder ocupar vaga de verdade, se '
+      + 'você quiser — e agora entra também na lista de Maestria de Magias e '
+      + 'Assinatura Mágica do Mago.',
+    correcoes: [
+      {
+        grupo: '🐛 Correções',
+        itens: [
+          'Mago: Maestria de Magias (nível 18) e Assinatura Mágica (nível '
+            + '20) não enxergavam mais a sua magia personalizada depois que '
+            + 'ela deixou de morar no grimório (versão 3.0.3). Agora ela '
+            + 'aparece como candidata, junto das magias do seu grimório. (#49)',
+          'Mago: renomear uma magia personalizada que já ocupava vaga e já '
+            + 'estava preparada podia deixar uma cópia com o nome antigo '
+            + 'presa na sua lista de preparadas, ocupando uma vaga fantasma. '
+            + 'Agora o rename também atualiza essa cópia.',
+        ],
+      },
+    ],
+    melhorias: [
+      {
+        grupo: '✨ Magia personalizada: vaga opcional',
+        itens: [
+          'Ao criar ou editar uma magia personalizada de 1º círculo ou '
+            + 'superior, você escolhe se ela fica sempre preparada e fora do '
+            + 'limite (o padrão desde a 3.0.3) ou se ocupa uma vaga de '
+            + 'verdade — entrando na lista de escolha do seu círculo, como '
+            + 'uma magia do livro. Útil para magias de outros suplementos que '
+            + 'não estão no catálogo do app. (#50, #54)',
+          'Desmarcando "sempre preparada", a magia entra no seu grimório '
+            + '(Mago) ou na sua lista de preparadas (demais classes '
+            + 'conjuradoras), e passa a contar no limite normalmente. Com o '
+            + 'limite de magias preparadas da classe já cheio, a troca é '
+            + 'recusada com aviso — nada fica "ocupando vaga" sem realmente '
+            + 'ocupar.',
+          'Na ficha e no PDF ela aparece em UMA linha só, no bloco do seu '
+            + 'círculo: com os botões de editar e remover de sempre, sem o '
+            + 'selo de "sempre preparada" e sem a cópia duplicada que '
+            + 'aparecia antes. Enquanto não estiver preparada (Mago que '
+            + 'ainda não a preparou do grimório, por exemplo), a linha sai '
+            + 'marcada como "Não preparada".',
+        ],
+      },
+    ],
+  },
   {
     versao: '3.0.4',
     data: '2026-09-09',

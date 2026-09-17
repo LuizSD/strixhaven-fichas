@@ -1145,6 +1145,15 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
       </div>
     </div>
     <label style="display:flex;align-items:center;gap:6px;margin:10px 0"><input type="checkbox" id="mc-ritual"> Pode ser conjurada como Ritual</label>
+    <div id="mc-sempre-preparada-linha" class="form-group">
+      <label style="display:flex;align-items:center;gap:6px">
+        <input type="checkbox" id="mc-sempre-preparada" checked> Sempre preparada (não ocupa vaga)
+      </label>
+      <div style="font-size:0.7rem;color:var(--text-muted)">
+        Marcada (padrão): a magia fica sempre pronta, fora do limite de magias da sua classe — como hoje.
+        Desmarcada: ela entra na lista de escolha do seu círculo e ocupa uma vaga de verdade, como uma magia do livro.
+      </div>
+    </div>
     <div class="form-group">
       <label class="form-label" for="mc-desc">Descricao</label>
       <textarea class="form-textarea" id="mc-desc" rows="4" placeholder="Descricao da magia..."></textarea>
@@ -1167,6 +1176,17 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
   alternarPersonalizado('mc-tempo', 'mc-tempo-personalizado');
   alternarPersonalizado('mc-duracao', 'mc-duracao-personalizada');
 
+  // A caixa de "sempre preparada" so faz sentido para magia de circulo 1+
+  // -- truque personalizado (circulo 0) tem outro mecanismo de limite
+  // (truquesPorClasse) e fica fora do escopo deste alternador.
+  const atualizarVisibilidadeSemprePreparada = () => {
+    const circulo = parseInt(document.getElementById('mc-circulo')?.value) || 0;
+    const linha = document.getElementById('mc-sempre-preparada-linha');
+    if (linha) linha.hidden = circulo === 0;
+  };
+  document.getElementById('mc-circulo')?.addEventListener('change', atualizarVisibilidadeSemprePreparada);
+  atualizarVisibilidadeSemprePreparada();
+
   const atualizarGatilhoReacao = () => {
     const selectTempo = document.getElementById('mc-tempo');
     const campo = document.getElementById('mc-gatilho-reacao');
@@ -1188,6 +1208,12 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     };
     document.getElementById('mc-nome').value = magiaExistente.nome || '';
     document.getElementById('mc-circulo').value = String(Number(magiaExistente.circulo) || 0);
+    // mc-circulo.value foi atribuido direto, sem 'change' -- a chamada
+    // inicial de atualizarVisibilidadeSemprePreparada() (antes deste bloco)
+    // rodou com o select ainda no valor padrao "0" e escondeu a linha; ao
+    // editar uma magia de circulo 1+, isso a deixaria escondida para
+    // sempre. Refaz o calculo agora, com o circulo de verdade ja no campo.
+    atualizarVisibilidadeSemprePreparada();
     definirSelectOuPersonalizado('mc-escola', 'mc-escola-personalizada', magiaExistente.escola || '');
     const tempoExistente = String(magiaExistente.tempo_conjuracao || '');
     const matchReacao = tempoExistente.match(/^rea[cç][aã]o\s*,\s*(.+)$/i);
@@ -1199,6 +1225,7 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     document.getElementById('mc-desc').value = magiaExistente.descricao || '';
     document.getElementById('mc-dano').value = magiaExistente.dano || '';
     document.getElementById('mc-ritual').checked = Boolean(magiaExistente.ritual);
+    document.getElementById('mc-sempre-preparada').checked = magiaExistente.sempre_preparada !== false;
     const componentes = String(magiaExistente.componentes || '').split(',').map(valor => valor.trim());
     ['V', 'S', 'M'].forEach(letra => { document.getElementById(`mc-comp-${letra.toLowerCase()}`).checked = componentes.includes(letra); });
     document.getElementById('mc-comp-outro').value = componentes.filter(valor => !['V', 'S', 'M'].includes(valor)).join(', ');
@@ -1270,10 +1297,12 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     const faltante = obrigatorios.find(([, valor]) => !valor);
     if (faltante) { toast(`Informe ${faltante[0]}`, 'error'); return; }
 
+    const circuloSalvo = parseInt(document.getElementById('mc-circulo')?.value) || 0;
+    const semprePreparadaMarcada = document.getElementById('mc-sempre-preparada')?.checked !== false;
     if (!char.magias_customizadas) char.magias_customizadas = [];
     const magiaSalva = {
       nome,
-      circulo: parseInt(document.getElementById('mc-circulo')?.value) || 0,
+      circulo: circuloSalvo,
       escola,
       tempo_conjuracao: tempoConjuracao,
       alcance,
@@ -1281,10 +1310,59 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
       duracao,
       descricao: document.getElementById('mc-desc')?.value || '',
       dano: document.getElementById('mc-dano')?.value || '',
-      ritual: Boolean(document.getElementById('mc-ritual')?.checked)
+      ritual: Boolean(document.getElementById('mc-ritual')?.checked),
+      // Ausente (undefined) e `true` sao o MESMO estado -- "sempre
+      // preparada", o comportamento desde a 3.0.3. So grava a chave
+      // quando o circulo e 1+ E o jogador desmarcou: gravar `true` a toa
+      // preencheria toda ficha nova com uma chave que nao muda nada, e
+      // grava-la em truque (circulo 0) contradiria o escopo deste campo.
+      ...(circuloSalvo > 0 && !semprePreparadaMarcada ? { sempre_preparada: false } : {}),
     };
     const nomeAnterior = magiaExistente?.nome;
     const circuloAnterior = magiaExistente ? (Number(magiaExistente.circulo) || 0) : null;
+
+    // Issues #50/#54: quando o jogador desmarca "sempre preparada", a
+    // magia passa a ocupar uma vaga de verdade -- Mago grava direto no
+    // grimorio (dali ele PREPARA pela tela normal, como qualquer outra
+    // magia do livro); as demais classes conjuradoras gravam direto em
+    // magias_preparadas, ja carimbada com a classe, porque essas classes
+    // nao passam por um preparo separado (ver comentario de tipoConj em
+    // mostrarBuscaMagia).
+    const ocupaVaga = circuloSalvo > 0 && !semprePreparadaMarcada;
+    const sup = superficieAtiva();
+    const ehMagoAgora = !!sup?.usaGrimorio;
+
+    /**
+     * true se HÁ uma vaga livre no círculo desta magia, para a superfície
+     * ativa. Mago sempre tem "vaga" no grimório (o limite dele é ouro, não
+     * espaço) -- só as demais classes têm teto de preparadas por círculo.
+     */
+    const temVagaLivre = () => {
+      if (ehMagoAgora) return true;
+      if (!sup) return false; // sem superficie de conjuracao, nao ha onde injetar
+      const subConj = subConjDaSuperficie(sup);
+      const semLimiteConhecido = !sup.tabela && !subConj;
+      if (semLimiteConhecido) return true;
+      const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj);
+      const classificacao = preparadasPorClasse(char, sup.classe);
+      return classificacao.desta.length < limites.preparadas;
+    };
+
+    // O nome/circulo ANTERIORES da magia (para achar e atualizar a entrada
+    // injetada quando o jogador renomeia, troca de circulo, ou alterna o
+    // toggle) -- mesma variavel `nomeAnterior`/`circuloAnterior` que o
+    // codigo de sincronia do grimorio, logo abaixo, ja calcula.
+    const ocupavaVagaAntes = magiaExistente?.sempre_preparada === false;
+
+    if (ocupaVaga && !ocupavaVagaAntes && !temVagaLivre()) {
+      // O limite conferido por temVagaLivre() e o TOTAL de magias
+      // preparadas da classe (limites.preparadas), nao uma cota do circulo
+      // -- o texto dizia "vaga livre de Nº círculo" e mandava o jogador
+      // procurar uma vaga que nao existe nesse formato.
+      toast('Seu limite de magias preparadas desta classe já está cheio. Libere uma vaga primeiro, ou deixe a magia sempre preparada.', 'error');
+      return;
+    }
+
     if (magiaExistente) char.magias_customizadas[indiceEdicao] = magiaSalva;
     else char.magias_customizadas.push(magiaSalva);
     const identidadeMudou = Boolean(magiaExistente) && (nomeAnterior !== magiaSalva.nome || circuloAnterior !== magiaSalva.circulo);
@@ -1347,8 +1425,19 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     // consigo confirmar que NÃO é do acervo", não como "não é do acervo":
     // falha FECHADA (avisa o jogador), nunca aberta (sincroniza sem
     // checar).
+    //
+    // `!ocupavaVagaAntes` (issues #50/#54): a entrada de uma personalizada
+    // que OCUPAVA vaga pertence inteiramente ao bloco novo, mais abaixo,
+    // que a encontra pelo nome+circulo anteriores e resolve os quatro
+    // casos. Sem esta guarda, este bloco rodava primeiro e RENOMEAVA a
+    // entrada; o bloco novo procurava pelo nome antigo, nao achava nada, e
+    // um rename com "sempre preparada" remarcada deixava a entrada
+    // renomeada presa no grimorio -- "sempre preparada" E no grimorio, o
+    // estado que a 3.0.3 eliminou. A heuristica de posse por homonimia
+    // tambem nao tem o que decidir aqui: `sempre_preparada:false` diz de
+    // quem e a entrada, entao `grimorioAmbiguo` nao pode disparar.
     let grimorioAmbiguo = false;
-    if (identidadeMudou && nomeAnterior && Array.isArray(char.grimorio)) {
+    if (identidadeMudou && nomeAnterior && !ocupavaVagaAntes && Array.isArray(char.grimorio)) {
       const idxProvavel = char.grimorio
         .findIndex(m => m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior);
       if (idxProvavel >= 0) {
@@ -1377,6 +1466,55 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
         }
       }
     }
+
+    // Issues #50/#54: sincronizar a entrada REAL (grimorio ou
+    // magias_preparadas) com o estado atual do toggle. Quatro casos:
+    //   1. Ocupava vaga, continua ocupando, nome/circulo mudou -> atualiza a entrada.
+    //   2. Ocupava vaga, continua ocupando, nada mudou -> nao mexe.
+    //   3. Ocupava vaga, passou a sempre preparada -> remove a entrada.
+    //   4. Nao ocupava vaga, passou a ocupar -> adiciona a entrada (a checagem
+    //      de vaga livre ja rodou acima, antes deste bloco).
+    if (ehMagoAgora) {
+      char.grimorio = Array.isArray(char.grimorio) ? char.grimorio : [];
+      if (ocupavaVagaAntes) {
+        const idx = char.grimorio.findIndex(m => m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior);
+        if (idx >= 0) {
+          if (ocupaVaga) char.grimorio[idx] = { nome: magiaSalva.nome, circulo: magiaSalva.circulo };
+          else char.grimorio.splice(idx, 1);
+        }
+        // O Mago pode ja ter PREPARADO esta personalizada a partir do
+        // grimorio -- `data-preparar-grimorio` (magias.js) grava
+        // {nome, circulo, classe:'Mago'} em magias_preparadas, sem
+        // `personalizada`/`origem`. Sem sincronizar aqui tambem, um rename
+        // ou um "voltar a marcar sempre preparada" deixa essa copia presa
+        // com o nome antigo, consumindo uma vaga que ninguem mais controla
+        // (mesmo formato de entrada orfa da issue #39).
+        char.magias_preparadas = Array.isArray(char.magias_preparadas) ? char.magias_preparadas : [];
+        const idxPrepMago = char.magias_preparadas.findIndex(m =>
+          m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior && m?.classe === 'Mago' && !m?.personalizada && !m?.origem);
+        if (idxPrepMago >= 0) {
+          if (ocupaVaga) char.magias_preparadas[idxPrepMago] = { ...char.magias_preparadas[idxPrepMago], nome: magiaSalva.nome, circulo: magiaSalva.circulo };
+          else char.magias_preparadas.splice(idxPrepMago, 1);
+        }
+      } else if (ocupaVaga) {
+        char.grimorio.push({ nome: magiaSalva.nome, circulo: magiaSalva.circulo });
+      }
+    } else {
+      char.magias_preparadas = Array.isArray(char.magias_preparadas) ? char.magias_preparadas : [];
+      if (ocupavaVagaAntes) {
+        const idx = char.magias_preparadas.findIndex(m => m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior && !m?.origem);
+        if (idx >= 0) {
+          if (ocupaVaga) char.magias_preparadas[idx] = { ...char.magias_preparadas[idx], nome: magiaSalva.nome, circulo: magiaSalva.circulo };
+          else char.magias_preparadas.splice(idx, 1);
+        }
+      } else if (ocupaVaga) {
+        char.magias_preparadas.push({
+          nome: magiaSalva.nome, circulo: magiaSalva.circulo,
+          ...(sup?.classe ? { classe: sup.classe } : {}),
+        });
+      }
+    }
+
     salvar();
     window.fecharModal();
     renderFichaCompleta();
@@ -2207,7 +2345,31 @@ export async function abrirEscolhaMagiasFixasMago(tipo) {
   if (nivelNa(char, 'Mago') < def.nivel) return;
 
   const grimorio = Array.isArray(char.grimorio) ? char.grimorio : [];
-  if (grimorio.length === 0) {
+
+  // Issue #49: a magia personalizada de circulo 1+ deixou de morar no
+  // grimorio na versao 3.0.3 (issue #46) -- ela e derivada de
+  // magias_customizadas e nao entra mais nesse array. Maestria de Magias e
+  // Assinatura Magica escolhem "do seu livro de magias", e uma personalizada
+  // do proprio Mago e parte do livro dele tanto quanto qualquer outra --
+  // por isso ela tambem precisa ser candidata aqui, e nao so as do
+  // grimorio.
+  //
+  // Deduplicada por NOME+CIRCULO: uma personalizada que o jogador tambem
+  // tenha marcado como "ocupa vaga" (Tarefa 4 deste plano) ja aparece em
+  // char.grimorio, e contar as duas fontes sem filtro a listaria duas
+  // vezes na mesma vaga. O par nome+circulo (e nao o nome sozinho, o mesmo
+  // par que o resto deste arquivo usa) evita excluir a personalizada "X" de
+  // 2o circulo so porque o grimorio tem uma homonima de 1o.
+  const chavesNoGrimorio = new Set(grimorio.map(m => `${m?.nome}|${Number(m?.circulo) || 0}`));
+  const personalizadasDeCirculo = (Array.isArray(char.magias_customizadas) ? char.magias_customizadas : [])
+    .filter(m => (Number(m?.circulo) || 0) > 0
+      && !chavesNoGrimorio.has(`${m?.nome}|${Number(m?.circulo) || 0}`));
+  const candidatasGrimorioEPersonalizadas = [...grimorio, ...personalizadasDeCirculo];
+
+  // A guarda de "livro vazio" roda DEPOIS da uniao: ela ficava antes e
+  // recusava o Mago cujo grimorio esta vazio mas que tem personalizadas de
+  // circulo -- candidatas legitimas destas vagas (issue #49).
+  if (candidatasGrimorioEPersonalizadas.length === 0) {
     toast('Registre magias no seu livro de magias primeiro.', 'error');
     return;
   }
@@ -2264,7 +2426,7 @@ export async function abrirEscolhaMagiasFixasMago(tipo) {
     const el = document.getElementById(`magia-fixa-${vaga.chave}`);
     if (!el) return;
     const outrasVagas = def.vagas.filter(v => v.chave !== vaga.chave);
-    const candidatas = grimorio
+    const candidatas = candidatasGrimorioEPersonalizadas
       .filter(m => Number(m.circulo) === vaga.circulo)
       .filter(m => !def.exigeAcao || ehAcao(m.nome));
     if (candidatas.length === 0) {

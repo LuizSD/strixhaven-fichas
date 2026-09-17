@@ -12,6 +12,11 @@ import { renderSecaoPactoBruxo } from './classes/bruxo.js';
 import { gastarPontosFeiticaria, getEstadoRecursosFeiticeiro } from './classes/feiticeiro.js';
 import { getCavaleiroMisticoConjuracao } from './classes/guerreiro.js';
 import { getTrapaceiroArcanoConjuracao } from './classes/ladino.js';
+// MAGIAS_FIXAS_MAGO: as chaves de `origem` de Maestria de Magias e
+// Assinatura Magica. A fusao abaixo precisa delas para reconhecer a entrada
+// gravada por sincronizarMagiasFixasMago (classes/mago.js) quando a magia
+// escolhida e uma personalizada (issue #49).
+import { MAGIAS_FIXAS_MAGO } from './classes/mago.js';
 import { _truquesColapsados } from './colapso.js';
 import { ehBardoComSegredosMagicos, getTruquesExtraEstiloLuta } from './combate.js';
 import { char, classesData, indiceMagiasCache, salvar } from './estado.js';
@@ -161,6 +166,71 @@ export function normalizarMagiaPersonalizada(m, indice) {
   };
 }
 
+// Chaves de `origem` das caracteristicas de magia fixa do Mago, derivadas da
+// propria constante (nao uma lista literal): a proxima caracteristica que
+// entrar em MAGIAS_FIXAS_MAGO ja nasce reconhecida pela fusao abaixo.
+const ORIGENS_MAGIA_FIXA_MAGO = new Set(Object.keys(MAGIAS_FIXAS_MAGO));
+
+/**
+ * Funde `magias_preparadas` com as magias personalizadas de círculo 1+ e
+ * devolve UMA lista em que cada magia aparece uma única vez, já na forma em
+ * que deve ser desenhada. A seção Magias da ficha e a folha impressa
+ * chamam a MESMA função -- as duas decidiam isso por conta própria, e a
+ * mesma magia podia sair de um jeito na tela e de outro no PDF.
+ *
+ * Os casos, sempre casados por nome+círculo (o par que o resto do projeto
+ * usa para identificar a entrada de uma personalizada):
+ *
+ *  1. Personalizada sem `sempre_preparada:false` -- entra DERIVADA, como
+ *     desde a issue #46: ela é sempre preparada e não tem entrada gravada.
+ *  2. Personalizada `sempre_preparada:false` (issues #50/#54) -- ela ocupa
+ *     vaga de verdade, então quem manda é a entrada gravada: a linha
+ *     personalizada ABSORVE essa entrada (levando `classe`, `origem` e
+ *     `gratis_usado` dela). Sem absorver, a magia saía DUAS vezes -- a
+ *     entrada crua pelo ramo do acervo (descrição vazia e "Conjurar" que
+ *     não conhece a magia, a forma da issue #39) e a derivada anunciando
+ *     "sempre preparada", exatamente o que o jogador desligou.
+ *  3. Entrada com `origem` de Maestria de Magias/Assinatura Mágica cujo
+ *     nome+círculo casa com uma personalizada -- absorvida nos DOIS
+ *     estados do toggle, porque escolher a personalizada nessas vagas é
+ *     legítimo em qualquer um deles (issue #49).
+ *
+ * A personalizada `sempre_preparada:false` SEM entrada gravada (Mago que
+ * ainda não preparou do grimório; outra classe que a tirou pelo "x" das
+ * preparadas) entra marcada `naoPreparada`: sem essa linha ela sairia da
+ * ficha levando os únicos botões de Editar/Remover que tem.
+ *
+ * @param {Array} preparadas `char.magias_preparadas`.
+ * @param {Array} personalizadas Personalizadas já normalizadas e com `indicePersonalizada`.
+ * @returns {Array} Lista única, que quem chama agrupa por círculo.
+ */
+export function fundirPreparadasComPersonalizadas(preparadas, personalizadas) {
+  const deCirculo = (personalizadas || []).filter(m => m.circulo > 0);
+  const absorvidas = new Set();
+  const linhas = (preparadas || []).map(entrada => {
+    const circulo = Number(entrada?.circulo) || 1;
+    const candidata = deCirculo.find(p => p.nome === entrada?.nome && p.circulo === circulo);
+    if (!candidata || absorvidas.has(candidata.indicePersonalizada)) return entrada;
+    const ehFixaDoMago = ORIGENS_MAGIA_FIXA_MAGO.has(entrada?.origem);
+    if (candidata.sempre_preparada !== false && !ehFixaDoMago) return entrada;
+    absorvidas.add(candidata.indicePersonalizada);
+    return {
+      ...candidata,
+      ...(entrada.classe ? { classe: entrada.classe } : {}),
+      // `origem` da entrada sobrepõe o 'Personalizada' que
+      // normalizarMagiaPersonalizada grava: é ela que mantém o selo de
+      // Maestria/Assinatura e o botão "Grátis" nesta linha única.
+      ...(entrada.origem ? { origem: entrada.origem } : {}),
+      ...(entrada.gratis_usado !== undefined ? { gratis_usado: entrada.gratis_usado } : {}),
+    };
+  });
+  deCirculo.forEach(p => {
+    if (absorvidas.has(p.indicePersonalizada)) return;
+    linhas.push(p.sempre_preparada === false ? { ...p, naoPreparada: true } : p);
+  });
+  return linhas;
+}
+
 function renderDetalhesMagiaPersonalizada(magia) {
   const meta = [magia.escola, magia.tempo_conjuracao, magia.alcance, magia.componentes, magia.duracao]
     .filter(Boolean)
@@ -184,13 +254,19 @@ function renderDetalhesMagiaPersonalizada(magia) {
  * `char.magias_customizadas` -- não ao handler do acervo de `dados/`, onde
  * a magia que o jogador inventou não existe (issue #39).
  *
- * Issue #46: o terceiro parâmetro `opts.naoPreparada` foi removido. Ele
- * existia para o acordeão "Magias Customizadas", que desenhava a magia de
- * círculo ainda não preparada com o rótulo "Não preparada" no lugar dos
- * controles de conjuração. A customizada de círculo passou a ser SEMPRE
- * preparada, o acordeão saiu junto, e o estado "não preparada" deixou de
- * existir para magia personalizada -- restaram os dois ramos reais
- * (círculo 0 e círculo 1+).
+ * Issue #46: o terceiro parâmetro `opts.naoPreparada` foi removido, porque
+ * a customizada de círculo passou a ser SEMPRE preparada e o estado "não
+ * preparada" deixou de existir para ela.
+ *
+ * Issues #50/#54: o estado voltou, agora como CAMPO do objeto
+ * (`magia.naoPreparada`, posto por `fundirPreparadasComPersonalizadas`) --
+ * a personalizada `sempre_preparada:false` ocupa vaga de verdade e pode
+ * estar fora da lista de preparadas (Mago que ainda não preparou do
+ * grimório, ou classe que a tirou pelo "x"). Sem controles de conjuração e
+ * com Editar/Remover, que só saem desta função. Pelo mesmo caminho chegam
+ * `magia.origem` (Maestria de Magias/Assinatura Mágica, issue #49) e
+ * `magia.gratis_usado`, absorvidos da entrada gravada: o selo de origem e
+ * o botão "Grátis" ficam NESTA linha, em vez de numa segunda linha crua.
  *
  * @param {object} magia Magia já normalizada por `normalizarMagiaPersonalizada`.
  * @param {number} indice Índice dela em `char.magias_customizadas`.
@@ -256,7 +332,21 @@ function renderLinhaMagiaPersonalizada(magia, indice) {
     circulosDisponiveis.length === 0
     || circulosDisponiveis.every(c => !circulosComEspacoDisponivel.has(c))
   );
-  const controlesConjuracao = magia.circulo === 0
+  // Selo e rótulo de origem: só aparecem quando a linha absorveu uma
+  // entrada de Maestria/Assinatura (`origem` sobreposta pela fusão). A
+  // personalizada comum fica com a `origem` 'Personalizada' que
+  // normalizarMagiaPersonalizada grava, e `rotuloOrigemMagia` não a
+  // reconhece -- rótulo vazio, linha igual à de antes.
+  const rotuloOrigem = rotuloOrigemMagia(magia);
+  // O botão "Grátis" segue a entrada absorvida (mesma condição da linha do
+  // acervo, `gratis_usado === false`): sem isto a conjuração gratuita
+  // ficaria desacoplada da única linha que sabe conjurar a magia.
+  const botaoGratis = magia.gratis_usado === false
+    ? `<button class="btn btn-sm btn-accent" data-conjurar-gratis="${escHtml(magia.nome)}">Grátis</button>`
+    : '';
+  const controlesConjuracao = magia.naoPreparada
+    ? ''
+    : magia.circulo === 0
     ? `<button class="btn btn-sm btn-cantrip" data-lancar-magia-custom="${indice}">Lançar</button>`
     : `
       ${temUpcast ? `
@@ -271,14 +361,17 @@ function renderLinhaMagiaPersonalizada(magia, indice) {
       ${magia.ritual ? `<button class="btn btn-sm btn-secondary" data-conjurar-ritual-custom="${indice}" title="Conjurar como Ritual (sem gastar espaço)">Ritual</button>` : ''}
     `;
   return `
-    <div class="magia-item magia-personalizada" data-magia-custom-index="${indice}" data-magia-circ="${magia.circulo}">
+    <div class="magia-item magia-personalizada${rotuloOrigem ? ' magia-dominio' : ''}" data-magia-custom-index="${indice}" data-magia-circ="${magia.circulo}">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div>
-          <div class="magia-nome">${escHtml(magia.nome)} <span class="badge badge-secondary" style="font-size:0.6rem">Personalizada</span>${ritual}</div>
+          <div class="magia-nome">${rotuloOrigem ? '<span class="badge-dominio">&#9733;</span> ' : ''}${escHtml(magia.nome)} <span class="badge badge-secondary" style="font-size:0.6rem">Personalizada</span>${ritual}</div>
           <div class="magia-meta"><span>${magia.circulo === 0 ? 'Truque' : `${magia.circulo}º Círculo`}</span></div>
+          ${rotuloOrigem ? `<div style="font-size:0.65rem;color:var(--secondary);font-weight:600;margin-top:1px">${escHtml(rotuloOrigem)}</div>` : ''}
+          ${magia.naoPreparada ? '<div style="font-size:0.65rem;color:var(--text-muted);font-style:italic">Não preparada</div>' : ''}
           ${tags.length ? `<div class="magia-tags">${tags.join('')}</div>` : ''}
         </div>
         <div class="no-print" style="display:flex;align-items:center;gap:4px">
+          ${botaoGratis}
           ${controlesConjuracao}
           <button class="btn btn-sm btn-secondary btn-icon" data-editar-magia-custom="${indice}" title="Editar magia personalizada">&#9998;</button>
           <button class="btn btn-sm btn-danger btn-icon" data-remover-magia-custom="${indice}" title="Remover magia personalizada">&times;</button>
@@ -571,6 +664,12 @@ export function renderSecaoMagias() {
     indicePersonalizada: indice
   }));
   const truquesPersonalizados = magiasPersonalizadas.filter(m => m.circulo === 0);
+  // Issues #50/#54: o chip "Personalizadas" conta SO as que continuam
+  // sempre preparadas. A `sempre_preparada:false` ocupa vaga de verdade e
+  // ja e contada no contador de preparadas -- conta-la aqui, sob o rotulo
+  // de "nao gasta vaga", negaria o que o jogador escolheu.
+  const personalizadasSemprePreparadas = magiasPersonalizadas
+    .filter(m => m.circulo > 0 && m.sempre_preparada !== false);
   const todosTruques = [
     ...(char.magias_conhecidas || []).filter(m => m.circulo === 0),
     ...truquesPersonalizados
@@ -707,22 +806,19 @@ export function renderSecaoMagias() {
   // Agrupar magias preparadas por círculo.
   //
   // Issue #46: a magia customizada de círculo 1+ entra AQUI, derivada de
-  // `char.magias_customizadas` -- ela é sempre preparada, e esta é a mesma
-  // fusão que a folha impressa (sheet/impressao.js) já fazia. Antes desta
-  // issue ela só chegava por `magias_preparadas`, depois de um clique em
-  // "Preparar", e o `find` abaixo trocava a entrada gravada pelo objeto
-  // completo. A migração `migrarMagiasCustomizadasSemprePreparadas`
-  // (sheet/migracoes.js) esvaziou esse caminho: nenhuma entrada de
-  // `magias_preparadas` tem mais a marca `personalizada`.
+  // `char.magias_customizadas` -- ela é sempre preparada.
+  //
+  // Issues #49/#50/#54: quem decide o que entra e em que forma é
+  // `fundirPreparadasComPersonalizadas` (acima), a MESMA função que a folha
+  // impressa (sheet/impressao.js) usa -- ver o docblock dela para os três
+  // casos. A fusão que existia aqui empurrava toda personalizada de
+  // círculo como "sempre preparada" e não sabia da entrada gravada, então a
+  // `sempre_preparada:false` saía duas vezes na mesma seção.
   const preparadasPorCirculo = {};
-  preparadas.forEach(m => {
+  fundirPreparadasComPersonalizadas(preparadas, magiasPersonalizadas).forEach(m => {
     const circ = m.circulo || 1;
     if (!preparadasPorCirculo[circ]) preparadasPorCirculo[circ] = [];
     preparadasPorCirculo[circ].push(m);
-  });
-  magiasPersonalizadas.filter(m => m.circulo > 0).forEach(m => {
-    if (!preparadasPorCirculo[m.circulo]) preparadasPorCirculo[m.circulo] = [];
-    preparadasPorCirculo[m.circulo].push(m);
   });
 
   // Verificar se é Mago (para grimório). `temClasse`, não o espelho
@@ -928,10 +1024,10 @@ export function renderSecaoMagias() {
             <span class="contador-valor">+${numSemClasse}</span>
           </div>
         ` : ''}
-        ${magiasPersonalizadas.filter(m => m.circulo > 0).length > 0 ? `
-          <div class="magia-contador contador-dominio" title="Magias que você mesmo criou: não gastam vaga do limite de preparadas e estão sempre preparadas (conjurá-las continua gastando espaço de magia).">
+        ${personalizadasSemprePreparadas.length > 0 ? `
+          <div class="magia-contador contador-dominio" title="Magias que você mesmo criou e deixou sempre preparadas: não gastam vaga do limite de preparadas (conjurá-las continua gastando espaço de magia).">
             <span class="contador-label">Personalizadas</span>
-            <span class="contador-valor">${magiasPersonalizadas.filter(m => m.circulo > 0).length}</span>
+            <span class="contador-valor">${personalizadasSemprePreparadas.length}</span>
           </div>
         ` : ''}
         ${preparadasEspeciais.length > 0 ? `
@@ -2827,7 +2923,14 @@ export function setupEventosEspacosMagia() {
           const idxGrimorio = char.grimorio.findIndex(m => m?.nome === atual.nome);
           if (idxGrimorio >= 0) char.grimorio.splice(idxGrimorio, 1);
         }
-        char.magias_preparadas = (char.magias_preparadas || []).filter(m => !(m.personalizada && m.nome === atual.nome));
+        // Issues #50/#54: a entrada injetada pela Tarefa 4 (demais classes
+        // conjuradoras, sem a flag `personalizada`) tambem precisa sair
+        // quando a magia personalizada e excluida -- senao a ficha fica com
+        // uma vaga fantasma que nenhum "x" da tela resolve. `atual` e a
+        // magia_customizada que esta sendo removida (ja existe no escopo
+        // desta funcao, algumas linhas acima).
+        char.magias_preparadas = (char.magias_preparadas || [])
+          .filter(m => !((m.personalizada || atual.sempre_preparada === false) && m.nome === atual.nome));
         char.magias_customizadas.splice(idx, 1);
         fecharModal();
         salvar();

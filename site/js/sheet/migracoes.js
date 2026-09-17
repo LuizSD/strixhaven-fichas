@@ -664,6 +664,13 @@ export function migrarMagiasCustomizadasSemprePreparadas() {
   const ehCustomizadaInequivoca = (magia) => {
     if (nomesDoAcervo.size === 0) return false;
     if (!temLastro(magia?.nome, magia?.circulo)) return false;
+    // Issues #50/#54 (mesmo raciocinio de migrarCopiasCustomizadasDoGrimorio,
+    // acima neste arquivo): sempre_preparada:false e o sinal de que esta
+    // entrada e o dado ATIVO do jogador, gravado pela Tarefa 4, e nao resto
+    // orfao do sistema anterior a 3.0.3.
+    const customizada = customizadas.find(m =>
+      m?.nome === magia?.nome && (Number(m?.circulo) || 0) === (Number(magia?.circulo) || 0));
+    if (customizada?.sempre_preparada === false) return false;
     const nomesDoCirculo = nomesDoAcervo.get(Number(magia?.circulo) || 0);
     // Escrito sem `?.` de proposito: `!undefined` seria REMOVER.
     if (!nomesDoCirculo) return false;
@@ -832,6 +839,18 @@ export function migrarCopiasCustomizadasDoGrimorio() {
   /** Decide se a entrada do grimorio so pode ter vindo da magia customizada. */
   const ehCopiaInequivoca = (entrada) => {
     if (!casaCustomizada(entrada)) return false;
+    // Issues #50/#54: a magia customizada com sempre_preparada:false ocupa
+    // vaga de verdade, e o caminho legitimo para isso E gravar a entrada
+    // aqui no grimorio (Tarefa 4 deste plano) -- entao ela bate com
+    // casaCustomizada por NOME E CIRCULO, exatamente como a copia orfa que
+    // esta funcao existe para limpar. A diferenca entre as duas e o
+    // proposito: uma e resto do sistema anterior a 3.0.3 (issue #46), a
+    // outra e o dado ativo do jogador. sempre_preparada:false e o unico
+    // sinal que distingue as duas, entao ele tem de ser consultado ANTES
+    // de decidir remover.
+    const customizada = customizadas.find(m =>
+      m?.nome === entrada?.nome && (Number(m?.circulo) || 0) === (Number(entrada?.circulo) || 0));
+    if (customizada?.sempre_preparada === false) return false;
     const nomesDoCirculo = nomesDoAcervo.get(Number(entrada?.circulo) || 0);
     // Circulo que o indice nao conhece: mesmo "nao sei" da guarda acima,
     // escrito sem `?.` de proposito -- `!undefined` seria REMOVER.

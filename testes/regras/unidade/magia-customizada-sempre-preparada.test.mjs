@@ -736,3 +736,64 @@ test('acervo indisponível (índice vazio): não remove NADA e devolve false', (
     'índice ainda não carregado é o mesmo "não sei"');
   assert.equal(p.grimorio.length, 2);
 });
+
+// ============================================================
+// Issues #50/#54: a magia customizada com sempre_preparada:false ocupa
+// vaga de verdade, e o caminho legitimo para isso E gravar a entrada
+// aqui (grimorio ou magias_preparadas) -- exatamente na MESMA forma que
+// as duas migracoes acima tratam como resto orfao do sistema anterior a
+// 3.0.3. sempre_preparada e o unico sinal que distingue as duas, e por
+// isso as migracoes precisam consulta-lo antes de decidir remover.
+// ============================================================
+
+test('migrarMagiasCustomizadasSemprePreparadas PRESERVA entrada com sempre_preparada:false', () => {
+  const p = ficha({
+    magias_preparadas: [{ nome: 'Névoa de Nimb', circulo: 1, classe: 'Mago' }],
+    magias_customizadas: [{ nome: 'Névoa de Nimb', circulo: 1, sempre_preparada: false }],
+  });
+  sheetEstado.definirChar(p);
+
+  const alterado = sheetMigracoes.migrarMagiasCustomizadasSemprePreparadas();
+
+  assert.equal(alterado, false, 'nada muda: a entrada e o dado ativo do recurso novo');
+  assert.deepEqual(p.magias_preparadas.map(m => m.nome), ['Névoa de Nimb']);
+});
+
+test('migrarMagiasCustomizadasSemprePreparadas CONTINUA removendo quando sempre_preparada e ausente/true (comportamento pre-existente)', () => {
+  const p = ficha({
+    magias_preparadas: [{ nome: 'Névoa de Nimb', circulo: 1, classe: 'Mago' }],
+    magias_customizadas: [{ nome: 'Névoa de Nimb', circulo: 1 }],
+  });
+  sheetEstado.definirChar(p);
+
+  const alterado = sheetMigracoes.migrarMagiasCustomizadasSemprePreparadas();
+
+  assert.equal(alterado, true, 'sem o toggle, e o mesmo resto orfao que a issue #46 sempre limpou');
+  assert.equal(p.magias_preparadas.length, 0);
+});
+
+test('migrarCopiasCustomizadasDoGrimorio PRESERVA entrada com sempre_preparada:false', () => {
+  const p = ficha({
+    grimorio: [{ nome: 'Névoa de Nimb', circulo: 1 }],
+    magias_customizadas: [{ nome: 'Névoa de Nimb', circulo: 1, sempre_preparada: false }],
+  });
+  sheetEstado.definirChar(p);
+
+  const alterado = sheetMigracoes.migrarCopiasCustomizadasDoGrimorio();
+
+  assert.equal(alterado, false, 'nada muda: a entrada e o dado ativo do recurso novo');
+  assert.deepEqual(p.grimorio.map(m => m.nome), ['Névoa de Nimb']);
+});
+
+test('migrarCopiasCustomizadasDoGrimorio CONTINUA removendo quando sempre_preparada e ausente/true (comportamento pre-existente)', () => {
+  const p = ficha({
+    grimorio: [{ nome: 'Névoa de Nimb', circulo: 1 }],
+    magias_customizadas: [{ nome: 'Névoa de Nimb', circulo: 1 }],
+  });
+  sheetEstado.definirChar(p);
+
+  const alterado = sheetMigracoes.migrarCopiasCustomizadasDoGrimorio();
+
+  assert.equal(alterado, true, 'sem o toggle, e o mesmo resto orfao que a issue #46 sempre limpou');
+  assert.equal(p.grimorio.length, 0);
+});

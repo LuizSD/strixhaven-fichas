@@ -14,7 +14,12 @@ import { conjuraPorAlgumaClasse } from '../regras-multiclasse-conjuracao.js';
 import { armadurasDoPersonagem, armasDoPersonagem } from '../regras-multiclasse-proficiencias.js';
 import { classesDe, reservasDadosVida, temClasse } from '../regras-multiclasse.js';
 import { ehProficienteEmSalvaguarda } from '../regras-salvaguardas.js';
-import { normalizarMagiaPersonalizada, rotuloOrigemMagia } from './magias.js';
+// fundirPreparadasComPersonalizadas (issues #49/#50/#54): a MESMA fusao que
+// a secao Magias da ficha usa. Esta folha tinha uma copia propria que
+// empurrava toda personalizada de circulo como "sempre preparada" e nao
+// sabia da entrada gravada -- a `sempre_preparada:false` saia duas vezes no
+// PDF, igual a tela.
+import { fundirPreparadasComPersonalizadas, normalizarMagiaPersonalizada, rotuloOrigemMagia } from './magias.js';
 // reservasDeEspacos (Tarefa 4, sub-projeto 4, Ruling 11): a caixa "Espacos
 // de Magia" da impressao lia `char.espacos_magia[circulo]` direto, na
 // forma antiga -- passa a ler pelo acessador derivado.
@@ -762,18 +767,14 @@ export async function gerarHtmlImpressao() {
 
     // Magias preparadas por circulo
     const preparadas = char.magias_preparadas || [];
+    const personalizadasDaFicha = (char.magias_customizadas || [])
+      .map((m, indice) => ({ ...normalizarMagiaPersonalizada(m, indice), indicePersonalizada: indice }));
     const preparadasPorCirculo = {};
-    preparadas.forEach(m => {
+    fundirPreparadasComPersonalizadas(preparadas, personalizadasDaFicha).forEach(m => {
       const circ = m.circulo || 1;
       if (!preparadasPorCirculo[circ]) preparadasPorCirculo[circ] = [];
       preparadasPorCirculo[circ].push(m);
     });
-    (char.magias_customizadas || []).map(normalizarMagiaPersonalizada)
-      .filter(m => m.circulo > 0)
-      .forEach(m => {
-        if (!preparadasPorCirculo[m.circulo]) preparadasPorCirculo[m.circulo] = [];
-        preparadasPorCirculo[m.circulo].push(m);
-      });
 
     Object.keys(preparadasPorCirculo).sort((a, b) => parseInt(a) - parseInt(b)).forEach(circ => {
       const magias = preparadasPorCirculo[circ].slice().sort((a, b) => {
