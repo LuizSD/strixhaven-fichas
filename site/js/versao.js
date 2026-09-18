@@ -13,13 +13,89 @@
 // ============================================================
 
 /** Versão exibida no header e marcada como atual na lista de notas. */
-export const VERSAO_ATUAL = '3.0.6';
+export const VERSAO_ATUAL = '3.0.7';
 
 // Cada entrada é uma versão. `melhorias` e `correcoes` são listas de
 // grupos, e cada grupo tem um título curto e seus itens. O emoji do
 // grupo entra no próprio título -- é o que separa visualmente melhoria
 // de correção sem depender de cor.
 export const NOTAS_VERSAO = [
+  {
+    versao: '3.0.7',
+    data: '2026-09-18',
+    rotulo: 'Grátis e organização',
+    resumo: 'Magias de Maestria de Magias e Assinatura Mágica ganham o '
+      + 'botão "Grátis" direto na lista de Preparadas, a magia '
+      + 'personalizada não preparada sai para uma seção própria, os '
+      + 'traços de espécie ganham selo de nível, agora dá para liberar '
+      + 'uma vaga na hora ao marcar uma magia (ou truque) personalizada '
+      + 'para ocupar espaço, e o truque personalizado ganhou a mesma '
+      + 'opção.',
+    melhorias: [
+      {
+        grupo: '✨ Grátis na lista principal',
+        itens: [
+          'As magias escolhidas para Maestria de Magias e Assinatura '
+            + 'Mágica agora têm o botão "Grátis" junto delas na lista '
+            + 'principal de Preparadas — antes só dava para conjurá-las '
+            + 'sem gastar espaço pelo painel de recursos do Mago, lá em '
+            + 'cima da ficha, obrigando a rolar a tela toda vez. Maestria '
+            + 'de Magias continua à vontade (nunca esgota); Assinatura '
+            + 'Mágica continua esgotando por magia, 1x por Descanso Curto '
+            + 'ou Longo — os dois lugares mostram sempre o mesmo estado. '
+            + '(#68)',
+        ],
+      },
+      {
+        grupo: '✨ Personalizada não preparada, fora da lista principal',
+        itens: [
+          'A magia personalizada que ocupa vaga mas ainda não foi '
+            + 'preparada (o Mago que ainda não a copiou do grimório, ou '
+            + 'outra classe que a tirou pelo "x" das preparadas) saía '
+            + 'misturada dentro da lista de círculo, marcada "Não '
+            + 'preparada" — agora ela tem uma seção própria, separada do '
+            + 'que está realmente pronto para conjurar, mantendo os '
+            + 'botões de editar e remover. (#71)',
+        ],
+      },
+      {
+        grupo: '✨ Liberar vaga na hora para a magia personalizada',
+        itens: [
+          'Ao desmarcar "sempre preparada" numa magia personalizada sem '
+            + 'ter vaga livre no limite da classe, a ficha não recusa mais '
+            + 'de vez — abre um modal para você escolher qual magia '
+            + 'preparada libera o lugar. A escolhida sai da lista, e a '
+            + 'personalizada entra no lugar dela, sem precisar fechar o '
+            + 'formulário e ir despreparar algo em outra tela primeiro. '
+            + '(#74)',
+        ],
+      },
+      {
+        grupo: '✨ Traços de Espécie: nível e sem separação Ativa/Passiva',
+        itens: [
+          'Cada traço de espécie agora mostra o selo com o nível em que '
+            + 'foi concedido, e o card parou de separar Habilidades '
+            + 'Ativas/Passivas em duas seções — mesmo ajuste já feito nas '
+            + 'Características de Classe (versão 3.0.6): a lista fica '
+            + 'única, na ordem do livro, com o selo Ativa/Passiva mantido '
+            + 'em cada card. (#73)',
+        ],
+      },
+      {
+        grupo: '✨ Truque personalizado também pode ocupar vaga',
+        itens: [
+          'O truque personalizado ganhou a mesma opção que a magia de '
+            + 'círculo 1º ou superior já tinha: ao criar ou editar, '
+            + 'escolha entre "sempre conhecido" (fora do limite de '
+            + 'truques da classe, como hoje) ou "ocupa vaga" — ele entra '
+            + 'na sua lista de truques conhecidos de verdade, contando no '
+            + 'limite. Sem vaga livre, o mesmo modal de liberar vaga da '
+            + 'magia aparece para truque também, oferecendo trocar por um '
+            + 'truque conhecido. (comentário na #74)',
+        ],
+      },
+    ],
+  },
   {
     versao: '3.0.6',
     data: '2026-09-17',

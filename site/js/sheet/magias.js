@@ -16,7 +16,7 @@ import { getTrapaceiroArcanoConjuracao } from './classes/ladino.js';
 // Assinatura Magica. A fusao abaixo precisa delas para reconhecer a entrada
 // gravada por sincronizarMagiasFixasMago (classes/mago.js) quando a magia
 // escolhida e uma personalizada (issue #49).
-import { MAGIAS_FIXAS_MAGO } from './classes/mago.js';
+import { MAGIAS_FIXAS_MAGO, magiaFixaMagoGratisDisponivel, marcarAssinaturaMagicaUsada } from './classes/mago.js';
 import { _truquesColapsados } from './colapso.js';
 import { ehBardoComSegredosMagicos, getTruquesExtraEstiloLuta } from './combate.js';
 import { char, classesData, indiceMagiasCache, salvar } from './estado.js';
@@ -231,6 +231,52 @@ export function fundirPreparadasComPersonalizadas(preparadas, personalizadas) {
   return linhas;
 }
 
+/**
+ * Issue #74 (comentário do usuário): mesma fusão de
+ * `fundirPreparadasComPersonalizadas`, agora para TRUQUES -- o truque
+ * personalizado "ocupa vaga" grava uma entrada crua em `magias_conhecidas`
+ * (grimorio.js), e sem fundir ela saía DUAS vezes: a crua pelo ramo do
+ * acervo (descrição vazia, "Lançar" que não conhece o truque -- a forma da
+ * issue #39) e a derivada anunciando "sempre conhecido".
+ *
+ * Mais simples que a de magias: truque não tem Maestria/Assinatura (não
+ * existe `ORIGENS_TRUQUE_FIXA` equivalente), e casa só por NOME -- círculo
+ * é sempre 0 dos dois lados.
+ *
+ * Casos:
+ *  1. Personalizado sem `sempre_preparada:false` -- entra DERIVADO, sempre
+ *     conhecido (comportamento desde a issue #46).
+ *  2. Personalizado `sempre_preparada:false` COM entrada gravada -- ela
+ *     ocupa vaga de verdade: a linha personalizada ABSORVE a entrada
+ *     (levando `classe`, se tiver).
+ *  3. Personalizado `sempre_preparada:false` SEM entrada gravada (o
+ *     jogador removeu pela grade de Trocar Truque) -- entra marcado
+ *     `naoConhecido`, preservando Editar/Remover.
+ *
+ * @param {Array} conhecidos `char.magias_conhecidas`, já filtrado por círculo 0.
+ * @param {Array} personalizadas Personalizadas já normalizadas e com `indicePersonalizada`.
+ * @returns {Array} Lista única, que quem chama filtra por `m.personalizada`.
+ */
+export function fundirTruquesComPersonalizados(conhecidos, personalizadas) {
+  const truques = (personalizadas || []).filter(m => m.circulo === 0);
+  const absorvidos = new Set();
+  const linhas = (conhecidos || []).map(entrada => {
+    const candidata = truques.find(t => t.nome === entrada?.nome);
+    if (!candidata || absorvidos.has(candidata.indicePersonalizada)) return entrada;
+    if (candidata.sempre_preparada !== false) return entrada;
+    absorvidos.add(candidata.indicePersonalizada);
+    return {
+      ...candidata,
+      ...(entrada.classe ? { classe: entrada.classe } : {}),
+    };
+  });
+  truques.forEach(t => {
+    if (absorvidos.has(t.indicePersonalizada)) return;
+    linhas.push(t.sempre_preparada === false ? { ...t, naoConhecido: true } : t);
+  });
+  return linhas;
+}
+
 function renderDetalhesMagiaPersonalizada(magia) {
   const meta = [magia.escola, magia.tempo_conjuracao, magia.alcance, magia.componentes, magia.duracao]
     .filter(Boolean)
@@ -267,6 +313,11 @@ function renderDetalhesMagiaPersonalizada(magia) {
  * `magia.origem` (Maestria de Magias/Assinatura Mágica, issue #49) e
  * `magia.gratis_usado`, absorvidos da entrada gravada: o selo de origem e
  * o botão "Grátis" ficam NESTA linha, em vez de numa segunda linha crua.
+ *
+ * Issue #74 (comentário do usuário): truque personalizado ganhou o mesmo
+ * toggle "ocupa vaga" de magia de círculo 1+, com o par equivalente
+ * `magia.naoConhecido`/`fundirTruquesComPersonalizados` -- truque não tem
+ * Maestria/Assinatura, então só o par `naoConhecido` se aplica a ele.
  *
  * @param {object} magia Magia já normalizada por `normalizarMagiaPersonalizada`.
  * @param {number} indice Índice dela em `char.magias_customizadas`.
@@ -344,7 +395,7 @@ function renderLinhaMagiaPersonalizada(magia, indice) {
   const botaoGratis = magia.gratis_usado === false
     ? `<button class="btn btn-sm btn-accent" data-conjurar-gratis="${escHtml(magia.nome)}">Grátis</button>`
     : '';
-  const controlesConjuracao = magia.naoPreparada
+  const controlesConjuracao = (magia.naoPreparada || magia.naoConhecido)
     ? ''
     : magia.circulo === 0
     ? `<button class="btn btn-sm btn-cantrip" data-lancar-magia-custom="${indice}">Lançar</button>`
@@ -368,6 +419,7 @@ function renderLinhaMagiaPersonalizada(magia, indice) {
           <div class="magia-meta"><span>${magia.circulo === 0 ? 'Truque' : `${magia.circulo}º Círculo`}</span></div>
           ${rotuloOrigem ? `<div style="font-size:0.65rem;color:var(--secondary);font-weight:600;margin-top:1px">${escHtml(rotuloOrigem)}</div>` : ''}
           ${magia.naoPreparada ? '<div style="font-size:0.65rem;color:var(--text-muted);font-style:italic">Não preparada</div>' : ''}
+          ${magia.naoConhecido ? '<div style="font-size:0.65rem;color:var(--text-muted);font-style:italic">Não conhecido</div>' : ''}
           ${tags.length ? `<div class="magia-tags">${tags.join('')}</div>` : ''}
         </div>
         <div class="no-print" style="display:flex;align-items:center;gap:4px">
@@ -663,17 +715,31 @@ export function renderSecaoMagias() {
     ...normalizarMagiaPersonalizada(magia, indice),
     indicePersonalizada: indice
   }));
-  const truquesPersonalizados = magiasPersonalizadas.filter(m => m.circulo === 0);
-  // Issues #50/#54: o chip "Personalizadas" conta SO as que continuam
-  // sempre preparadas. A `sempre_preparada:false` ocupa vaga de verdade e
-  // ja e contada no contador de preparadas -- conta-la aqui, sob o rotulo
-  // de "nao gasta vaga", negaria o que o jogador escolheu.
+  // Issues #50/#54/#74: os dois chips "Personalizadas" (magia e truque)
+  // contam SO as que continuam sempre preparadas/conhecidas. A
+  // `sempre_preparada:false` ocupa vaga de verdade e ja e contada no
+  // contador de preparadas/truques -- conta-la aqui, sob o rotulo de "nao
+  // gasta vaga", negaria o que o jogador escolheu.
   const personalizadasSemprePreparadas = magiasPersonalizadas
     .filter(m => m.circulo > 0 && m.sempre_preparada !== false);
-  const todosTruques = [
-    ...(char.magias_conhecidas || []).filter(m => m.circulo === 0),
-    ...truquesPersonalizados
-  ];
+  const truquesPersonalizadosSempreConhecidos = magiasPersonalizadas
+    .filter(m => m.circulo === 0 && m.sempre_preparada !== false);
+  // fundirTruquesComPersonalizados (issue #74, comentário do usuário):
+  // mesma fusão que fundirPreparadasComPersonalizadas já faz para magias
+  // -- um truque "ocupa vaga" tem entrada crua em magias_conhecidas
+  // (grimorio.js) e é a personalizada dele; sem fundir, apareceria duas
+  // vezes. `todosTruques` (e tudo que deriva dele, abaixo) já sai com uma
+  // linha só por truque -- inclusive os "sempre conhecidos", que entram
+  // aqui marcados `personalizada:true` (por isso `truquesClasseDoAcervo`,
+  // mais abaixo, continua os excluindo do ramo do livro).
+  const todosTruques = fundirTruquesComPersonalizados(
+    (char.magias_conhecidas || []).filter(m => m.circulo === 0),
+    magiasPersonalizadas
+  );
+  // Linhas que `renderLinhaMagiaPersonalizada` desenha: tudo que a fusão
+  // marcou como personalizada -- sempre conhecido (derivado), absorvido
+  // (ocupa vaga, já preparado) ou `naoConhecido` (ocupa vaga, orfão).
+  const truquesPersonalizados = todosTruques.filter(m => m.personalizada);
   const truquesEspecie = todosTruques.filter(m => m.origem === 'especie');
   // O que conta no limite de truques mora em regras-origens-magia.js, a
   // fonte única das origens que o jogador não escolheu. Aqui existia uma
@@ -815,7 +881,16 @@ export function renderSecaoMagias() {
   // círculo como "sempre preparada" e não sabia da entrada gravada, então a
   // `sempre_preparada:false` saía duas vezes na mesma seção.
   const preparadasPorCirculo = {};
+  // Issue #71: a personalizada "ocupa vaga" que AINDA NÃO tem entrada
+  // gravada (`naoPreparada`, ver fundirPreparadasComPersonalizadas) sai da
+  // lista de Preparadas por círculo -- ela não ocupa vaga nenhuma AINDA, e
+  // misturada entre as que ocupam poluía a lista que o jogador olha para
+  // saber o que está pronto para conjurar. Vai para uma seção própria,
+  // abaixo, que preserva Editar/Remover (os únicos botões que ela tem) sem
+  // fingir que é uma preparada.
+  const magiasPersonalizadasNaoPreparadas = [];
   fundirPreparadasComPersonalizadas(preparadas, magiasPersonalizadas).forEach(m => {
+    if (m.naoPreparada) { magiasPersonalizadasNaoPreparadas.push(m); return; }
     const circ = m.circulo || 1;
     if (!preparadasPorCirculo[circ]) preparadasPorCirculo[circ] = [];
     preparadasPorCirculo[circ].push(m);
@@ -1006,10 +1081,10 @@ export function renderSecaoMagias() {
             <span class="contador-valor">${truquesSempre.length}</span>
           </div>
         ` : ''}
-        ${truquesPersonalizados.length > 0 ? `
+        ${truquesPersonalizadosSempreConhecidos.length > 0 ? `
           <div class="magia-contador contador-dominio" title="Truques que você mesmo criou: não gastam vaga do limite de truques da classe e estão sempre prontos para uso.">
             <span class="contador-label">Truques Personalizados</span>
-            <span class="contador-valor">${truquesPersonalizados.length}</span>
+            <span class="contador-valor">${truquesPersonalizadosSempreConhecidos.length}</span>
           </div>
         ` : ''}
         ${maxPreparadas > 0 ? `
@@ -1093,6 +1168,20 @@ export function renderSecaoMagias() {
       <!-- Dádivas do Pacto (Bruxo) -->
       ${renderSecaoPactoBruxo()}
 
+      <!-- Issue #71: personalizadas "ocupa vaga" ainda não preparadas --
+           fora da lista de Preparadas, com Editar/Remover preservados. -->
+      ${magiasPersonalizadasNaoPreparadas.length > 0 ? `
+        <details data-details-id="magias-personalizadas-nao-preparadas" style="margin-bottom:8px" open>
+          <summary style="font-weight:700;cursor:pointer;padding:6px 0;border-bottom:1px solid var(--border-light);color:var(--text-muted)">
+            Personalizadas não preparadas (${magiasPersonalizadasNaoPreparadas.length})
+          </summary>
+          <div style="padding-top:4px">
+            <div style="font-size:0.75rem;color:var(--text-muted);padding:2px 0 6px">Ocupam vaga quando você as preparar em "Preparar Magias" -- até lá, não contam no limite.</div>
+            ${magiasPersonalizadasNaoPreparadas.slice().sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR')).map(m => renderLinhaMagiaPersonalizada(m, m.indicePersonalizada)).join('')}
+          </div>
+        </details>
+      ` : ''}
+
       <!--
         Achado 2 da rodada 1 de correção da Tarefa 4 (revisão independente):
         o contador do topo (numPreparadas) virou por CLASSE, mas esta lista
@@ -1119,6 +1208,14 @@ export function renderSecaoMagias() {
             ${magias.filter(m => !m.personalizada).slice().sort((a, b) => prioridadeConjuracao(a.nome) - prioridadeConjuracao(b.nome)).map(m => {
               const ehEspecial = magiaEhEspecial(m);
               const origemLabel = rotuloOrigemMagia(m);
+              // Issue #68: Maestria de Magias/Assinatura Mágica ganham o
+              // botão "Grátis" nesta lista principal, junto da magia --
+              // antes só apareciam no painel de recursos do Mago lá em
+              // cima. `magiaFixaMagoGratisDisponivel` devolve null para
+              // qualquer outra origem, e nesse caso cai no mecanismo
+              // genérico (`gratis_usado`, talentos como Iniciado em Magia).
+              const gratisFixa = magiaFixaMagoGratisDisponivel(m.nome);
+              const gratisDisponivel = gratisFixa !== null ? gratisFixa : m.gratis_usado === false;
               const circulos = Object.keys(espacos).filter(c => parseInt(c) >= m.circulo).sort((a, b) => parseInt(a) - parseInt(b));
               const temUpcast = circulos.length > 1;
               // circulosComEspacoDisponivel (nao `espacos`): ver Important 3
@@ -1142,7 +1239,7 @@ export function renderSecaoMagias() {
                         ${circulos.map(c => `<option value="${c}"${c == m.circulo ? ' selected' : ''}>${c}º</option>`).join('')}
                       </select>
                     ` : ''}
-                    ${(m.gratis_usado === false) ? `<button class="btn btn-sm btn-accent" data-conjurar-gratis="${m.nome}">Grátis</button>` : ''}
+                    ${gratisDisponivel ? `<button class="btn btn-sm btn-accent" data-conjurar-gratis="${m.nome}">Grátis</button>` : ''}
                     <button class="btn btn-sm ${todosEsgotados ? 'btn-secondary' : 'btn-primary'}" data-conjurar="${m.nome}" data-conj-circ="${circulos[0] || m.circulo}" ${todosEsgotados ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>Conjurar</button>
                     ${ehMagiaRitual(m.nome) ? `<button class="btn btn-sm btn-secondary" data-conjurar-ritual="${m.nome}" data-conj-circ="${m.circulo}" title="Conjurar como Ritual (sem gastar espaço)">Ritual</button>` : ''}
                   </div>
@@ -1159,7 +1256,7 @@ export function renderSecaoMagias() {
       ${todosTruques.length > 0 ? `
         <details id="details-truques"${_truquesColapsados ? '' : ' open'} style="margin-bottom:8px">
           <summary style="font-weight:700;cursor:pointer;padding:6px 0;border-bottom:1px solid var(--border-light)">
-            Truques (${truquesNoLimite.length}${maxTruques ? ' / ' + maxTruques : ''}${truquesSemClasse.length > 0 ? ` + ${truquesSemClasse.length} sem classe` : ''}${truquesEspecie.length > 0 ? ` + ${truquesEspecie.length} espécie` : ''}${truquesTalento.length > 0 ? ` + ${truquesTalento.length} talento` : ''}${truquesSempre.length > 0 ? ` + ${truquesSempre.length} subclasse` : ''}${truquesPersonalizados.length > 0 ? ` + ${truquesPersonalizados.length} personalizado` : ''})
+            Truques (${truquesNoLimite.length}${maxTruques ? ' / ' + maxTruques : ''}${truquesSemClasse.length > 0 ? ` + ${truquesSemClasse.length} sem classe` : ''}${truquesEspecie.length > 0 ? ` + ${truquesEspecie.length} espécie` : ''}${truquesTalento.length > 0 ? ` + ${truquesTalento.length} talento` : ''}${truquesSempre.length > 0 ? ` + ${truquesSempre.length} subclasse` : ''}${truquesPersonalizadosSempreConhecidos.length > 0 ? ` + ${truquesPersonalizadosSempreConhecidos.length} personalizado` : ''})
           </summary>
           <div style="padding-top:4px">
             ${truquesEspecie.slice().sort((a, b) => prioridadeConjuracao(a.nome) - prioridadeConjuracao(b.nome)).map(m => `
@@ -2542,19 +2639,38 @@ export function setupEventosEspacosMagia() {
     renderFichaCompleta();
   }
 
-  // Função auxiliar para conjuração gratuita (talentos).
+  // Função auxiliar para conjuração gratuita (talentos, e desde a issue #68
+  // também Maestria de Magias/Assinatura Mágica do Mago).
   //
-  // Delega para `aplicarConjuracaoSemEspaco`, a mesma rota que a Maestria de
-  // Magias e a Assinatura Mágica do Mago usam: esta função tinha uma CÓPIA da
-  // aplicação de efeito/alvo/concentração, e dado derivado copiado diverge em
-  // silêncio -- foi por não existir essa rota compartilhada que os botões do
-  // Mago nasceram sem efeito nenhum.
+  // Delega para `aplicarConjuracaoSemEspaco`, a mesma rota que os botões
+  // dedicados de Maestria/Assinatura (painel de recursos, habilidades.js)
+  // usam: esta função tinha uma CÓPIA da aplicação de efeito/alvo/
+  // concentração, e dado derivado copiado diverge em silêncio -- foi por
+  // não existir essa rota compartilhada que os botões do Mago nasceram
+  // sem efeito nenhum.
+  //
+  // A BOOKKEEPING de "usado" segue a MESMA fonte que magiaFixaMagoGratisDisponivel
+  // leu para desenhar o botão: Assinatura Mágica marca
+  // char.recursos.mago.assinatura_magia_N_usada (marcarAssinaturaMagicaUsada),
+  // igual ao botão dedicado -- nunca `entrada.gratis_usado`, que ficaria
+  // como um segundo estado, ignorado pelo painel de cima. Maestria de
+  // Magias não marca nada (à vontade, nunca esgota). Só quando NENHUMA das
+  // duas reconhece o nome (mecanismo genérico de talento) é que
+  // `entrada.gratis_usado` é a fonte de verdade.
   function _executarConjuracaoGratis(entrada, nome) {
+    const origemFixa = entrada.origem === 'maestria_magias' ? 'Maestria de Magias'
+      : entrada.origem === 'assinatura_magica' ? 'Assinatura Mágica' : null;
+    if (origemFixa) {
+      if (entrada.origem === 'assinatura_magica') marcarAssinaturaMagicaUsada(nome);
+      aplicarConjuracaoSemEspaco(nome, entrada.circulo, `${nome} conjurada gratuitamente (${origemFixa})!`);
+      return;
+    }
     entrada.gratis_usado = true;
     aplicarConjuracaoSemEspaco(nome, entrada.circulo, `${nome} conjurada gratuitamente (talento)!`);
   }
 
-  // Conjurar magia gratuitamente (talentos: 1x por descanso longo)
+  // Conjurar magia gratuitamente (talentos: 1x por descanso longo; Maestria
+  // de Magias/Assinatura Mágica do Mago: issue #68)
   document.querySelectorAll('[data-conjurar-gratis]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -2566,7 +2682,9 @@ export function setupEventosEspacosMagia() {
       }
 
       const nome = btn.dataset.conjurarGratis;
-      const entrada = char.magias_preparadas.find(m => m.nome === nome && m.gratis_usado === false);
+      const gratisFixa = magiaFixaMagoGratisDisponivel(nome);
+      const entrada = char.magias_preparadas.find(m => m.nome === nome
+        && (gratisFixa !== null ? gratisFixa : m.gratis_usado === false));
       if (!entrada) return;
 
       // Verificar conflito de concentração
@@ -2931,6 +3049,13 @@ export function setupEventosEspacosMagia() {
         // desta funcao, algumas linhas acima).
         char.magias_preparadas = (char.magias_preparadas || [])
           .filter(m => !((m.personalizada || atual.sempre_preparada === false) && m.nome === atual.nome));
+        // Issue #74 (comentário do usuário): truque personalizado
+        // "ocupa vaga" grava direto em magias_conhecidas (grimorio.js) --
+        // mesma limpeza da linha acima, agora para essa fonte. Só o
+        // círculo 0 entra lá; casar por nome basta (mesma granularidade
+        // da linha do grimório/preparadas, acima).
+        char.magias_conhecidas = (char.magias_conhecidas || [])
+          .filter(m => !(atual.sempre_preparada === false && atual.circulo === 0 && m.nome === atual.nome));
         char.magias_customizadas.splice(idx, 1);
         fecharModal();
         salvar();

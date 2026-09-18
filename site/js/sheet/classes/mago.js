@@ -160,6 +160,55 @@ export function getEstadoRecursosMago() {
 }
 
 /**
+ * Issue #68: diz se UMA magia de Maestria de Magias/Assinatura Mágica tem
+ * uso gratuito disponível AGORA, lendo a mesma fonte que o painel de
+ * recursos do Mago (renderPainelRecursosMago, sheet/ficha.js) já usa --
+ * sem guardar um segundo estado em `magias_preparadas`, que ficaria
+ * desatualizado assim que o jogador conjurasse por QUALQUER um dos dois
+ * lugares (painel de cima ou o botão "Grátis" da lista de preparadas).
+ *
+ * Maestria de Magias é "à vontade" (Classes.md:5330 -- nunca esgota,
+ * sempre `true`); Assinatura Mágica esgota 1x por Descanso Curto/Longo,
+ * por VAGA (m1/m2) -- lê `assinatura_magia_1_usada`/`_2_usada`.
+ *
+ * @param {string} nome
+ * @returns {boolean|null} `null` quando a magia não é nem Maestria nem
+ *   Assinatura -- quem chama decide o que fazer com a magia nesse caso
+ *   (ex.: cair no mecanismo genérico de `gratis_usado`).
+ */
+export function magiaFixaMagoGratisDisponivel(nome) {
+  const estado = getEstadoRecursosMago();
+  if (!estado) return null;
+  if (estado.maestriaMagiasAtiva && (nome === estado.maestriaMagia1 || nome === estado.maestriaMagia2)) {
+    return true;
+  }
+  if (estado.assinaturaMagicaAtiva) {
+    if (nome === estado.assinatura1) return !estado.assinatura1Usada;
+    if (nome === estado.assinatura2) return !estado.assinatura2Usada;
+  }
+  return null;
+}
+
+/**
+ * Marca como usada a Assinatura Mágica correspondente ao nome, se houver
+ * (a MESMA escrita que o botão dedicado do painel de recursos já faz,
+ * habilidades.js:2176-2177) -- para o botão "Grátis" da lista de
+ * preparadas (issue #68) não abrir uma segunda contabilidade. Maestria de
+ * Magias nunca marca nada: é "à vontade" por regra do livro.
+ *
+ * @param {string} nome
+ * @returns {boolean} true se encontrou e marcou uma assinatura.
+ */
+export function marcarAssinaturaMagicaUsada(nome) {
+  if (!temClasse(char, 'Mago') || !char.recursos?.mago) return false;
+  const estado = getEstadoRecursosMago();
+  if (!estado?.assinaturaMagicaAtiva) return false;
+  if (nome === estado.assinatura1) { char.recursos.mago.assinatura_magia_1_usada = true; return true; }
+  if (nome === estado.assinatura2) { char.recursos.mago.assinatura_magia_2_usada = true; return true; }
+  return false;
+}
+
+/**
  * Grava as magias escolhidas para uma característica de magia fixa do Mago
  * (`maestria_magias` ou `assinatura_magica`) e sincroniza a lista de
  * preparadas.

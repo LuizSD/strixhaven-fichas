@@ -1089,6 +1089,78 @@ export async function mostrarBuscaMagia() {
   renderTab();
 }
 
+/**
+ * Issue #74: quando o jogador desmarca "sempre preparada"/"sempre
+ * conhecido" numa personalizada mas não há vaga livre no limite, a
+ * versão anterior só recusava com um aviso -- o jogador tinha de sair do
+ * formulário, abrir "Preparar Magias" para despreparar algo, voltar aqui
+ * e tentar de novo. Este modal oferece liberar a vaga NA HORA: lista as
+ * magias/truques conhecidos da superfície ativa (mesmas candidatas de
+ * `mostrarTrocaMagiaConhecida`/`truquesTrocaveis`, acima -- `desta` ∪
+ * `semClasse`, nunca `deOutra`: nunca liberar vaga de OUTRA classe para
+ * dar à personalizada desta). Escolher uma a remove da lista real e
+ * chama `aoLiberar`, que o chamador usa para tentar salvar de novo -- o
+ * formulário não fecha (isto é um SUB-modal, empilhado sobre ele por
+ * `abrirModal`), então os campos preenchidos continuam lá.
+ *
+ * Comentário do usuário na issue #74: truque personalizado (círculo 0)
+ * ganhou a mesma opção que magia de círculo 1+ já tinha -- por isso este
+ * modal passou a atender os dois, com `ehTruque` decidindo a fonte
+ * (`truquesPorClasse`/`magias_conhecidas` vs `preparadasPorClasse`/
+ * `magias_preparadas`) e o texto.
+ *
+ * @param {object|undefined} sup Superfície de conjuração ativa (sem ela, nada para liberar).
+ * @param {boolean} ehTruque true para truque (círculo 0), false para magia (círculo 1+).
+ * @param {() => void} aoLiberar Chamado depois de remover a magia/truque escolhido.
+ */
+function abrirEscolhaVagaParaLiberar(sup, ehTruque, aoLiberar) {
+  const classificacao = ehTruque ? truquesPorClasse(char, sup?.classe) : preparadasPorClasse(char, sup?.classe);
+  const candidatas = sup
+    ? [...classificacao.desta, ...classificacao.semClasse].filter(m => ehTruque ? m.circulo === 0 : m.circulo > 0)
+    : [];
+  const rotuloClasse = sup?.classe ? ` de ${escHtml(sup.classe)}` : '';
+  const rotuloItem = ehTruque ? 'truques conhecidos' : 'magias preparadas';
+  const rotuloItemSingular = ehTruque ? 'truque conhecido' : 'magia preparada';
+  const campoReal = ehTruque ? 'magias_conhecidas' : 'magias_preparadas';
+
+  if (candidatas.length === 0) {
+    abrirModal('Sem vaga livre', `
+      <div class="info-box error" style="font-size:0.85rem">
+        Seu limite de ${rotuloItem}${rotuloClasse} já está cheio, e não há nenhum ${rotuloItemSingular}
+        para liberar por aqui. ${ehTruque ? 'Troque um truque em "Preparar Magias"' : 'Desprepare uma magia em "Preparar Magias"'}
+        primeiro, ou deixe ${ehTruque ? 'este truque sempre conhecido' : 'esta magia sempre preparada'}.
+      </div>
+    `, '<button class="btn btn-primary" onclick="fecharModal()">Entendi</button>');
+    return;
+  }
+
+  abrirModal('Liberar uma vaga', `
+    <div class="info-box info" style="font-size:0.85rem;margin-bottom:10px">
+      Seu limite de ${rotuloItem}${rotuloClasse} está cheio. Escolha um ${rotuloItemSingular}
+      para liberar a vaga — ele sai da lista, e a sua personalizada entra no lugar.
+    </div>
+    <div class="opcao-grid densa">
+      ${candidatas.map((m, i) => `
+        <div class="opcao-card">
+          <div class="opcao-nome">${escHtml(m.nome)}</div>
+          <div class="opcao-resumo"><span>${ehTruque ? 'Truque' : `${m.circulo}º Círculo`}</span></div>
+          <button class="btn btn-sm btn-secondary" data-liberar-vaga-indice="${i}">Liberar esta vaga</button>
+        </div>
+      `).join('')}
+    </div>
+  `, '<button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>');
+
+  document.querySelectorAll('[data-liberar-vaga-indice]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const escolhida = candidatas[parseInt(btn.dataset.liberarVagaIndice)];
+      const idx = (char[campoReal] || []).indexOf(escolhida);
+      if (idx >= 0) char[campoReal].splice(idx, 1);
+      window.fecharModal();
+      aoLiberar();
+    });
+  });
+}
+
 export async function mostrarFormMagiaCustom(indiceEdicao = null) {
   const magiaExistente = Number.isInteger(indiceEdicao)
     ? (char.magias_customizadas || [])[indiceEdicao]
@@ -1183,12 +1255,9 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     <label style="display:flex;align-items:center;gap:6px;margin:10px 0"><input type="checkbox" id="mc-ritual"> Pode ser conjurada como Ritual</label>
     <div id="mc-sempre-preparada-linha" class="form-group">
       <label style="display:flex;align-items:center;gap:6px">
-        <input type="checkbox" id="mc-sempre-preparada" checked> Sempre preparada (não ocupa vaga)
+        <input type="checkbox" id="mc-sempre-preparada" checked> <span id="mc-sempre-preparada-rotulo">Sempre preparada (não ocupa vaga)</span>
       </label>
-      <div style="font-size:0.7rem;color:var(--text-muted)">
-        Marcada (padrão): a magia fica sempre pronta, fora do limite de magias da sua classe — como hoje.
-        Desmarcada: ela entra na lista de escolha do seu círculo e ocupa uma vaga de verdade, como uma magia do livro.
-      </div>
+      <div id="mc-sempre-preparada-explicacao" style="font-size:0.7rem;color:var(--text-muted)"></div>
     </div>
     <div class="form-group">
       <label class="form-label" for="mc-desc">Descricao</label>
@@ -1212,13 +1281,25 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
   alternarPersonalizado('mc-tempo', 'mc-tempo-personalizado');
   alternarPersonalizado('mc-duracao', 'mc-duracao-personalizada');
 
-  // A caixa de "sempre preparada" so faz sentido para magia de circulo 1+
-  // -- truque personalizado (circulo 0) tem outro mecanismo de limite
-  // (truquesPorClasse) e fica fora do escopo deste alternador.
+  // Issue #74 (comentário do usuário): o toggle "sempre preparada" agora
+  // vale também para truque personalizado (círculo 0) -- antes ficava
+  // escondido, e o truque era sempre derivado, sem chance de ocupar vaga
+  // do limite de truques da classe (truquesPorClasse). O texto muda
+  // conforme o círculo porque "vaga do seu círculo"/"magia do livro" não
+  // faz sentido para truque -- ele não tem círculo de escolha, só o
+  // limite de truques conhecidos da classe.
   const atualizarVisibilidadeSemprePreparada = () => {
     const circulo = parseInt(document.getElementById('mc-circulo')?.value) || 0;
-    const linha = document.getElementById('mc-sempre-preparada-linha');
-    if (linha) linha.hidden = circulo === 0;
+    const rotulo = document.getElementById('mc-sempre-preparada-rotulo');
+    const explicacao = document.getElementById('mc-sempre-preparada-explicacao');
+    if (rotulo) rotulo.textContent = circulo === 0 ? 'Sempre conhecido (não ocupa vaga)' : 'Sempre preparada (não ocupa vaga)';
+    if (explicacao) {
+      explicacao.textContent = circulo === 0
+        ? 'Marcado (padrão): o truque fica sempre pronto, fora do limite de truques da sua classe — como hoje. '
+          + 'Desmarcado: ele entra na sua lista de truques conhecidos e ocupa uma vaga de verdade, como um truque do livro.'
+        : 'Marcada (padrão): a magia fica sempre pronta, fora do limite de magias da sua classe — como hoje. '
+          + 'Desmarcada: ela entra na lista de escolha do seu círculo e ocupa uma vaga de verdade, como uma magia do livro.';
+    }
   };
   document.getElementById('mc-circulo')?.addEventListener('change', atualizarVisibilidadeSemprePreparada);
   atualizarVisibilidadeSemprePreparada();
@@ -1348,11 +1429,12 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
       dano: document.getElementById('mc-dano')?.value || '',
       ritual: Boolean(document.getElementById('mc-ritual')?.checked),
       // Ausente (undefined) e `true` sao o MESMO estado -- "sempre
-      // preparada", o comportamento desde a 3.0.3. So grava a chave
-      // quando o circulo e 1+ E o jogador desmarcou: gravar `true` a toa
-      // preencheria toda ficha nova com uma chave que nao muda nada, e
-      // grava-la em truque (circulo 0) contradiria o escopo deste campo.
-      ...(circuloSalvo > 0 && !semprePreparadaMarcada ? { sempre_preparada: false } : {}),
+      // preparada"/"sempre conhecido", o comportamento desde a 3.0.3. So
+      // grava a chave quando o jogador desmarcou: gravar `true` a toa
+      // preencheria toda ficha nova com uma chave que nao muda nada.
+      // Comentario do usuario na issue #74: truque (circulo 0) passou a
+      // valer tambem -- antes so magia de circulo 1+ entrava aqui.
+      ...(!semprePreparadaMarcada ? { sempre_preparada: false } : {}),
     };
     const nomeAnterior = magiaExistente?.nome;
     const circuloAnterior = magiaExistente ? (Number(magiaExistente.circulo) || 0) : null;
@@ -1364,20 +1446,38 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     // magias_preparadas, ja carimbada com a classe, porque essas classes
     // nao passam por um preparo separado (ver comentario de tipoConj em
     // mostrarBuscaMagia).
-    const ocupaVaga = circuloSalvo > 0 && !semprePreparadaMarcada;
+    //
+    // Issue #74 (comentario do usuario): truque personalizado (circulo 0)
+    // entra na mesma regra -- "ocupa vaga" agora tambem se aplica a ele,
+    // sempre gravando direto em magias_conhecidas (truque nao tem
+    // grimorio nem preparo separado, para NENHUMA classe -- nem o Mago).
+    const ocupaVaga = !semprePreparadaMarcada;
     const sup = superficieAtiva();
     const ehMagoAgora = !!sup?.usaGrimorio;
+    const ehTruqueSalvo = circuloSalvo === 0;
 
     /**
-     * true se HÁ uma vaga livre no círculo desta magia, para a superfície
-     * ativa. Mago sempre tem "vaga" no grimório (o limite dele é ouro, não
-     * espaço) -- só as demais classes têm teto de preparadas por círculo.
+     * true se HÁ uma vaga livre para esta personalizada, na superfície
+     * ativa. Magia de círculo 1+: Mago sempre tem "vaga" no grimório (o
+     * limite dele é ouro, não espaço); as demais classes têm teto de
+     * preparadas. Truque (círculo 0): SEMPRE limitado por contagem --
+     * mesmo o Mago, que não tem a folga do grimório aqui (truque não usa
+     * grimório para NINGUÉM) -- mesmo limite e mesmo bônus que
+     * mostrarBuscaMagia soma na aba "Truques" (getTruquesExtraEstiloLuta,
+     * getBonusTruquesOrdem).
      */
     const temVagaLivre = () => {
-      if (ehMagoAgora) return true;
       if (!sup) return false; // sem superficie de conjuracao, nao ha onde injetar
       const subConj = subConjDaSuperficie(sup);
       const semLimiteConhecido = !sup.tabela && !subConj;
+      if (ehTruqueSalvo) {
+        if (semLimiteConhecido) return true;
+        const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj);
+        const maxTruq = limites.truques + getTruquesExtraEstiloLuta() + getBonusTruquesOrdem(char, sup.classe);
+        const classificacao = truquesPorClasse(char, sup.classe);
+        return classificacao.desta.length < maxTruq;
+      }
+      if (ehMagoAgora) return true;
       if (semLimiteConhecido) return true;
       const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj);
       const classificacao = preparadasPorClasse(char, sup.classe);
@@ -1390,12 +1490,17 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     // codigo de sincronia do grimorio, logo abaixo, ja calcula.
     const ocupavaVagaAntes = magiaExistente?.sempre_preparada === false;
 
+    // Issue #74: sem vaga livre, a versão anterior só recusava com um
+    // aviso e devolvia o jogador para fora do formulário -- ele tinha de
+    // descobrir sozinho que precisava despreparar algo em "Preparar
+    // Magias" antes de tentar de novo. Agora oferece liberar a vaga na
+    // hora (abrirEscolhaVagaParaLiberar, acima): escolhida uma magia para
+    // sair, o clique é repetido sozinho -- o formulário continua com os
+    // mesmos valores, e desta vez temVagaLivre() já enxerga a vaga livre.
     if (ocupaVaga && !ocupavaVagaAntes && !temVagaLivre()) {
-      // O limite conferido por temVagaLivre() e o TOTAL de magias
-      // preparadas da classe (limites.preparadas), nao uma cota do circulo
-      // -- o texto dizia "vaga livre de Nº círculo" e mandava o jogador
-      // procurar uma vaga que nao existe nesse formato.
-      toast('Seu limite de magias preparadas desta classe já está cheio. Libere uma vaga primeiro, ou deixe a magia sempre preparada.', 'error');
+      abrirEscolhaVagaParaLiberar(sup, ehTruqueSalvo, () => {
+        document.getElementById('btn-salvar-mc')?.click();
+      });
       return;
     }
 
@@ -1503,51 +1608,88 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
       }
     }
 
-    // Issues #50/#54: sincronizar a entrada REAL (grimorio ou
-    // magias_preparadas) com o estado atual do toggle. Quatro casos:
-    //   1. Ocupava vaga, continua ocupando, nome/circulo mudou -> atualiza a entrada.
+    // Issues #50/#54/#74: sincronizar a entrada REAL (grimorio,
+    // magias_preparadas ou magias_conhecidas) com o estado atual do
+    // toggle. Quatro casos, por FONTE:
+    //   1. Ocupava vaga NAQUELA fonte, continua ocupando -- nome/circulo
+    //      mudou -> atualiza a entrada.
     //   2. Ocupava vaga, continua ocupando, nada mudou -> nao mexe.
-    //   3. Ocupava vaga, passou a sempre preparada -> remove a entrada.
+    //   3. Ocupava vaga, passou a sempre preparada/conhecida -> remove a entrada.
     //   4. Nao ocupava vaga, passou a ocupar -> adiciona a entrada (a checagem
     //      de vaga livre ja rodou acima, antes deste bloco).
-    if (ehMagoAgora) {
-      char.grimorio = Array.isArray(char.grimorio) ? char.grimorio : [];
-      if (ocupavaVagaAntes) {
-        const idx = char.grimorio.findIndex(m => m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior);
+    //
+    // A fonte é decidida por TIPO (truque vs magia), separado do
+    // ANTES/DEPOIS (`circuloAnterior`/`circuloSalvo`) -- o caso raro de a
+    // edição trocar a personalizada ENTRE truque e magia de círculo (ex.:
+    // truque virou magia de 1º círculo) precisa remover da fonte ANTIGA e
+    // adicionar na fonte NOVA, não confundir as duas.
+    const ocupavaVagaComoTruque = ocupavaVagaAntes && circuloAnterior === 0;
+    const ocupavaVagaComoMagia = ocupavaVagaAntes && circuloAnterior > 0;
+    const ocupaVagaComoTruque = ocupaVaga && ehTruqueSalvo;
+    const ocupaVagaComoMagia = ocupaVaga && !ehTruqueSalvo;
+
+    // Truque (círculo 0): sempre em magias_conhecidas, para QUALQUER
+    // classe -- truque não usa grimório nem passa por preparo separado
+    // (nem o Mago), diferente de magia de círculo 1+.
+    if (ocupavaVagaComoTruque || ocupaVagaComoTruque) {
+      char.magias_conhecidas = Array.isArray(char.magias_conhecidas) ? char.magias_conhecidas : [];
+      if (ocupavaVagaComoTruque) {
+        const idx = char.magias_conhecidas.findIndex(m => m?.nome === nomeAnterior && Number(m?.circulo) === 0 && !m?.personalizada && !m?.origem);
         if (idx >= 0) {
-          if (ocupaVaga) char.grimorio[idx] = { nome: magiaSalva.nome, circulo: magiaSalva.circulo };
-          else char.grimorio.splice(idx, 1);
+          if (ocupaVagaComoTruque) char.magias_conhecidas[idx] = { ...char.magias_conhecidas[idx], nome: magiaSalva.nome };
+          else char.magias_conhecidas.splice(idx, 1);
         }
-        // O Mago pode ja ter PREPARADO esta personalizada a partir do
-        // grimorio -- `data-preparar-grimorio` (magias.js) grava
-        // {nome, circulo, classe:'Mago'} em magias_preparadas, sem
-        // `personalizada`/`origem`. Sem sincronizar aqui tambem, um rename
-        // ou um "voltar a marcar sempre preparada" deixa essa copia presa
-        // com o nome antigo, consumindo uma vaga que ninguem mais controla
-        // (mesmo formato de entrada orfa da issue #39).
-        char.magias_preparadas = Array.isArray(char.magias_preparadas) ? char.magias_preparadas : [];
-        const idxPrepMago = char.magias_preparadas.findIndex(m =>
-          m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior && m?.classe === 'Mago' && !m?.personalizada && !m?.origem);
-        if (idxPrepMago >= 0) {
-          if (ocupaVaga) char.magias_preparadas[idxPrepMago] = { ...char.magias_preparadas[idxPrepMago], nome: magiaSalva.nome, circulo: magiaSalva.circulo };
-          else char.magias_preparadas.splice(idxPrepMago, 1);
-        }
-      } else if (ocupaVaga) {
-        char.grimorio.push({ nome: magiaSalva.nome, circulo: magiaSalva.circulo });
-      }
-    } else {
-      char.magias_preparadas = Array.isArray(char.magias_preparadas) ? char.magias_preparadas : [];
-      if (ocupavaVagaAntes) {
-        const idx = char.magias_preparadas.findIndex(m => m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior && !m?.origem);
-        if (idx >= 0) {
-          if (ocupaVaga) char.magias_preparadas[idx] = { ...char.magias_preparadas[idx], nome: magiaSalva.nome, circulo: magiaSalva.circulo };
-          else char.magias_preparadas.splice(idx, 1);
-        }
-      } else if (ocupaVaga) {
-        char.magias_preparadas.push({
-          nome: magiaSalva.nome, circulo: magiaSalva.circulo,
+      } else if (ocupaVagaComoTruque) {
+        char.magias_conhecidas.push({
+          nome: magiaSalva.nome, circulo: 0,
           ...(sup?.classe ? { classe: sup.classe } : {}),
         });
+      }
+    }
+
+    // Magia de círculo 1+: bloco pré-existente (issues #50/#54), agora
+    // gateado por "ComoMagia" para não disparar quando o toggle é de um
+    // truque.
+    if (ocupavaVagaComoMagia || ocupaVagaComoMagia) {
+      if (ehMagoAgora) {
+        char.grimorio = Array.isArray(char.grimorio) ? char.grimorio : [];
+        if (ocupavaVagaComoMagia) {
+          const idx = char.grimorio.findIndex(m => m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior);
+          if (idx >= 0) {
+            if (ocupaVagaComoMagia) char.grimorio[idx] = { nome: magiaSalva.nome, circulo: magiaSalva.circulo };
+            else char.grimorio.splice(idx, 1);
+          }
+          // O Mago pode ja ter PREPARADO esta personalizada a partir do
+          // grimorio -- `data-preparar-grimorio` (magias.js) grava
+          // {nome, circulo, classe:'Mago'} em magias_preparadas, sem
+          // `personalizada`/`origem`. Sem sincronizar aqui tambem, um rename
+          // ou um "voltar a marcar sempre preparada" deixa essa copia presa
+          // com o nome antigo, consumindo uma vaga que ninguem mais controla
+          // (mesmo formato de entrada orfa da issue #39).
+          char.magias_preparadas = Array.isArray(char.magias_preparadas) ? char.magias_preparadas : [];
+          const idxPrepMago = char.magias_preparadas.findIndex(m =>
+            m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior && m?.classe === 'Mago' && !m?.personalizada && !m?.origem);
+          if (idxPrepMago >= 0) {
+            if (ocupaVagaComoMagia) char.magias_preparadas[idxPrepMago] = { ...char.magias_preparadas[idxPrepMago], nome: magiaSalva.nome, circulo: magiaSalva.circulo };
+            else char.magias_preparadas.splice(idxPrepMago, 1);
+          }
+        } else if (ocupaVagaComoMagia) {
+          char.grimorio.push({ nome: magiaSalva.nome, circulo: magiaSalva.circulo });
+        }
+      } else {
+        char.magias_preparadas = Array.isArray(char.magias_preparadas) ? char.magias_preparadas : [];
+        if (ocupavaVagaComoMagia) {
+          const idx = char.magias_preparadas.findIndex(m => m?.nome === nomeAnterior && Number(m?.circulo) === circuloAnterior && !m?.origem);
+          if (idx >= 0) {
+            if (ocupaVagaComoMagia) char.magias_preparadas[idx] = { ...char.magias_preparadas[idx], nome: magiaSalva.nome, circulo: magiaSalva.circulo };
+            else char.magias_preparadas.splice(idx, 1);
+          }
+        } else if (ocupaVagaComoMagia) {
+          char.magias_preparadas.push({
+            nome: magiaSalva.nome, circulo: magiaSalva.circulo,
+            ...(sup?.classe ? { classe: sup.classe } : {}),
+          });
+        }
       }
     }
 

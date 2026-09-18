@@ -63,7 +63,20 @@ function instalarDocumentoFalso() {
       return registro.get(id);
     },
     querySelector: () => null,
-    querySelectorAll: () => [],
+    // Issue #74: abrirEscolhaVagaParaLiberar (grimorio.js) liga os botões
+    // "Liberar esta vaga" via `document.querySelectorAll('[data-x]')`, uma
+    // lista de tamanho VARIÁVEL (depende de quantas magias estão
+    // preparadas) -- sem id fixo por botão, ao contrário do resto deste
+    // arquivo. O stub varre o REGISTRO por elementos já criados (via
+    // getElementById) que carregam a chave em `dataset`; o teste
+    // pré-registra esses elementos antes do clique que dispara a busca,
+    // pelo mesmo padrão já usado em edicao-idiomas.test.mjs.
+    querySelectorAll(sel) {
+      const m = sel.match(/^\[data-([\w-]+)\]$/);
+      if (!m) return [];
+      const attrCamel = m[1].replace(/-([a-z])/g, (_x, c) => c.toUpperCase());
+      return [...registro.values()].filter(el => attrCamel in el.dataset);
+    },
     createElement: (tag) => elementoFalso(tag),
     body: { appendChild() {} },
   };
@@ -71,6 +84,17 @@ function instalarDocumentoFalso() {
     registro,
     restaurar() { globalThis.document = docOriginal; },
   };
+}
+
+/**
+ * Pré-registra o botão "Liberar esta vaga" de índice `i` -- tem de existir
+ * ANTES do clique em Salvar que dispara abrirEscolhaVagaParaLiberar,
+ * porque o querySelectorAll dela varre o registro uma única vez.
+ */
+function prepararBotaoLiberarVaga(indice) {
+  const el = document.getElementById(`liberar-vaga-${indice}`);
+  el.dataset.liberarVagaIndice = String(indice);
+  return el;
 }
 
 function magoNivel5({ grimorio = [], preparadas = [] } = {}) {
@@ -296,7 +320,13 @@ test('MAGO: mesmo com magias_preparadas cheio, a injecao no grimorio e aceita (o
     'Mago injeta no grimorio independente de magias_preparadas -- o limite dele e outro');
 });
 
-test('CLERIGO sem vaga livre no circulo: a tentativa de desmarcar "sempre preparada" e recusada', async () => {
+// Issue #74: sem vaga livre, a produção deixou de RECUSAR de vez -- agora
+// abre um modal oferecendo liberar uma vaga (abrirEscolhaVagaParaLiberar,
+// grimorio.js). Este oráculo mede só o instante ANTES de qualquer escolha
+// no modal: nada é gravado enquanto o jogador não decide (mesma garantia
+// de antes -- "a recusa desfaz o toggle" continua valendo até a escolha).
+// O fluxo de ESCOLHER liberar uma vaga é medido nos testes seguintes.
+test('CLERIGO sem vaga livre no circulo: nada e gravado ate o jogador escolher uma vaga para liberar', async () => {
   sheetEstado.definirClasseData(mapaDadosDisco.get('Clérigo'));
   sheetEstado.definirClassesData(mapaDadosDisco);
   const tabelaClerigo = mapaDadosDisco.get('Clérigo').tabela_caracteristicas;
@@ -316,6 +346,93 @@ test('CLERIGO sem vaga livre no circulo: a tentativa de desmarcar "sempre prepar
     'sem vaga, a magia nao pode ser injetada em magias_preparadas');
   assert.ok(!(p.magias_customizadas || []).some(m => m.nome === 'Chama Azul' && m.sempre_preparada === false),
     'a recusa tem de desfazer tambem o toggle -- senao a magia fica marcada "ocupa vaga" sem ocupar nenhuma');
+});
+
+// Issue #74: escolher UMA magia preparada para liberar a vaga tem de (1)
+// tirá-la de magias_preparadas e (2) injetar a personalizada no lugar dela
+// -- o clique repete sozinho o salvamento original (mesmo formulário
+// preenchido), e desta vez temVagaLivre() enxerga a vaga livre.
+test('CLERIGO sem vaga livre: escolher liberar uma vaga remove a preparada escolhida E injeta a personalizada', async () => {
+  sheetEstado.definirClasseData(mapaDadosDisco.get('Clérigo'));
+  sheetEstado.definirClassesData(mapaDadosDisco);
+  const tabelaClerigo = mapaDadosDisco.get('Clérigo').tabela_caracteristicas;
+  const limites = utils.getLimitesMagias(tabelaClerigo, 5, null);
+  const preparadasNoLimite = Array.from({ length: limites.preparadas }, (_, i) => (
+    { nome: `Prece ${i}`, circulo: 1, classe: 'Clérigo' }
+  ));
+  const p = clerigoNivel5({ preparadas: preparadasNoLimite });
+  sheetEstado.definirChar(p);
+  await sheetGrimorio.mostrarFormMagiaCustom();
+
+  // As candidatas do modal são as MESMAS `preparadas`, na mesma ordem
+  // (preparadasPorClasse preserva a ordem de char.magias_preparadas) --
+  // pré-registra um botão por candidata antes do clique que as busca.
+  preparadasNoLimite.forEach((_, i) => prepararBotaoLiberarVaga(i));
+
+  preencherESalvar({ nome: 'Chama Azul', semprePreparada: false });
+  // Escolhe liberar a candidata de índice 0 ("Prece 0").
+  document.getElementById('liberar-vaga-0').click();
+
+  assert.ok(!p.magias_preparadas.some(m => m.nome === 'Prece 0'),
+    'a magia escolhida para liberar a vaga tem de sair de magias_preparadas');
+  const injetada = p.magias_preparadas.find(m => m.nome === 'Chama Azul');
+  assert.ok(injetada, 'a personalizada tem de entrar no lugar da vaga liberada');
+  assert.equal(injetada.circulo, 1);
+  assert.equal(injetada.classe, 'Clérigo');
+  assert.equal(p.magias_preparadas.length, limites.preparadas,
+    'uma saiu, uma entrou -- o total de preparadas nao pode mudar');
+  assert.equal(p.magias_customizadas.find(m => m.nome === 'Chama Azul')?.sempre_preparada, false,
+    'desta vez o toggle e mantido: a vaga foi liberada e a injecao teve sucesso');
+});
+
+test('CLERIGO sem vaga livre: só a candidata ESCOLHIDA sai -- as demais preparadas continuam intactas', async () => {
+  sheetEstado.definirClasseData(mapaDadosDisco.get('Clérigo'));
+  sheetEstado.definirClassesData(mapaDadosDisco);
+  const tabelaClerigo = mapaDadosDisco.get('Clérigo').tabela_caracteristicas;
+  const limites = utils.getLimitesMagias(tabelaClerigo, 5, null);
+  const preparadasNoLimite = Array.from({ length: limites.preparadas }, (_, i) => (
+    { nome: `Prece ${i}`, circulo: 1, classe: 'Clérigo' }
+  ));
+  const p = clerigoNivel5({ preparadas: preparadasNoLimite });
+  sheetEstado.definirChar(p);
+  await sheetGrimorio.mostrarFormMagiaCustom();
+  preparadasNoLimite.forEach((_, i) => prepararBotaoLiberarVaga(i));
+
+  preencherESalvar({ nome: 'Chama Azul', semprePreparada: false });
+  // Desta vez escolhe a ÚLTIMA candidata, para provar que o índice certo é
+  // respeitado -- não sempre a primeira.
+  const ultimoIndice = preparadasNoLimite.length - 1;
+  document.getElementById(`liberar-vaga-${ultimoIndice}`).click();
+
+  const nomesRestantes = p.magias_preparadas.map(m => m.nome);
+  for (let i = 0; i < ultimoIndice; i++) {
+    assert.ok(nomesRestantes.includes(`Prece ${i}`), `Prece ${i} não deveria ter sido removida`);
+  }
+  assert.ok(!nomesRestantes.includes(`Prece ${ultimoIndice}`), 'só a última candidata (a escolhida) sai');
+});
+
+test('CLERIGO sem nenhuma superfície de conjuração e sem candidatas: mostra aviso, sem lista de botões', async () => {
+  // sup === undefined (sem classes conjuradoras na ficha) -- o mesmo ramo
+  // que já fazia temVagaLivre() devolver false ("sem superficie de
+  // conjuracao, nao ha onde injetar"). abrirEscolhaVagaParaLiberar não
+  // pode listar candidata nenhuma aqui; medido pela AUSÊNCIA de qualquer
+  // botão registrado no documento falso.
+  const p = {
+    nome: 'Sem Classe', especie: 'Humano', classe: 'Guerreiro', subclasse: '',
+    nivel: 5, xp: 6500,
+    atributos: { forca: 16, destreza: 12, constituicao: 14, inteligencia: 8, sabedoria: 10, carisma: 10 },
+    classes: [{ classe: 'Guerreiro', subclasse: '', nivel: 5, ordem: 0 }],
+    grimorio: [], magias_preparadas: [], magias_customizadas: [],
+    schema_versao: 2,
+  };
+  sheetEstado.definirChar(p);
+  await sheetGrimorio.mostrarFormMagiaCustom();
+  preencherESalvar({ nome: 'Chama Azul', semprePreparada: false });
+
+  assert.ok(!p.magias_preparadas.some(m => m.nome === 'Chama Azul'),
+    'sem superficie de conjuracao, nao ha vaga nenhuma para liberar -- a magia nao pode ser injetada');
+  assert.equal(document.querySelectorAll('[data-liberar-vaga-indice]').length, 0,
+    'sem candidata nenhuma, o modal nao pode desenhar nenhum botao "Liberar esta vaga"');
 });
 
 test('CLERIGO com vaga livre: desmarcar "sempre preparada" injeta {nome, circulo, classe} em magias_preparadas', async () => {

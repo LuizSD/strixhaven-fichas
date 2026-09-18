@@ -181,13 +181,20 @@ test('desmarcar a caixa grava sempre_preparada: false', async () => {
   assert.equal(salva.sempre_preparada, false);
 });
 
-test('truque (circulo 0) nao mostra a caixa de sempre preparada', async () => {
+// Issue #74 (comentário do usuário): truque personalizado (círculo 0)
+// ganhou a mesma opção "ocupa vaga" que magia de círculo 1+ já tinha --
+// antes a caixa ficava escondida para truque, e a mensagem mudava de
+// "Sempre preparada" para "Sempre conhecido" (truque não é "preparado",
+// é "conhecido").
+test('truque (circulo 0) TAMBÉM mostra a caixa de sempre preparada, com o texto ajustado', async () => {
   sheetEstado.definirChar(magoNivel5());
   await sheetGrimorio.mostrarFormMagiaCustom();
   document.getElementById('mc-circulo').value = '0';
   document.getElementById('mc-circulo').dispatchEvent(new Event('change'));
   const linha = document.getElementById('mc-sempre-preparada-linha');
-  assert.equal(linha?.hidden, true, 'truque personalizado fica fora do escopo deste toggle');
+  assert.notEqual(linha?.hidden, true, 'truque personalizado agora também ocupa vaga -- a caixa não pode ficar escondida');
+  const rotulo = document.getElementById('mc-sempre-preparada-rotulo');
+  assert.match(rotulo?.textContent || '', /conhecido/i, 'para truque, o texto fala em "conhecido", não "preparada"');
 });
 
 test('editar uma magia existente sem sempre_preparada mostra a caixa MARCADA', async () => {

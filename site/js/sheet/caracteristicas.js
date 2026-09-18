@@ -170,7 +170,12 @@ export function gerarTracoSinteticoEspecie(especie, tracosEscolhidos, nivel) {
 
   const entradas = [{
     nome: `${tituloPai} — ${escolha}`,
-    descricao: info.descBase
+    descricao: info.descBase,
+    // Issue #73: concedido na criação -- não tem menção de nível no texto
+    // (descBase nunca fala em nível), então o detector por regex de
+    // nivelDoTraco cairia no padrão (1), que já é o valor certo aqui;
+    // gravado explícito para não depender desse acaso.
+    nivel_minimo: 1,
   }];
 
   // Uma entrada de traço sintético independente por magia de legado desbloqueada,
@@ -180,7 +185,8 @@ export function gerarTracoSinteticoEspecie(especie, tracosEscolhidos, nivel) {
       if (nivel >= parseInt(nv)) {
         entradas.push({
           nome: `${tituloPai} — ${escolha} (${nomeMagia})`,
-          descricao: `Magia sempre preparada: *${nomeMagia}* (nível ${nv}). Pode ser conjurada uma vez sem gastar um espaço de magia, restaurando ao completar um Descanso Longo.`
+          descricao: `Magia sempre preparada: *${nomeMagia}* (nível ${nv}). Pode ser conjurada uma vez sem gastar um espaço de magia, restaurando ao completar um Descanso Longo.`,
+          nivel_minimo: parseInt(nv),
         });
       }
     }
@@ -243,22 +249,39 @@ export function renderSecaoTracosEspecie() {
     return ehHabilidadeAtiva(t.descricao);
   };
 
-  const passivos = tracosMostrar.filter(t => !ehAtivo(t));
-  const ativos = tracosMostrar.filter(t => ehAtivo(t));
+  // Issue #73: mesmo motivo do bloco de Características de Classe (issue
+  // #60, ver o comentário lá) -- a separação em Habilidades Ativas/
+  // Passivas era vocabulário do APP (o selo por card já diz a
+  // classificação) e reordenava por ela em vez de por nível. Lista única,
+  // ordenada por nível.
+  const tracosOrdenados = [...tracosMostrar].sort((a, b) => nivelDoTraco(a) - nivelDoTraco(b));
 
   return `
     <div class="card print-break-before">
       <div class="card-header"><h2>Traços de Espécie — ${escHtml(char.especie)}</h2></div>
-      ${ativos.length > 0 ? `
-        <div class="section-divider"><span>Habilidades Ativas</span></div>
-        ${ativos.map(t => renderTracoEspecie(t, TRACOS_HERDAM_ANCESTRALIDADE.includes(t.nome), TRACOS_REVELACAO_CELESTIAL.includes(t.nome))).join('')}
-      ` : ''}
-      ${passivos.length > 0 ? `
-        <div class="section-divider"><span>Habilidades Passivas</span></div>
-        ${passivos.map(t => renderTracoEspecie(t, false)).join('')}
-      ` : ''}
+      ${tracosOrdenados.map(t => renderTracoEspecie(t,
+        TRACOS_HERDAM_ANCESTRALIDADE.includes(t.nome), TRACOS_REVELACAO_CELESTIAL.includes(t.nome))).join('')}
     </div>
   `;
+}
+
+/**
+ * Issue #73: nível em que o personagem recebeu este traço de espécie, para
+ * o selo "Nv.N" no card e para ordenar a lista -- mesma ideia do `f.nivel`
+ * das características de classe, mas traço de espécie NÃO tem esse campo
+ * estruturado no catálogo (dados/origens/especies.json). A maioria é
+ * concedida na criação (nível 1); os poucos que exigem nível maior o dizem
+ * de duas formas: `nivel_minimo` explícito (sub-traços sintéticos, ver
+ * gerarTracoSinteticoEspecie) ou menção na prosa do livro ("a partir do
+ * nível N"/"no nível N", ex.: Voo Dracônico do Draconato) -- a MESMA regex
+ * que já filtra esses traços por nível, logo acima em
+ * renderSecaoTracosEspecie.
+ */
+function nivelDoTraco(t) {
+  if (typeof t.nivel_minimo === 'number') return t.nivel_minimo;
+  const match = t.descricao?.match(/(?:a partir do |no )n[ií]vel (\d+)/i);
+  if (match) return parseInt(match[1]);
+  return 1;
 }
 
 function renderTracoEspecie(traco, herdaAncestralidade = false, ehSubRevelacao = false) {
@@ -417,6 +440,7 @@ function renderTracoEspecie(traco, herdaAncestralidade = false, ehSubRevelacao =
   return `
     <details style="margin-bottom:6px">
       <summary style="font-weight:600;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;flex-wrap:wrap;gap:2px">
+        <span class="badge badge-secondary" style="margin-right:4px">Nv.${nivelDoTraco(traco)}</span>
         ${traco.nome}
         ${ehSortePequenino ? '<span class="badge" style="font-size:0.65rem;margin-left:4px;background:var(--success);color:#fff">Re-roll nat 1</span>' : tipoBadge}
         ${recargaBadge}

@@ -19,7 +19,7 @@ import { ehProficienteEmSalvaguarda } from '../regras-salvaguardas.js';
 // empurrava toda personalizada de circulo como "sempre preparada" e nao
 // sabia da entrada gravada -- a `sempre_preparada:false` saia duas vezes no
 // PDF, igual a tela.
-import { fundirPreparadasComPersonalizadas, normalizarMagiaPersonalizada, rotuloOrigemMagia } from './magias.js';
+import { fundirPreparadasComPersonalizadas, fundirTruquesComPersonalizados, normalizarMagiaPersonalizada, rotuloOrigemMagia } from './magias.js';
 // reservasDeEspacos (Tarefa 4, sub-projeto 4, Ruling 11): a caixa "Espacos
 // de Magia" da impressao lia `char.espacos_magia[circulo]` direto, na
 // forma antiga -- passa a ler pelo acessador derivado.
@@ -720,18 +720,30 @@ export async function gerarHtmlImpressao() {
     }
 
     // Truques - usar layout em colunas para melhor aproveitamento
-    const todosTruques = (char.magias_conhecidas || []).filter(m => m.circulo === 0);
-    const truquesPersonalizados = (char.magias_customizadas || [])
-      .map(normalizarMagiaPersonalizada)
-      .filter(m => m.circulo === 0);
-    if (todosTruques.length > 0 || truquesPersonalizados.length > 0) {
+    //
+    // Issue #74 (comentário do usuário): truque personalizado "ocupa
+    // vaga" grava uma entrada crua em magias_conhecidas -- sem fundir com
+    // a personalizada, saía duas vezes no PDF (a crua sem descrição, e a
+    // derivada). Mesma fusão que a ficha usa (fundirTruquesComPersonalizados),
+    // e o mesmo corte da issue #71: `naoConhecido` (o jogador removeu o
+    // truque pela grade de Trocar Truque, sem apagar a personalizada) não
+    // entra no PDF -- imprimi-lo diria que ele está pronto, o que não é
+    // verdade até o jogador voltar a marcá-lo.
+    const personalizadasDoPdf = (char.magias_customizadas || [])
+      .map((m, indice) => ({ ...normalizarMagiaPersonalizada(m, indice), indicePersonalizada: indice }));
+    const truquesFundidos = fundirTruquesComPersonalizados(
+      (char.magias_conhecidas || []).filter(m => m.circulo === 0),
+      personalizadasDoPdf
+    ).filter(m => !m.naoConhecido);
+    if (truquesFundidos.length > 0) {
       pagMagias += `<div class="print-section"><div class="print-section-title">Truques</div><div class="print-multi-col">`;
-      todosTruques.forEach(m => {
+      truquesFundidos.forEach(m => {
+        if (m.personalizada) {
+          pagMagias += htmlMagiaPersonalizadaImpressao(m);
+          return;
+        }
         const origem = rotuloOrigemMagia(m);
         pagMagias += htmlMagiaImpressao(m.nome, 0, cacheMagias, origem);
-      });
-      truquesPersonalizados.forEach(m => {
-        pagMagias += htmlMagiaPersonalizadaImpressao(m);
       });
       pagMagias += `</div></div>`;
     }
@@ -770,7 +782,13 @@ export async function gerarHtmlImpressao() {
     const personalizadasDaFicha = (char.magias_customizadas || [])
       .map((m, indice) => ({ ...normalizarMagiaPersonalizada(m, indice), indicePersonalizada: indice }));
     const preparadasPorCirculo = {};
+    // Issue #71: personalizada "ocupa vaga" sem entrada gravada ainda
+    // (`naoPreparada`) fica FORA do PDF -- imprimi-la junto das preparadas
+    // diria que ela está pronta para conjurar, o que não é verdade até o
+    // jogador prepará-la de fato em "Preparar Magias". Mesmo corte que a
+    // seção Magias da ficha faz (sheet/magias.js).
     fundirPreparadasComPersonalizadas(preparadas, personalizadasDaFicha).forEach(m => {
+      if (m.naoPreparada) return;
       const circ = m.circulo || 1;
       if (!preparadasPorCirculo[circ]) preparadasPorCirculo[circ] = [];
       preparadasPorCirculo[circ].push(m);
