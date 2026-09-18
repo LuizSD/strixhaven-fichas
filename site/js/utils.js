@@ -7,6 +7,11 @@ import { getAtributoConjuracaoSubclasse, getConjuracaoSubclasse } from './regras
 // Acessores de multiclasse. Não há ciclo: regras-multiclasse.js importa
 // apenas dados-classes.js, que utils.js já importa acima.
 import { classesDe, temClasse } from './regras-multiclasse.js';
+// preparadasPorClasse: sem ciclo -- regras-magia-classe.js importa
+// regras-origens-magia.js e regras-multiclasse-conjuracao.js, nenhum dos
+// dois importa utils.js. Ver o comentario de normalizarGrimorioMago abaixo
+// para o porque desta importacao (issue #62).
+import { preparadasPorClasse } from './regras-magia-classe.js';
 
 // --- Cálculos D&D ---
 
@@ -144,41 +149,38 @@ export function nomesMagiaCirculo1Conhecidas(personagem) {
  * Magias preparadas normais de 1º círculo ou superior também devem constar
  * no grimório; magias concedidas por outra origem não contam para essa regra.
  *
- * NÃO CONVERTIDA para multiclasse (Tarefa 3, sub-projeto "tela magias por
- * classe" -- decisão tomada, não esquecimento). O portão `personagem.classe
- * !== 'Mago'` lê o ESPELHO de propósito: ela empurra para dentro de
+ * ESPELHO de propósito: ela empurrava para dentro de
  * `personagem.grimorio` toda magia de `magias_preparadas` com círculo > 0
- * que passe em `magiaContaNoLimite` (linhas abaixo). Trocar o portão por
- * `temClasse(personagem, 'Mago')` faria um Clérigo 5/Mago 1 copiar as
- * magias PREPARADAS DO CLÉRIGO para dentro do grimório do Mago --
- * corrupção de ficha, não conversão de leitura.
+ * que passasse em `magiaContaNoLimite` (linhas abaixo), sem olhar de qual
+ * CLASSE cada entrada era -- issues #61/#62: um Mago 1(inicial)/Clérigo 5
+ * tinha as magias de Domínio do Clérigo (Palavra Curativa, Curar
+ * Ferimentos, Santuário, Bênção -- concedidas automaticamente em
+ * `magias_preparadas` por `_concederMagiaAutomatica`, levelup.js) varridas
+ * para dentro do grimório do Mago, e de lá reaparecendo na grade de
+ * "Preparar Magias" do Mago (`mostrarBuscaMagia`, sheet/grimorio.js, que lê
+ * candidatas de círculo 1+ do grimório quando a superfície ativa usa
+ * grimório) -- exatamente a mistura relatada.
  *
- * ATUALIZAÇÃO (sub-projeto "magia sabe a classe", que fechou o adiamento de
- * docs/PERGUNTAS-PENDENTES.txt "MAGIA PREPARADA NAO SABE DE QUE CLASSE E"):
- * `magias_preparadas[].classe` agora EXISTE, mas isso NÃO destrava o portão
- * acima. O campo é OPCIONAL -- ausente ou string não vazia, nunca chute --
- * e a migração só carimba o que dá para saber com certeza (RULING R-B, classe
- * única; ou lista de magias bater com exatamente uma classe do multiclasse).
- * O estado misto (parte carimbada, parte sem carimbo) é PERMANENTE por
- * decisão de projeto, não uma fase de transição: magia personalizada, lista
- * ausente do app, ou multiclasse ambíguo (ex.: Feiticeiro/Mago, que
- * compartilham 95% da lista menor) nunca recebem carimbo. Para essas
- * entradas sem `classe`, o perigo de empurrar a magia errada para o
- * grimório é IDÊNTICO ao de antes do campo existir.
+ * DUAS METADES, as duas agora aplicadas (o "destravamento seguro" que o
+ * comentário desta função previa e adiava para um sub-projeto futuro):
+ * (1) o portão usa `temClasse(personagem, 'Mago')` em vez do espelho -- um
+ * Clérigo(inicial)/Mago(multiclasse) agora também normaliza o grimório do
+ * Mago, não só quando Mago é a classe inicial; (2) em personagem
+ * MULTICLASSE, o laço de empurrar filtra por `magia.classe === 'Mago'`
+ * (nunca `semClasse`, nunca `deOutra`) via `preparadasPorClasse(personagem,
+ * 'Mago').desta` (regras-magia-classe.js) -- a mesma medida que
+ * `mostrarBuscaMagia` já usa para o contador. `magias_preparadas[].classe`
+ * é OPCIONAL (ver o docblock de `preparadasPorClasse`): ausente quando a
+ * classe não dá para saber com certeza (magia personalizada, lista ausente
+ * do app, ou multiclasse ambíguo tipo Feiticeiro/Mago) -- por isso a
+ * varredura NUNCA inclui `semClasse` num multiclasse, só o que está
+ * carimbado como `'Mago'` de verdade.
  *
- * Ou seja: o campo novo resolve o problema só pela METADE. CONVERTER ESTE
- * PORTÃO MECANICAMENTE (`personagem.classe !== 'Mago'` ->
- * `!temClasse(personagem, 'Mago')`, sem tocar no laço de empurrar) CONTINUA
- * SENDO CORRUPÇÃO DE FICHA: um Clérigo 5/Mago 1 ainda teria as preparadas
- * SEM carimbo (e as carimbadas `'Clérigo'`) copiadas para o grimório do
- * Mago. Não destrave isto por causa desta atualização.
- *
- * Um destravamento seguro existe, mas exige as DUAS metades juntas, não só
- * o portão: (1) `temClasse(personagem, 'Mago')` no portão, E (2) o laço de
- * empurrar filtrando por `magia.classe === 'Mago'` (nunca `semClasse`, nunca
- * `deOutra`) -- exatamente `preparadasPorClasse(personagem, 'Mago').desta`,
- * de `regras-magia-classe.js`. Fica registrado aqui como possibilidade para
- * um sub-projeto futuro, não como pedido de mudança desta função.
+ * EM CLASSE ÚNICA a filtragem por classe não entra: fichas legadas de Mago
+ * puro têm `magias_preparadas` majoritariamente SEM `classe` (o carimbo é
+ * recente), e sem ambiguidade nenhuma -- toda entrada é do próprio Mago. Um
+ * personagem de classe única continua varrendo `magias_preparadas` inteiro,
+ * exatamente como sempre varreu.
  *
  * MAGIA PERSONALIZADA NÃO ENTRA POR AQUI, e desde a issue #46 por DOIS
  * motivos independentes. O primeiro é o de sempre (issue #42): esta função
@@ -195,7 +197,7 @@ export function nomesMagiaCirculo1Conhecidas(personagem) {
  * @returns {{alterado: boolean, pendentes: number}}
  */
 export function normalizarGrimorioMago(personagem, limitePreparadas) {
-  if (!personagem || typeof personagem !== 'object' || personagem.classe !== 'Mago') {
+  if (!personagem || typeof personagem !== 'object' || !temClasse(personagem, 'Mago')) {
     return { alterado: false, pendentes: 0 };
   }
 
@@ -243,7 +245,14 @@ export function normalizarGrimorioMago(personagem, limitePreparadas) {
     personagem.grimorio = grimorioNormalizado;
   }
 
-  const preparadasNormais = (Array.isArray(personagem.magias_preparadas) ? personagem.magias_preparadas : [])
+  // Multiclasse: só a fatia CARIMBADA como 'Mago' entra na varredura --
+  // nunca `semClasse` nem `deOutra` (issues #61/#62, ver docblock acima).
+  // Classe única: sem outra classe para confundir, a lista inteira
+  // continua sendo a fonte, do jeito que sempre foi.
+  const candidatas = classesDe(personagem).length > 1
+    ? preparadasPorClasse(personagem, 'Mago').desta
+    : (Array.isArray(personagem.magias_preparadas) ? personagem.magias_preparadas : []);
+  const preparadasNormais = candidatas
     .filter(magia => magia && typeof magia === 'object' && typeof magia.nome === 'string' && magia.nome && magiaContaNoLimite(magia) && Number(magia.circulo) > 0);
 
   for (const magia of preparadasNormais) {

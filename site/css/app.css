@@ -153,6 +153,7 @@ body {
   font-size: 0.9rem; font-weight: 600; cursor: pointer;
   transition: background 0.2s, transform 0.1s;
   text-decoration: none; line-height: 1.2;
+  flex-shrink: 0; white-space: nowrap;
 }
 .btn:active { transform: scale(0.97); }
 .btn-primary { background: var(--primary); color: #fff; }

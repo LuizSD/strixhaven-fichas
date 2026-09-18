@@ -65,7 +65,7 @@ export function renderSecaoInventario() {
     <div class="card">
       <div class="card-header">
         <h2>Inventario</h2>
-        <div class="no-print" style="display:flex;gap:4px;align-items:center">
+        <div class="no-print" style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
           <span style="font-weight:700;color:var(--secondary);font-size:0.9rem;cursor:pointer" id="btn-edit-po" title="Editar Carteira">${formatarCarteira(char.moedas)}</span>
           <button class="btn btn-sm btn-accent" id="btn-add-inv">+ Item</button>
           <button class="btn btn-sm btn-secondary" id="btn-add-inv-custom">+ Custom</button>

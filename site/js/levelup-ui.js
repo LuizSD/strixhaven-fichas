@@ -934,8 +934,14 @@ export function renderEscolhasTalento(nome, talentoData, ctx, state = {}) {
       </div>`;
   }
 
-  // ASI embutido no talento
-  const atributosASI = obterAtributosASITalento(talentoData).map(chave => ({ nome: ATRIBUTOS_NOMES[chave], chave }));
+  // ASI embutido no talento -- pulado para "Aumento no Valor de Atributo"
+  // em si: o bloco acima já cobre a escolha (+2/um ou +1/dois), e este
+  // select genérico de "+1" duplicaria o controle sem que nada o leia
+  // (persistirTalento/registrarDadivaEpicaLegada usam só `aumentos_atributo`
+  // para este talento).
+  const atributosASI = nome === 'Aumento no Valor de Atributo'
+    ? []
+    : obterAtributosASITalento(talentoData).map(chave => ({ nome: ATRIBUTOS_NOMES[chave], chave }));
   const limiteASI = getLimiteASITalento(talentoData);
   if (atributosASI.length > 0) {
     html += `<div style="font-weight:600;font-size:0.85rem;margin-top:8px">Aumento de Atributo (+1)</div>`;

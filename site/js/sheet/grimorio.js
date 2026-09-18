@@ -2539,10 +2539,25 @@ export async function abrirEscolhaMagiasFixasMago(tipo) {
   // par que o resto deste arquivo usa) evita excluir a personalizada "X" de
   // 2o circulo so porque o grimorio tem uma homonima de 1o.
   const chavesNoGrimorio = new Set(grimorio.map(m => `${m?.nome}|${Number(m?.circulo) || 0}`));
-  const personalizadasDeCirculo = (Array.isArray(char.magias_customizadas) ? char.magias_customizadas : [])
+  const personalizadasPorChave = new Map(
+    (Array.isArray(char.magias_customizadas) ? char.magias_customizadas : [])
+      .map(m => [`${m?.nome}|${Number(m?.circulo) || 0}`, m])
+  );
+  const personalizadasDeCirculo = [...personalizadasPorChave.values()]
     .filter(m => (Number(m?.circulo) || 0) > 0
       && !chavesNoGrimorio.has(`${m?.nome}|${Number(m?.circulo) || 0}`));
-  const candidatasGrimorioEPersonalizadas = [...grimorio, ...personalizadasDeCirculo];
+  // Issue #78: uma personalizada "ocupa vaga" grava no grimório só
+  // {nome, circulo} (grimorio.js/char.grimorio.push, mais acima) -- sem
+  // `descricao`. `deMagias` (opcoes-dominio.js) usa `m.descricao` quando
+  // presente e só cai no carregador do acervo real quando falta; para uma
+  // personalizada esse acervo não a conhece e a descrição sai vazia. Troca
+  // a entrada crua do grimório pela personalizada completa quando os dois
+  // batem por nome+círculo, para o card ganhar a descrição de verdade.
+  const grimorioComDescricao = grimorio.map(m => {
+    const chave = `${m?.nome}|${Number(m?.circulo) || 0}`;
+    return personalizadasPorChave.get(chave) || m;
+  });
+  const candidatasGrimorioEPersonalizadas = [...grimorioComDescricao, ...personalizadasDeCirculo];
 
   // A guarda de "livro vazio" roda DEPOIS da uniao: ela ficava antes e
   // recusava o Mago cujo grimorio esta vazio mas que tem personalizadas de

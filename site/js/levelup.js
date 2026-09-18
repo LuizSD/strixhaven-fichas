@@ -167,7 +167,7 @@ export function obterTalentosElegiveis(personagem, dadosTalentos, nivel, opcoes 
     .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 }
 
-function validarDistribuicaoASI(personagem, aumentos, limite = 20) {
+export function validarDistribuicaoASI(personagem, aumentos, limite = 20) {
   if (!aumentos || typeof aumentos !== 'object' || Array.isArray(aumentos)) return false;
   let total = 0;
   for (const [atributo, valor] of Object.entries(aumentos)) {

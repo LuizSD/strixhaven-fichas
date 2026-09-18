@@ -13,13 +13,51 @@
 // ============================================================
 
 /** Versão exibida no header e marcada como atual na lista de notas. */
-export const VERSAO_ATUAL = '3.0.7';
+export const VERSAO_ATUAL = '3.0.8';
 
 // Cada entrada é uma versão. `melhorias` e `correcoes` são listas de
 // grupos, e cada grupo tem um título curto e seus itens. O emoji do
 // grupo entra no próprio título -- é o que separa visualmente melhoria
 // de correção sem depender de cor.
 export const NOTAS_VERSAO = [
+  {
+    versao: '3.0.8',
+    data: '2026-09-18',
+    rotulo: 'Correções da comunidade',
+    resumo: 'Botão de item personalizado sem cortar no inventário, e o '
+      + 'talento Aumento no Valor de Atributo pelo botão "+ Talento" da '
+      + 'ficha volta a exigir os 2 pontos de distribuição do livro.',
+    correcoes: [
+      {
+        grupo: '🐛 Correções',
+        itens: [
+          'Inventário: o botão "+ Custom" podia espremer e cortar texto em '
+            + 'telas estreitas, disputando espaço com "+ Item" e a carteira '
+            + 'na mesma linha sem quebrar. Agora o grupo de botões quebra '
+            + 'linha quando necessário, e nenhum botão da ficha encolhe '
+            + 'abaixo do próprio texto. (#81)',
+          '"+ Talento" da ficha: adicionar Aumento no Valor de Atributo não '
+            + 'pedia a distribuição de 2 pontos do livro (+2 num atributo, '
+            + 'ou +1 em dois) — usava por engano o mesmo select de "+1 '
+            + 'automático" de talentos como Resiliente, concedendo só a '
+            + 'metade do que o talento dá. Agora exige e aplica a '
+            + 'distribuição certa, igual à subida de nível. (#67)',
+          'Mago: a magia personalizada escolhida para Maestria de Magias '
+            + 'ou Assinatura Mágica não mostrava descrição ao clicar "ver '
+            + 'detalhes" quando também ocupava vaga no grimório — o '
+            + 'grimório guarda só nome e círculo, e a tela buscava a '
+            + 'descrição no acervo real, que não conhece magia inventada. '
+            + 'Agora usa a descrição da própria personalizada. (#78)',
+          'Multiclasse: um Mago com Clérigo (ou qualquer outra classe '
+            + 'conjuradora) tinha as magias preparadas PELA OUTRA classe '
+            + 'copiadas para dentro do grimório do Mago — a limpeza da '
+            + 'ficha varria toda magia preparada de círculo 1+ sem olhar '
+            + 'de qual classe ela era. Agora só copia o que está '
+            + 'carimbado com a classe certa. (#62)',
+        ],
+      },
+    ],
+  },
   {
     versao: '3.0.7',
     data: '2026-09-18',

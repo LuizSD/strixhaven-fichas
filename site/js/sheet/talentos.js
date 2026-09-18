@@ -8,8 +8,9 @@
 import { ATRIBUTOS_KEYS, ATRIBUTOS_NOMES } from '../dados-classes.js';
 import { getMagiasClasse, getTalentos } from '../db.js';
 import { bindEscolhasTalento, renderEscolhasTalento } from '../levelup-ui.js';
-import { aplicarASITalento, exigeDadivaEpica, obterAtributosASITalento, obterTalentosElegiveis, registrarDadivaEpicaLegada, talentoPermitidoNaRecuperacaoDadiva } from '../levelup.js';
+import { aplicarASITalento, exigeDadivaEpica, obterAtributosASITalento, obterTalentosElegiveis, registrarDadivaEpicaLegada, talentoPermitidoNaRecuperacaoDadiva, validarDistribuicaoASI } from '../levelup.js';
 import { aplicarEfeitoTalento, getRegraTalento, obterEscolhasObrigatoriasTalento, validarEscolhasTalento } from '../regras-cobertura.js';
+import { aplicarDeltaSistema } from '../ficha-edicoes.js';
 import { abrirModal, escHtml, mdParaHtml, nomesMagiaCirculo1Conhecidas, semAcento, toast } from '../utils.js';
 import { montarSeletor } from '../ui-opcoes.js';
 import { deMagias, deTalentos, motivoPreRequisito } from '../opcoes-dominio.js';
@@ -617,11 +618,22 @@ export async function abrirModalAdicionarTalento() {
   // Talento marcado no card (montarSeletor abaixo) -- lido pelo botão
   // "Adicionar" no lugar do antigo `#add-tal-nome`?.value.
   let talentoEscolhido = '';
-  const persistirTalento = (nome, talento, atributoASI, escolhasCobertura = {}) => {
+  const persistirTalento = (nome, talento, atributoASI, escolhasCobertura = {}, aumentosAtributo = null) => {
     const nomesAtributo = { forca: 'Força', destreza: 'Destreza', constituicao: 'Constituição', inteligencia: 'Inteligência', sabedoria: 'Sabedoria', carisma: 'Carisma' };
     if (nome === 'Resiliente' && (char.salvaguardas_proficientes || []).includes(nomesAtributo[atributoASI])) {
       toast('Escolha um atributo sem proficiência em salvaguarda para Resiliente.', 'error');
       return false;
+    }
+    // Aumento no Valor de Atributo: +2 num só ou +1 em dois, nunca o "+1
+    // automático" genérico usado pelos demais talentos com ASI embutido
+    // (Resiliente etc.) -- mesma validação da subida de nível
+    // (levelup.js/validarDistribuicaoASI), senão esta via concede só a
+    // metade do que o livro dá.
+    if (nome === 'Aumento no Valor de Atributo') {
+      if (!validarDistribuicaoASI(char, aumentosAtributo, 20)) {
+        toast('Distribua +2 em um atributo ou +1 em dois atributos, até o máximo 20.', 'error');
+        return false;
+      }
     }
     const escolhasCompletas = { ...escolhasCobertura, atributo: atributoASI, talento_asi: atributoASI };
     const validacao = validarEscolhasTalento(char, nome, escolhasCompletas);
@@ -629,7 +641,11 @@ export async function abrirModalAdicionarTalento() {
       toast(validacao.erro, 'error');
       return false;
     }
-    if (atributoASI) {
+    if (nome === 'Aumento no Valor de Atributo') {
+      for (const [atributo, valor] of Object.entries(aumentosAtributo)) {
+        aplicarDeltaSistema(char, `atributos.${atributo}`, valor, 20);
+      }
+    } else if (atributoASI) {
       const resultadoASI = aplicarASITalento(char, talento, atributoASI);
       if (!resultadoASI.sucesso) { toast(resultadoASI.erro, 'error'); return false; }
     }
@@ -729,7 +745,15 @@ export async function abrirModalAdicionarTalento() {
     const regraTalento = getRegraTalento(nome);
     const atributosASI = obterAtributosASITalento(talento);
     const escolhasObrigatorias = obterEscolhasObrigatoriasTalento(regraTalento, char);
-    if (atributosASI.length === 0 && escolhasObrigatorias.length === 0) {
+    // "Aumento no Valor de Atributo" descreve a distribuição de 2 pontos no
+    // seu próprio `descricao` de nível de talento, não num `beneficios[]`
+    // com nome "Aumento no Valor de Atributo" (aquele padrão é só dos
+    // talentos QUE CONCEDEM um "+1" embutido, ex.: Resiliente) -- por isso
+    // `obterAtributosASITalento` devolve [] para ele mesmo, e sem esta
+    // checagem explícita cairia direto no atalho abaixo, persistindo sem
+    // pedir distribuição nenhuma (issue #67).
+    const ehASIPadrao = nome === 'Aumento no Valor de Atributo';
+    if (!ehASIPadrao && atributosASI.length === 0 && escolhasObrigatorias.length === 0) {
       persistirTalento(nome, talento);
       return;
     }
@@ -790,12 +814,26 @@ export async function abrirModalAdicionarTalento() {
       const energias = [...document.querySelectorAll('.dadiva-energia-escolha')]
         .map(select => select.value)
         .filter(Boolean);
+      // Aumento no Valor de Atributo: lê os selects `levelup-talento-attr-*`
+      // (o distribuidor de 2 pontos, renderEscolhasTalento) em vez do
+      // `atributo` genérico acima -- este é lido do select "Aumento de
+      // Atributo (+1)" que renderEscolhasTalento também desenha para todo
+      // talento com ASI embutido, mas que para este talento específico dá
+      // só a metade do que o livro concede.
+      let aumentosAtributo = null;
+      if (nome === 'Aumento no Valor de Atributo') {
+        aumentosAtributo = {};
+        ATRIBUTOS_KEYS.forEach(key => {
+          const valor = parseInt(document.getElementById(`levelup-talento-attr-${key}`)?.value) || 0;
+          if (valor > 0) aumentosAtributo[key] = valor;
+        });
+      }
       confirmado = persistirTalento(nome, talento, atributo, {
         selecoes: magia ? [magia] : rituais.length > 0 ? rituais : selecoes,
         magia,
         rituais,
         energias
-      });
+      }, aumentosAtributo);
     });
   });
 }

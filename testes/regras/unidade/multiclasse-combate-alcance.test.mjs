@@ -469,8 +469,13 @@ const UTILS_ESPELHOS_FORA_DO_ESCOPO_3D = [
   // como espelho. `nomesMagiaCirculo1Conhecidas`, a linha seguinte, continua
   // fora do escopo desta tarefa (ela decide "1º círculo já conhecido",
   // não o grimório em si) e permanece classificada abaixo.
+  //
+  // `normalizarGrimorioMago` (issue #62, 2026-09-18) tambem saiu desta
+  // lista: o portao virou `!temClasse(personagem, 'Mago')`, e a varredura
+  // em multiclasse passou a filtrar por `preparadasPorClasse(...).desta`
+  // (regras-magia-classe.js) em vez de ler `magias_preparadas` inteiro --
+  // as duas metades que o docblock da funcao (utils.js) pedia.
   "if (personagem?.classe === 'Mago') {",
-  "if (!personagem || typeof personagem !== 'object' || personagem.classe !== 'Mago') {",
   // Atributo de conjuracao: le classe, subclasse e nivel do espelho de uma
   // vez so. Num multiclasse conjurador o CD sai da classe inicial.
   'const info = CLASSES_INFO[personagem?.classe];',
