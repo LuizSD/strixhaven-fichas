@@ -2,7 +2,7 @@
 // Modal de edicao da ficha e subida de nivel
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
-import { ATRIBUTOS_KEYS, ATRIBUTOS_NOMES, PERICIAS, POINT_BUY_CUSTOS, POINT_BUY_TOTAL, STANDARD_ARRAY } from '../dados-classes.js';
+import { ATRIBUTOS_KEYS, ATRIBUTOS_NOMES, IDIOMAS_COMUNS, IDIOMAS_RAROS, PERICIAS, POINT_BUY_CUSTOS, POINT_BUY_TOTAL, STANDARD_ARRAY } from '../dados-classes.js';
 import { validarAtributosEditados, validarAtributosManuais, validarListaUnica } from '../ficha-edicao-validacoes.js';
 import { aplicarEdicao, consolidarEdicoesAtributos, deltaManualAtributos, registrarAjusteManualAtributos, reverterEdicao } from '../ficha-edicoes.js';
 import { abrirLevelUpCards } from '../levelup-ui.js';
@@ -56,9 +56,20 @@ function salvarFlagLevelUpFlowV2(ativo) {
 }
 
 // --- Edição do cabeçalho e detalhes ---
-function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
-  const secoes = ['atributos', 'pericias', 'detalhes'];
+// Exportada (era privada) para o oráculo de unidade da issue #58 poder
+// abrir o modal direto na aba "idiomas" -- o harness de unidade não
+// interpreta HTML, então clicar num botão de aba gerado por `.map()`
+// (sem id próprio) não é alcançável só por getElementById, ao contrário do
+// resto deste modal, que usa ids fixos.
+export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
+  const secoes = ['atributos', 'pericias', 'idiomas', 'detalhes'];
   let secao = secoes.includes(secaoInicial) ? secaoInicial : 'atributos';
+  // Issue #58: idiomas passam a ser editáveis livremente (adicionar/tirar),
+  // sem a regra de orçamento da criação (obterRegraIdiomasAtual, so vale no
+  // criador). Proposta em closure, igual ao padrão de atributos/pericias
+  // deste modal -- editada por toggle de checkbox e pelo campo de texto
+  // livre, e só gravada em char.idiomas no Salvar.
+  let propostaIdiomas = [...(char.idiomas || [])];
   let imagemPendente = char.imagem || '';
   let propostaAtributos = Object.fromEntries(ATRIBUTOS_KEYS.map(key => [key, char.atributos_base?.[key] ?? char.atributos[key]]));
   const bonusAtributo = key => char.bonus_antecedente?.[key] || 0;
@@ -175,6 +186,33 @@ function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
       const limite = (char.pericias_proficientes || []).length;
       return navegacao + `<div class="info-box info" style="font-size:0.8rem;margin-bottom:10px">Mantenha ${limite} proficiência(s). Especializações continuam exigindo proficiência.</div><div style="max-height:45vh;overflow:auto">${PERICIAS.map(p => `<label class="form-check" style="justify-content:flex-start;margin:0 0 6px"><input type="checkbox" data-edicao-pericia="${escHtml(p.nome)}" ${(char.pericias_proficientes || []).includes(p.nome) ? 'checked' : ''}> ${rotuloPericia(p.nome)}${(char.pericias_expertise || []).includes(p.nome) ? ' (Especialização)' : ''}</label>`).join('')}</div>${campoEstaEditado('pericias_proficientes') ? '<button class="btn btn-sm btn-secondary mt-1" data-reverter-campo="pericias_proficientes">Reverter perícias</button>' : ''}`;
     }
+    if (secao === 'idiomas') {
+      // Issue #58: sem limite de quantidade -- ao contrário de pericias
+      // (que preserva o numero de proficiencias da criacao), idiomas e
+      // edicao livre. A lista mostrada e a UNIAO do catalogo do livro
+      // (Comuns + Raros) com qualquer idioma que a ficha ja tenha e que o
+      // catalogo nao cobre (ex.: escolhido por uma caracteristica, ou
+      // homebrew) -- para nao sumir da tela um idioma que so existe
+      // porque o jogador o tinha antes.
+      const catalogo = new Set([...IDIOMAS_COMUNS, ...IDIOMAS_RAROS]);
+      const extrasJaSalvos = propostaIdiomas.filter(i => !catalogo.has(i));
+      const caixaIdioma = nome => `<label class="form-check" style="justify-content:flex-start;margin:0 0 6px"><input type="checkbox" data-edicao-idioma-toggle="${escHtml(nome)}" ${propostaIdiomas.includes(nome) ? 'checked' : ''}> ${escHtml(nome)}</label>`;
+      return navegacao + `
+        <div class="info-box info" style="font-size:0.8rem;margin-bottom:10px">Marque ou desmarque livremente -- não há limite de idiomas aqui.</div>
+        <div class="section-divider" style="margin-top:0"><span>Idiomas Comuns</span></div>
+        <div>${IDIOMAS_COMUNS.map(caixaIdioma).join('')}</div>
+        <div class="section-divider"><span>Idiomas Raros</span></div>
+        <div>${IDIOMAS_RAROS.map(caixaIdioma).join('')}</div>
+        ${extrasJaSalvos.length > 0 ? `
+        <div class="section-divider"><span>Outros já na ficha</span></div>
+        <div>${extrasJaSalvos.map(caixaIdioma).join('')}</div>` : ''}
+        <div class="section-divider"><span>Adicionar outro idioma</span></div>
+        <div style="display:flex;gap:6px;margin-bottom:6px">
+          <input type="text" class="form-input" id="edicao-idioma-novo" placeholder="Nome do idioma (ex.: suplemento, homebrew)" style="flex:1">
+          <button type="button" class="btn btn-sm btn-secondary" id="btn-edicao-idioma-add">Adicionar</button>
+        </div>
+        ${campoEstaEditado('idiomas') ? '<button class="btn btn-sm btn-secondary mt-1" data-reverter-campo="idiomas">Reverter idiomas</button>' : ''}`;
+    }
     const campos = [
       { key: 'aparencia', label: 'Aparência' }, { key: 'personalidade', label: 'Personalidade' }, { key: 'ideais', label: 'Ideais' }, { key: 'lacos', label: 'Laços' }, { key: 'defeitos', label: 'Defeitos' }, { key: 'historia_personagem', label: 'História' }, { key: 'notas', label: 'Notas' }
     ];
@@ -266,6 +304,8 @@ function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
         if (!resultado.ok) { toast(resultado.erro, 'error'); return; }
         if ((char.pericias_expertise || []).some(p => !proposta.includes(p))) { toast('Não remova uma perícia com Especialização.', 'error'); return; }
         aplicarEdicao(char, 'pericias_proficientes', proposta);
+      } else if (secao === 'idiomas') {
+        aplicarEdicao(char, 'idiomas', [...new Set(propostaIdiomas)]);
       } else if (secao === 'detalhes') {
         const nome = document.querySelector('[data-edicao-identidade="nome"]')?.value?.trim();
         aplicarEdicao(char, 'nome', nome || char.nome);
@@ -321,6 +361,23 @@ function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
       const corpo = document.getElementById('edicao-ficha-corpo');
       if (corpo) { corpo.innerHTML = render(); vincular(); }
     }));
+    document.querySelectorAll('[data-edicao-idioma-toggle]').forEach(input => input.addEventListener('change', () => {
+      const nome = input.dataset.edicaoIdiomaToggle;
+      propostaIdiomas = input.checked
+        ? [...new Set([...propostaIdiomas, nome])]
+        : propostaIdiomas.filter(i => i !== nome);
+      const corpo = document.getElementById('edicao-ficha-corpo');
+      if (corpo) { corpo.innerHTML = render(); vincular(); }
+    }));
+    document.getElementById('btn-edicao-idioma-add')?.addEventListener('click', () => {
+      const campo = document.getElementById('edicao-idioma-novo');
+      const nome = campo?.value?.trim();
+      if (!nome) { toast('Informe o nome do idioma.', 'error'); return; }
+      if (propostaIdiomas.includes(nome)) { toast('Esse idioma já está na lista.', 'error'); return; }
+      propostaIdiomas = [...propostaIdiomas, nome];
+      const corpo = document.getElementById('edicao-ficha-corpo');
+      if (corpo) { corpo.innerHTML = render(); vincular(); }
+    });
     document.getElementById('edicao-imagem-btn')?.addEventListener('click', () => document.getElementById('edicao-imagem-input')?.click());
     document.getElementById('edicao-imagem-input')?.addEventListener('change', async event => {
       const arquivo = event.target.files?.[0];

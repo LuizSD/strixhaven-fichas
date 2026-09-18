@@ -44,8 +44,14 @@ function renderCaracteristicasDeUmaClasse(ctx, mostrarNomeClasse) {
     }
   }
 
-  const passivas = feats.filter(f => !ehHabilidadeAtiva(f.descricao, f.nome));
-  const ativas = feats.filter(f => ehHabilidadeAtiva(f.descricao, f.nome));
+  // Issue #60: a separação em duas seções (Ativas/Passivas) é vocabulário
+  // do APP, não do livro -- e reordenava a lista por classificação em vez
+  // de nível, empurrando característica ativa de nível baixo (ex.:
+  // Assinatura Mágica) para acima de passiva de nível 1. Cada card já
+  // carrega o selo "Ativa"/"Passiva" (tipoBadge, habilidades.js), então a
+  // seção deixou de ser a única forma de transmitir essa informação --
+  // agora é só ordenação por nível, na ordem em que o livro apresenta.
+  const featsOrdenados = [...feats].sort((a, b) => (a.nivel || 0) - (b.nivel || 0));
   const titulo = mostrarNomeClasse
     ? `Características de Classe — ${escHtml(ctx.classe)} ${ctx.nivelClasse}`
     : 'Características de Classe';
@@ -53,14 +59,7 @@ function renderCaracteristicasDeUmaClasse(ctx, mostrarNomeClasse) {
   return `
     <div class="card print-break-before">
       <div class="card-header"><h2>${titulo}</h2></div>
-      ${ativas.length > 0 ? `
-        <div class="section-divider"><span>Habilidades Ativas</span></div>
-        ${ativas.map(f => renderFeatureItem(f, 'classe', ctx)).join('')}
-      ` : ''}
-      ${passivas.length > 0 ? `
-        <div class="section-divider"><span>Habilidades Passivas</span></div>
-        ${passivas.map(f => renderFeatureItem(f, 'classe', ctx)).join('')}
-      ` : ''}
+      ${featsOrdenados.map(f => renderFeatureItem(f, 'classe', ctx)).join('')}
     </div>
   `;
 }
@@ -88,20 +87,14 @@ function renderSubclasseDeUmaClasse(ctx) {
   const feats = sc.caracteristicas.filter(c => c.nivel <= ctx.nivelClasse);
   if (!feats.length) return '';
 
-  const passivas = feats.filter(f => !ehHabilidadeAtiva(f.descricao, f.nome));
-  const ativas = feats.filter(f => ehHabilidadeAtiva(f.descricao, f.nome));
+  // Mesmo motivo do bloco de classe, acima (issue #60): lista única,
+  // ordenada por nível -- o selo por card já diz Ativa/Passiva.
+  const featsOrdenados = [...feats].sort((a, b) => (a.nivel || 0) - (b.nivel || 0));
 
   return `
     <div class="card print-break-before">
       <div class="card-header"><h2>Subclasse — ${escHtml(ctx.subclasse)}</h2></div>
-      ${ativas.length > 0 ? `
-        <div class="section-divider"><span>Habilidades Ativas</span></div>
-        ${ativas.map(f => renderFeatureItem(f, 'subclasse', ctx)).join('')}
-      ` : ''}
-      ${passivas.length > 0 ? `
-        <div class="section-divider"><span>Habilidades Passivas</span></div>
-        ${passivas.map(f => renderFeatureItem(f, 'subclasse', ctx)).join('')}
-      ` : ''}
+      ${featsOrdenados.map(f => renderFeatureItem(f, 'subclasse', ctx)).join('')}
     </div>
   `;
 }

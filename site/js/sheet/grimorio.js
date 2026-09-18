@@ -587,13 +587,25 @@ export async function mostrarBuscaMagia() {
       // "quanto do limite já foi gasto?" é classificacaoTruques.desta
       // (truquesPorClasse, regras-magia-classe.js).
       const truquesEsp = truquesAtuais.filter(m => m.origem === 'especie');
+      // Issue #63: os demais truques CONCEDIDOS (não escolhidos pelo
+      // jogador nesta grade) -- ex.: Ilusão Menor ou seu substituto,
+      // concedidos por Ilusões Aprimoradas do Ilusionista, origem
+      // `subclasse_automatica` -- ficavam FORA da lista de "não removível"
+      // (só `origem === 'especie'` entrava). Sem essa guarda, o cartão saía
+      // igual a qualquer truque de classe escolhido: clicável no check, sem
+      // selo, e clicar removia o truque de `magias_conhecidas` para sempre
+      // (nada mais o concede de volta). `truqueEhTrocavel` é a fonte única
+      // das origens que o jogador não escolheu (regras-origens-magia.js);
+      // aqui ela cobre exatamente o que esta grade tem de travar.
+      const truquesConcedidos = truquesAtuais.filter(m => m.origem !== 'especie' && !truqueEhTrocavel(m));
       // Mesma medida do portao de gravacao: `desta` (carimbados com a
       // classe da superficie ativa), nao a soma global.
       const numTruq = classificacaoTruques.desta.length;
-      html += `<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px">Truques: ${numTruq}/${maxTruq}${truquesEsp.length > 0 ? ` (+${truquesEsp.length} espécie)` : ''}</div>`;
+      html += `<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px">Truques: ${numTruq}/${maxTruq}${truquesEsp.length > 0 ? ` (+${truquesEsp.length} espécie)` : ''}${truquesConcedidos.length > 0 ? ` (+${truquesConcedidos.length} concedido)` : ''}</div>`;
 
       const selecionadosSet = new Set(truquesAtuais.map(m => m.nome));
       const truquesEspSet = new Set(truquesEsp.map(m => m.nome));
+      const truquesConcedidosSet = new Set(truquesConcedidos.map(m => m.nome));
 
       // Exibir truques de espécie (não removíveis) primeiro
       if (truquesEsp.length > 0) {
@@ -609,14 +621,31 @@ export async function mostrarBuscaMagia() {
         `).join('')}</div>`;
       }
 
+      // Truques concedidos por talento/subclasse (não removíveis daqui, pelo
+      // mesmo motivo dos de espécie -- rotuloOrigemMagia() já sabe nomear
+      // cada origem individualmente (Talento, Subclasse etc.).
+      if (truquesConcedidos.length > 0) {
+        let listaConcedidos = truquesConcedidos;
+        if (termo.length >= 2) listaConcedidos = listaConcedidos.filter(m => semAcento(m.nome).includes(termo));
+        html += `<div style="font-size:0.75rem;font-weight:700;color:var(--secondary);margin:8px 0 4px">Truques Concedidos</div>`;
+        html += `<div class="opcao-grid densa">${listaConcedidos.map(m => `
+          <div class="opcao-card selecionada magia-dominio" style="opacity:0.7;cursor:default">
+            <span class="opcao-check"></span>
+            <div class="opcao-nome" data-detalhe-magia="${m.nome}" data-detalhe-circ="0" style="cursor:pointer"><span class="badge-dominio">&#9733;</span> ${m.nome}</div>
+            <div class="opcao-resumo"><span>${rotuloOrigemMagia(m)}</span></div>
+          </div>
+        `).join('')}</div>`;
+      }
+
       let lista = [...truquesClasse];
       lista.sort((a, b) => {
         const aSel = selecionadosSet.has(a.nome) ? 0 : 1;
         const bSel = selecionadosSet.has(b.nome) ? 0 : 1;
         return aSel - bSel || a.nome.localeCompare(b.nome);
       });
-      // Filtrar truques de espécie da lista de classe (evitar duplicatas)
-      lista = lista.filter(m => !truquesEspSet.has(m.nome));
+      // Filtrar truques de espécie e de concessão da lista de classe
+      // (evitar duplicatas -- os dois já saíram nas seções travadas acima).
+      lista = lista.filter(m => !truquesEspSet.has(m.nome) && !truquesConcedidosSet.has(m.nome));
       if (termo.length >= 2) lista = lista.filter(m => semAcento(m.nome).includes(termo));
       // Grisalha os cartoes so quando a contagem e CERTA -- havendo
       // truque sem carimbo a grade nao bloqueia por incerteza, mesma
@@ -744,9 +773,16 @@ export async function mostrarBuscaMagia() {
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         const nome = el.dataset.truqueCheck;
-        // Não permitir remover truques de espécie
+        // Issue #63: a guarda só olhava `origem === 'especie'` -- um truque
+        // concedido por subclasse (Ilusão Menor ou seu substituto, Ilusões
+        // Aprimoradas do Ilusionista) passava direto e o clique o REMOVIA
+        // de `magias_conhecidas` para sempre, sem nada que o devolvesse.
+        // `truqueEhTrocavel` (regras-origens-magia.js) é a fonte única das
+        // origens que o jogador não escolheu -- a mesma que já trava a
+        // grade acima (truquesConcedidos) e o modal de troca do Descanso
+        // Longo (truquesTrocaveis, mais abaixo neste arquivo).
         const entradaExistente = (char.magias_conhecidas || []).find(m => m.nome === nome);
-        if (entradaExistente && entradaExistente.origem === 'especie') return;
+        if (entradaExistente && !truqueEhTrocavel(entradaExistente)) return;
         const idx = (char.magias_conhecidas || []).findIndex(m => m.nome === nome);
         if (idx >= 0) {
           char.magias_conhecidas.splice(idx, 1);

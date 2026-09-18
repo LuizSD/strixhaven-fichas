@@ -65,7 +65,7 @@
       "custo": "400 PO"
     },
     {
-      "nome": "Placas Parcial",
+      "nome": "Armadura de Placas Parcial",
       "categoria": "Média",
       "ca": "15 + Modificador de Des (máx. 2)",
       "requisito_forca": "—",
@@ -101,7 +101,7 @@
       "custo": "200 PO"
     },
     {
-      "nome": "Placas",
+      "nome": "Armadura de Placas",
       "categoria": "Pesada",
       "ca": "18",
       "requisito_forca": "For 15",

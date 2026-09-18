@@ -1,17 +1,22 @@
 // ============================================================
-// A ficha imprime cada característica na seção certa, e não oferece
-// controle de uso a quem não se esgota.
+// A ficha classifica cada característica com o selo certo (Ativa/Passiva),
+// e não oferece controle de uso a quem não se esgota.
+//
+// Issue #60: a ficha deixou de separar Ativas/Passivas em duas seções --
+// hoje é uma lista única por card, ordenada por nível (o selo por card já
+// diz a classificação, então a seção parou de ser a única forma de
+// transmiti-la). Este spec passou a ler o selo em vez da seção; a
+// classificação em si (ehHabilidadeAtiva) não mudou.
 //
 // Os motores de unidade (classes-passivas.test.mjs, subclasses-recursos.
 // test.mjs) já confrontam ehHabilidadeAtiva/detectarRecarga/
 // detectarUsosMaximos contra o livro, característica a característica. O
-// que só o navegador prova é a consequência que o jogador encontra: em
-// qual das duas listas o nome aparece, e se existe um botão clicável ao
-// lado dele.
+// que só o navegador prova é a consequência que o jogador encontra: qual
+// selo o card carrega, e se existe um botão clicável ao lado dele.
 //
 // PHB 2024, Ataque Extra do Guerreiro (Classes.md:3852): "...sempre que
 // executar a ação Atacar no seu turno" -- benefício contínuo, sem custo. O
-// app o colocava em "Habilidades Ativas" porque 'no seu turno' estava na
+// app o marcava com o selo "Ativa" porque 'no seu turno' estava na
 // lista de gatilhos de ehHabilidadeAtiva.
 //
 // PHB 2024, Maestria em Arma do Guerreiro (Classes.md:3816): "Sempre que
@@ -40,59 +45,60 @@ const BARBARO = {
 };
 
 /**
- * Devolve os nomes de característica listados em cada uma das duas seções
- * do card "Características de Classe". A estrutura é plana: um
- * `<div class="section-divider">` com o título, seguido dos `<details>` de
- * cada característica como IRMÃOS, até o divisor seguinte
- * (site/js/sheet/caracteristicas.js:41-51).
+ * Devolve os nomes de característica classificados como "Ativa" ou
+ * "Passiva" pelo selo que cada card já carrega (tipoBadge,
+ * site/js/sheet/habilidades.js). Issue #60: a ficha deixou de separar
+ * Ativas/Passivas em duas seções -- a lista agora é única, ordenada por
+ * nível, e o selo por card é a única forma de ler a classificação.
  */
-async function secoesDeHabilidade(page) {
-  // Espera os divisores existirem antes de varrer. Sem isto o spec lia o DOM
-  // antes de renderFichaCompleta terminar e devolvia duas listas vazias --
-  // flake real, que so aparecia com a suite inteira rodando em paralelo.
-  await page.waitForSelector('.section-divider', { state: 'attached', timeout: 15_000 });
+async function classificacaoDeHabilidade(page) {
+  // Espera os cards de característica existirem antes de varrer. Sem isto
+  // o spec lia o DOM antes de renderFichaCompleta terminar e devolvia duas
+  // listas vazias -- flake real, que so aparecia com a suite inteira
+  // rodando em paralelo.
+  await page.waitForSelector('.card-header:has-text("Características de Classe")', { state: 'attached', timeout: 15_000 });
   return page.evaluate(() => {
     const saida = { ativas: [], passivas: [] };
-    for (const divisor of document.querySelectorAll('.section-divider')) {
-      const titulo = (divisor.textContent || '').trim();
-      const alvo = titulo === 'Habilidades Ativas' ? 'ativas'
-        : titulo === 'Habilidades Passivas' ? 'passivas' : null;
-      if (!alvo) continue;
-      let el = divisor.nextElementSibling;
-      while (el && !el.classList.contains('section-divider')) {
-        const resumo = el.querySelector?.(':scope > summary');
-        if (resumo) saida[alvo].push(resumo.textContent.replace(/\s+/g, ' ').trim());
-        el = el.nextElementSibling;
+    for (const card of document.querySelectorAll('.card')) {
+      const titulo = card.querySelector('.card-header')?.textContent || '';
+      if (!titulo.includes('Características de Classe') && !titulo.includes('Subclasse')) continue;
+      for (const item of card.querySelectorAll('details')) {
+        const resumo = item.querySelector(':scope > summary');
+        if (!resumo) continue;
+        const nome = resumo.textContent.replace(/\s+/g, ' ').trim();
+        const badges = [...resumo.querySelectorAll('.badge')].map(b => b.textContent.trim());
+        if (badges.includes('Ativa')) saida.ativas.push(nome);
+        else if (badges.includes('Passiva')) saida.passivas.push(nome);
       }
     }
     return saida;
   });
 }
 
-test('ficha: Ataque Extra e Maestria em Arma aparecem em Habilidades Passivas', async ({ context }) => {
+test('ficha: Ataque Extra e Maestria em Arma são classificadas como Passivas', async ({ context }) => {
   const { page, erros } = await abrirFicha(context, GUERREIRO, 'regras-ativa-guerreiro');
 
-  const { ativas, passivas } = await secoesDeHabilidade(page);
+  const { ativas, passivas } = await classificacaoDeHabilidade(page);
 
   // Guarda contra asserção vazia: se o seletor deixar de casar, as duas
   // listas vêm vazias e todo `not.toContain` abaixo passaria por vacuidade.
   expect(ativas.length + passivas.length,
-    'a ficha de um Guerreiro nível 5 deveria listar características em alguma das duas seções')
+    'a ficha de um Guerreiro nível 5 deveria listar características com selo Ativa/Passiva')
     .toBeGreaterThan(0);
 
   const contem = (lista, nome) => lista.some((n) => n.includes(nome));
 
   for (const nome of ['Ataque Extra', 'Maestria em Arma']) {
     expect(contem(passivas, nome),
-      `${nome} deveria estar em Passivas. Ativas: ${ativas.join(' | ')}`).toBe(true);
+      `${nome} deveria ter selo Passiva. Ativas: ${ativas.join(' | ')}`).toBe(true);
     expect(contem(ativas, nome),
-      `${nome} não deveria estar em Ativas -- o livro não lhe dá custo nenhum`).toBe(false);
+      `${nome} não deveria ter selo Ativa -- o livro não lhe dá custo nenhum`).toBe(false);
   }
 
-  // Surto de Ação é o contraste que prova que a seção "Ativas" não secou:
-  // ela TEM custo (uso limitado que volta no descanso) e continua lá.
+  // Surto de Ação é o contraste que prova que a classificação "Ativa" não
+  // secou: ela TEM custo (uso limitado que volta no descanso) e continua lá.
   expect(contem(ativas, 'Surto de Ação'),
-    `Surto de Ação deveria continuar em Ativas. Passivas: ${passivas.join(' | ')}`).toBe(true);
+    `Surto de Ação deveria continuar com selo Ativa. Passivas: ${passivas.join(' | ')}`).toBe(true);
 
   // A Maestria em Arma também não pode mais ostentar selo de recarga: ela
   // nunca se esgota, só permite trocar a escolha no Descanso Longo.

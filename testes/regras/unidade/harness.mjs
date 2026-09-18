@@ -115,7 +115,11 @@ export async function modulosApp() {
          // Issue #57 (Tarefa 3): a regra pura do teto de tres itens
          // sintonizados, consumida pelos oraculos de sintonizacao.test.mjs
          // via sintonizacao.TETO_SINTONIZACAO / itensSintonizados / podeSintonizar.
-         sintonizacao] = await Promise.all([
+         sintonizacao,
+         // Issue #58: setupEventosEdicao() liga o botao #btn-editar-ficha,
+         // que abre o modal com a nova secao "idiomas" -- consumido pelos
+         // oraculos de edicao-idiomas.test.mjs.
+         sheetEdicao] = await Promise.all([
     importar('site/js/regras-cobertura.js'),
     importar('site/js/talentos-effects.js'),
     importar('site/js/store.js'),
@@ -192,6 +196,7 @@ export async function modulosApp() {
     importar('site/js/sheet/combate.js'),
     importar('site/js/sheet/item-customizado-form.js'),
     importar('site/js/regras-sintonizacao.js'),
+    importar('site/js/sheet/edicao.js'),
   ]);
   // Um modulo de classe por nome de ARQUIVO (minusculo, sem acento -- ex.:
   // sheetClasses.clerigo, sheetClasses.paladino), e nao pelo nome que o app
@@ -210,7 +215,7 @@ export async function modulosApp() {
              fichaEdicoes, fichaEdicaoValidacoes, multiclasse, home, multiclasseConjuracao,
              multiclasseProgressao, contextoClasse, sheetCaracteristicas, sheetFicha,
              proficiencias, magiaClasse, regrasPreparoMagias, sheetClasses, sheetHabilidades,
-             sheetMaestrias, sheetHpDescanso, sheetCombate, itemCustomForm, sintonizacao };
+             sheetMaestrias, sheetHpDescanso, sheetCombate, itemCustomForm, sintonizacao, sheetEdicao };
   return _cache;
 }
 

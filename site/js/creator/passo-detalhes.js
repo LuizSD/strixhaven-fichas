@@ -2,7 +2,7 @@
 // Passo 7: detalhes pessoais e idiomas
 // Extraido de site/js/pages/creator.js sem alteracao de comportamento.
 // ============================================================
-import { ATRIBUTOS_NOMES, CLASSES_INFO } from '../dados-classes.js';
+import { ATRIBUTOS_NOMES, CLASSES_INFO, IDIOMAS_COMUNS } from '../dados-classes.js';
 import { calcMod, calcPVNivel1, descreverCapacidadeCarga, escHtml, getTamanho, processarImagemArquivo, toast } from '../utils.js';
 import { dadosCache, personagem } from './wizard.js';
 
@@ -10,11 +10,11 @@ import { dadosCache, personagem } from './wizard.js';
 // PASSO 7: DETALHES
 // ============================================================
 
-// PHB 2024 (cap. 2): personagem conhece Comum + 2 idiomas da lista de Idiomas Comuns
-const IDIOMAS_COMUNS_2024 = [
-  'Comum', 'Língua de Sinais Comum', 'Dracônico', 'Anão', 'Élfico',
-  'Gigante', 'Gnômico', 'Goblin', 'Pequenino', 'Orc'
-];
+// PHB 2024 (cap. 2): personagem conhece Comum + 2 idiomas da lista de
+// Idiomas Comuns. IDIOMAS_COMUNS_2024 (nome local mantido pelas referências
+// abaixo) agora vem de dados-classes.js -- fonte única com sheet/edicao.js
+// (issue #58), sem mudar nenhum valor da lista.
+const IDIOMAS_COMUNS_2024 = IDIOMAS_COMUNS;
 
 export function obterRegraIdiomasAtual() {
   const antecedente = dadosCache.antecedentes?.find(a => a.nome === personagem.antecedente);

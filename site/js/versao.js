@@ -13,13 +13,68 @@
 // ============================================================
 
 /** Versão exibida no header e marcada como atual na lista de notas. */
-export const VERSAO_ATUAL = '3.0.5';
+export const VERSAO_ATUAL = '3.0.6';
 
 // Cada entrada é uma versão. `melhorias` e `correcoes` são listas de
 // grupos, e cada grupo tem um título curto e seus itens. O emoji do
 // grupo entra no próprio título -- é o que separa visualmente melhoria
 // de correção sem depender de cor.
 export const NOTAS_VERSAO = [
+  {
+    versao: '3.0.6',
+    data: '2026-09-17',
+    rotulo: 'Correções e idiomas',
+    resumo: 'Nome de armadura corrigido, truque do Ilusionista deixa de '
+      + 'sumir ao ser trocado, características ordenadas por nível na '
+      + 'ficha, e agora dá para adicionar ou remover idiomas depois da '
+      + 'criação.',
+    correcoes: [
+      {
+        grupo: '🐛 Correções',
+        itens: [
+          'O catálogo de armaduras guardava "Placas" e "Placas Parcial" '
+            + 'sem o prefixo "Armadura de", que é o nome completo do livro. '
+            + 'Corrigido para "Armadura de Placas" e "Armadura de Placas '
+            + 'Parcial". Personagens que já tinham a armadura equipada não '
+            + 'mudam sozinhos — só armaduras adicionadas depois desta '
+            + 'versão usam o nome novo. (#64)',
+          'Ilusionista: o truque de Ilusões Aprimoradas (Ilusão Menor, ou '
+            + 'o substituto escolhido por já conhecê-la) aparecia na aba '
+            + '"Truques" como um truque de classe comum, sem o selo de '
+            + 'travado que um truque de espécie tem. Clicar nele o '
+            + 'removia da ficha para sempre, deixando o personagem com um '
+            + 'truque a menos permanentemente. (#63)',
+        ],
+      },
+    ],
+    melhorias: [
+      {
+        grupo: '✨ Características por nível, não por seção',
+        itens: [
+          'O card "Características de Classe" (e o de Subclasse) parou de '
+            + 'separar Habilidades Ativas e Habilidades Passivas em duas '
+            + 'seções — a separação empurrava característica ativa de '
+            + 'nível alto para cima de passiva de nível baixo (ex.: '
+            + 'Assinatura Mágica do Mago, nível 20, aparecia acima de '
+            + 'Acadêmico, nível 2). Agora é uma lista única, na ordem em '
+            + 'que o livro apresenta; cada característica continua com o '
+            + 'selo Ativa/Passiva. (#60)',
+        ],
+      },
+      {
+        grupo: '✨ Idiomas editáveis',
+        itens: [
+          'O modal "Editar ficha" ganhou uma aba "Idiomas": marque ou '
+            + 'desmarque livremente qualquer idioma do catálogo do livro '
+            + '(Comuns e Raros), ou adicione qualquer outro nome pelo '
+            + 'campo de texto — útil para idiomas de suplementos ou '
+            + 'homebrew que não estão no catálogo. Sem limite de '
+            + 'quantidade: a regra de orçamento da criação vale só ali. '
+            + '(#58)',
+        ],
+      },
+    ],
+  },
   {
     versao: '3.0.5',
     data: '2026-09-15',

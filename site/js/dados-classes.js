@@ -320,6 +320,25 @@ export const PERICIAS = [
   { nome: "Sobrevivência", atributo: "Sabedoria" }
 ];
 
+// Idiomas Comuns (PHB 2024, Criação de Personagens): todo personagem
+// conhece Comum; antecedente/espécie concedem escolhas adicionais entre
+// estes. Fonte única -- creator/passo-detalhes.js (regra de criação) e
+// sheet/edicao.js (edição livre pós-criação, issue #58) importam daqui
+// para não divergir a lista em dois lugares.
+export const IDIOMAS_COMUNS = [
+  'Comum', 'Língua de Sinais Comum', 'Dracônico', 'Anão', 'Élfico',
+  'Gigante', 'Gnômico', 'Goblin', 'Pequenino', 'Orc'
+];
+
+// Idiomas Raros (PHB 2024, Criação de Personagens): secretos ou de outros
+// planos -- menos comuns no Plano Material. Nenhuma regra de criação os
+// concede por padrão; só entram na ficha por escolha manual ou
+// característica específica.
+export const IDIOMAS_RAROS = [
+  'Abissal', 'Celestial', 'Dialeto Obscuro', 'Druídico', 'Gíria dos Ladrões',
+  'Infernal', 'Primordial', 'Silvestre', 'Subcomum'
+];
+
 // Nomes legíveis dos atributos
 export const ATRIBUTOS_NOMES = {
   forca: "Força",
