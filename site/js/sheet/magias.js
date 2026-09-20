@@ -5,6 +5,7 @@
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
 import { ATRIBUTO_NOME_PARA_KEY, CLASSES_INFO } from '../dados-classes.js';
+import { renderExtra } from '../strixhaven/extras.js';
 import { getMagiasClasse, getMagiasPorCirculo } from '../db.js';
 import { abrirModal, bonusProficiencia, calcMod, escHtml, getBonusTruquesOrdem, getLimitesMagias, getMagiaPreparadas, mdParaHtml, semAcento, toast } from '../utils.js';
 import { getEstadoFuria } from './classes/barbaro.js';
@@ -43,7 +44,7 @@ import { abrirModalAdicionarTalento, abrirModalEditarIniciadoEmMagia } from './t
 // fonte única dos três baldes desta/deOutra/semClasse -- ver o comentário
 // de renderSecaoMagias, abaixo, para o "contador honesto" que esta função
 // substitui.
-import { preparadasPorClasse, truquesPorClasse } from '../regras-magia-classe.js';
+import { preparadasComExtrasPorClasse as preparadasPorClasse, truquesComExtrasPorClasse as truquesPorClasse } from '../regras-magia-classe.js';
 
 // `magiaContaNoLimite` e `magiaEhEspecial` moram em regras-origens-magia.js,
 // a fonte única das origens que o jogador não escolheu. Reexportados aqui
@@ -127,6 +128,7 @@ function reservaDoCirculo(circulo) {
 }
 
 export function rotuloOrigemMagia(magia) {
+  if (magia?.origem === 'extra') return 'Extra';
   if (magia?.origem === 'dominio') return 'Domínio';
   if (magia?.origem === 'sempre') return 'Sempre Preparada';
   if (magia?.origem === 'especie_legado') return 'Sempre Preparada';
@@ -162,7 +164,7 @@ export function normalizarMagiaPersonalizada(m, indice) {
     dano: String(magia.dano || ''),
     ritual: Boolean(magia.ritual),
     personalizada: true,
-    origem: 'Personalizada'
+    origem: magia.origem === 'extra' ? 'extra' : 'Personalizada'
   };
 }
 
@@ -209,7 +211,7 @@ export function fundirPreparadasComPersonalizadas(preparadas, personalizadas) {
   const absorvidas = new Set();
   const linhas = (preparadas || []).map(entrada => {
     const circulo = Number(entrada?.circulo) || 1;
-    const candidata = deCirculo.find(p => p.nome === entrada?.nome && p.circulo === circulo);
+    const candidata = deCirculo.find(p => p.origem !== 'extra' && p.nome === entrada?.nome && p.circulo === circulo);
     if (!candidata || absorvidas.has(candidata.indicePersonalizada)) return entrada;
     const ehFixaDoMago = ORIGENS_MAGIA_FIXA_MAGO.has(entrada?.origem);
     if (candidata.sempre_preparada !== false && !ehFixaDoMago) return entrada;
@@ -226,6 +228,7 @@ export function fundirPreparadasComPersonalizadas(preparadas, personalizadas) {
   });
   deCirculo.forEach(p => {
     if (absorvidas.has(p.indicePersonalizada)) return;
+    if (p.origem === 'extra') { linhas.push({ ...p, naoPreparada: !['preparada', 'sempre preparada'].includes(p.estado_extra) }); return; }
     linhas.push(p.sempre_preparada === false ? { ...p, naoPreparada: true } : p);
   });
   return linhas;
@@ -261,7 +264,7 @@ export function fundirTruquesComPersonalizados(conhecidos, personalizadas) {
   const truques = (personalizadas || []).filter(m => m.circulo === 0);
   const absorvidos = new Set();
   const linhas = (conhecidos || []).map(entrada => {
-    const candidata = truques.find(t => t.nome === entrada?.nome);
+    const candidata = truques.find(t => t.origem !== 'extra' && t.nome === entrada?.nome);
     if (!candidata || absorvidos.has(candidata.indicePersonalizada)) return entrada;
     if (candidata.sempre_preparada !== false) return entrada;
     absorvidos.add(candidata.indicePersonalizada);
@@ -272,6 +275,7 @@ export function fundirTruquesComPersonalizados(conhecidos, personalizadas) {
   });
   truques.forEach(t => {
     if (absorvidos.has(t.indicePersonalizada)) return;
+    if (t.origem === 'extra') { linhas.push({ ...t, naoConhecido: t.estado_extra === 'grimório' }); return; }
     linhas.push(t.sempre_preparada === false ? { ...t, naoConhecido: true } : t);
   });
   return linhas;
@@ -324,6 +328,7 @@ function renderDetalhesMagiaPersonalizada(magia) {
  * @returns {string} HTML da linha.
  */
 function renderLinhaMagiaPersonalizada(magia, indice) {
+  if (magia.origem === 'extra') return renderExtra(magia, char);
   const tags = [];
   if (magia.escola) tags.push(`<span class="magia-tag tag-escola">${escHtml(magia.escola)}</span>`);
   if (magia.tempo_conjuracao) {
@@ -577,7 +582,7 @@ export async function obterMagiasDisponiveisClasseAtual(opcoes = {}) {
   if (ehSubclasseConjuradora(opcoes)) {
     classeParaMagias = 'Mago';
   }
-  const magiasClasseData = await getMagiasClasse(classeParaMagias);
+  const magiasClasseData = await getMagiasClasse(classeParaMagias, char);
   const base = achatarMagiasClasse(magiasClasseData);
 
   // Combatente Druídico: incluir truques de Druida
@@ -714,7 +719,7 @@ export function renderSecaoMagias() {
   const magiasPersonalizadas = (char.magias_customizadas || []).map((magia, indice) => ({
     ...normalizarMagiaPersonalizada(magia, indice),
     indicePersonalizada: indice
-  }));
+  })).filter(m => m.origem !== 'extra');
   // Issues #50/#54/#74: os dois chips "Personalizadas" (magia e truque)
   // contam SO as que continuam sempre preparadas/conhecidas. A
   // `sempre_preparada:false` ocupa vaga de verdade e ja e contada no

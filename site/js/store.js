@@ -5,10 +5,11 @@ import { gerarId, normalizarGrimorioMago } from './utils.js';
 import { enfileirarSync, enfileirarRemocao } from './sync.js';
 import { criarCarteiraVazia, normalizarCarteira, definirTaxas, resetarTaxas } from './moedas.js';
 
-const STORAGE_KEY = 'dnd_personagens';
-const BACKUP_KEY = 'dnd_personagens_backup';
-const TAXAS_MOEDA_KEY = 'dnd_taxas_moeda';
-const COMPRAR_ATIVO_KEY = 'dnd_comprar_ativo_padrao';
+import { migrarAcademia } from './strixhaven/modelo.js';
+const STORAGE_KEY = 'strixhaven_2024_personagens';
+const BACKUP_KEY = 'strixhaven_2024_personagens_backup';
+const TAXAS_MOEDA_KEY = 'strixhaven_2024_taxas_moeda';
+const COMPRAR_ATIVO_KEY = 'strixhaven_2024_comprar_ativo_padrao';
 
 /** Preferencia global do usuario (todos os personagens): togle "Comprar" do seletor de itens vem marcado por padrao */
 export function carregarComprarAtivoPadrao() {
@@ -53,7 +54,9 @@ export function listarPersonagens() {
     const lista = dados ? JSON.parse(dados) : [];
     let grimorioAlterado = false;
     const personagens = lista.map(p => {
-      const personagem = migrarEdicoesLegado(migrarMoedasLegado(p));
+      const antes = JSON.stringify(p);
+      const personagem = migrarAcademia(migrarEdicoesLegado(migrarMoedasLegado(p)));
+      if (JSON.stringify(personagem) !== antes) grimorioAlterado = true;
       if (normalizarGrimorioMago(personagem).alterado) grimorioAlterado = true;
       return personagem;
     });
@@ -77,6 +80,7 @@ export function getPersonagem(id) {
 
 /** Salva ou atualiza um personagem */
 export function salvarPersonagem(personagem) {
+  migrarAcademia(personagem);
   const lista = listarPersonagens();
   const idx = lista.findIndex(p => p.id === personagem.id);
   personagem.atualizado_em = new Date().toISOString();
@@ -179,7 +183,8 @@ export function migrarMoedasLegado(p) {
 /** Adiciona metadados de edição sem alterar campos existentes da ficha. */
 export function migrarEdicoesLegado(p) {
   if (!p || typeof p !== 'object') return p;
-  if (!p.edicoes || p.edicoes.versao !== 1) p.edicoes = { versao: 1, campos: {} };
+  if (!p.edicoes || typeof p.edicoes !== 'object') p.edicoes = { versao: 1, campos: {} };
+  p.edicoes.versao ??= 1;
   if (!p.edicoes.campos || typeof p.edicoes.campos !== 'object') p.edicoes.campos = {};
   if (!p.configuracao_criacao || typeof p.configuracao_criacao !== 'object') p.configuracao_criacao = {};
   if (!p.configuracao_criacao.atributos) {
@@ -261,6 +266,7 @@ export function importarPersonagens(jsonStr) {
         console.warn('importarPersonagens: personagem ignorado (estrutura invalida)', p?.id ?? `indice ${i}`);
         continue;
       }
+      migrarAcademia(p);
       if (!lista.find(e => e.id === p.id)) {
         lista.push(p);
         countNovos++;
@@ -274,6 +280,15 @@ export function importarPersonagens(jsonStr) {
     console.error('Erro ao importar:', err);
     return -1;
   }
+}
+
+/** Cópia explícita da base local original, com backup intacto e sem apagar origem. */
+export function copiarFichasOriginais() {
+  const json = localStorage.getItem('dnd_personagens');
+  if (!json) return 0;
+  const backup = 'strixhaven_2024_backup_importacao_original';
+  if (!localStorage.getItem(backup)) localStorage.setItem(backup, json);
+  return importarPersonagens(json);
 }
 
 /** Cria template de personagem vazio */

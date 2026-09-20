@@ -3,16 +3,8 @@
 // Modulo opcional: se nao logado, tudo funciona via localStorage
 // ============================================================
 
-// Configuracao do projeto Firebase (produção)
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyBlk6l-yuMQpC080fOsN4NC4mB5pbyY7VA",
-  authDomain: "ded2024.firebaseapp.com",
-  projectId: "ded2024",
-  storageBucket: "ded2024.firebasestorage.app",
-  messagingSenderId: "360073497668",
-  appId: "1:360073497668:web:34377bc83947cbb7018011",
-  measurementId: "G-RET2BV4Z36"
-};
+import { CAMPANHA_CONFIG, sincronizacaoConfigurada } from './campanha-config.js';
+const FIREBASE_CONFIG = CAMPANHA_CONFIG.firebase;
 
 let _app = null;
 let _auth = null;
@@ -26,6 +18,7 @@ let _onAuthChangeCallbacks = [];
  * Carrega os scripts via importmap compat (ESM CDN).
  */
 async function inicializarFirebase() {
+  if (!sincronizacaoConfigurada()) return;
   if (_inicializado) return;
   try {
     // Importar Firebase App
@@ -70,6 +63,7 @@ export function firebaseDisponivel() {
 
 /** Login com Google via popup */
 export async function loginComGoogle() {
+  if (!sincronizacaoConfigurada()) throw new Error('Modo local: sincronização indisponível até configurar um projeto Firebase próprio.');
   await inicializarFirebase();
   if (!_auth) throw new Error('Firebase nao inicializado');
   const { signInWithPopup, GoogleAuthProvider } =

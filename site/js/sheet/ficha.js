@@ -6,6 +6,10 @@
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
 import { ATRIBUTOS_KEYS, ATRIBUTOS_NOMES, ATRIBUTO_NOME_PARA_KEY, CLASSES_INFO, PERICIAS } from '../dados-classes.js';
+import { renderAcademia, setupAcademia } from '../strixhaven/academia.js';
+import { setupExtras, renderExtrasDaFicha } from './extras.js';
+import { baixarPdfFicha } from './pdf.js';
+import { renderManual, setupManual } from './manual.js';
 import { XP_POR_NIVEL } from '../levelup.js';
 import { _renderSyncIndicadorHtml } from '../pages/sheet.js';
 import { conjuraPorAlgumaClasse } from '../regras-multiclasse-conjuracao.js';
@@ -255,12 +259,14 @@ export function renderFichaCompleta() {
 
   const container = containerRef;
   container.innerHTML = `
+    <nav class="sh-nav no-print" aria-label="Seções da ficha"><a href="#" data-sh-alvo="char-nome-display">Personagem</a><a href="#" data-sh-alvo="magias-extra-acoes">Magias</a><a href="#" data-sh-alvo="sh-inventario">Inventário</a><a href="#" data-sh-alvo="vida-academica">Vida acadêmica</a></nav>
     <!-- Cabeçalho do personagem -->
-    <div class="card">
+    <div class="card sh-personagem">
       <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:8px">
         <div style="display:flex;align-items:start;gap:10px;flex:1;min-width:0">
           <div style="flex:1;min-width:0">
             <h2 style="font-size:1.3rem;margin-bottom:2px" id="char-nome-display">${escHtml(char.nome) || 'Sem Nome'}</h2>
+            <p class="sh-selo">${escHtml(char.strixhaven?.faculdade || 'Faculdade ainda não definida')} · ${escHtml(char.strixhaven?.ano ?? 1)}º ano acadêmico</p>
             <div style="font-size:0.9rem;color:var(--text-muted)">
               ${/* classesDe: o cabecalho mostrava so a classe INICIAL, entao
                     uma ficha que exibe recursos de Barbaro dizia "Mago 10" --
@@ -1048,13 +1054,18 @@ export function renderFichaCompleta() {
       classes de verdade (regras-multiclasse-conjuracao.js), Magia de Pacto
       inclusive.
     -->
-    ${(conjuraPorAlgumaClasse(char) || getTruquesExtraEstiloLuta() > 0 || char.iniciado_em_magia?.lista || (char.iniciado_em_magia_instancias?.length > 0) || possuiAlgumaMagia(char)) ? renderSecaoMagias() : ''}
+    <div id="magias-extra-acoes" class="sh-acoes no-print"><button class="btn btn-accent" id="adicionar-magia-extra">Adicionar magia extra</button><span class="sh-selo">${(char.magias_customizadas || []).filter(m => m.origem === 'extra').length} concessões Extra</span></div>
+    ${(conjuraPorAlgumaClasse(char) || getTruquesExtraEstiloLuta() > 0 || char.iniciado_em_magia?.lista || (char.iniciado_em_magia_instancias?.length > 0) || possuiAlgumaMagia({ ...char, magias_customizadas: (char.magias_customizadas || []).filter(m => m.origem !== 'extra') })) ? renderSecaoMagias() : ''}
+    ${renderExtrasDaFicha()}
 
     <!-- Inventário -->
-    ${renderSecaoInventario()}
+    <div id="sh-inventario">${renderSecaoInventario()}</div>
 
     <!-- Detalhes pessoais -->
+    <button class="btn btn-secondary no-print" id="pdf-editavel">Exportar PDF editável (AcroForm)</button>
     ${renderSecaoDetalhes()}
+    ${renderManual()}
+    ${renderAcademia(char)}
 
     <!-- Ações da ficha -->
     <div class="card no-print mt-3">
@@ -1065,6 +1076,12 @@ export function renderFichaCompleta() {
   `;
 
   // --- Eventos ---
+  setupAcademia(char, containerRef, () => { salvar(); renderFichaCompleta(); });
+  setupExtras(containerRef);
+  setupManual(containerRef);
+  container.querySelector('#btn-print')?.addEventListener('click', () => baixarPdfFicha());
+  container.querySelector('#pdf-editavel')?.addEventListener('click', () => baixarPdfFicha(true));
+  container.querySelectorAll('[data-sh-alvo]').forEach(b => { b.onclick = e => { e.preventDefault(); document.getElementById(b.dataset.shAlvo)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }; });
   setupEventosHP();
   setupEventosDescanso();
   setupEventosEdicao();
@@ -1082,4 +1099,4 @@ export function renderFichaCompleta() {
 
   // Restaurar estado dos details
   restaurarEstadoDetails(estadoDetails);
-}
+}

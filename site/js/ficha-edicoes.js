@@ -5,9 +5,10 @@ export function clonar(valor) {
 }
 
 export function garantirEstadoEdicoes(personagem) {
-  if (!personagem.edicoes || personagem.edicoes.versao !== 1) {
+  if (!personagem.edicoes || typeof personagem.edicoes !== 'object') {
     personagem.edicoes = { versao: 1, campos: {} };
   }
+  personagem.edicoes.versao ??= 1;
   if (!personagem.edicoes.campos || typeof personagem.edicoes.campos !== 'object') {
     personagem.edicoes.campos = {};
   }

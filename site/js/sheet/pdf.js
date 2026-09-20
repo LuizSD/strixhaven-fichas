@@ -9,6 +9,7 @@ import { char, especiesCache, passivosTalentosCache } from './estado.js';
 import { classesDe } from '../regras-multiclasse.js';
 import { ehProficienteEmSalvaguarda } from '../regras-salvaguardas.js';
 import { gerarHtmlImpressao } from './impressao.js';
+import { gerarPdfEditavel } from '../strixhaven/exportacao.js';
 
 /* ===========================================================================
    GERACAO DE PDF (pdf-lib)
@@ -245,6 +246,9 @@ export function extrairBlocosDetalhe(html) {
       if (tx) blocos.push({ t: 'p', text: tx });
     }
   });
+  doc.querySelectorAll('.sh-impressao h2, .sh-impressao h3, .sh-impressao p').forEach(el => {
+    blocos.push({ t: el.tagName === 'H2' ? 'h2' : el.tagName === 'H3' ? 'name' : 'p', text: limpar(el.textContent) });
+  });
   return blocos;
 }
 /** Quebra texto em linhas que cabem em maxW, medindo com a fonte. */
@@ -254,6 +258,16 @@ function _quebrarLinhas(text, font, size, maxW) {
     const palavras = paragrafo.split(/\s+/).filter(Boolean);
     let cur = '';
     for (const w of palavras) {
+      // URLs, IDs e palavras extensas também precisam continuar na próxima
+      // linha; antes uma palavra maior que a página ultrapassava a margem.
+      if (font.widthOfTextAtSize(w, size) > maxW) {
+        if (cur) { linhas.push(cur); cur = ''; }
+        for (const letra of w) {
+          if (cur && font.widthOfTextAtSize(cur + letra, size) > maxW) { linhas.push(cur); cur = ''; }
+          cur += letra;
+        }
+        continue;
+      }
       const teste = cur ? cur + ' ' + w : w;
       if (font.widthOfTextAtSize(teste, size) > maxW && cur) { linhas.push(cur); cur = w; }
       else cur = teste;
@@ -460,7 +474,7 @@ async function _renderizarPdf(PDFLib, dados, detalhes) {
   const fontB = await doc.embedFont(StandardFonts.HelveticaBold);
   const W = 595.28, H = 841.89, M = 36;
   const C = {
-    maroon: rgb(0.482, 0.176, 0.149),
+    maroon: rgb(0.08, 0.17, 0.27),
     white: rgb(1, 1, 1),
     subWhite: rgb(0.93, 0.9, 0.88),
     ink: rgb(0.13, 0.13, 0.13),
@@ -494,10 +508,25 @@ async function gerarPdfFicha() {
  * standalone o link abre o PDF no visor nativo (com botao de compartilhar), sem
  * os bloqueios de print/share do container.
  */
-export async function baixarPdfFicha() {
+function resumoParaFormulario(dados) {
+  // Os dados brutos continuam nas páginas seguintes; o resumo usa rótulos
+  // humanos, em vez de campos separados para cada nome/flag de apresentação.
+  const proficiencia = r => `${r.bonus}${r.exp ? ' · Especialização' : r.prof ? ' · Proficiente' : ''}`;
+  return {
+    nome: dados.nome, identidade: dados.sub,
+    combate: Object.fromEntries(dados.stats.map(r => [r.label, r.value])),
+    atributos: Object.fromEntries(dados.atributos.map(r => [r.nome, `${r.val} · modificador ${r.mod}`])),
+    salvaguardas: Object.fromEntries(dados.saves.map(r => [r.nome, proficiencia(r)])),
+    pericias: Object.fromEntries(dados.pericias.map(r => [r.nome, proficiencia(r)])),
+    sentidos: dados.sentidos.join('; '), defesas: dados.defesas.join('; '), equipamento: dados.equipado.join('; '),
+  };
+}
+
+/** Entrega um PDF local, descritivo ou AcroForm, sem enviar a ficha a servidores. */
+export async function baixarPdfFicha(editavel = false) {
   toast('Gerando PDF...', 'info');
   try {
-    const bytes = await gerarPdfFicha();
+    const bytes = editavel ? await gerarPdfEditavel({ resumo_calculado: resumoParaFormulario(_montarDadosCartao()), ...char }, await carregarPdfLib()) : await gerarPdfFicha();
     const blob = new Blob([bytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     const nome = `Ficha ${char.nome || 'personagem'}.pdf`.replace(/[\\/:*?"<>|]/g, '-');
@@ -514,4 +543,3 @@ export async function baixarPdfFicha() {
     toast('Erro ao gerar PDF', 'danger');
   }
 }
-

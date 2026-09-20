@@ -4,6 +4,7 @@
 // ============================================================
 import { ATRIBUTOS_KEYS, ATRIBUTOS_NOMES, PERICIAS } from '../dados-classes.js';
 import { getMagiasPorCirculo } from '../db.js';
+import { htmlComplemento } from '../strixhaven/exportacao.js';
 import { formatarCarteira, totalEmCobre } from '../moedas.js';
 import { bonusProficiencia, calcBonusPericia, calcCA, calcIntuicaoPassiva, calcInvestigacaoPassiva, calcMod, calcPercepcaoPassiva, conjuracoesPorClasse, escHtml, fmtMod, getDeslocamento, getTamanho, mdParaHtml, toast } from '../utils.js';
 import { SUBTRACOS_ESPECIE, gerarTracoSinteticoEspecie } from './caracteristicas.js';
@@ -185,12 +186,13 @@ function htmlMagiaImpressao(nome, circulo, cacheMagias, origemExtra) {
 
 function htmlMagiaPersonalizadaImpressao(registro) {
   const magia = normalizarMagiaPersonalizada(registro);
-  const meta = [magia.escola, magia.tempo_conjuracao, magia.alcance, magia.componentes, magia.duracao]
+  const meta = [magia.escola, magia.tempo_conjuracao, magia.alcance, magia.componentes, magia.duracao,
+    ...(magia.origem === 'extra' ? ['Regra da mesa', magia.estado_extra, magia.sempre_preparada === false ? 'Ocupa vaga' : 'Não ocupa vaga'] : [])]
     .filter(Boolean)
     .map(escHtml)
     .join(' | ');
   const badges = [
-    '<span style="font-weight:400;font-size:7pt;color:#666">(Personalizada)</span>',
+    `<span style="font-weight:400;font-size:7pt;color:#666">(${magia.origem === 'extra' ? 'Extra' : 'Personalizada'})</span>`,
     magia.ritual ? '<span style="font-weight:400;font-size:7pt;color:#666">(Ritual)</span>' : ''
   ].filter(Boolean).join(' ');
   const dano = magia.dano
@@ -730,7 +732,8 @@ export async function gerarHtmlImpressao() {
     // entra no PDF -- imprimi-lo diria que ele está pronto, o que não é
     // verdade até o jogador voltar a marcá-lo.
     const personalizadasDoPdf = (char.magias_customizadas || [])
-      .map((m, indice) => ({ ...normalizarMagiaPersonalizada(m, indice), indicePersonalizada: indice }));
+      .map((m, indice) => ({ ...normalizarMagiaPersonalizada(m, indice), indicePersonalizada: indice }))
+      .filter(m => m.origem !== 'extra');
     const truquesFundidos = fundirTruquesComPersonalizados(
       (char.magias_conhecidas || []).filter(m => m.circulo === 0),
       personalizadasDoPdf
@@ -780,7 +783,8 @@ export async function gerarHtmlImpressao() {
     // Magias preparadas por circulo
     const preparadas = char.magias_preparadas || [];
     const personalizadasDaFicha = (char.magias_customizadas || [])
-      .map((m, indice) => ({ ...normalizarMagiaPersonalizada(m, indice), indicePersonalizada: indice }));
+      .map((m, indice) => ({ ...normalizarMagiaPersonalizada(m, indice), indicePersonalizada: indice }))
+      .filter(m => m.origem !== 'extra');
     const preparadasPorCirculo = {};
     // Issue #71: personalizada "ocupa vaga" sem entrada gravada ainda
     // (`naoPreparada`) fica FORA do PDF -- imprimi-la junto das preparadas
@@ -897,7 +901,7 @@ export async function gerarHtmlImpressao() {
     html += `<div class="print-page">${pagFinal}</div>`;
   }
 
-  return html;
+  return html + htmlComplemento(char);
 }
 
 /**

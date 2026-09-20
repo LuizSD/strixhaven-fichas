@@ -1,8 +1,11 @@
 // Service Worker para PWA D&D 5.5 Ficha de Personagem
 // CACHE_VERSION é substituído automaticamente pelo número do run do GitHub Actions a cada deploy
 const CACHE_VERSION = 0; // AUTO
-const CACHE_STATIC = `dnd-ficha-static-v${CACHE_VERSION}`;
-const CACHE_DATA = `dnd-ficha-data-v${CACHE_VERSION}`;
+const CACHE_PREFIX = `strixhaven-2024-${self.registration.scope}-`;
+const CACHE_STATIC = `${CACHE_PREFIX}static-r3-v${CACHE_VERSION}`;
+const CACHE_DATA = `${CACHE_PREFIX}data-r3-v${CACHE_VERSION}`;
+// Fallbacks abaixo abrem estes caches explicitamente. caches.match() global
+// poderia executar JS de um cache legado preservado, inclusive o Firebase do autor.
 
 // Arquivos estáticos do site (versionados pelo cache)
 const STATIC_ASSETS = [
@@ -10,6 +13,12 @@ const STATIC_ASSETS = [
   './index.html',
   './manifest.json',
   './css/app.css',
+  './css/strixhaven.css',
+  './img/strixhaven.svg',
+  './img/strixhaven-192.png',
+  './img/strixhaven-512.png',
+  './img/ornamento-strixhaven.svg',
+  './js/campanha-config.js',
   './js/app.js',
   './js/db.js',
   './js/store.js',
@@ -99,7 +108,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((keys) => {
       return Promise.all(
         keys
-          .filter((k) => k !== CACHE_STATIC && k !== CACHE_DATA)
+          .filter((k) => k.startsWith(CACHE_PREFIX) && k !== CACHE_STATIC && k !== CACHE_DATA)
           .map((k) => caches.delete(k))
       );
     }).then(() => self.clients.claim())
@@ -115,7 +124,7 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'CLEAR_CACHES') {
     event.waitUntil(
       caches.keys().then((keys) => {
-        return Promise.all(keys.map((k) => caches.delete(k)));
+        return Promise.all(keys.filter(k => k.startsWith(CACHE_PREFIX)).map((k) => caches.delete(k)));
       })
     );
   }
@@ -157,8 +166,9 @@ self.addEventListener('fetch', (event) => {
         cache.put(request, fresh.clone());
         return fresh;
       } catch {
-        return (await caches.match(request))
-          || (await caches.match('./index.html'))
+        const cache = await caches.open(CACHE_STATIC);
+        return (await cache.match(request))
+          || (await cache.match('./index.html'))
           || new Response(
             '<!doctype html><meta charset="utf-8"><title>Offline</title>'
             + '<p>App indisponivel offline. Abra online uma vez para instalar.</p>',
@@ -180,7 +190,7 @@ self.addEventListener('fetch', (event) => {
         }
         return fresh;
       } catch {
-        return (await caches.match(request))
+        return (await (await caches.open(CACHE_DATA)).match(request))
           || new Response('null', { status: 200, headers: { 'Content-Type': 'application/json' } });
       }
     })());
@@ -198,7 +208,7 @@ self.addEventListener('fetch', (event) => {
         }
         return fresh;
       } catch {
-        return (await caches.match(request))
+        return (await (await caches.open(CACHE_STATIC)).match(request))
           || new Response('', { status: 504, statusText: 'Offline' });
       }
     })());
@@ -210,7 +220,7 @@ self.addEventListener('fetch', (event) => {
     try {
       return await fetch(request);
     } catch {
-      return (await caches.match(request))
+      return (await (await caches.open(CACHE_STATIC)).match(request))
         || new Response('', { status: 504, statusText: 'Offline' });
     }
   })());

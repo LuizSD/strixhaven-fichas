@@ -83,14 +83,11 @@ test('ficha: a composição do modo manual declara o ganho de nível e soma o to
   expect(soma, `os termos de "${composicao}" deveriam somar o total exibido (17)`).toBe(17);
 });
 
-test('ficha: o modo manual grampeia (não recusa) o valor digitado acima de 20', async ({ context }) => {
+test('ficha: a exceção explícita da mesa preserva o valor acima de 20 e identifica o ajuste', async ({ context }) => {
   const { page } = await abrirEdicaoManual(context, 'regras-edicao-manual-2');
 
-  // O `max` do input impede a digitação em navegador; o `change` do módulo
-  // GRAMPEIA o valor em 20 -- não há recusa nem toast, o campo é corrigido
-  // silenciosamente. A força da semente é 12, então o grampeio em 20 tem de
-  // se refletir também no delta manual gravado (+8), prova de que o 20
-  // salvo veio desse grampeio e não de outro caminho.
+  // Perfil da adaptação: o fluxo normal mantém o teto. Só a edição manual
+  // explicitamente escolhida aceita exceções, sem correção silenciosa.
   await page.fill('[data-edicao-manual-atributo="forca"]', '25');
   await page.locator('[data-edicao-manual-atributo="forca"]').dispatchEvent('change');
   await assentar(page).catch(() => {});
@@ -98,9 +95,9 @@ test('ficha: o modo manual grampeia (não recusa) o valor digitado acima de 20',
   await page.waitForTimeout(400);
 
   const salvo = await personagemSalvo(page);
-  expect(salvo?.atributos?.forca, 'o teto de 20 tem de segurar mesmo no modo sem regras').toBe(20);
+  expect(salvo?.atributos?.forca, 'a exceção manual deve preservar o inteiro digitado').toBe(25);
   expect(salvo?.edicoes?.campos?.atributos?.manual?.forca,
-    'o delta manual gravado deveria refletir o valor grampeado (12 -> 20), não os 25 digitados').toBe(8);
+    'o delta manual deve refletir 12 -> 25 e continuar reversível').toBe(13);
 });
 
 test('ficha: o método da criação continua acessível ao lado do modo manual', async ({ context }) => {

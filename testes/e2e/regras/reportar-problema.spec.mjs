@@ -26,12 +26,21 @@ import { abrirSite } from './helpers-regras.mjs';
 const AQUI = dirname(fileURLToPath(import.meta.url));
 const DIR_TEMPLATES = resolve(AQUI, '..', '..', '..', '.github', 'ISSUE_TEMPLATE');
 
+/** Configuração própria simulada somente na resposta local do módulo; não acessa o GitHub. */
+async function configurarFork(context) {
+  await context.route('**/js/campanha-config.js', route => route.fulfill({
+    contentType: 'application/javascript',
+    body: "export const CAMPANHA_CONFIG = { repositorio: 'https://github.com/usuario-teste/fork-strixhaven', firebase: null }; export function sincronizacaoConfigurada() { return false; }",
+  }));
+}
+
 /** Nome do arquivo de template pedido por um link `issues/new?template=…`. */
 function templateDoLink(href) {
   return new URL(href).searchParams.get('template');
 }
 
 test('botão 🐛: abre o modal com os links de issue do GitHub', async ({ context }) => {
+  await configurarFork(context);
   const { page, erros } = await abrirSite(context);
 
   await page.locator('#btn-reportar-bug').click();
@@ -48,21 +57,22 @@ test('botão 🐛: abre o modal com os links de issue do GitHub', async ({ conte
   // Os três apontam para o repositório público, em aba nova e sem vazar
   // o `window.opener` para o site de destino.
   for (const link of [bug, sugestao, lista]) {
-    await expect(link).toHaveAttribute('href', /github\.com\/ZaitBr-bit\/D-D_2024/);
+    await expect(link).toHaveAttribute('href', /github\.com\/usuario-teste\/fork-strixhaven/);
     await expect(link).toHaveAttribute('target', '_blank');
     await expect(link).toHaveAttribute('rel', /noopener/);
   }
 
-  // O Reddit continua como alternativa para quem não tem conta no GitHub.
+  // Crédito ao original é separado do suporte do fork.
   await expect(
-    page.locator('#modal-corpo a[href*="reddit.com"]'),
-    'o Reddit deveria continuar disponível como alternativa'
-  ).toHaveCount(2);
+    page.locator('#modal-corpo a[href="https://github.com/ZaitBr-bit/D-D_2024"]'),
+    'o crédito original deve permanecer separado'
+  ).toHaveCount(1);
 
   expect(erros, `erros de console/página: ${erros.join('; ')}`).toEqual([]);
 });
 
 test('botão 🐛: os links citam templates que existem e mandam a versão atual', async ({ context }) => {
+  await configurarFork(context);
   const { page } = await abrirSite(context);
 
   await page.locator('#btn-reportar-bug').click();
@@ -82,4 +92,11 @@ test('botão 🐛: os links citam templates que existem e mandam a versão atual
   // A versão manual do site chega pré-preenchida no campo `versao` do
   // formulário -- o mesmo id declarado em bug.yml.
   expect(new URL(hrefBug).searchParams.get('versao')).toBe(VERSAO_ATUAL);
+});
+
+test('sem URL própria: informa indisponibilidade e não direciona bugs ao autor original', async ({ context }) => {
+  const { page } = await abrirSite(context);
+  await page.locator('#btn-reportar-bug').click();
+  await expect(page.locator('#modal-corpo')).toContainText('ainda não foi configurado');
+  await expect(page.locator('#link-issue-bug')).toHaveCount(0);
 });

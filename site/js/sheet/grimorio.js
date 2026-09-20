@@ -5,7 +5,8 @@
 // de espaco livre.
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
-import { getIndiceMagias, getMagiasPorCirculo } from '../db.js';
+import { getIndiceMagias, getMagiasPorCirculo, getListaExpandidaStrixhaven } from '../db.js';
+import { camposExtra, campoExtraSemTeste, lerExtra } from '../strixhaven/extras.js';
 import { VALOR_EM_COBRE, formatarCarteira, podePagar, retirarValor } from '../moedas.js';
 import { abrirModal, escHtml, getBonusTruquesOrdem, getEspacosMagia, getLimitesMagias, magiaMagoEstaNoGrimorio, mdParaHtml, semAcento, toast } from '../utils.js';
 import { montarSeletor } from '../ui-opcoes.js';
@@ -47,7 +48,7 @@ import { nivelNa } from '../regras-multiclasse.js';
 // reimplementar contando char.magias_preparadas cru contra o limite de UMA
 // superficie -- ver o comentario de mostrarBuscaMagia, abaixo, para o antes
 // e depois.
-import { preparadasPorClasse, truquesPorClasse } from '../regras-magia-classe.js';
+import { preparadasPorClasse, truquesPorClasse, preparadasComExtrasPorClasse, truquesComExtrasPorClasse } from '../regras-magia-classe.js';
 
 // Issue #46: aqui vivia `personalizadasDeCirculoDaFicha`, a lista de
 // `char.magias_customizadas` de círculo 1+ no formato de cartão. As duas
@@ -89,7 +90,7 @@ import { preparadasPorClasse, truquesPorClasse } from '../regras-magia-classe.js
  */
 function magiaPersonalizadaDaFicha(personagem, nome, circulo) {
   return (personagem?.magias_customizadas || [])
-    .find(m => m?.nome === nome && Number(m?.circulo) === Number(circulo));
+    .find(m => m?.origem !== 'extra' && m?.nome === nome && Number(m?.circulo) === Number(circulo));
 }
 
 /**
@@ -267,7 +268,7 @@ export async function mostrarBuscaMagia() {
   // (`preparadasNormais.length = 0; ...push(...)`) -- os fechamentos que a
   // leem (renderTab, os handlers de clique) enxergam o valor atual porque
   // todos vivem no mesmo escopo léxico desta função.
-  let classificacaoAtiva = preparadasPorClasse(char, sup?.classe);
+  let classificacaoAtiva = preparadasComExtrasPorClasse(char, sup?.classe);
   // truquesPorClasse: o MESMO movimento, agora para TRUQUES. Até aqui o
   // portão de truque era o último a ainda usar o proxy `umaSuperficieSo`,
   // e o comentário dele dizia "AQUI NÃO EXISTE PROXY HONESTO -- truque não
@@ -277,7 +278,7 @@ export async function mostrarBuscaMagia() {
   // jeito que a magia de círculo já carimbava. Com contagem certa o portão
   // volta a valer sempre; com ficha antiga (sem carimbo) a incerteza fica
   // visível e não vira bloqueio -- mesma regra das preparadas.
-  let classificacaoTruques = truquesPorClasse(char, sup?.classe);
+  let classificacaoTruques = truquesComExtrasPorClasse(char, sup?.classe);
   // Classes "conhecidas" (Bardo, Bruxo, Feiticeiro) e subclasses conjuradoras: somente consulta
   const somenteConsulta = tipoConj === 'conhecidas';
 
@@ -520,7 +521,7 @@ export async function mostrarBuscaMagia() {
       // Para classe única `deOutra` é sempre vazio -- nada muda para a
       // maioria dos personagens.
       const especiais = (char.magias_preparadas || []).filter(m => magiaEhEspecial(m));
-      const normais = [...classificacaoAtiva.desta, ...classificacaoAtiva.semClasse];
+      const normais = [...classificacaoAtiva.desta, ...classificacaoAtiva.semClasse].filter(m => m.origem !== 'extra');
       const filtradas = termo.length >= 2 ? normais.filter(m => semAcento(m.nome).includes(termo)) : normais;
       const filtradasDom = termo.length >= 2 ? especiais.filter(m => semAcento(m.nome).includes(termo)) : especiais;
 
@@ -1002,11 +1003,11 @@ export async function mostrarBuscaMagia() {
     // truque antigo de mutar `preparadasNormais` em lugar (`.length = 0` +
     // `push`): reatribuir o `let` de fora já é visto por renderTab e pelos
     // handlers de clique, que vivem no mesmo escopo léxico.
-    classificacaoAtiva = preparadasPorClasse(char, sup?.classe);
+    classificacaoAtiva = preparadasComExtrasPorClasse(char, sup?.classe);
     // Mesmo motivo da linha acima: os fechamentos (renderTab, handlers de
     // clique) leem esta variável do escopo léxico, então reatribuir aqui
     // já é visto por todos.
-    classificacaoTruques = truquesPorClasse(char, sup?.classe);
+    classificacaoTruques = truquesComExtrasPorClasse(char, sup?.classe);
 
     // Contador de truques: `desta` (os carimbados com a classe da
     // superfície ativa), não mais a soma global de todas as classes.
@@ -1128,7 +1129,7 @@ function abrirEscolhaVagaParaLiberar(sup, ehTruque, aoLiberar) {
       <div class="info-box error" style="font-size:0.85rem">
         Seu limite de ${rotuloItem}${rotuloClasse} já está cheio, e não há nenhum ${rotuloItemSingular}
         para liberar por aqui. ${ehTruque ? 'Troque um truque em "Preparar Magias"' : 'Desprepare uma magia em "Preparar Magias"'}
-        primeiro, ou deixe ${ehTruque ? 'este truque sempre conhecido' : 'esta magia sempre preparada'}.
+        primeiro, ou deixe ${ehTruque ? 'este truque sempre conhecido' : 'esta magia sempre preparada'}. Para extras, marque “Não ocupa vaga” no editor da concessão extra.
       </div>
     `, '<button class="btn btn-primary" onclick="fecharModal()">Entendi</button>');
     return;
@@ -1161,10 +1162,13 @@ function abrirEscolhaVagaParaLiberar(sup, ehTruque, aoLiberar) {
   });
 }
 
-export async function mostrarFormMagiaCustom(indiceEdicao = null) {
+export async function mostrarFormMagiaCustom(indiceEdicao = null, opcoesExtra = null) {
+  const personagemAlvo = opcoesExtra?.personagem || char;
+  const extra = !!opcoesExtra || personagemAlvo.magias_customizadas?.[indiceEdicao]?.origem === 'extra';
+  const concluirExtra = opcoesExtra?.concluir || (() => { salvar(); renderFichaCompleta(); });
   const magiaExistente = Number.isInteger(indiceEdicao)
-    ? (char.magias_customizadas || [])[indiceEdicao]
-    : null;
+    ? (personagemAlvo.magias_customizadas || [])[indiceEdicao]
+    : opcoesExtra?.inicial || null;
   if (Number.isInteger(indiceEdicao) && !magiaExistente) return;
   let indice = null;
   try {
@@ -1197,7 +1201,8 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     ${valores.map(valor => `<option value="${escHtml(valor)}">${escHtml(valor)}</option>`).join('')}
     <option value="__personalizado__">Personalizado…</option>`;
 
-  abrirModal(magiaExistente ? 'Editar Magia Personalizada' : 'Magia Personalizada', `
+  abrirModal(extra ? 'Magia extra · editor manual' : magiaExistente ? 'Editar Magia Personalizada' : 'Magia Personalizada', `
+    ${extra ? camposExtra(magiaExistente || {}, personagemAlvo) + campoExtraSemTeste(magiaExistente || {}) : ''}
     <div class="form-group">
       <label class="form-label" for="mc-nome">Nome</label>
       <input type="text" class="form-input" id="mc-nome" placeholder="Nome da magia">
@@ -1294,6 +1299,11 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
     const explicacao = document.getElementById('mc-sempre-preparada-explicacao');
     if (rotulo) rotulo.textContent = circulo === 0 ? 'Sempre conhecido (não ocupa vaga)' : 'Sempre preparada (não ocupa vaga)';
     if (explicacao) {
+      if (extra) {
+        rotulo.textContent = 'Não ocupa vaga (desmarque para ocupar a cota selecionada)';
+        explicacao.textContent = 'O estado conhecida/grimório/preparada é independente desta cota. Não concede usos ou espaços.';
+        return;
+      }
       explicacao.textContent = circulo === 0
         ? 'Marcado (padrão): o truque fica sempre pronto, fora do limite de truques da sua classe — como hoje. '
           + 'Desmarcado: ele entra na sua lista de truques conhecidos e ocupa uma vaga de verdade, como um truque do livro.'
@@ -1389,7 +1399,7 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
       ? (document.getElementById('mc-gatilho-reacao')?.value?.trim() || '')
       : '';
     const tempoConjuracao = gatilhoReacao ? `${tempoBase}, ${gatilhoReacao}` : tempoBase;
-    if (!tempoConjuracaoMagiaValido(tempoConjuracao)) {
+    if ((!extra && !tempoConjuracaoMagiaValido(tempoConjuracao)) || !tempoConjuracao) {
       toast('Informe um tempo de conjuração válido para uma magia (por exemplo: Ação, Ação Bônus, Reação, 1 minuto ou 1 hora).', 'error');
       return;
     }
@@ -1416,8 +1426,9 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
 
     const circuloSalvo = parseInt(document.getElementById('mc-circulo')?.value) || 0;
     const semprePreparadaMarcada = document.getElementById('mc-sempre-preparada')?.checked !== false;
-    if (!char.magias_customizadas) char.magias_customizadas = [];
+    if (!personagemAlvo.magias_customizadas) personagemAlvo.magias_customizadas = [];
     const magiaSalva = {
+      ...(magiaExistente || {}),
       nome,
       circulo: circuloSalvo,
       escola,
@@ -1434,8 +1445,22 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
       // preencheria toda ficha nova com uma chave que nao muda nada.
       // Comentario do usuario na issue #74: truque (circulo 0) passou a
       // valer tambem -- antes so magia de circulo 1+ entrava aqui.
-      ...(!semprePreparadaMarcada ? { sempre_preparada: false } : {}),
+      sempre_preparada: semprePreparadaMarcada,
     };
+    if (extra) {
+      try {
+        Object.assign(magiaSalva, lerExtra(magiaExistente, personagemAlvo));
+        if (magiaSalva.sempre_preparada === false && !magiaSalva.classe) {
+          toast('Para ocupar vaga, escolha a classe da cota; ou mantenha “Não ocupa vaga”.', 'error'); return;
+        }
+        // Cota pode ser atribuída a uma classe existente; não inventa classe para não conjuradores.
+        const lista = personagemAlvo.magias_customizadas;
+        const idx = Number.isInteger(indiceEdicao) ? lista.findIndex(m => m.id === magiaExistente.id) : -1;
+        if (idx >= 0) lista[idx] = magiaSalva; else lista.push(magiaSalva);
+        window.fecharModal(); concluirExtra();
+      } catch (e) { toast(e.message, 'error'); }
+      return;
+    }
     const nomeAnterior = magiaExistente?.nome;
     const circuloAnterior = magiaExistente ? (Number(magiaExistente.circulo) || 0) : null;
 
@@ -1474,13 +1499,13 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
         if (semLimiteConhecido) return true;
         const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj);
         const maxTruq = limites.truques + getTruquesExtraEstiloLuta() + getBonusTruquesOrdem(char, sup.classe);
-        const classificacao = truquesPorClasse(char, sup.classe);
+        const classificacao = truquesComExtrasPorClasse(char, sup.classe);
         return classificacao.desta.length < maxTruq;
       }
       if (ehMagoAgora) return true;
       if (semLimiteConhecido) return true;
       const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj);
-      const classificacao = preparadasPorClasse(char, sup.classe);
+      const classificacao = preparadasComExtrasPorClasse(char, sup.classe);
       return classificacao.desta.length < limites.preparadas;
     };
 
@@ -1714,7 +1739,8 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null) {
 /** Busca de magia para copiar no Grimório do Mago */
 export async function mostrarBuscaGrimorio() {
   const indice = await getIndiceMagias();
-  const magiasDoAcervo = (indice?.magias || []).filter(m => m.circulo > 0 && (m.classes || []).includes('Mago'));
+  const expandida = await getListaExpandidaStrixhaven(char);
+  const magiasDoAcervo = (indice?.magias || []).filter(m => m.circulo > 0 && ((m.classes || []).includes('Mago') || expandida.includes(m.nome)));
   // Issue #46: a magia customizada saiu daqui. Ela é SEMPRE preparada e
   // derivada de `char.magias_customizadas`; copiá-la para o grimório por
   // 50 PO/círculo não compra mais nada, e deixaria duas linhas da mesma
@@ -2541,6 +2567,7 @@ export async function abrirEscolhaMagiasFixasMago(tipo) {
   const chavesNoGrimorio = new Set(grimorio.map(m => `${m?.nome}|${Number(m?.circulo) || 0}`));
   const personalizadasPorChave = new Map(
     (Array.isArray(char.magias_customizadas) ? char.magias_customizadas : [])
+      .filter(m => m?.origem !== 'extra')
       .map(m => [`${m?.nome}|${Number(m?.circulo) || 0}`, m])
   );
   const personalizadasDeCirculo = [...personalizadasPorChave.values()]

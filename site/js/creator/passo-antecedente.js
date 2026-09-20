@@ -94,10 +94,10 @@ export function _reconstruirTalentosBase() {
 export function _consolidarFerramentaAntecedente() {
   // Remover a contribuição do antecedente anterior, se houver, antes de recalcular
   if (dadosCache.ferramentaAntecedenteAtual) {
-    const { valor, campo } = dadosCache.ferramentaAntecedenteAtual;
+    const { valor, campo, adicionada } = dadosCache.ferramentaAntecedenteAtual;
     const arr = campo === 'instrumento_escolhido' ? personagem.proficiencias_instrumentos : personagem.proficiencias_ferramentas;
     const idx = arr ? arr.indexOf(valor) : -1;
-    if (idx >= 0) arr.splice(idx, 1);
+    if (idx >= 0 && adicionada !== false) arr.splice(idx, 1);
     dadosCache.ferramentaAntecedenteAtual = null;
   }
 
@@ -111,7 +111,7 @@ export function _consolidarFerramentaAntecedente() {
   let valor, campo;
   if (antEscolha) {
     valor = personagem.escolhas_antecedente?.[antEscolha.campo] || null;
-    campo = antEscolha.campo;
+    campo = antEscolha.instrumentos?.includes(valor) ? 'instrumento_escolhido' : antEscolha.campo;
   } else {
     valor = ant?.ferramentas?.trim() || null;
     campo = 'ferramenta_escolhida';
@@ -121,8 +121,9 @@ export function _consolidarFerramentaAntecedente() {
   if (!personagem.proficiencias_ferramentas) personagem.proficiencias_ferramentas = [];
   if (!personagem.proficiencias_instrumentos) personagem.proficiencias_instrumentos = [];
   const destino = campo === 'instrumento_escolhido' ? personagem.proficiencias_instrumentos : personagem.proficiencias_ferramentas;
-  if (!destino.includes(valor)) destino.push(valor);
-  dadosCache.ferramentaAntecedenteAtual = { valor, campo };
+  const adicionada = !destino.includes(valor);
+  if (adicionada) destino.push(valor);
+  dadosCache.ferramentaAntecedenteAtual = { valor, campo, adicionada };
 }
 
 function abrirPopupAntecedente(nome) {
@@ -212,7 +213,7 @@ function abrirPopupAntecedente(nome) {
   document.getElementById('popup-confirmar-antecedente')?.addEventListener('click', () => {
     // Validar escolhas de antecedente (ferramenta/instrumento)
     const antEscolha = ANTECEDENTES_ESCOLHAS[nome];
-    if (antEscolha && !personagem.escolhas_antecedente?.[antEscolha.campo]) {
+    if (antEscolha && !antEscolha.opcoes.includes(personagem.escolhas_antecedente?.[antEscolha.campo])) {
       toast(`Selecione ${antEscolha.titulo}`, 'error');
       return;
     }
@@ -232,6 +233,7 @@ function abrirPopupAntecedente(nome) {
       if (!personagem.escolhas_talento) personagem.escolhas_talento = {};
       personagem.escolhas_talento.antecedente = vals;
     }
+    const escolhaConfirmada = antEscolha ? personagem.escolhas_antecedente?.[antEscolha.campo] : null;
     // Se mudou de antecedente, limpar dados especificos do anterior
     if (personagem.antecedente && personagem.antecedente !== nome) {
       personagem.bonus_antecedente = {};
@@ -245,6 +247,10 @@ function abrirPopupAntecedente(nome) {
       delete dadosCache.bonus111;
     }
     personagem.antecedente = nome;
+    if (antEscolha && escolhaConfirmada) {
+      personagem.escolhas_antecedente ||= {};
+      personagem.escolhas_antecedente[antEscolha.campo] = escolhaConfirmada;
+    }
 
     // Aplicar pericias do antecedente
     dadosCache.pericias_antecedente = pericias;
@@ -276,4 +282,4 @@ function abrirPopupAntecedente(nome) {
     const wizContent = document.getElementById('wizard-content');
     if (wizContent) renderStepAntecedente(wizContent);
   });
-}
+}

@@ -251,6 +251,4 @@ export const GATILHOS_SEM_COBERTURA = [
   'paladino-subclasse-acao=gloria_lenda_viva',
   'paladino-subclasse-acao=vinganca_anjo_vingador',
   'paladino-subclasse-acao=vinganca_voto_inimizade',
-  'sortudo-acao=desvantagem',
-  'sortudo-acao=vantagem',
 ];

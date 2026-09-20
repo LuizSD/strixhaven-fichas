@@ -489,6 +489,9 @@ export function setupEventosHP() {
 // clique do botão de descanso) -- ela nunca precisou de escopo de módulo,
 // só não havia consumidor fora daqui até este ponto.
 export function restaurarHabilidades(tipoDescanso) {
+  for (const m of char.magias_customizadas || []) {
+    if (m.origem === 'extra' && (m.recuperacao === `descanso ${tipoDescanso}` || tipoDescanso === 'longo' && m.recuperacao === 'descanso curto')) m.usos_gastos = 0;
+  }
   if (!char.usos_habilidades) return;
   const allFeats = [];
   // contextosDeClasse: um contexto por classe do personagem. A forma

@@ -32,12 +32,12 @@ export function validarListaUnica(lista, opcoesPermitidas, limite, descricao) {
  * @param {object} proposta - Mapa chave-de-atributo -> valor total desejado.
  * @returns {{ok: boolean, erro?: string}} Resultado da validacao.
  */
-export function validarAtributosManuais(proposta) {
+export function validarAtributosManuais(proposta, excecaoMesa = false) {
   const valores = Object.values(proposta || {});
   if (valores.length !== 6 || valores.some(v => !Number.isInteger(v))) {
     return { ok: false, erro: 'Informe os seis atributos com valores inteiros.' };
   }
-  if (valores.some(v => v < 1 || v > 20)) {
+  if (!excecaoMesa && valores.some(v => v < 1 || v > 20)) {
     return { ok: false, erro: 'Cada atributo deve ficar entre 1 e 20.' };
   }
   return { ok: true };

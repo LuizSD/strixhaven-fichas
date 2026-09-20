@@ -4,9 +4,26 @@
 // ============================================================
 
 // Caminho base para os arquivos de dados.
-// No deploy (GitHub Pages), o workflow substitui '../dados' por './dados' via sed.
+// site/ e dados/ são irmãos também no Pages, sob qualquer prefixo de fork.
 const BASE_PATH = '../dados';
 const cache = {};
+
+/** Conteúdo de campanha aditivo; os JSON da base permanecem intactos. */
+export async function getStrixhaven() {
+  return fetchJSON('strixhaven/modulo.json');
+}
+
+/** Somente o antecedente concede lista expandida; matrícula nunca concede magias. */
+export async function getListaExpandidaStrixhaven(personagem) {
+  const listas = await fetchJSON('strixhaven/listas-2024.json');
+  const faculdade = ['Lorehold', 'Prismari', 'Quandrix', 'Silverquill', 'Witherbloom'].find(f => personagem?.antecedente === `Estudante de ${f} (adaptação)`);
+  return faculdade ? listas?.[faculdade] || [] : [];
+}
+
+/** Magias próprias do suplemento, identificadas por edição e ID. */
+async function magiasStrixhaven() {
+  return (await fetchJSON('strixhaven/magias.json'))?.magias || [];
+}
 
 /** Busca um JSON com cache em memória */
 async function fetchJSON(caminho) {
@@ -37,30 +54,70 @@ export async function getClasse(nome) {
 }
 
 /** Carrega lista de magias de uma classe conjuradora */
-export async function getMagiasClasse(nomeClasse) {
+export async function getMagiasClasse(nomeClasse, personagem = null) {
   const nomeArq = nomeClasse.toLowerCase()
     .replace(/á/g, 'a').replace(/ã/g, 'a').replace(/é/g, 'e')
     .replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u');
-  return fetchJSON(`classes/magias_${nomeArq}.json`);
+  const base = await fetchJSON(`classes/magias_${nomeArq}.json`);
+  if (!base) return null;
+  const resultado = structuredClone(base);
+  for (const m of await magiasStrixhaven()) {
+    if (!m.classes.includes(nomeClasse)) continue;
+    const chave = `${m.circulo}º Círculo`;
+    (resultado.lista_magias[chave] ||= []).push({ ...m, especial: m.concentracao ? 'C' : '—' });
+  }
+  if (personagem) {
+    const nomes = await getListaExpandidaStrixhaven(personagem);
+    const indice = await getIndiceMagias();
+    for (const m of indice?.magias || []) {
+      if (!nomes.includes(m.nome)) continue;
+      const lista = resultado.lista_magias[`${m.circulo}º Círculo`] ||= [];
+      if (!lista.some(x => x.nome === m.nome)) lista.push({ ...m, especial: /concentra/i.test(m.duracao) ? 'C' : '—' });
+    }
+  }
+  return resultado;
 }
 
 // --- Origens ---
 
 /** Carrega todos os antecedentes */
 export async function getAntecedentes() {
-  return fetchJSON('origens/antecedentes.json');
+  const base = await fetchJSON('origens/antecedentes.json');
+  const modulo = await getStrixhaven();
+  if (!base) return null;
+  const academicos = (modulo?.faculdades || []).map(f => ({
+    id: `scc-estudante-${f.id}-2024`, nome: `Estudante de ${f.nome} (adaptação)`,
+    valores_atributo: 'Força, Destreza, Constituição, Inteligência, Sabedoria, Carisma',
+    talento: 'Iniciado de Strixhaven (adaptação)', pericias: f.pericias, ferramentas: f.ferramentas,
+    idiomas_obrigatorios: ['Comum'], idiomas_adicionais: 2,
+    idiomas_opcoes: ['Língua de Sinais Comum', 'Dracônico', 'Anão', 'Élfico', 'Gigante', 'Gnômico', 'Goblin', 'Pequenino', 'Orc'],
+    equipamento: 'Escolha B: (B) 50 PO',
+    descricao: `${f.area}. SCC 2021 (2014), perfil de adaptação da mesa 2024: escolha aumentos de atributo uma vez, dois idiomas pela base 2024 e 50 PO para equipamento. Iniciado substitui o talento de origem, não acumula outro. Configure as escolhas do talento na ficha; a faculdade acadêmica é independente. Lista expandida original, apenas elegibilidade (não concessão automática): ${f.lista_expandida_2014.join(', ')}.`,
+    fonte: `https://dnd5e.wikidot.com/background:${f.id}-student`, edicao_original: '2014', adaptacao: modulo.adaptacao,
+  }));
+  return { ...base, antecedentes: [...base.antecedentes, ...academicos], total: base.antecedentes.length + academicos.length };
 }
 
 /** Carrega todas as espécies */
 export async function getEspecies() {
-  return fetchJSON('origens/especies.json');
+  const base = await fetchJSON('origens/especies.json');
+  const modulo = await getStrixhaven();
+  return base ? { ...base, especies: [...base.especies, ...(modulo?.especies || [])], total: base.especies.length + (modulo?.especies.length || 0) } : null;
 }
 
 // --- Talentos ---
 
 /** Carrega todos os talentos */
 export async function getTalentos() {
-  return fetchJSON('talentos/talentos.json');
+  const base = await fetchJSON('talentos/talentos.json');
+  if (!base) return null;
+  const resultado = structuredClone(base);
+  for (const t of (await getStrixhaven())?.talentos || []) {
+    (resultado.por_categoria[t.categoria] ||= []).push(t);
+    resultado.todos.push(t);
+    resultado.total++;
+  }
+  return resultado;
 }
 
 // --- Equipamento ---
@@ -89,13 +146,19 @@ export async function getFerramentas() {
 
 /** Carrega índice de todas as magias (resumido) */
 export async function getIndiceMagias() {
-  return fetchJSON('magias/_indice.json');
+  const base = await fetchJSON('magias/_indice.json');
+  if (!base) return null;
+  const magias = [...base.magias, ...await magiasStrixhaven()];
+  return { ...base, magias, total_magias: magias.length };
 }
 
 /** Carrega magias de um círculo específico (com descrição completa) */
 export async function getMagiasPorCirculo(circulo) {
   const nome = circulo === 0 ? 'truques' : `circulo_${circulo}`;
-  return fetchJSON(`magias/${nome}.json`);
+  const base = await fetchJSON(`magias/${nome}.json`);
+  if (!base) return null;
+  const magias = [...base.magias, ...(await magiasStrixhaven()).filter(m => m.circulo === Number(circulo))];
+  return { ...base, magias, total_magias: magias.length };
 }
 
 /** Carrega magias de uma classe (lista resumida: nome, circulo, escola) */
@@ -103,7 +166,10 @@ export async function getMagiasPorClasseLista(nomeClasse) {
   const nomeArq = nomeClasse.toLowerCase()
     .replace(/á/g, 'a').replace(/ã/g, 'a').replace(/é/g, 'e')
     .replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u');
-  return fetchJSON(`magias/por_classe/${nomeArq}.json`);
+  const base = await fetchJSON(`magias/por_classe/${nomeArq}.json`);
+  if (!base) return null;
+  const magias = [...base.magias, ...(await magiasStrixhaven()).filter(m => m.classes.includes(nomeClasse))];
+  return { ...base, magias, total_magias: magias.length };
 }
 
 /**
@@ -131,10 +197,10 @@ export async function getMagiasRituais(circulo) {
 }
 
 /** Busca uma magia específica pelo nome (carrega o círculo inteiro) */
-export async function getMagia(nome, circulo) {
+export async function getMagia(nome, circulo, id = null) {
   const dados = await getMagiasPorCirculo(circulo);
   if (!dados) return null;
-  return dados.magias.find(m => m.nome === nome) || null;
+  return dados.magias.find(m => id ? m.id === id : m.nome === nome) || null;
 }
 
 /** Busca magias por nome (busca no índice, retorna matches) */

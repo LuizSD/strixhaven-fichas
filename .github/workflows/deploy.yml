@@ -26,45 +26,9 @@ jobs:
 
       - name: Prepare site
         run: |
-          # Monta o artifact preservando a estrutura atual servida em producao:
-          # raiz com redirect -> /site/, a app em site/ e os dados em dados/
-          # (a app usa BASE_PATH '../dados', que resolve para /D-D_2024/dados).
-          # Assim a URL publica continua .../D-D_2024/site/ apos migrar o Pages
-          # para GitHub Actions, e o sed passa a valer de fato em producao.
-          mkdir -p _dist
-          cp index.html _dist/index.html
-          cp -r site _dist/site
-          cp -r dados _dist/dados
-          # Lista de todos os JSON de dados para precache offline do Service Worker.
-          # URLs relativas ao escopo do SW (/site/): ../dados/....json
-          python3 - <<'PY'
-          import os, json
-          urls = []
-          for root, _, files in os.walk('_dist/dados'):
-              for f in files:
-                  if f.endswith('.json'):
-                      p = os.path.join(root, f).replace('_dist/dados', '../dados').replace(os.sep, '/')
-                      urls.append(p)
-          with open('_dist/site/dados-precache.json', 'w', encoding='utf-8') as fh:
-              json.dump(sorted(urls), fh, ensure_ascii=False)
-          PY
-          # Lista de todos os modulos JS para precache offline do Service Worker.
-          # O sw.js tinha uma lista MANUAL de 12 arquivos: cobria 12 de 22
-          # modulos antes da refatoracao e passou a cobrir 12 de 61 depois.
-          # URLs relativas ao escopo do SW (/site/): ./js/....js
-          python3 - <<'PY'
-          import os, json
-          urls = []
-          for root, _, files in os.walk('_dist/site/js'):
-              for f in files:
-                  if f.endswith('.js'):
-                      p = os.path.join(root, f).replace('_dist/site', '.').replace(os.sep, '/')
-                      urls.append(p)
-          with open('_dist/site/js-precache.json', 'w', encoding='utf-8') as fh:
-              json.dump(sorted(urls), fh, ensure_ascii=False)
-          print(f'js-precache.json: {len(urls)} modulos')
-          PY
-          sed -i "s|const CACHE_VERSION = 0; // AUTO|const CACHE_VERSION = ${{ github.run_number }};|" _dist/site/sw.js
+          # Preserva index.html, site/ e dados/ como irmãos, sob qualquer fork.
+          # A allowlist do preparador exclui .ai/ e assets-private/ por construção.
+          python3 scripts/preparar_dist.py --build "${{ github.run_number }}"
           sed -i "s|v0</span><!-- VERSION_AUTO -->|v${{ github.run_number }}</span><!-- VERSION_AUTO -->|" _dist/site/index.html
 
       - name: Setup Pages
