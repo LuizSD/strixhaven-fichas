@@ -3,6 +3,7 @@
 // ============================================================
 import { ATRIBUTOS_KEYS, ATRIBUTO_NOME_PARA_KEY, PERICIAS, CLASSES_INFO } from './dados-classes.js';
 import { magiaContaNoLimite } from './regras-origens-magia.js';
+import { valorComAjuste } from './strixhaven/modelo.js';
 import { getAtributoConjuracaoSubclasse, getConjuracaoSubclasse } from './regras-conjuracao-subclasse.js';
 // Acessores de multiclasse. Não há ciclo: regras-multiclasse.js importa
 // apenas dados-classes.js, que utils.js já importa acima.
@@ -264,7 +265,7 @@ export function normalizarGrimorioMago(personagem, limitePreparadas) {
     // `preparadasNormais` --, e fica de propósito: é o que sobrevive se
     // alguém reverter o predicado. Ver o docblock desta função para o
     // caminho completo do defeito.
-    if (magia.personalizada) continue;
+    if (magia.personalizada || magia.origem === 'extra') continue;
     if (!magiaMagoEstaNoGrimorio(personagem, magia.nome)) {
       personagem.grimorio.push({ ...magia });
       alterado = true;
@@ -553,7 +554,7 @@ export function calcCA(personagem, passivos = null) {
   // Bônus genérico de CA de talentos
   ca += passivos?.bonusCA || 0;
 
-  return ca;
+  return valorComAjuste(personagem, 'ca', ca);
 }
 
 /**
@@ -671,7 +672,7 @@ export function calcPercepcaoPassiva(personagem) {
   if (personagem.classe === 'Bardo' && (personagem.nivel || 1) >= 2 && !prof && !exp) {
     bonus += Math.floor(bonusProficiencia(personagem.nivel) / 2);
   }
-  return 10 + bonus;
+  return 10 + valorComAjuste(personagem, 'pericia:Percepção', bonus);
 }
 
 /** Calcula Intuicao Passiva (10 + bonus pericia Intuicao) */
@@ -743,7 +744,7 @@ export function calcBonusPericia(personagem, nomePericia, opcoes = {}) {
     }
   }
 
-  return bonus;
+  return valorComAjuste(personagem, `pericia:${nomePericia}`, bonus);
 }
 
 /** Calcula espaços de magia com base na tabela da classe */

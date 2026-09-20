@@ -4,7 +4,7 @@
 // ============================================================
 import { getUsuario, salvarPersonagemCloud, removerPersonagemCloud } from './auth.js';
 
-const SYNC_QUEUE_KEY = 'dnd_sync_queue';
+const SYNC_QUEUE_KEY = 'strixhaven_2024_sync_queue';
 const MAX_TENTATIVAS = 3;
 const RETRY_DELAY_MS = 5000;
 

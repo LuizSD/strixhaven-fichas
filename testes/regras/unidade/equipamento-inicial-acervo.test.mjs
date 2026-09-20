@@ -205,7 +205,9 @@ for (const instrumento of INSTRUMENTOS_TODAS_AS_LISTAS) {
 }
 for (const antecedente of Object.values(ANTECEDENTES_ESCOLHAS)) {
   if (!/instrumento|jogos/i.test(antecedente.titulo)) continue;
-  for (const opcao of antecedente.opcoes) SEM_PAR_NO_ACERVO.set(opcao, MOTIVO_VARIANTE);
+  // Prismari oferece uma união de instrumentos e ferramentas. Só o subconjunto
+  // de instrumentos é dívida de variantes; ferramentas de artesão têm dados reais.
+  for (const opcao of antecedente.instrumentos || antecedente.opcoes) SEM_PAR_NO_ACERVO.set(opcao, MOTIVO_VARIANTE);
 }
 
 // ------------------------------------------------------------

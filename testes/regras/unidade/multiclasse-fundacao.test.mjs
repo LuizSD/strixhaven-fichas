@@ -1028,17 +1028,17 @@ const ESCRITAS_PERMITIDAS = new Set([
   // saíram no 3e (gasto e reset passaram por gastarDadosVida()/
   // restaurarTodosDadosVida(), em regras-multiclasse.js, que está em
   // ARQUIVOS_AUTORIZADOS); o da subida de nível saiu no sub-projeto 5.
-  'site/js/creator/wizard.js:441',     // grava dados_vida_total na criação de personagem
-  'site/js/store.js:324',  // dados_vida_total: 1  (template de criação)
-  'site/js/store.js:325',  // dados_vida_usados: 0 (template de criação)
+  'site/js/creator/wizard.js:444',     // grava dados_vida_total na criação; cota extra deslocou linhas
+  'site/js/store.js:339',  // dados_vida_total: 1  (template de criação; migração acadêmica aditiva deslocou linhas)
+  'site/js/store.js:340',  // dados_vida_usados: 0 (template de criação)
 
   // Escritores legados de espacos_magia que sobram depois da Tarefa 3
   // (sub-projeto 4): a rede de escrita fecha para o GASTO (gastarEspaco/
   // restaurarEspacosDePacto/restaurarEspacosDeConjuracao, em
   // sheet/reservas-espacos.js, agora ARQUIVOS_AUTORIZADOS). Sobra só a
   // CRIAÇÃO, que ainda inicializa o campo direto.
-  'site/js/creator/wizard.js:92',   // personagem.espacos_magia = {} na criação -- sub-projeto 5
-  'site/js/creator/wizard.js:447',  // idem, grava a tabela da classe inicial -- sub-projeto 5
+  'site/js/creator/wizard.js:94',   // personagem.espacos_magia = {} na criação -- sub-projeto 5
+  'site/js/creator/wizard.js:450',  // idem, grava a tabela da classe inicial -- sub-projeto 5
   // pages/sheet.js:100-158 era o reconciliador de render -- a Tarefa 4
   // removeu-o (deixando migrarEspacosMagia() no lugar, em
   // sheet/migracoes.js, ARQUIVOS_AUTORIZADOS) e as 9 entradas que
@@ -1052,7 +1052,7 @@ const ESCRITAS_PERMITIDAS = new Set([
   // de Fonte de Magia são efêmeros por natureza (concedidos e limpos a
   // cada Descanso Longo), e nenhuma tarefa do sub-projeto 4 lhes dá um
   // escritor único.
-  'site/js/sheet/hp-descanso.js:1014',      // char.espacos_magia_extras = {} (limpa no Longo) -- número atualizado pela Tarefa 3 do sub-projeto 2026-08-29-troca-por-classe-descanso (imports novos no topo do arquivo deslocaram a linha; era 1009)
+  'site/js/sheet/hp-descanso.js:1017',      // char.espacos_magia_extras = {} (limpa no Longo); recuperação de extras deslocou linhas
   'site/js/sheet/habilidades.js:933',       // if (!extras) extras = {}  (Fonte de Magia) -- número de linha reapontado pela rodada 1 de correção da Tarefa 6 (import de superficieAtivaDaFicha e comentário do portão de Memorizar Magia acrescentados acima)
   'site/js/sheet/habilidades.js:934',       // extras[c] = (extras[c] || 0) + 1  (Fonte de Magia) -- idem
   // habilidades.js: Resplendor Sagrado (Paladino/Devoção), Fonte de Magia

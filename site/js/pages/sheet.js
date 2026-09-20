@@ -173,7 +173,6 @@ export async function renderSheet(container, charId) {
     onSyncStatusChange(_atualizarIndicadorSync);
   }
 
-  document.getElementById('btn-print')?.addEventListener('click', () => baixarPdfFicha());
 
   // Pre-aquecer cache de descricoes de magias em segundo plano, para que o
   // clique em Imprimir nao dependa de fetch de rede (mobile exige window.print()
@@ -221,4 +220,4 @@ function _atualizarIndicadorSync(status) {
   if (!el) return;
   const { texto, cor } = _textoStatusSync(status);
   el.innerHTML = `<span style="color:${cor}">${texto}</span>`;
-}
+}

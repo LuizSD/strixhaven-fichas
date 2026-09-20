@@ -35,6 +35,8 @@ const STEPS = [
   { id: 'detalhes', label: 'Detalhes' }
 ];
 
+import { contarExtrasCriacao } from '../strixhaven/modelo.js';
+
 export let personagem = null;
 let stepAtual = 0;
 export let dadosCache = {};
@@ -331,8 +333,9 @@ function validarStep() {
         // mesma função que o resto do app -- ver getBonusTruquesOrdem)
         truquesNecessarios += getBonusTruquesOrdem(personagem);
 
-        const truquesSelecionados = (personagem.magias_conhecidas || []).filter(m => m.circulo === 0).length;
-        const preparadasSelecionadas = (personagem.magias_preparadas || []).length;
+        const truquesSelecionados = (personagem.magias_conhecidas || []).filter(m => m.circulo === 0).length + contarExtrasCriacao(personagem, true);
+        const extrasPreparadas = contarExtrasCriacao(personagem, false);
+        const preparadasSelecionadas = (personagem.magias_preparadas || []).length + extrasPreparadas;
 
         if (truquesNecessarios > 0 && truquesSelecionados < truquesNecessarios) {
           toast(`Selecione ${truquesNecessarios} truques (${truquesSelecionados} selecionados)`, 'error');
@@ -349,7 +352,7 @@ function validarStep() {
             toast(`Selecione 6 magias de 1º círculo para o grimório (${grimorio.length} selecionadas)`, 'error');
             return false;
           }
-          if (preparadas.length !== 4 || preparadas.some(m => !magiaMagoEstaNoGrimorio(personagem, m?.nome))) {
+          if (preparadas.length + extrasPreparadas < 4 || preparadas.length > 4 || preparadas.some(m => !magiaMagoEstaNoGrimorio(personagem, m?.nome))) {
             toast('Selecione 4 magias preparadas que também estejam no grimório', 'error');
             return false;
           }

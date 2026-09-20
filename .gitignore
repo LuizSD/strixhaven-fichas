@@ -125,3 +125,6 @@ Icones-classes/
 .venv/
 *.zip
 docs/PERGUNTAS-PENDENTES.txt
+.ai/
+assets-private/
+_dist/

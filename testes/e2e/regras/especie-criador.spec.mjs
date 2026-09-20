@@ -22,7 +22,8 @@ import { abrirSite, assentar, confirmarModal, satisfazerPasso, personagemEmCriac
 
 const DADOS = JSON.parse(readFileSync(
   new URL('../../../dados/origens/especies.json', import.meta.url), 'utf-8'));
-const ESPECIES_NO_DADO = (DADOS.especies || DADOS).map((e) => e.nome);
+const STRIXHAVEN = JSON.parse(readFileSync(new URL('../../../dados/strixhaven/modulo.json', import.meta.url), 'utf-8'));
+const ESPECIES_NO_DADO = [...(DADOS.especies || DADOS), ...STRIXHAVEN.especies].map((e) => e.nome);
 
 /**
  * Leva o criador até o passo de Espécie. Classe vem ANTES dele
@@ -49,7 +50,7 @@ test('criador: o passo de espécie oferece todas as espécies de dados/', async 
   await expect(cards.first(), 'o passo de espécie deveria renderizar os cards').toBeVisible();
 
   const oferecidas = (await cards.evaluateAll((els) => els.map((e) => e.dataset.especie))).sort();
-  expect(oferecidas, 'a tela deveria oferecer exatamente as espécies de dados/origens/especies.json')
+  expect(oferecidas, 'a tela deve preservar todas as espécies da base e acrescentar as da campanha')
     .toEqual([...ESPECIES_NO_DADO].sort());
 
   expect(erros, `erros de console/página: ${erros.join('; ')}`).toEqual([]);

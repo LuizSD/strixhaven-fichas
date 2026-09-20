@@ -101,7 +101,7 @@ export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
     return `<div class="atributo-box" data-key="${key}">
       <div class="atributo-nome">${ATRIBUTOS_NOMES[key]}</div>
       <input type="number" class="form-input" style="text-align:center;font-size:1rem;padding:6px;font-weight:700"
-             min="1" max="20" data-edicao-manual-atributo="${key}" value="${total}">
+             step="1" data-edicao-manual-atributo="${key}" value="${total}">
       <div style="font-size:0.65rem;color:var(--text-muted)">${composicao.join(' · ')}</div>
       <div class="atributo-mod">${fmtMod(calcMod(total))}</div>
       <div class="atributo-total">${total}</div>
@@ -130,7 +130,7 @@ export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
       </div>`;
       if (modoManual) {
         return navegacao + barraModo + `
-          <div class="info-box warning" style="font-size:0.8rem;margin-bottom:10px">Edição livre: digite o valor final de cada atributo, entre 1 e 20. O ajuste feito aqui fica marcado como manual na ficha, e o método usado na criação continua registrado.</div>
+          <div class="info-box warning" style="font-size:0.8rem;margin-bottom:10px">Ajuste manual — exceção explícita da mesa: digite valores finais inteiros, sem limites de criação. O cálculo anterior e os ajustes ficam identificados; reverter restaura o cálculo automático.</div>
           <div class="atributos-grid atributos-grid-edicao">${ATRIBUTOS_KEYS.map(caixaManual).join('')}</div>
           ${atributosEstaoEditados() ? '<button class="btn btn-sm btn-secondary mt-1" data-reverter-atributos>Reverter distribuição de atributos</button>' : ''}`;
       }
@@ -258,7 +258,7 @@ export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
   const vincularBotaoSalvar = () => {
     document.getElementById('btn-salvar-edicao-ficha')?.addEventListener('click', () => {
       if (secao === 'atributos' && modoManual) {
-        const resultado = validarAtributosManuais(propostaManual);
+        const resultado = validarAtributosManuais(propostaManual, true);
         if (!resultado.ok) { toast(resultado.erro, 'error'); return; }
         const antes = { ...char.atributos };
         const modConAntes = calcMod(antes.constituicao ?? 10);
@@ -335,10 +335,9 @@ export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
     });
     document.querySelectorAll('[data-edicao-manual-atributo]').forEach(input => input.addEventListener('change', () => {
       const key = input.dataset.edicaoManualAtributo;
-      const valor = parseInt(input.value, 10);
-      propostaManual[key] = Number.isInteger(valor)
-        ? Math.max(1, Math.min(20, valor))
-        : (char.atributos?.[key] ?? 10);
+      const valor = input.value.trim() === '' ? NaN : Number(input.value);
+      if (!Number.isInteger(valor)) { toast('Informe um inteiro. O valor anterior foi preservado.', 'error'); input.value = propostaManual[key]; return; }
+      propostaManual[key] = valor;
       const corpo = document.getElementById('edicao-ficha-corpo');
       if (corpo) { corpo.innerHTML = render(); vincular(); }
     }));

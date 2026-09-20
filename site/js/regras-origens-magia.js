@@ -31,6 +31,7 @@
  * limite de preparadas e não entram numa troca.
  */
 export const ORIGENS_MAGIA_ISENTA = [
+  'extra',                  // exceção da mesa; predicado permite optar por ocupar vaga
   'dominio',                // magia de domínio/subclasse, concedida automaticamente
   'sempre',                 // "você sempre tem X preparada", da prosa da subclasse
   'especie_legado',         // Linhagem Élfica, Legado Ínfero
@@ -54,6 +55,7 @@ export const ORIGENS_MAGIA_ISENTA = [
  * magias.
  */
 export const ORIGENS_TRUQUE_NAO_TROCAVEL = [
+  'extra',                  // editada por ID no editor extra, não na troca de classe
   'especie',                // truque de espécie (Alto Elfo, Tiferino)
   'sempre',
   'especie_legado',
@@ -117,6 +119,7 @@ export function possuiAlgumaMagia(char) {
  * uma busca por nome isentaria a do livro junto.
  */
 export function magiaContaNoLimite(magia) {
+  if (magia?.origem === 'extra') return magia.sempre_preparada === false;
   if (magia?.personalizada === true) return false;
   return !ORIGENS_MAGIA_ISENTA.includes(magia?.origem);
 }
@@ -131,6 +134,7 @@ export function magiaEhEspecial(magia) {
  * (espécie, talento, ou característica que o concede fixo) não pode.
  */
 export function truqueEhTrocavel(magia) {
+  if (magia?.origem === 'extra') return false;
   return !ORIGENS_TRUQUE_NAO_TROCAVEL.includes(magia?.origem);
 }
 
@@ -151,6 +155,7 @@ export function truqueEhTrocavel(magia) {
  * acusava "Truques 3 / 2" em vermelho por um truque concedido de graça.
  */
 export function truqueContaNoLimite(magia) {
+  if (magia?.origem === 'extra') return magia.sempre_preparada === false && magia.estado_extra !== 'grimório';
   if (magia?.origem === 'subclasse_fixa') return true;
   return !ORIGENS_TRUQUE_NAO_TROCAVEL.includes(magia?.origem);
 }

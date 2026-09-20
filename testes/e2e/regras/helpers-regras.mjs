@@ -251,6 +251,10 @@ export async function abrirFicha(context, campos, id = 'regras-teste-1') {
   await semearPersonagem(lado.page, campos, id);
   await lado.page.goto(`${NOVO}#ficha/${id}`, { waitUntil: 'domcontentloaded' });
   await assentar(lado.page);
+  // A navegação por hash não substitui o documento: o conteúdo da home ainda
+  // podia satisfazer assentar() enquanto a ficha buscava dados. Espere o render
+  // real antes de medir estado salvo (inclusive o fallback de PV).
+  await lado.page.locator('#char-nome-display').waitFor({ state: 'visible' });
   return lado;
 }
 

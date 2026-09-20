@@ -547,6 +547,19 @@ export const CLASSES_ESCOLHAS = {
 
 // Escolhas de antecedente (ferramentas/instrumentos)
 export const ANTECEDENTES_ESCOLHAS = {
+  'Estudante de Prismari (adaptação)': {
+    titulo: 'Instrumento musical ou ferramenta de artesão',
+    descricao: 'Escolha uma proficiência de Prismari (SCC 2014 adaptado para a campanha 2024).',
+    campo: 'ferramenta_escolhida',
+    opcoes: [...INSTRUMENTOS_MUSICAIS, ...FERRAMENTAS_ARTESAO],
+    instrumentos: INSTRUMENTOS_MUSICAIS,
+  },
+  'Estudante de Quandrix (adaptação)': {
+    titulo: 'Ferramenta de artesão',
+    descricao: 'Escolha uma proficiência de Quandrix (SCC 2014 adaptado para a campanha 2024).',
+    campo: 'ferramenta_escolhida',
+    opcoes: FERRAMENTAS_ARTESAO,
+  },
   'Artesão': {
     titulo: 'Ferramenta de Artesão',
     descricao: 'Escolha um tipo de Ferramenta de Artesão:',
@@ -672,4 +685,4 @@ export const KITS_EXPANSAO = {
   ],
 };
 // Alias: "Kit de Explorador" (Druida) aponta para "Kit de Explorador de Masmorras"
-KITS_EXPANSAO['Kit de Explorador'] = KITS_EXPANSAO['Kit de Explorador de Masmorras'];
+KITS_EXPANSAO['Kit de Explorador'] = KITS_EXPANSAO['Kit de Explorador de Masmorras'];

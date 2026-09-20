@@ -1,4 +1,28 @@
-# Criador de Ficha de Personagem — D&D 5.5 (2024)
+# Strixhaven — fichas de estudantes sobre D&D 2024
+
+Adaptação incremental da aplicação de ZaitBr, mantendo o catálogo e o motor
+2024. O suplemento **Strixhaven: A Curriculum of Chaos (2021)** é da edição
+2014; as decisões de campanha estão em [docs/STRIXHAVEN.md](docs/STRIXHAVEN.md).
+Não é uma conversão geral para 2014 nem um produto oficial.
+
+**Modo local por padrão.** Login e sincronização estão indisponíveis até configurar
+um Firebase próprio em `site/js/campanha-config.js`. Não usa o projeto do autor.
+Fichas antigas podem ser importadas por JSON; há cópia explícita com backup quando
+o armazenamento original está no mesmo navegador. Não apague os backups.
+
+```bash
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+Abra `http://localhost:8000/site/`. Sirva a raiz inteira: `site/` e `dados/` são irmãos.
+Publicação: [docs/DEPLOY-STRIXHAVEN.md](docs/DEPLOY-STRIXHAVEN.md).
+Verificação e limitações: [docs/STRIXHAVEN.md](docs/STRIXHAVEN.md).
+
+## Referência da aplicação original
+
+As informações a seguir documentam a base original. Os links abaixo são créditos
+ao upstream; não são o endereço de publicação ou suporte deste fork. A configuração
+local e as adaptações descritas acima prevalecem para esta edição de campanha.
 
 **[▶ Abrir o app](https://zaitbr-bit.github.io/D-D_2024/)** &nbsp;·&nbsp;
 **[🐛 Relatar um problema](https://github.com/ZaitBr-bit/D-D_2024/issues/new?template=bug.yml)** &nbsp;·&nbsp;

@@ -2,6 +2,7 @@
 // App principal - Router SPA e inicialização
 // ============================================================
 import { renderHome } from './pages/home.js';
+import { CAMPANHA_CONFIG } from './campanha-config.js';
 import { renderCreator } from './pages/creator.js';
 import { renderSheet } from './pages/sheet.js';
 import { inicializarSync } from './sync.js';
@@ -36,7 +37,11 @@ const VERSAO_VISTA_KEY = 'dnd_versao_vista';
 export function definirTituloHeader(texto) {
   const el = document.getElementById('header-titulo');
   if (!el) return;
-  el.textContent = texto;
+  el.textContent = '';
+  const nome = document.createElement('span');
+  nome.className = 'header-nome';
+  nome.textContent = texto;
+  el.appendChild(nome);
   if (APP_VERSION) {
     const span = document.createElement('span');
     span.className = 'header-versao';
@@ -129,7 +134,7 @@ function processarRota() {
 
   // Definir título padrão
   const titulos = {
-    'home': 'D&D 5.5 Ficha',
+    'home': 'Strixhaven · Estudantes',
     'criar': 'Novo Personagem',
     'ficha': 'Ficha'
   };
@@ -137,7 +142,9 @@ function processarRota() {
   atualizarSeloVersaoClicavel(pagina);
 
   if (render) {
-    render(content, param);
+    // A vida acadêmica pode ser longa. Trocar de rota volta ao início depois
+    // do render assíncrono, sem afetar a posição de edições na mesma ficha.
+    Promise.resolve(render(content, param)).then(() => window.scrollTo(0, 0));
   } else {
     content.innerHTML = '<div class="empty-state"><h2>Pagina nao encontrada</h2><button class="btn btn-primary" onclick="navegar(\'home\')">Voltar ao inicio</button></div>';
   }
@@ -234,7 +241,7 @@ function abrirNotasVersaoSeAtualizou() {
 // --- Reportar problema ---
 
 /** Repositório público do projeto, onde ficam as issues. */
-const REPO_URL = 'https://github.com/ZaitBr-bit/D-D_2024';
+const REPO_URL = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/.test(CAMPANHA_CONFIG.repositorio) ? CAMPANHA_CONFIG.repositorio.replace(/\/$/, '') : '';
 
 /**
  * Monta o corpo do modal de "Reportar Problema".
@@ -249,6 +256,7 @@ const REPO_URL = 'https://github.com/ZaitBr-bit/D-D_2024';
  * O Reddit continua como alternativa para quem não tem conta no GitHub.
  */
 function corpoReportarProblema() {
+  if (!REPO_URL) return '<p>O endereço de suporte deste fork ainda não foi configurado. Configure <code>repositorio</code> em <code>site/js/campanha-config.js</code>.</p><p>Base original: <a href="https://github.com/ZaitBr-bit/D-D_2024" target="_blank" rel="noopener noreferrer">ZaitBr · D-D_2024</a> — código MIT.</p>';
   const versao = encodeURIComponent(VERSAO_ATUAL || '');
   return `
     <p style="margin-bottom:12px">Encontrou um erro ou tem uma ideia? O melhor lugar é a página do projeto no GitHub:</p>
@@ -257,11 +265,7 @@ function corpoReportarProblema() {
       <a class="btn btn-secondary" id="link-issue-sugestao" href="${REPO_URL}/issues/new?template=sugestao.yml" target="_blank" rel="noopener noreferrer" style="text-align:center;text-decoration:none">💡 Sugerir uma melhoria</a>
       <a class="btn btn-secondary" id="link-issues-lista" href="${REPO_URL}/issues" target="_blank" rel="noopener noreferrer" style="text-align:center;text-decoration:none">📋 Ver o que já foi relatado</a>
     </div>
-    <p style="margin:16px 0 8px;font-size:0.85rem;color:var(--text-muted)">Precisa de uma conta no GitHub (gratuita). Sem conta, dá para falar pelo Reddit:</p>
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <a class="btn btn-secondary" href="https://www.reddit.com/r/rpgbrasil/comments/1sgrj1j/criador_de_ficha_dd_55_2024_web_e_mobile_gratuito/" target="_blank" rel="noopener noreferrer" style="text-align:center;text-decoration:none">💬 Comentário no post</a>
-      <a class="btn btn-secondary" href="https://www.reddit.com/user/ZaitBrz/" target="_blank" rel="noopener noreferrer" style="text-align:center;text-decoration:none">✉ Mensagem direta</a>
-    </div>
+    <p>Crédito à base original: <a href="https://github.com/ZaitBr-bit/D-D_2024" target="_blank" rel="noopener noreferrer">ZaitBr · D-D_2024</a> — MIT.</p>
   `;
 }
 

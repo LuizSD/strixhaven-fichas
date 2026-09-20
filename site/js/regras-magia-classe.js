@@ -27,6 +27,17 @@
 // ============================================================
 import { magiaContaNoLimite, truquesQueContamNoLimite } from './regras-origens-magia.js';
 import { superficiesDeConjuracao } from './regras-multiclasse-conjuracao.js';
+import { extrasQueOcupam } from './strixhaven/modelo.js';
+
+/** Visão de cota: inclui extras, mas não as oferece aos normalizadores/trocas de classe. */
+export function preparadasComExtrasPorClasse(personagem, nomeClasse) {
+  return preparadasPorClasse({ ...personagem, magias_preparadas: [...(personagem?.magias_preparadas || []), ...extrasQueOcupam(personagem, false)] }, nomeClasse);
+}
+
+/** Cota de truques explícita, independente do acervo normal que pode ser trocado. */
+export function truquesComExtrasPorClasse(personagem, nomeClasse, mapaDados = null) {
+  return truquesPorClasse({ ...personagem, magias_conhecidas: [...(personagem?.magias_conhecidas || []), ...extrasQueOcupam(personagem, true)] }, nomeClasse, mapaDados);
+}
 
 /**
  * Devolve um Set com TODOS os nomes de magia do JSON de

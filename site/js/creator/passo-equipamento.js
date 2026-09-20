@@ -31,7 +31,8 @@ export function parseEquipamentoOpcoes(texto) {
   if (!texto) return null;
   // Formato: "Escolha A ou B: (A) item1, item2, 10 PO; ou (B) 50 PO"
   // Ou: "Escolha A, B ou C: (A) ...; (B) ...; ou (C) ..."
-  const match = texto.match(/Escolha ([A-Z])(?:,?\s*([A-Z]))?\s*ou\s*([A-Z]):/i);
+  const match = texto.match(/Escolha ([A-Z])(?:,?\s*([A-Z]))?\s*ou\s*([A-Z]):/i)
+    || texto.match(/Escolha ([A-Z]):/i);
   if (!match) return null;
 
   const opcoes = [];

@@ -617,7 +617,7 @@ export function migrarMagiasCustomizadasSemprePreparadas() {
   // NADA no lugar. `circulo` ausente, `null` ou string nao numerica cai em 0
   // pelo saneamento e e igualmente ignorado.
   const customizadas = (Array.isArray(char?.magias_customizadas) ? char.magias_customizadas : [])
-    .filter(m => (Number(m?.circulo) || 0) > 0);
+    .filter(m => m?.origem !== 'extra' && (Number(m?.circulo) || 0) > 0);
   const temLastro = (nome, circulo) => customizadas.some(m =>
     m?.nome === nome && (Number(m?.circulo) || 0) === (Number(circulo) || 0));
 
@@ -811,7 +811,7 @@ export function migrarCopiasCustomizadasDoGrimorio() {
   if (grimorio.length === 0) return false;
 
   const customizadas = (Array.isArray(char?.magias_customizadas) ? char.magias_customizadas : [])
-    .filter(m => (Number(m?.circulo) || 0) > 0);
+    .filter(m => m?.origem !== 'extra' && (Number(m?.circulo) || 0) > 0);
   if (customizadas.length === 0) return false;
 
   // NA DUVIDA, PRESERVA. Indice vazio ou ausente nao significa "o acervo nao

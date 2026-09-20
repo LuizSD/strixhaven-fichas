@@ -73,7 +73,12 @@ async function circulosPorCimaDasBarras(page, fracao) {
       const zona = (r.bottom > rod.top && r.top < rod.bottom) ? 'rodapé'
         : (r.top < cab.bottom && r.bottom > cab.top) ? 'cabeçalho' : null;
       if (!zona) continue;
-      const alvo = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      // O centro do círculo pode estar FORA da barra quando apenas sua borda
+      // intersecta a faixa. Testar ali acusava sobreposição inexistente após
+      // mudanças legítimas de tipografia. Amostra a interseção real.
+      const barra = zona === 'rodapé' ? rod : cab;
+      const yIntersecao = (Math.max(r.top, barra.top) + Math.min(r.bottom, barra.bottom)) / 2;
+      const alvo = document.elementFromPoint(r.left + r.width / 2, yIntersecao);
       // Só é defeito se o CÍRCULO responde no ponto: se responder a barra,
       // ele está corretamente coberto por ela.
       if (alvo && alvo.classList?.contains('opcao-check')) {

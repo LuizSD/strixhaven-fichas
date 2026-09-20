@@ -6,6 +6,8 @@ import { enfileirarSync, obterIdsPendentesRemocao } from '../sync.js';
 import { toast, abrirModal, fmtData, escHtml } from '../utils.js';
 import { CLASSES_INFO } from '../dados-classes.js';
 import { classesDe } from '../regras-multiclasse.js';
+import { sincronizacaoConfigurada } from '../campanha-config.js';
+import { copiarFichasOriginais } from '../store.js';
 import { iniciarAuth, getUsuario, loginComGoogle, logout, onAuthChange, buscarPersonagensCloud } from '../auth.js';
 
 let _containerRef = null;
@@ -35,6 +37,7 @@ export function _escolherNoMerge(local, cloud) {
 }
 
 export function renderHome(container) {
+  if (document.body?.dataset) document.body.dataset.faculdade = '';
   _containerRef = container;
   const personagens = listarPersonagens();
   const usuario = getUsuario();
@@ -56,7 +59,7 @@ export function renderHome(container) {
 
 function _renderConteudo(container, personagens, usuario) {
   // Barra de conta Google (opcional)
-  const contaHtml = usuario
+  const contaHtml = !sincronizacaoConfigurada() ? '<div class="sh-local"><strong>Modo local</strong> · Fichas neste aparelho. Login e sincronização indisponíveis até configurar um projeto próprio.</div>' : usuario
     ? `<div class="card" style="display:flex;align-items:center;gap:10px;padding:10px 14px;margin-bottom:12px;background:var(--bg-input)">
         <img src="${escHtml(usuario.photoURL || '')}" alt="" style="width:32px;height:32px;border-radius:50%;${usuario.photoURL ? '' : 'display:none'}" referrerpolicy="no-referrer">
         <div style="flex:1;min-width:0">
@@ -104,7 +107,7 @@ function _renderConteudo(container, personagens, usuario) {
   container.innerHTML = `
     ${contaHtml}
     <div class="flex justify-between items-center mb-1">
-      <h2 style="font-size:1.1rem;color:var(--text)">Meus Personagens</h2>
+      <h2 style="font-size:1.1rem;color:var(--text)">Cadernos de estudantes</h2>
       <div class="flex gap-1">
         <button class="btn btn-sm btn-secondary" id="btn-exportar" title="Exportar todos os personagens num único arquivo">Exportar Todos</button>
         <button class="btn btn-sm btn-secondary" id="btn-importar" title="Importar arquivo com 1 ou vários personagens">Importar</button>
@@ -208,6 +211,13 @@ function _renderConteudo(container, personagens, usuario) {
 
 /** Configura eventos de login/logout/sync */
 function _setupAuthEvents(container) {
+  if (localStorage.getItem('dnd_personagens') && !container.querySelector('#copiar-originais')) {
+    const botao = document.createElement('button');
+    botao.id = 'copiar-originais'; botao.className = 'btn btn-secondary';
+    botao.textContent = 'Copiar fichas locais da base original (com backup)';
+    botao.onclick = () => { const n = copiarFichasOriginais(); toast(n < 0 ? 'Arquivo original inválido; origem preservada.' : `${n} ficha(s) copiada(s). A base original permanece intacta.`, n < 0 ? 'error' : 'success'); renderHome(container); };
+    container.appendChild(botao);
+  }
   // Login com Google
   document.getElementById('btn-login-google')?.addEventListener('click', async () => {
     try {
@@ -400,6 +410,7 @@ function renderCharCard(p) {
       <div class="char-avatar">${p.imagem ? `<img src="${escHtml(p.imagem)}" alt="">` : escHtml(inicial)}</div>
       <div class="char-info">
         <div class="char-nome">${escHtml(p.nome) || 'Sem nome'}</div>
+        <div class="sh-selo">${escHtml(p.strixhaven?.faculdade || 'Faculdade a definir')} · ${escHtml(p.strixhaven?.ano ?? 1)}º ano</div>
         <div class="char-detalhe">
           ${escHtml(p.especie || '')} ${textoClasses}
           ${dadoVida ? `&middot; ${dadoVida}` : ''}

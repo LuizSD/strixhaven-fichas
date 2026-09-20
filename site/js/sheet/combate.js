@@ -7,6 +7,7 @@
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
 import { PERICIAS } from '../dados-classes.js';
+import { valorComAjuste } from '../strixhaven/modelo.js';
 import { abrirModal, calcMod, escHtml, fmtPeso, getMultiplicadorCarga, PERICIAS_CONHECIMENTO_PRIMORDIAL, toast } from '../utils.js';
 import { nivelNa, subclasseDe } from '../regras-multiclasse.js';
 import { getEstadoFuria } from './classes/barbaro.js';
@@ -356,7 +357,7 @@ export function getModIniciativa() {
   // espelho da classe inicial.
   const vantagem = nivelNa(char, 'Bárbaro') >= 7
     || (subclasseDe(char, 'Guerreiro') === 'Campeão' && nivelNa(char, 'Guerreiro') >= 3);
-  return { valor: base + (passivos.bonusIniciativa || 0), vantagem };
+  return { valor: valorComAjuste(char, 'iniciativa', base + (passivos.bonusIniciativa || 0)), vantagem };
 }
 
 export function forcaPrimordialAtiva() {
@@ -377,4 +378,4 @@ export function setupEventosVantagemDesvantagem() {
       toast(el.dataset.vdInfo, 'info');
     });
   });
-}
+}

@@ -38,7 +38,7 @@ test('Resplendor Sagrado: restaurar gasta um espaço de 5º círculo', async ({ 
   // Marcar o Resplendor como já usado e garantir um espaço de 5º livre,
   // que é o estado em que o botão "restaurar" faz sentido.
   await page.evaluate(() => {
-    const lista = JSON.parse(localStorage.getItem('dnd_personagens') || '[]');
+    const lista = JSON.parse(localStorage.getItem('strixhaven_2024_personagens') || '[]');
     const p = lista.find((x) => x.id === 'regras-paladino-resplendor');
     p.recursos = p.recursos || {};
     p.recursos.paladino = p.recursos.paladino || {};
@@ -46,7 +46,7 @@ test('Resplendor Sagrado: restaurar gasta um espaço de 5º círculo', async ({ 
     p.recursos.paladino.subclasses.devocao = { resplendor_sagrado_usado: true };
     p.espacos_magia = p.espacos_magia || {};
     p.espacos_magia[5] = { total: 1, usados: 0 };
-    localStorage.setItem('dnd_personagens', JSON.stringify(lista));
+    localStorage.setItem('strixhaven_2024_personagens', JSON.stringify(lista));
   });
   await page.reload();
   await assentar(page).catch(() => {});
@@ -65,7 +65,7 @@ test('Resplendor Sagrado: restaurar gasta um espaço de 5º círculo', async ({ 
   await assentar(page).catch(() => {});
 
   const estado = await page.evaluate(() => {
-    const lista = JSON.parse(localStorage.getItem('dnd_personagens') || '[]');
+    const lista = JSON.parse(localStorage.getItem('strixhaven_2024_personagens') || '[]');
     const p = lista.find((x) => x.id === 'regras-paladino-resplendor');
     return {
       // A forma armazenada virou por FONTE (Tarefa 4, sub-projeto 4):
