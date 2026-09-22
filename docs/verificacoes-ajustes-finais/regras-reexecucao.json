@@ -1,0 +1,14 @@
+{
+  "command": "node node_modules/@playwright/test/cli.js test --config=regras/playwright.config.mjs --reporter=json itens-seletor-ficha.spec.mjs magias-customizadas.spec.mjs --grep preserva as 5|OUTRO círculo|nome E círculo",
+  "cwd": "testes/e2e",
+  "exitCode": 0,
+  "stats": {
+    "startTime": "2026-09-22T14:40:50.309Z",
+    "duration": 7326.839,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "failures": []
+}

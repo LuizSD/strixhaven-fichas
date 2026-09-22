@@ -11,10 +11,11 @@ import { setupExtras, renderExtrasDaFicha } from './extras.js';
 import { renderAlertasMagias } from './alertas-magias.js';
 import { rotuloLocalizado, NOMES_CLASSES } from '../catalogo-localizado.js';
 import { idiomaLocalizado } from '../idiomas-catalogo.js';
-import { modeloPdfHtml, setupModelosPdf } from '../pdf-templates.js';
+import { abrirModalPdf } from '../pdf-modal.js';
 import { carregarPdfLib } from './pdf.js';
 import { baixarPdfFicha } from './pdf.js';
-import { renderManual, setupManual } from './manual.js';
+import { renderManual, setupManual, renderIdiomasFicha } from './manual.js';
+import { renderAlbumFotos, renderRetratoFotos } from '../fotos.js';
 import { XP_POR_NIVEL } from '../levelup.js';
 import { _renderSyncIndicadorHtml } from '../pages/sheet.js';
 import { conjuraPorAlgumaClasse } from '../regras-multiclasse-conjuracao.js';
@@ -297,7 +298,7 @@ export function renderFichaCompleta() {
               ${char.nivel < 20 ? ` / ${XP_POR_NIVEL[char.nivel + 1]}` : ' (Nível Máximo)'}
             </div>
           </div>
-          ${char.imagem ? `<div class="char-avatar" style="width:64px;height:64px;font-size:1.6rem;flex-shrink:0"><img src="${escHtml(char.imagem)}" alt=""></div>` : ''}
+          <div id="retrato-personagem"></div>
         </div>
         <div class="no-print" style="display:flex;gap:4px;flex-direction:column">
           <div style="display:flex;gap:4px">
@@ -1069,9 +1070,9 @@ export function renderFichaCompleta() {
     <div id="sh-inventario">${renderSecaoInventario()}</div>
 
     <!-- Detalhes pessoais -->
-    <div class="no-print">${modeloPdfHtml()}</div>
-    <button class="btn btn-secondary no-print" id="pdf-editavel">Exportar PDF editável (AcroForm)</button>
     ${renderSecaoDetalhes()}
+    ${renderIdiomasFicha()}
+    <section id="album-fotos"></section>
     ${renderManual()}
     ${renderAcademia(char)}
 
@@ -1087,9 +1088,10 @@ export function renderFichaCompleta() {
   setupAcademia(char, containerRef, () => { salvar(); renderFichaCompleta(); });
   setupExtras(containerRef);
   setupManual(containerRef);
-  container.querySelector('#btn-print')?.addEventListener('click', () => baixarPdfFicha());
-  container.querySelector('#pdf-editavel')?.addEventListener('click', () => baixarPdfFicha(true));
-  setupModelosPdf(container, carregarPdfLib);
+  const salvarFotos = () => { salvar(); renderFichaCompleta(); };
+  renderRetratoFotos(char, container.querySelector('#retrato-personagem'), salvarFotos);
+  renderAlbumFotos(char, container.querySelector('#album-fotos'), salvarFotos);
+  container.querySelector('#btn-print')?.addEventListener('click', () => abrirModalPdf(carregarPdfLib, id => baixarPdfFicha(id !== 'descritivo', id, true)));
   container.querySelectorAll('[data-sh-alvo]').forEach(b => { b.onclick = e => { e.preventDefault(); document.getElementById(b.dataset.shAlvo)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }; });
   setupEventosHP();
   setupEventosDescanso();

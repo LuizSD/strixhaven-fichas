@@ -5,14 +5,15 @@ import { mostrarFormMagiaCustom } from './grimorio.js';
 import { renderFichaCompleta } from './ficha.js';
 import { reservasDeEspacos, gastarEspaco } from './reservas-espacos.js';
 import { getEstadoFuria } from './classes/barbaro.js';
-import { maiorCirculoAtual, renderAlertasMagias, setupAlertasMagias } from './alertas-magias.js';
+import { renderAlertasMagias, setupAlertasMagias, alertasDaFicha, identidadeAvisoMagia } from './alertas-magias.js';
 import { abrirBuscaGlobalMagias } from '../magias/busca-ui.js';
 import { abrirEditorMagia } from '../magias/editor.js';
 
 /** Uma visão ordenável da coleção existente, sem copiar concessões para outras listas. */
 export function renderExtrasDaFicha() {
   const extras = (char.magias_customizadas || []).filter(m => m.origem === 'extra');
-  return `<section class="card" id="magias-extras"><h3>Magias registradas · escolhas livres</h3>${renderAlertasMagias()}<p>Ordem manual, independente do círculo. Preparação, cota e recurso são decisões separadas.</p><div class="sh-acoes"><button class="btn btn-primary spell-search-action" id="pesquisar-todas-magias">Pesquisar em todas as magias<small lang="en">Search all spells</small></button><button class="btn btn-secondary" id="magia-manual-global">Adicionar magia manualmente</button><button class="btn btn-secondary" id="catalogo-todos">Mostrar todas as magias · círculos 0–9</button></div><div class="sh-grade">${extras.map(m => `${m.circulo > maiorCirculoAtual() ? `<p class="catalogo-alerta ${m.motivo ? 'info' : 'error'}">⚠ ${escHtml(m.nome)}: ${m.circulo}º círculo — personagem atualmente conjura até o ${maiorCirculoAtual()}º. Não conjurável atualmente por espaços.</p>` : ''}${renderExtra(m, char)}`).join('')}</div></section>`;
+  const observacoes = new Set(alertasDaFicha().map(a => a.magiaId).filter(Boolean));
+  return `<section class="card" id="magias-extras"><h3>Magias registradas · escolhas livres</h3>${renderAlertasMagias(false, 'extras')}<p>Ordem manual, independente do círculo. Preparação, cota e recurso são decisões separadas.</p><div class="sh-acoes"><button class="btn btn-primary spell-search-action" id="pesquisar-todas-magias">Pesquisar em todas as magias<small lang="en">Search all spells</small></button><button class="btn btn-secondary" id="magia-manual-global">Adicionar magia manualmente</button><button class="btn btn-secondary" id="catalogo-todos">Mostrar todas as magias · círculos 0–9</button></div><div class="sh-grade">${extras.map(m => `<div>${observacoes.has(identidadeAvisoMagia(m)) ? `<button class="btn btn-sm btn-secondary observacao-magia-link no-print" data-observacoes-magia="${escHtml(identidadeAvisoMagia(m))}">${m.motivo || char.justificativa_magias ? 'ⓘ':'⚠'} Observações desta magia</button>` : ''}${renderExtra(m, char)}</div>`).join('')}</div></section>`;
 }
 
 /** Conjuração explícita: nenhuma reserva menor ou gratuita é inventada. */

@@ -23,10 +23,12 @@
 //    exigir paridade era exigir que o novo fosse tao limitado quanto o
 //    antigo, e o proprio arquivo ja dizia isso de duas delas.
 import { existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { test, expect } from '@playwright/test';
-import { NOVO } from './helpers.mjs';
+import { NOVO as BASE } from './helpers.mjs';
+const NOVO = BASE.replace('/site/', '/_dist/offline-original/site/');
 
 // Os manifestos de precache sao gerados no DEPLOY (.github/workflows/
 // deploy.yml), varrendo site/js/** e dados/**. Numa copia de trabalho eles
@@ -39,7 +41,12 @@ import { NOVO } from './helpers.mjs';
 // verifica nada, so ensina a ignorar a saida -- foi o argumento com que
 // este projeto aposentou o baseline dos monolitos em b02f1e1.
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const TEM_MANIFESTO = existsSync(resolve(RAIZ, 'site', 'js-precache.json'));
+let TEM_MANIFESTO = false;
+test.beforeAll(() => {
+  // Mesmo empacotador estático do aplicativo; dispensa dependência de deploy.
+  execFileSync('python3', ['scripts/preparar_dist.py','--destino','_dist/offline-original','--build','2026092203'], { cwd:RAIZ });
+  TEM_MANIFESTO = existsSync(resolve(RAIZ, '_dist/offline-original/site/js-precache.json'));
+});
 
 const SITES = [['refatorado', NOVO]];
 

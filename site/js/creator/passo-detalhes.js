@@ -3,7 +3,9 @@
 // Extraido de site/js/pages/creator.js sem alteracao de comportamento.
 // ============================================================
 import { ATRIBUTOS_NOMES, CLASSES_INFO, IDIOMAS_COMUNS } from '../dados-classes.js';
-import { calcMod, calcPVNivel1, descreverCapacidadeCarga, escHtml, getTamanho, processarImagemArquivo, toast } from '../utils.js';
+import { calcMod, calcPVNivel1, descreverCapacidadeCarga, escHtml, getTamanho, toast } from '../utils.js';
+import { abrirGerenciadorFotos, renderPreviewFoto } from '../fotos.js';
+import { definirFotoPrincipal } from '../fotos-modelo.js';
 import { dadosCache, personagem } from './wizard.js';
 
 // ============================================================
@@ -172,14 +174,11 @@ export function renderStepDetalhes(el) {
           </div>
         </div>
         <div class="col" style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
-          <div class="char-avatar" id="det-imagem-preview" style="width:56px;height:56px;font-size:1.4rem">
-            ${personagem.imagem ? `<img src="${escHtml(personagem.imagem)}" alt="">` : escHtml((personagem.nome || personagem.classe || '?').charAt(0).toUpperCase() || '?')}
-          </div>
+          <div id="det-imagem-preview" style="width:96px"></div>
           <div style="display:flex;gap:4px">
-            <button type="button" class="btn btn-sm btn-secondary" id="det-imagem-btn">Foto</button>
-            <button type="button" class="btn btn-sm btn-danger" id="det-imagem-remover" title="Remover imagem" style="${personagem.imagem ? '' : 'display:none'}">&times;</button>
+            <button type="button" class="btn btn-sm btn-secondary" id="det-imagem-btn">Fotos por URL</button>
+            <button type="button" class="btn btn-sm btn-danger" id="det-imagem-remover">Sem principal</button>
           </div>
-          <input type="file" accept="image/*" id="det-imagem-input" style="display:none">
         </div>
       </div>
 
@@ -353,34 +352,13 @@ export function renderStepDetalhes(el) {
     });
   });
 
-  document.getElementById('det-imagem-btn')?.addEventListener('click', () => {
-    document.getElementById('det-imagem-input')?.click();
-  });
-
-  const detImagemInicial = () => (personagem.nome || personagem.classe || '?').charAt(0).toUpperCase() || '?';
-
-  document.getElementById('det-imagem-input')?.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    e.target.value = '';
-    if (!file) return;
-    const dataUrl = await processarImagemArquivo(file, 300);
-    if (!dataUrl) {
-      toast('Não foi possível processar essa imagem', 'error');
-      return;
-    }
-    personagem.imagem = dataUrl;
-    const preview = document.getElementById('det-imagem-preview');
-    if (preview) preview.innerHTML = `<img src="${escHtml(dataUrl)}" alt="">`;
-    const btnRemover = document.getElementById('det-imagem-remover');
-    if (btnRemover) btnRemover.style.display = '';
-  });
+  const atualizarFoto = () => renderPreviewFoto(personagem, document.getElementById('det-imagem-preview'));
+  atualizarFoto();
+  document.getElementById('det-imagem-btn')?.addEventListener('click', () => abrirGerenciadorFotos(personagem, atualizarFoto));
 
   document.getElementById('det-imagem-remover')?.addEventListener('click', () => {
-    personagem.imagem = '';
-    const preview = document.getElementById('det-imagem-preview');
-    if (preview) preview.textContent = detImagemInicial();
-    const btnRemover = document.getElementById('det-imagem-remover');
-    if (btnRemover) btnRemover.style.display = 'none';
+    if (!confirm('Deixar o cabeçalho sem foto principal? O álbum será preservado.')) return;
+    definirFotoPrincipal(personagem,null); atualizarFoto();
   });
 }
 

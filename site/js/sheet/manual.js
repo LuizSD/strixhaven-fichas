@@ -6,7 +6,14 @@ import { aplicarEdicao } from '../ficha-edicoes.js';
 import { getEstadoFuria } from './classes/barbaro.js';
 import { forcaPrimordialAtiva } from './combate.js';
 import { novoId, numeroInformado, valorComAjuste } from '../strixhaven/modelo.js';
-import { abrirIdiomas } from '../idiomas-catalogo.js';
+import { abrirIdiomas, IDIOMAS_CATALOGO } from '../idiomas-catalogo.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';
+
+export function renderIdiomasFicha() {
+  const personalizados = char.idiomas_personalizados || [];
+  const padrao = char.idiomas_padrao || (char.idiomas || []).filter(n => !personalizados.some(i => i.nome === n));
+  return `<section class="card" id="idiomas-ficha"><h2>Idiomas</h2><div class="idiomas-selecionados">${padrao.map(nome => rotuloLocalizado(IDIOMAS_CATALOGO.find(i => i.nome === nome) || { nome })).join('')}${personalizados.map(i => rotuloLocalizado(i)).join('')}</div><div class="sh-acoes no-print"><button class="btn btn-primary bilingual-action" id="idioma-adicionar-direto">Adicionar idioma personalizado<small lang="en">Add custom language</small></button><button class="btn btn-secondary" id="idiomas-gerenciar">Gerenciar idiomas</button></div></section>`;
+}
 
 /** Valores derivados editáveis calculados sem aplicar o ajuste em si. */
 function calculadosManuais() {
@@ -46,6 +53,9 @@ function editarBeneficio(id) {
 
 /** Liga ações manuais sem relaxar os seletores normais de criação. */
 export function setupManual(container) {
+  const salvarIdiomas = () => { salvar(); renderFichaCompleta(); };
+  container.querySelector('#idioma-adicionar-direto')?.addEventListener('click', () => abrirIdiomas(char, salvarIdiomas, { criar:true }));
+  container.querySelector('#idiomas-gerenciar')?.addEventListener('click', () => abrirIdiomas(char, salvarIdiomas));
   container.querySelector('#manual-idiomas')?.addEventListener('click', () => abrirIdiomas(char, () => { salvar(); renderFichaCompleta(); }));
   container.querySelector('#manual-beneficio')?.addEventListener('click', () => editarBeneficio());
   container.querySelectorAll('[data-beneficio-editar]').forEach(b => { b.onclick = () => editarBeneficio(b.dataset.beneficioEditar); });

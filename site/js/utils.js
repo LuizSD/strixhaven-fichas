@@ -13,6 +13,7 @@ import { classesDe, temClasse } from './regras-multiclasse.js';
 // dois importa utils.js. Ver o comentario de normalizarGrimorioMago abaixo
 // para o porque desta importacao (issue #62).
 import { preparadasPorClasse } from './regras-magia-classe.js';
+import { prepararModalAcessivel, liberarModalAcessivel } from './modal-acessivel.js';
 
 // --- Cálculos D&D ---
 
@@ -1158,15 +1159,15 @@ export function abrirModal(titulo, corpoHtml, acoesHtml = '', onClose = null) {
     // Fechar sub-modal ao clicar fora ou no X
     sub.addEventListener('click', (e) => {
       if (e.target === sub || e.target.closest('[data-fechar-sub]')) {
-        sub.remove();
-        _subModalCount--;
+        fecharModal();
       }
     });
     // Substituir onclick="fecharModal()" nos botões do sub-modal
     sub.querySelectorAll('[onclick*="fecharModal"]').forEach(btn => {
       btn.removeAttribute('onclick');
-      btn.addEventListener('click', () => { sub.remove(); _subModalCount--; });
+      btn.addEventListener('click', () => fecharModal());
     });
+    prepararModalAcessivel(sub, fecharModal);
     return;
   }
 
@@ -1176,6 +1177,7 @@ export function abrirModal(titulo, corpoHtml, acoesHtml = '', onClose = null) {
   overlay.style.display = 'flex';
   _onModalClose = onClose;
   document.getElementById('modal-container').scrollTop = 0;
+  prepararModalAcessivel(overlay, fecharModal);
 }
 
 /** Fecha modal global */
@@ -1183,20 +1185,24 @@ export function fecharModal() {
   // Se existem sub-modais, fechar o mais recente
   if (_subModalCount > 0) {
     const sub = document.getElementById(`sub-modal-overlay-${_subModalCount}`);
-    if (sub) sub.remove();
+    if (sub) { liberarModalAcessivel(sub); sub.remove(); }
     _subModalCount--;
     return;
   }
-  document.getElementById('modal-overlay').style.display = 'none';
+  const overlay = document.getElementById('modal-overlay');
+  liberarModalAcessivel(overlay);
+  overlay.style.display = 'none';
   if (_onModalClose) { const cb = _onModalClose; _onModalClose = null; cb(); }
 }
 
 /** Fecha todos os modais (principal + sub-modais) */
 export function fecharModalTodos() {
   // Remover todos sub-modais
-  document.querySelectorAll('.sub-modal-overlay').forEach(el => el.remove());
+  [...document.querySelectorAll('.sub-modal-overlay')].reverse().forEach(el => { liberarModalAcessivel(el); el.remove(); });
   _subModalCount = 0;
-  document.getElementById('modal-overlay').style.display = 'none';
+  const overlay = document.getElementById('modal-overlay');
+  liberarModalAcessivel(overlay);
+  overlay.style.display = 'none';
   if (_onModalClose) { const cb = _onModalClose; _onModalClose = null; cb(); }
 }
 // Expor para onclick inline

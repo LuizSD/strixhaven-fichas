@@ -115,12 +115,17 @@ test('extra de círculo alto, identidade, recurso, academia, JSON e AcroForm', a
   const exemploAtual = await page.evaluate(async () => (await import('./js/store.js')).exportarPersonagem('estudante-teste'));
   await writeFile(new URL('personagem-exemplo.json', artefatos), exemploAtual);
   const download = page.waitForEvent('download');
-  await page.locator('#pdf-editavel').click();
+  await page.locator('#btn-print').click();
+  await page.locator('input[value="strixhaven-atual"]').check();
+  await page.locator('#pdf-gerar').click();
   const pdf = await download;
   await pdf.saveAs(new URL('estudante-editavel.pdf', artefatos).pathname);
   const descritivo = page.waitForEvent('download');
+  await page.locator('#pdf-cancelar').click();
   await page.locator('#btn-print').click();
+  await page.locator('#pdf-gerar').click();
   await (await descritivo).saveAs(new URL('estudante-descritivo.pdf', artefatos).pathname);
+  await page.locator('#pdf-cancelar').click();
   const arquivoEditavel = await readFile(new URL('estudante-editavel.pdf', artefatos));
   const pdfVerificado = await page.evaluate(async bytes => {
     const doc = await window.PDFLib.PDFDocument.load(new Uint8Array(bytes));
@@ -257,7 +262,9 @@ test('PDFs com continuações preservam o último registro, notas e campos edit�
   const backupLongo = await page.evaluate(async () => (await import('./js/store.js')).exportarPersonagem('estudante-teste'));
   await writeFile(new URL('personagem-longo.json', artefatos), backupLongo);
   const dl = page.waitForEvent('download');
-  await page.locator('#pdf-editavel').click();
+  await page.locator('#btn-print').click();
+  await page.locator('input[value="strixhaven-atual"]').check();
+  await page.locator('#pdf-gerar').click();
   await (await dl).saveAs(new URL('longo-editavel.pdf', artefatos).pathname);
   const verificado = await page.evaluate(async () => {
     const s = await import('./js/store.js');
@@ -277,7 +284,9 @@ test('PDFs com continuações preservam o último registro, notas e campos edit�
   expect(verificado.detalhes).toContain('MARCADOR-FINAL-MAGIA');
   expect(verificado.detalhes).toContain('Relação 24');
   const dl2 = page.waitForEvent('download');
+  await page.locator('#pdf-cancelar').click();
   await page.locator('#btn-print').click();
+  await page.locator('#pdf-gerar').click();
   await (await dl2).saveAs(new URL('longo-descritivo.pdf', artefatos).pathname);
 });
 

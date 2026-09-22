@@ -15,6 +15,7 @@ const STATIC_ASSETS = [
   './css/app.css',
   './css/strixhaven.css',
   './css/magias-catalogo.css',
+  './css/ajustes-finais.css',
   './img/strixhaven.svg',
   './img/strixhaven-192.png',
   './img/strixhaven-512.png',
@@ -149,6 +150,8 @@ function ehHostDeRede(hostname) {
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
+  // Referências visuais externas são exibidas pelo navegador, nunca arquivadas pela PWA.
+  if (request.destination === 'image' && url.origin !== self.location.origin) return;
 
   // Ignorar esquemas que o Cache API não suporta (ex: chrome-extension://)
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;

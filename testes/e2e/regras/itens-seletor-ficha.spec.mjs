@@ -19,7 +19,7 @@ import { abrirFicha, personagemSalvo, clicarBotaoFicha } from './helpers-regras.
 
 const SEMENTE_BASE = { classe: 'Guerreiro', nivel: 1 };
 
-test('ficha: modal "Adicionar Item" abre, lista as 5 categorias e a busca filtra', async ({ context }) => {
+test('ficha: modal "Adicionar Item" preserva as 5 categorias e acrescenta o catálogo legado', async ({ context }) => {
   const { page, erros } = await abrirFicha(context, SEMENTE_BASE, 'regras-itens-seletor-1');
 
   // Abrir pelo botão da ficha -- getElementById(...)?.click() puro é
@@ -28,10 +28,12 @@ test('ficha: modal "Adicionar Item" abre, lista as 5 categorias e a busca filtra
 
   // As 5 categorias do brief, na ordem certa.
   const filtros = page.locator('.filtro-inv-cat[data-cat]');
-  await expect(filtros).toHaveCount(5);
+  const categoriasLegadas = await page.evaluate(async () => [...new Set((await (await import('./js/db.js')).getEquipamentoLegado()).map(i => i.category))]);
+  await expect(filtros).toHaveCount(5 + categoriasLegadas.length);
   const categoriasEsperadas = ['armas', 'armaduras', 'consumiveis', 'municao', 'equipamento'];
   const categoriasNoDOM = await filtros.evaluateAll(els => els.map(el => el.dataset.cat));
-  expect(categoriasNoDOM, 'categorias do filtro devem bater com as 5 do brief, na mesma ordem').toEqual(categoriasEsperadas);
+  expect(categoriasNoDOM.slice(0,5), 'categorias originais continuam na mesma ordem').toEqual(categoriasEsperadas);
+  expect(categoriasNoDOM.slice(5)).toEqual(categoriasLegadas.map((_,i)=>`legado-${i}`));
 
   // Toggle "Comprar" existe e começa desmarcado (preferência global só
   // fica marcada se salva antes -- contexto novo do teste, sem gravação prévia).

@@ -73,11 +73,13 @@ test('círculo 9, justificativa, idiomas e JSON completo preservam escolhas e PD
   await page.locator('#extra-sem-teste').check();
   await page.locator('#extra-motivo').fill('Recompensa futura');
   await page.locator('#btn-salvar-mc').click();
-  await expect(page.locator('#magias-extras')).toContainText('Não conjurável atualmente');
+  await page.locator('#observacoes-extras').click();
+  await expect(page.locator('#modal-corpo')).toContainText('não conjurável atualmente');
+  await page.keyboard.press('Escape');
   await page.locator('[data-justificar-magias]').first().click();
   await page.locator('#magias-justificativa').fill('Regra da mesa: repertório incompleto e recompensa futura');
   await page.locator('#magias-justificar-salvar').click();
-  await expect(page.locator('.catalogo-alerta.info').first()).toContainText('Divergência aceita');
+  await expect(page.locator('#magias-extras > .observacoes-resumo.info')).toContainText('divergências aceitas');
   await page.locator('#manual-idiomas').click();
   await page.locator('#idioma-busca').fill('Sylvan');
   await expect(page.locator('[data-idioma]')).toHaveCount(1);
@@ -109,7 +111,11 @@ test('círculo 9, justificativa, idiomas e JSON completo preservam escolhas e PD
     expect(p.justificativa_magias).toContain('Regra da mesa');
   }
   const download = page.waitForEvent('download');
-  await page.locator('#pdf-editavel').click();
+  await page.locator('#btn-print').click();
+  await page.locator('input[value="strixhaven-atual"]').check();
+  await page.locator('#pdf-gerar').click();
+  await page.locator('#pdf-estado').filter({hasText:'PDF gerado'}).waitFor();
+  await page.locator('#pdf-cancelar').click();
   const arquivo = await download;
   const dir = new URL('../../../assets-private/entrega/', import.meta.url);
   await mkdir(dir, { recursive: true });
@@ -130,7 +136,9 @@ test('círculo 9, justificativa, idiomas e JSON completo preservam escolhas e PD
 
 test('quantidades abaixo e acima são alertas persistentes sem conceder espaços', async ({ page }) => {
   await ficha(page);
-  await expect(page.locator('#magias-extras')).toContainText('0/3 truques — falta 3');
+  await page.locator('#observacoes-extras').click();
+  await expect(page.locator('#modal-corpo')).toContainText('0/3 truques — falta 3');
+  await page.keyboard.press('Escape');
   await page.locator('#catalogo-todos').click();
   await page.locator('#extra-classe-filtro').selectOption('Paladino');
   await page.locator('#extra-nivel-filtro').selectOption('1');
@@ -148,14 +156,18 @@ test('quantidades abaixo e acima são alertas persistentes sem conceder espaços
     salvar(); (await import('./js/sheet/ficha.js')).renderFichaCompleta();
     return antes;
   });
-  await expect(page.locator('#magias-extras')).toContainText('4/3 truques — excede 1');
+  await page.locator('#observacoes-extras').click();
+  await expect(page.locator('#modal-corpo')).toContainText('4/3 truques — excede 1');
+  await page.keyboard.press('Escape');
   await page.reload();
   await expect(page.locator('[data-extra-id]')).toHaveCount(4);
   expect(await page.evaluate(async () => JSON.stringify((await import('./js/sheet/estado.js')).char.espacos_magia))).toBe(espacos);
   await page.locator('[data-justificar-magias]').first().click();
   await page.locator('#magias-justificativa').fill('Talento da campanha');
   await page.locator('#magias-justificar-salvar').click();
-  await expect(page.locator('#magias-extras .catalogo-alerta.info').first()).toContainText('4/3 truques — excede 1');
+  await expect(page.locator('#magias-extras > .observacoes-resumo.info')).toContainText('divergências aceitas');
+  await page.locator('#observacoes-extras').click();
+  await expect(page.locator('#modal-corpo')).toContainText('4/3 truques — excede 1');
 });
 
 test('equipamento legado é bilíngue e a instância editável não altera o catálogo', async ({ page }) => {
@@ -203,7 +215,6 @@ test('Critical20 usa mapa próprio, limpa dados anteriores e mantém complemento
   // Candidato só no navegador isolado da auditoria; produção exige validated=true.
   if (!manifest.validated) await page.route('**/dados/pdf-templates/bardo-critical20.json', route => route.fulfill({ contentType: 'application/json', body: JSON.stringify({ ...manifest, validated: true }) }));
   await ficha(page);
-  await expect(page.locator('#modelo-pdf option[value="bardo-critical20"]')).toBeAttached();
   await page.evaluate(async () => {
     const { char, salvar } = await import('./js/sheet/estado.js');
     const spells = await (await import('./js/db.js')).getMagiasLegado();
@@ -212,9 +223,10 @@ test('Critical20 usa mapa próprio, limpa dados anteriores e mantém complemento
     char.strixhaven.faculdade = 'Quandrix';
     salvar(); (await import('./js/sheet/ficha.js')).renderFichaCompleta();
   });
-  await page.locator('#modelo-pdf').selectOption('bardo-critical20');
+  await page.locator('#btn-print').click();
+  await page.locator('input[value="bardo-critical20"]').check();
   const download = page.waitForEvent('download');
-  await page.locator('#pdf-editavel').click();
+  await page.locator('#pdf-gerar').click();
   const dir = new URL('../../../assets-private/entrega/', import.meta.url);
   await mkdir(dir, { recursive: true });
   await (await download).saveAs(new URL('bardo-phb-editavel.pdf', dir).pathname);
@@ -244,10 +256,12 @@ test('Critical20 usa mapa próprio, limpa dados anteriores e mantém complemento
 test('template opcional ausente não quebra exportador atual', async ({ page }) => {
   await page.route('**/reference/templates/**', route => route.fulfill({ status: 404, body: '' }));
   await ficha(page);
+  await page.locator('#btn-print').click();
   await expect(page.locator('#pdf-modelo-disponibilidade')).toContainText('indisponível');
-  await expect(page.locator('#modelo-pdf option')).toHaveCount(1);
+  await expect(page.locator('#pdf-opcoes input:enabled')).toHaveCount(2);
+  await page.locator('input[value="strixhaven-atual"]').check();
   const download = page.waitForEvent('download');
-  await page.locator('#pdf-editavel').click();
+  await page.locator('#pdf-gerar').click();
   expect((await download).suggestedFilename()).toContain('Auditoria PHB');
 });
 

@@ -102,7 +102,9 @@ test('outra classe e círculo 9: destino escolhido, alerta e nenhum espaço conc
   expect(depois.find(p => p.id === 'global-druida').magias_customizadas).toHaveLength(1);
   await page.goto('#ficha/global-mago');
   await expect(page.locator('#magias-extras')).toContainText('Não conjurável atualmente');
-  await expect(page.locator('#magias-extras')).toContainText('Fora da lista da sua classe');
+  await page.locator('#observacoes-extras').click();
+  await expect(page.locator('#modal-corpo')).toContainText('fora das listas de classe');
+  await page.keyboard.press('Escape');
   await page.reload();
   await expect(page.locator('[data-extra-id]')).toHaveCount(2);
 });
@@ -177,7 +179,9 @@ test('IDs antigos reconciliam sem perder overrides nem remover versões', async 
 
 test('cotas são referências: menos/mais, justificativa e mudança de classe preservam registros', async ({ page }) => {
   await preparar(page,true);
-  await expect(page.locator('#magias-extras')).toContainText('0/3 truques — falta 3');
+  await page.locator('#observacoes-extras').click();
+  await expect(page.locator('#modal-corpo')).toContainText('0/3 truques — falta 3');
+  await page.keyboard.press('Escape');
   const antes = await page.evaluate(async () => (await import('./js/store.js')).getPersonagem('global-mago').espacos_magia);
   await page.locator('#pesquisar-todas-magias').click();
   await q(page,'origem').selectOption('2014-legacy');
@@ -190,11 +194,14 @@ test('cotas são referências: menos/mais, justificativa e mudança de classe pr
     await expect(page.locator('#ga-salvar')).toHaveCount(0);
   }
   await page.evaluate(() => window.fecharModal());
-  await expect(page.locator('#magias-extras')).toContainText('4/3 truques — excede 1');
-  await page.locator('[data-justificar-magias]').first().click();
+  await page.locator('#observacoes-extras').click();
+  await expect(page.locator('#modal-corpo')).toContainText('4/3 truques — excede 1');
   await page.locator('#magias-justificativa').fill('Bônus da campanha');
   await page.locator('#magias-justificar-salvar').click();
-  await expect(page.locator('#magias-extras .catalogo-alerta.info').first()).toContainText('4/3 truques — excede 1');
+  await expect(page.locator('#magias-extras > .observacoes-resumo.info')).toContainText('divergências aceitas');
+  await page.locator('#observacoes-extras').click();
+  await expect(page.locator('#modal-corpo')).toContainText('4/3 truques — excede 1');
+  await page.keyboard.press('Escape');
   const r = await page.evaluate(async () => {
     const s = await import('./js/store.js');
     const p = s.getPersonagem('global-mago');
