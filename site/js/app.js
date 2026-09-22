@@ -5,6 +5,7 @@ import { renderHome } from './pages/home.js';
 import { CAMPANHA_CONFIG } from './campanha-config.js';
 import { renderCreator } from './pages/creator.js';
 import { renderSheet } from './pages/sheet.js';
+import { renderTodasMagias } from './pages/magias.js';
 import { inicializarSync } from './sync.js';
 import { carregarTaxasMoeda } from './store.js';
 import { toast, abrirModal } from './utils.js';
@@ -15,7 +16,8 @@ import { abrirNotasVersao } from './notas-versao.js';
 const routes = {
   'home': renderHome,
   'criar': renderCreator,
-  'ficha': renderSheet
+  'ficha': renderSheet,
+  'magias': renderTodasMagias
 };
 
 /** Navegar para uma rota */
@@ -93,6 +95,20 @@ function processarRota() {
   const partes = hash.split('/');
   const pagina = partes[0];
   const param = partes.slice(1).join('/');
+  const menuMagias = document.getElementById('menu-todas-magias');
+  if (menuMagias) {
+    menuMagias.href = pagina === 'ficha' ? `#magias/${param}` : '#magias';
+    menuMagias.setAttribute('aria-current', pagina === 'magias' ? 'page' : 'false');
+    menuMagias.onclick = pagina === 'criar' ? async e => {
+      e.preventDefault();
+      const { personagem } = await import('./creator/wizard.js');
+      const { abrirBuscaGlobalMagias } = await import('./magias/busca-ui.js');
+      abrirBuscaGlobalMagias({ personagem, aoSalvar: async () => {
+        const etapa = document.getElementById('wizard-content');
+        if (etapa?.querySelector('#criacao-alertas-magias')) (await import('./creator/passo-magias.js')).renderStepMagias(etapa);
+      } });
+    } : null;
+  }
 
   const render = proprio(routes, pagina);
   const content = document.getElementById('app-content');
@@ -136,7 +152,8 @@ function processarRota() {
   const titulos = {
     'home': 'Strixhaven · Estudantes',
     'criar': 'Novo Personagem',
-    'ficha': 'Ficha'
+    'ficha': 'Ficha',
+    'magias': 'Todas as Magias'
   };
   definirTituloHeader(proprio(titulos, pagina) || 'D&D 5.5 Ficha');
   atualizarSeloVersaoClicavel(pagina);

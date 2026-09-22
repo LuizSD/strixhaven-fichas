@@ -1,0 +1,14 @@
+{
+  "command": "node node_modules/@playwright/test/cli.js test --config=ajustes-finais.config.mjs --reporter=json",
+  "cwd": "testes/e2e",
+  "exitCode": 0,
+  "stats": {
+    "startTime": "2026-09-22T16:37:56.981Z",
+    "duration": 44399.917,
+    "expected": 17,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "failures": []
+}

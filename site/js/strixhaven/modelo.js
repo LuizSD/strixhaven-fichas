@@ -1,10 +1,14 @@
 // Extensão da ficha 2024. Nunca projeta o personagem em um schema menor.
+import { CLASSES_INFO } from '../dados-classes.js';
+import { migrarFotos } from '../fotos-modelo.js';
 export const FACULDADES = ['Lorehold', 'Prismari', 'Quandrix', 'Silverquill', 'Witherbloom'];
 
 /** Fonte única de cota extra; não grava cópias em preparadas ou grimório. */
 export function extrasQueOcupam(p, truque) {
   return (p?.magias_customizadas || []).filter(m => m.origem === 'extra' && m.sempre_preparada === false
-    && (truque ? Number(m.circulo) === 0 && m.estado_extra !== 'grimório' : Number(m.circulo) > 0 && ['preparada', 'sempre preparada'].includes(m.estado_extra)));
+    && (truque ? Number(m.circulo) === 0 && !['grimório', 'registrada'].includes(m.estado_extra)
+      : Number(m.circulo) > 0 && (['preparada', 'sempre preparada'].includes(m.estado_extra)
+        || (m.estado_extra === 'conhecida' && CLASSES_INFO[m.classe || p.classe]?.tipo_conjuracao === 'conhecidas'))));
 }
 
 /** Cota explícita durante criação de classe única; sem carimbo conta na única classe. */
@@ -25,8 +29,52 @@ export function valorComAjuste(p, chave, calculado) {
 }
 
 /** Migração aditiva e idempotente; campos de versões futuras são preservados. */
+function guardarImportacaoPendente(p, chave, valor) {
+  const anterior = p.dados_importados_pendentes;
+  if (!anterior || typeof anterior !== 'object' || Array.isArray(anterior)) p.dados_importados_pendentes = anterior == null ? {} : { original: anterior };
+  let destino = chave, sufixo = 2;
+  while (Object.hasOwn(p.dados_importados_pendentes, destino) && JSON.stringify(p.dados_importados_pendentes[destino]) !== JSON.stringify(valor)) destino = `${chave}#${sufixo++}`;
+  p.dados_importados_pendentes[destino] = valor;
+}
+
+function colecaoImportada(p, objeto, chave, caminho = chave) {
+  const valor = objeto[chave];
+  if (valor == null) { objeto[chave] = []; return; }
+  if (!Array.isArray(valor)) {
+    guardarImportacaoPendente(p, caminho, valor); objeto[chave] = []; return;
+  }
+  const invalidos = valor.map((v, indice) => ({ indice, valor: v })).filter(r => !r.valor || typeof r.valor !== 'object' || Array.isArray(r.valor));
+  if (invalidos.length) {
+    guardarImportacaoPendente(p, caminho, invalidos);
+    objeto[chave] = valor.filter(v => v && typeof v === 'object' && !Array.isArray(v));
+  }
+}
+
 export function migrarAcademia(p) {
   if (!p || typeof p !== 'object') return p;
+  p.schemaVersion = Math.max(Number(p.schemaVersion) || 0, 2);
+  migrarFotos(p);
+  for (const chave of ['idiomas_personalizados', 'magias_customizadas', 'inventario', 'beneficios_manuais']) colecaoImportada(p, p, chave);
+  if (p.idiomas != null && !Array.isArray(p.idiomas)) { guardarImportacaoPendente(p, 'idiomas', p.idiomas); p.idiomas = []; }
+  for (const idioma of p.idiomas_personalizados) {
+    idioma.id ||= novoId();
+    if (!idioma.name || typeof idioma.name !== 'object' || Array.isArray(idioma.name)) idioma.name = { ptBR:idioma.nome || '', en:idioma.en || '', ptBRStatus:'interface-translation', original:idioma.name };
+    idioma.name.aliases ??= Array.isArray(idioma.aliases) ? [...idioma.aliases] : [];
+    idioma.source = { sourceId:'local', sourceTitle:idioma.origem || 'Idioma personalizado', ...idioma.source, rulesVersion:'custom' };
+  }
+  for (const item of p.inventario || []) {
+    item.nome ??= typeof item.name === 'string' ? item.name : item.name?.ptBR || item.name?.en || '';
+    if (!item.name || typeof item.name !== 'object' || Array.isArray(item.name)) item.name = { ptBR: item.nome || '', en: '', ptBRStatus: 'missing', original: item.name ?? item.nome };
+    if (item.tipo === 'customizado') item.source ??= { sourceId: 'local', sourceTitle: 'Item personalizado', rulesVersion: 'custom' };
+  }
+  for (const m of p.magias_customizadas || []) {
+    m.nome ??= typeof m.name === 'string' ? m.name : m.name?.ptBR || m.name?.en || '';
+    if (!m.name || typeof m.name !== 'object' || Array.isArray(m.name)) m.name = { ptBR: m.nome || '', en: '', ptBRStatus: 'missing', original: m.name ?? m.nome };
+    if (m.classes != null && !Array.isArray(m.classes)) { guardarImportacaoPendente(p, `magia:${m.id || m.nome}:classes`, m.classes); delete m.classes; }
+    m.source ??= { sourceId: 'local', sourceTitle: 'Conteúdo personalizado', rulesVersion: 'custom' };
+    if (m.origem === 'extra') delete m.restricoes_excedidas; // cache derivado antigo; motivo manual é preservado
+  }
+  if (p.strixhaven != null && (typeof p.strixhaven !== 'object' || Array.isArray(p.strixhaven))) { guardarImportacaoPendente(p, 'strixhaven', p.strixhaven); p.strixhaven = {}; }
   p.strixhaven ??= {};
   const a = p.strixhaven;
   a.versao ??= 1;
@@ -36,7 +84,7 @@ export function migrarAcademia(p) {
   a.ano ??= 1;
   a.notas ??= '';
   for (const chave of ['relacionamentos', 'cursos', 'avaliacoes', 'atividades', 'empregos']) {
-    a[chave] ??= [];
+    colecaoImportada(p, a, chave, `strixhaven.${chave}`);
     for (const registro of a[chave]) registro.id ||= novoId();
   }
   for (const m of p.magias_customizadas || []) m.id ||= novoId();

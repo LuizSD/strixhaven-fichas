@@ -1,0 +1,22 @@
+{
+  "id": "strixhaven-atual",
+  "kind": "generated-template",
+  "validated": true,
+  "sourcePattern": null,
+  "templateHash": null,
+  "generatorSource": "site/js/strixhaven/exportacao.js",
+  "generatorSha256": "d6e98dcc8a2e702d5901102f565c4828c7fd3df9fa3f869eff1205c284a7ef81",
+  "pages": "dynamic",
+  "pageSize": [
+    595,
+    842
+  ],
+  "fieldNamePattern": "campo.<sequence>.<document path>.<continuation offset>",
+  "proof": {
+    "sha256": "32cf921cd47819613444da3d0fd41bc5e75a88955da1bb5c83bd9b0f419113d7",
+    "pages": 8,
+    "widgets": 168,
+    "editable": true
+  },
+  "coverage": "Percorre propriedades do documento e cria continuação; retrato binário fica fora do formulário textual."
+}

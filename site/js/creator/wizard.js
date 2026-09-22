@@ -88,9 +88,9 @@ function limparDadosDoPasso(stepIndex) {
       break;
 
     case 'magias':
-      personagem.magias_conhecidas = [];
-      personagem.magias_preparadas = [];
-      personagem.grimorio = [];
+      // Voltar ou trocar classe não apaga escolhas já registradas.
+      // Elegibilidade é recalculada; o jogador decide o que remover.
+      // Somente recursos derivados são reconstruídos na conclusão.
       personagem.espacos_magia = {};
       delete dadosCache.magiasClasse;
       delete dadosCache.indiceMagias;
@@ -106,7 +106,7 @@ function limparDadosDoPasso(stepIndex) {
       personagem.historia_personagem = '';
       personagem.notas = '';
       personagem.tamanho = '';
-      personagem.idiomas = ['Comum'];
+      personagem.idiomas ||= ['Comum'];
       break;
   }
 }
@@ -338,23 +338,19 @@ function validarStep() {
         const preparadasSelecionadas = (personagem.magias_preparadas || []).length + extrasPreparadas;
 
         if (truquesNecessarios > 0 && truquesSelecionados < truquesNecessarios) {
-          toast(`Selecione ${truquesNecessarios} truques (${truquesSelecionados} selecionados)`, 'error');
-          return false;
+          toast(`Referência: ${truquesSelecionados}/${truquesNecessarios} truques. A ficha pode ser salva incompleta.`, 'warning');
         }
         if (preparadasNecessarias > 0 && preparadasSelecionadas < preparadasNecessarias) {
-          toast(`Selecione ${preparadasNecessarias} magias (${preparadasSelecionadas} selecionadas)`, 'error');
-          return false;
+          toast(`Referência: ${preparadasSelecionadas}/${preparadasNecessarias} magias. A ficha pode ser salva incompleta.`, 'warning');
         }
         if (personagem.classe === 'Mago' && personagem.nivel === 1) {
           const grimorio = Array.isArray(personagem.grimorio) ? personagem.grimorio : [];
           const preparadas = Array.isArray(personagem.magias_preparadas) ? personagem.magias_preparadas : [];
           if (grimorio.length !== 6 || grimorio.some(m => Number(m?.circulo) !== 1)) {
-            toast(`Selecione 6 magias de 1º círculo para o grimório (${grimorio.length} selecionadas)`, 'error');
-            return false;
+            toast(`Grimório: ${grimorio.length}/6 magias sugeridas. Escolhas preservadas.`, 'warning');
           }
           if (preparadas.length + extrasPreparadas < 4 || preparadas.length > 4 || preparadas.some(m => !magiaMagoEstaNoGrimorio(personagem, m?.nome))) {
-            toast('Selecione 4 magias preparadas que também estejam no grimório', 'error');
-            return false;
+            toast('Referência: 4 preparadas do grimório. Divergência preservada sem impedir salvar.', 'warning');
           }
         }
       }

@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 2,
+  "itens": [
+    {
+      "id": "dmg-2014-ring-of-evasion",
+      "nome": "Anel de Evasão",
+      "name": {
+        "ptBR": "Anel de Evasão",
+        "en": "Ring of Evasion",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "category": "Itens mágicos (DMG 2014)",
+      "raridade": "Rara",
+      "requer_sintonizacao": true,
+      "mechanics": {
+        "charges": 3,
+        "recovery": {
+          "dice": "1d3",
+          "when": "dawn"
+        }
+      },
+      "descricao": "Efeitos legados para consulta e controle manual; não concede bônus, espaços ou magias automaticamente.",
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 153,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-swimming",
+      "nome": "Anel de Natação",
+      "name": {
+        "ptBR": "Anel de Natação",
+        "en": "Ring of Swimming",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "category": "Itens mágicos (DMG 2014)",
+      "raridade": "Incomum",
+      "requer_sintonizacao": false,
+      "mechanics": {
+        "swimSpeedMeters": 12
+      },
+      "descricao": "Efeitos legados para consulta e controle manual; não concede bônus, espaços ou magias automaticamente.",
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 153,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-protection",
+      "nome": "Anel de Proteção",
+      "name": {
+        "ptBR": "Anel de Proteção",
+        "en": "Ring of Protection",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "category": "Itens mágicos (DMG 2014)",
+      "raridade": "Rara",
+      "requer_sintonizacao": true,
+      "mechanics": {
+        "armorClassBonus": 1,
+        "savingThrowBonus": 1
+      },
+      "descricao": "Efeitos legados para consulta e controle manual; não concede bônus, espaços ou magias automaticamente.",
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 153,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-feather-falling",
+      "nome": "Anel de Queda Suave",
+      "name": {
+        "ptBR": "Anel de Queda Suave",
+        "en": "Ring of Feather Falling",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "category": "Itens mágicos (DMG 2014)",
+      "raridade": "Rara",
+      "requer_sintonizacao": true,
+      "mechanics": {
+        "fallSpeedMetersPerRound": 18,
+        "fallDamage": false
+      },
+      "descricao": "Efeitos legados para consulta e controle manual; não concede bônus, espaços ou magias automaticamente.",
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 153,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-regeneration",
+      "nome": "Anel de Regeneração",
+      "name": {
+        "ptBR": "Anel de Regeneração",
+        "en": "Ring of Regeneration",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "category": "Itens mágicos (DMG 2014)",
+      "raridade": "Muito Rara",
+      "requer_sintonizacao": true,
+      "mechanics": {
+        "healingDice": "1d6",
+        "intervalMinutes": 10,
+        "minimumCurrentHP": 1,
+        "regrowDays": "1d6+1"
+      },
+      "descricao": "Efeitos legados para consulta e controle manual; não concede bônus, espaços ou magias automaticamente.",
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-resistance",
+      "nome": "Anel de Resistência",
+      "name": {
+        "ptBR": "Anel de Resistência",
+        "en": "Ring of Resistance",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "category": "Itens mágicos (DMG 2014)",
+      "raridade": "Rara",
+      "requer_sintonizacao": true,
+      "mechanics": {
+        "resistanceChoices": [
+          "acid",
+          "cold",
+          "fire",
+          "force",
+          "lightning",
+          "necrotic",
+          "poison",
+          "psychic",
+          "radiant",
+          "thunder"
+        ],
+        "choose": 1
+      },
+      "descricao": "Efeitos legados para consulta e controle manual; não concede bônus, espaços ou magias automaticamente.",
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-three-wishes",
+      "nome": "Anel dos Três Desejos",
+      "name": {
+        "ptBR": "Anel dos Três Desejos",
+        "en": "Ring of Three Wishes",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "category": "Itens mágicos (DMG 2014)",
+      "raridade": "Lendária",
+      "requer_sintonizacao": false,
+      "mechanics": {
+        "charges": 3,
+        "chargesPerUse": 1,
+        "spellRef": "phb-2014-wish",
+        "activation": "action",
+        "nonmagicalAtZero": true
+      },
+      "descricao": "Efeitos legados para consulta e controle manual; não concede bônus, espaços ou magias automaticamente.",
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Itens mágicos"
+      }
+    }
+  ]
+}

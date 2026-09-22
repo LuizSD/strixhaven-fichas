@@ -6,6 +6,7 @@ import { enfileirarSync, enfileirarRemocao } from './sync.js';
 import { criarCarteiraVazia, normalizarCarteira, definirTaxas, resetarTaxas } from './moedas.js';
 
 import { migrarAcademia } from './strixhaven/modelo.js';
+import { reconciliarMagias } from './magias/modelo.js';
 const STORAGE_KEY = 'strixhaven_2024_personagens';
 const BACKUP_KEY = 'strixhaven_2024_personagens_backup';
 const TAXAS_MOEDA_KEY = 'strixhaven_2024_taxas_moeda';
@@ -56,6 +57,7 @@ export function listarPersonagens() {
     const personagens = lista.map(p => {
       const antes = JSON.stringify(p);
       const personagem = migrarAcademia(migrarEdicoesLegado(migrarMoedasLegado(p)));
+      reconciliarMagias(personagem);
       if (JSON.stringify(personagem) !== antes) grimorioAlterado = true;
       if (normalizarGrimorioMago(personagem).alterado) grimorioAlterado = true;
       return personagem;
@@ -81,6 +83,7 @@ export function getPersonagem(id) {
 /** Salva ou atualiza um personagem */
 export function salvarPersonagem(personagem) {
   migrarAcademia(personagem);
+  reconciliarMagias(personagem);
   const lista = listarPersonagens();
   const idx = lista.findIndex(p => p.id === personagem.id);
   personagem.atualizado_em = new Date().toISOString();
@@ -267,6 +270,7 @@ export function importarPersonagens(jsonStr) {
         continue;
       }
       migrarAcademia(p);
+      reconciliarMagias(p);
       if (!lista.find(e => e.id === p.id)) {
         lista.push(p);
         countNovos++;

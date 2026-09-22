@@ -1,0 +1,60 @@
+[
+  {
+    "id": "bardo-critical20",
+    "sha256": "6e28fd99001080fc9d47c41ac25a0a4f94b160829496554718a0cee19aa51eea",
+    "kind": "template",
+    "alsoFoundAt": [
+      "D-D_2024/reference/templates/bardo-critical20-6e28fd990010.pdf",
+      "D-D_2024/assets-private/references/Bardo - Critical20 (1).pdf",
+      "assets-private/Bardo - Critical20 (1).pdf"
+    ]
+  },
+  {
+    "id": "strixhaven-atual-privado",
+    "sha256": "8547610bfc3e622b14b27be82408265c4e817d753d13c2b07577641b7a480da7",
+    "kind": "template",
+    "alsoFoundAt": [
+      "D-D_2024/assets-private/Strixhaven_Ficha_Editavel_2_Paginas_CORRIGIDA.pdf"
+    ]
+  },
+  {
+    "id": "tetse-strixhaven",
+    "sha256": "09dc421a8b247302031a419d22b54136e432ab21a28a8ae9a74126fbdd13ab25",
+    "kind": "template",
+    "alsoFoundAt": [
+      "D-D_2024/assets-private/Tetse-strixhaven (6).pdf"
+    ]
+  },
+  {
+    "id": "ficha-2024",
+    "sha256": "52f693c25c4edf8bd7abfde3d83ac22f684a35423e269dec4e120b96f3362869",
+    "kind": "template",
+    "alsoFoundAt": [
+      "assets-private/D&D 5.5 - Ficha de Personagem - Editável - V. 5.1.18.pdf"
+    ]
+  },
+  {
+    "id": "phb-2014-10th",
+    "sha256": "c0d18ede598e55bc1759a0b64901a207fd24328b832637b2da60950c86b32412",
+    "kind": "book",
+    "alsoFoundAt": [
+      "assets-private/Player's Handbook [10th Print] (1).pdf"
+    ]
+  },
+  {
+    "id": "tetse-strixhaven-9091c2e91252",
+    "sha256": "9091c2e91252d1dd7df532c070aed2bfed4a7566557690f1c2348566b53fdcc2",
+    "kind": "template",
+    "alsoFoundAt": [
+      "assets-private/Tetse-strixhaven (2).pdf"
+    ]
+  },
+  {
+    "id": "dmg-2014-pt",
+    "sha256": "2ca3c21ee90d703ca5ab0e713540531d37893913afe2aef063d5f7fdb5adfcc3",
+    "kind": "book",
+    "alsoFoundAt": [
+      "assets-private/dd-5e-guia-do-mestre-biblioteca-elfica.pdf"
+    ]
+  }
+]

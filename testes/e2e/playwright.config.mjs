@@ -22,7 +22,7 @@ export default defineConfig({
   projects: [
     {
       name: 'offline',
-      testMatch: 'offline.spec.mjs',
+      testMatch: resolve(AQUI, 'offline.spec.mjs').replace(/\\/g, '/'),
       // O UNICO projeto que permite Service Worker -- é justamente ele o
       // objeto do teste. Serial porque cada teste mexe em cache do dominio.
       use: { serviceWorkers: 'allow' },

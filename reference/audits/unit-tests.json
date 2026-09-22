@@ -1,0 +1,23 @@
+{
+  "command": "npm run test:regras:unidade",
+  "cwd": "testes/e2e",
+  "exitCode": 1,
+  "counts": {
+    "tests": 2521,
+    "pass": 2253,
+    "fail": 12,
+    "skipped": 256,
+    "cancelled": 0
+  },
+  "missingReferenceFiles": [
+    "Informacoes Separadas/Antecedente.md",
+    "Informacoes Separadas/Classes.md",
+    "Informacoes Separadas/Criação de Personagens.md",
+    "Informacoes Separadas/D&D 5.5 - Livro do Jogador (2024) 5.3.7.md",
+    "Informacoes Separadas/Espécies.md",
+    "Informacoes Separadas/Magias.md",
+    "Informacoes Separadas/Talentos.md"
+  ],
+  "otherErrors": [],
+  "status": "blocked"
+}

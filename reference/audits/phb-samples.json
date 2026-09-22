@@ -1,0 +1,101 @@
+{
+  "sha256": "c0d18ede598e55bc1759a0b64901a207fd24328b832637b2da60950c86b32412",
+  "samples": [
+    {
+      "name": "Acid Splash",
+      "printedPage": 211,
+      "level": 0
+    },
+    {
+      "name": "Aid",
+      "printedPage": 211,
+      "level": 2
+    },
+    {
+      "name": "Dispel Evil and Good",
+      "printedPage": 233,
+      "level": 5
+    },
+    {
+      "name": "Leomund's Tiny Hut",
+      "printedPage": 255,
+      "level": 3
+    },
+    {
+      "name": "Melf's Acid Arrow",
+      "printedPage": 259,
+      "level": 2
+    },
+    {
+      "name": "Mordenkainen's Sword",
+      "printedPage": 262,
+      "level": 7
+    },
+    {
+      "name": "Otiluke's Freezing Sphere",
+      "printedPage": 263,
+      "level": 6
+    },
+    {
+      "name": "Otiluke's Resilient Sphere",
+      "printedPage": 264,
+      "level": 4
+    },
+    {
+      "name": "Guidance",
+      "printedPage": 248,
+      "level": 0
+    },
+    {
+      "name": "Minor Illusion",
+      "printedPage": 260,
+      "level": 0
+    },
+    {
+      "name": "Fireball",
+      "printedPage": 241,
+      "level": 3
+    },
+    {
+      "name": "Ice Storm",
+      "printedPage": 252,
+      "level": 4
+    },
+    {
+      "name": "Cone of Cold",
+      "printedPage": 224,
+      "level": 5
+    },
+    {
+      "name": "Heal",
+      "printedPage": 250,
+      "level": 6
+    },
+    {
+      "name": "Finger of Death",
+      "printedPage": 241,
+      "level": 7
+    },
+    {
+      "name": "Sunburst",
+      "printedPage": 279,
+      "level": 8
+    },
+    {
+      "name": "Wish",
+      "printedPage": 288,
+      "level": 9
+    },
+    {
+      "name": "Zone of Truth",
+      "printedPage": 289,
+      "level": 2
+    },
+    {
+      "name": "Alarm",
+      "printedPage": 211,
+      "level": 1
+    }
+  ],
+  "image": "assets-private/entrega/phb-amostras.png"
+}

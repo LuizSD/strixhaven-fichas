@@ -10,6 +10,10 @@ import { dadosCache, personagem } from './wizard.js';
 import { escolherExtra } from '../strixhaven/extras.js';
 import { mostrarFormMagiaCustom } from '../sheet/grimorio.js';
 import { contarExtrasCriacao } from '../strixhaven/modelo.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';
+import { abrirBuscaGlobalMagias } from '../magias/busca-ui.js';
+import { abrirEditorMagia } from '../magias/editor.js';
+import { nomeMagiaHtml } from '../magias/apresentacao.js';
 
 /**
  * O selo de Concentracao vem da DURACAO da magia, no acervo -- nao do
@@ -42,16 +46,46 @@ function temMarcador(magia, sigla) {
 // ============================================================
 export async function renderStepMagias(el) {
   await renderStepMagiasBase(el);
+  const tabela = (dadosCache.classeData || await getClasse(personagem.classe))?.tabela_caracteristicas;
+  const maxCirculo = Math.max(0, ...Object.keys(getEspacosMagia(tabela, personagem.nivel) || {}).map(Number));
+  const alerta = document.createElement('aside'); alerta.id = 'criacao-alertas-magias'; alerta.dataset.maxCirculo = maxCirculo;
+  el.prepend(alerta);
+  atualizarAvisosCriacao(alerta, getTruquesConhecidos(tabela, personagem.nivel) + getBonusTruquesOrdem(personagem), getMagiaPreparadas(tabela, personagem.nivel));
   const botao = document.createElement('button');
   botao.className = 'btn btn-accent'; botao.textContent = 'Adicionar magia extra'; botao.type = 'button';
   botao.onclick = () => escolherExtra(personagem, inicial => mostrarFormMagiaCustom(null, { inicial, personagem, concluir: () => renderStepMagias(el) }));
   el.prepend(botao);
+  const todos = document.createElement('button');
+  todos.className = 'btn btn-secondary'; todos.type = 'button'; todos.textContent = 'Mostrar todas as magias · todos os círculos (0–9)';
+  todos.onclick = () => escolherExtra(personagem, inicial => mostrarFormMagiaCustom(null, { inicial, personagem, concluir: () => renderStepMagias(el) }), true);
+  botao.before(todos);
+  const buscaGlobal = document.createElement('button');
+  buscaGlobal.type = 'button'; buscaGlobal.className = 'btn btn-primary spell-search-action';
+  buscaGlobal.innerHTML = 'Pesquisar em todas as magias<small lang="en">Search all spells</small>';
+  buscaGlobal.onclick = () => abrirBuscaGlobalMagias({ personagem, aoSalvar: () => renderStepMagias(el) });
+  const manualGlobal = document.createElement('button'); manualGlobal.type = 'button'; manualGlobal.className = 'btn btn-secondary'; manualGlobal.textContent = 'Adicionar magia manualmente';
+  manualGlobal.onclick = () => abrirEditorMagia(personagem, { aoSalvar: () => renderStepMagias(el) });
+  todos.before(buscaGlobal, manualGlobal);
   const resumo = document.createElement('div');
   resumo.className = 'sh-grade';
-  resumo.innerHTML = (personagem.magias_customizadas || []).filter(m => m.origem === 'extra').map(m => `<article class="sh-registro"><strong>${escHtml(m.nome)}</strong> <span class="sh-selo">Extra</span><p>${m.circulo ? `${m.circulo}º círculo` : 'Truque'} · ${m.sempre_preparada === false ? 'Ocupa vaga' : 'Não ocupa vaga'}</p><button class="btn btn-sm btn-secondary" data-cr-extra-editar="${escHtml(m.id)}">Editar</button><button class="btn btn-sm btn-secondary" data-cr-extra-remover="${escHtml(m.id)}">Remover extra</button></article>`).join('');
+  resumo.innerHTML = (personagem.magias_customizadas || []).filter(m => m.origem === 'extra').map(m => `<article class="sh-registro">${rotuloLocalizado(m)} <span class="sh-selo">Extra</span><p>${m.circulo ? `${m.circulo}º círculo` : 'Truque'} · ${m.sempre_preparada === false ? 'Ocupa vaga' : 'Não ocupa vaga'}</p><button class="btn btn-sm btn-secondary" data-cr-extra-editar="${escHtml(m.id)}">Editar</button><button class="btn btn-sm btn-secondary" data-cr-extra-remover="${escHtml(m.id)}">Remover extra</button></article>`).join('');
   botao.after(resumo);
   resumo.querySelectorAll('[data-cr-extra-editar]').forEach(b => { b.onclick = () => mostrarFormMagiaCustom(personagem.magias_customizadas.findIndex(m => m.id === b.dataset.crExtraEditar), { personagem, concluir: () => renderStepMagias(el) }); });
   resumo.querySelectorAll('[data-cr-extra-remover]').forEach(b => { b.onclick = () => { personagem.magias_customizadas = personagem.magias_customizadas.filter(m => m.id !== b.dataset.crExtraRemover); renderStepMagias(el); }; });
+}
+
+function atualizarAvisosCriacao(el, maxTruques, maxPreparadas) {
+  if (!el) return;
+  const linhas = [];
+  const t = (personagem.magias_conhecidas || []).filter(m => Number(m.circulo) === 0).length + contarExtrasCriacao(personagem, true);
+  const p = (personagem.magias_preparadas || []).length + contarExtrasCriacao(personagem, false);
+  for (const [real, max, nome] of [[t, maxTruques, 'truques'], [p, maxPreparadas, 'magias conhecidas/preparadas']]) {
+    if (real !== max) linhas.push(`${real}/${max} ${nome} — ${real > max ? 'excede' : 'falta'} ${Math.abs(real-max)}`);
+  }
+  const altas = (personagem.magias_customizadas || []).filter(m => Number(m.circulo) > Number(el.dataset.maxCirculo));
+  for (const m of altas) linhas.push(`${m.nome}: ${m.circulo}º círculo — personagem atualmente conjura até o ${el.dataset.maxCirculo}º. Registrada, não conjurável atualmente por espaços.`);
+  el.className = linhas.length ? `catalogo-alerta ${t > maxTruques || p > maxPreparadas || altas.length ? 'error' : 'warning'}` : '';
+  el.innerHTML = linhas.length ? `<strong>⚠ Referências não bloqueantes de magia</strong><ul>${linhas.map(l => `<li>${escHtml(l)}</li>`).join('')}</ul><p>${escHtml(personagem.classe)}, nível ${personagem.nivel} · progressão 2024. Você pode continuar e salvar; estas escolhas não alteram espaços.</p>` : '';
 }
 
 /** Fluxo normal preservado, com suas restrições de classe e nível. */
@@ -215,7 +249,7 @@ async function renderStepMagiasBase(el) {
             return `
               <div class="opcao-card ${sel ? 'selecionada' : ''} ${bloqueado ? 'bloqueada' : ''}" data-magia-nome="${nome}" data-magia-circ="${circ}" ${bloqueado ? 'style="opacity:0.4"' : ''}>
                 <span class="opcao-check" data-creator-check="${nome}"></span>
-                <div class="opcao-nome" data-creator-info="${nome}" data-creator-info-circ="${circ}">${nome}${bloqueadoPorIM ? ' (já conhecido)' : ''}${bloqueadoPorEspecie ? ' (já concedido pela espécie)' : ''}</div>
+                <div class="opcao-nome" data-creator-info="${nome}" data-creator-info-circ="${circ}">${nomeMagiaHtml(nome, circ)}${bloqueadoPorIM ? ' (já conhecido)' : ''}${bloqueadoPorEspecie ? ' (já concedido pela espécie)' : ''}</div>
                 <div class="opcao-resumo">
                   <span>${m.escola || ''}</span>
                   ${ehConcentracao(m) ? '<span>Conc.</span>' : ''}
@@ -306,7 +340,6 @@ async function renderStepMagiasBase(el) {
         const nome = card.dataset.magoPreparada;
         const idx = personagem.magias_preparadas.findIndex(m => m.nome === nome);
         if (idx >= 0) personagem.magias_preparadas.splice(idx, 1);
-        else if (personagem.magias_preparadas.length + extrasPreparadas >= numPreparadas) toast(`Máximo de ${numPreparadas} magias preparadas (incluindo extras que ocupam vaga)`, 'error');
         // personagem.classe: no criador o personagem tem exatamente UMA
         // classe (a inicial, nivel 1) -- e o unico lugar deste sub-projeto
         // onde ler o espelho char.classe e correto.
@@ -599,7 +632,7 @@ function toggleMagia(nome, circulo, isTruque, maxTruques, maxPreparadas, magoNiv
       personagem.magias_conhecidas.splice(idx, 1);
     } else {
       const truquesAtual = personagem.magias_conhecidas.filter(m => m.circulo === 0).length + contarExtrasCriacao(personagem, true);
-      if (truquesAtual >= maxTruques) { toast(`Máximo de ${maxTruques} truques`, 'error'); return; }
+      if (truquesAtual >= maxTruques) toast(`⚠ Excede a referência de ${maxTruques} truques; escolha preservada.`, 'warning');
       personagem.magias_conhecidas.push({ nome, circulo });
     }
   } else if (magoNivel1) {
@@ -609,7 +642,7 @@ function toggleMagia(nome, circulo, isTruque, maxTruques, maxPreparadas, magoNiv
       personagem.grimorio.splice(idx, 1);
       personagem.magias_preparadas = (personagem.magias_preparadas || []).filter(m => m.nome !== nome);
     } else {
-      if (personagem.grimorio.length >= limiteGrimorio) { toast(`Máximo de ${limiteGrimorio} magias no grimório`, 'error'); return; }
+      if (personagem.grimorio.length >= limiteGrimorio) toast(`⚠ Excede a referência de ${limiteGrimorio} magias no grimório.`, 'warning');
       personagem.grimorio.push({ nome, circulo });
     }
   } else {
@@ -617,7 +650,7 @@ function toggleMagia(nome, circulo, isTruque, maxTruques, maxPreparadas, magoNiv
     if (idx >= 0) {
       personagem.magias_preparadas.splice(idx, 1);
     } else {
-      if (personagem.magias_preparadas.length + contarExtrasCriacao(personagem, false) >= maxPreparadas) { toast(`Máximo de ${maxPreparadas} ${labelMagias}`, 'error'); return; }
+      if (personagem.magias_preparadas.length + contarExtrasCriacao(personagem, false) >= maxPreparadas) toast(`⚠ Excede a referência de ${maxPreparadas} ${labelMagias}.`, 'warning');
       // personagem.classe: mesmo caso do site acima -- classe inicial e unica no criador.
       personagem.magias_preparadas.push({ nome, circulo, ...(personagem.classe ? { classe: personagem.classe } : {}) });
     }
@@ -625,6 +658,7 @@ function toggleMagia(nome, circulo, isTruque, maxTruques, maxPreparadas, magoNiv
 }
 
 function atualizarContadoresMagia(maxTruques, maxPrep, magoNivel1 = false, limiteGrimorio = 0) {
+  atualizarAvisosCriacao(document.getElementById('criacao-alertas-magias'), maxTruques, maxPrep);
   const infoBox = document.querySelector('#wizard-content .info-box.info');
   if (!infoBox) return;
   const numT = (personagem.magias_conhecidas || []).filter(m => m.circulo === 0).length + contarExtrasCriacao(personagem, true);

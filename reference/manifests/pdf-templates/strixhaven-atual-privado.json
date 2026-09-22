@@ -1,0 +1,2775 @@
+{
+  "id": "strixhaven-atual-privado",
+  "filename": "Strixhaven_Ficha_Editavel_2_Paginas_CORRIGIDA.pdf",
+  "sha256": "8547610bfc3e622b14b27be82408265c4e817d753d13c2b07577641b7a480da7",
+  "pages": 2,
+  "alsoFoundAt": [
+    "D-D_2024/assets-private/Strixhaven_Ficha_Editavel_2_Paginas_CORRIGIDA.pdf"
+  ],
+  "kind": "template",
+  "dimensions": [
+    {
+      "page": 1,
+      "width": 1280.0,
+      "height": 1808.0
+    },
+    {
+      "page": 2,
+      "width": 1280.0,
+      "height": 1808.0
+    }
+  ],
+  "fields": [
+    {
+      "name": "p1_nome_personagem",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        292.0,
+        278.0,
+        610.0,
+        304.0
+      ],
+      "xref": 10
+    },
+    {
+      "name": "p1_raca",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        145.0,
+        310.0,
+        610.0,
+        336.0
+      ],
+      "xref": 13
+    },
+    {
+      "name": "p1_classe",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        160.0,
+        342.0,
+        610.0,
+        368.0
+      ],
+      "xref": 15
+    },
+    {
+      "name": "p1_nivel",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        145.0,
+        374.0,
+        610.0,
+        400.0
+      ],
+      "xref": 17
+    },
+    {
+      "name": "p1_faculdade",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        796.0,
+        282.0,
+        1210.0,
+        308.0
+      ],
+      "xref": 18
+    },
+    {
+      "name": "p1_alinhamento",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        798.0,
+        316.0,
+        1210.0,
+        342.0
+      ],
+      "xref": 20
+    },
+    {
+      "name": "p1_experiencia",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        798.0,
+        349.0,
+        1210.0,
+        375.0
+      ],
+      "xref": 22
+    },
+    {
+      "name": "p1_forca_mod",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        128.0,
+        461.0,
+        204.0,
+        515.0
+      ],
+      "xref": 23
+    },
+    {
+      "name": "p1_forca_pontos",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        226.0,
+        461.0,
+        300.0,
+        515.0
+      ],
+      "xref": 25
+    },
+    {
+      "name": "p1_destreza_mod",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        128.0,
+        568.0,
+        204.0,
+        622.0
+      ],
+      "xref": 27
+    },
+    {
+      "name": "p1_destreza_pontos",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        226.0,
+        568.0,
+        300.0,
+        622.0
+      ],
+      "xref": 28
+    },
+    {
+      "name": "p1_constituicao_mod",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        128.0,
+        675.0,
+        204.0,
+        729.0
+      ],
+      "xref": 29
+    },
+    {
+      "name": "p1_constituicao_pontos",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        226.0,
+        675.0,
+        300.0,
+        729.0
+      ],
+      "xref": 30
+    },
+    {
+      "name": "p1_inteligencia_mod",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        128.0,
+        783.0,
+        204.0,
+        837.0
+      ],
+      "xref": 31
+    },
+    {
+      "name": "p1_inteligencia_pontos",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        226.0,
+        783.0,
+        300.0,
+        837.0
+      ],
+      "xref": 32
+    },
+    {
+      "name": "p1_sabedoria_mod",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        128.0,
+        890.0,
+        204.0,
+        944.0
+      ],
+      "xref": 33
+    },
+    {
+      "name": "p1_sabedoria_pontos",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        226.0,
+        890.0,
+        300.0,
+        944.0
+      ],
+      "xref": 34
+    },
+    {
+      "name": "p1_carisma_mod",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        128.0,
+        997.0,
+        204.0,
+        1051.0
+      ],
+      "xref": 35
+    },
+    {
+      "name": "p1_carisma_pontos",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        226.0,
+        997.0,
+        300.0,
+        1051.0
+      ],
+      "xref": 36
+    },
+    {
+      "name": "p1_classe_armadura",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        361.0,
+        506.0,
+        452.0,
+        566.0
+      ],
+      "xref": 37
+    },
+    {
+      "name": "p1_iniciativa",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        508.0,
+        510.0,
+        602.0,
+        561.0
+      ],
+      "xref": 39
+    },
+    {
+      "name": "p1_deslocamento",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        645.0,
+        510.0,
+        752.0,
+        561.0
+      ],
+      "xref": 41
+    },
+    {
+      "name": "p1_pv_total",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        849.0,
+        502.0,
+        948.0,
+        530.0
+      ],
+      "xref": 43
+    },
+    {
+      "name": "p1_pv_atuais",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        849.0,
+        542.0,
+        948.0,
+        570.0
+      ],
+      "xref": 45
+    },
+    {
+      "name": "p1_pv_temporarios",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        866.0,
+        581.0,
+        948.0,
+        609.0
+      ],
+      "xref": 46
+    },
+    {
+      "name": "p1_save_forca",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        1003.0,
+        472.0,
+        1030.0,
+        499.0
+      ],
+      "xref": 48
+    },
+    {
+      "name": "p1_save_destreza",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        1003.0,
+        510.0,
+        1030.0,
+        537.0
+      ],
+      "xref": 52
+    },
+    {
+      "name": "p1_save_constituicao",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        1003.0,
+        548.0,
+        1030.0,
+        575.0
+      ],
+      "xref": 53
+    },
+    {
+      "name": "p1_save_inteligencia",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        1003.0,
+        586.0,
+        1030.0,
+        613.0
+      ],
+      "xref": 54
+    },
+    {
+      "name": "p1_save_sabedoria",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        1003.0,
+        624.0,
+        1030.0,
+        651.0
+      ],
+      "xref": 55
+    },
+    {
+      "name": "p1_save_carisma",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        1003.0,
+        662.0,
+        1030.0,
+        689.0
+      ],
+      "xref": 56
+    },
+    {
+      "name": "p1_skill_acrobacia_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        667.0,
+        378.0,
+        694.0
+      ],
+      "xref": 57
+    },
+    {
+      "name": "p1_skill_acrobacia_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        665.0,
+        667.0,
+        694.0
+      ],
+      "xref": 58
+    },
+    {
+      "name": "p1_skill_atletismo_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        704.0,
+        378.0,
+        731.0
+      ],
+      "xref": 60
+    },
+    {
+      "name": "p1_skill_atletismo_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        702.0,
+        667.0,
+        731.0
+      ],
+      "xref": 61
+    },
+    {
+      "name": "p1_skill_arcana_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        741.0,
+        378.0,
+        768.0
+      ],
+      "xref": 62
+    },
+    {
+      "name": "p1_skill_arcana_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        739.0,
+        667.0,
+        768.0
+      ],
+      "xref": 63
+    },
+    {
+      "name": "p1_skill_atuacao_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        778.0,
+        378.0,
+        805.0
+      ],
+      "xref": 64
+    },
+    {
+      "name": "p1_skill_atuacao_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        776.0,
+        667.0,
+        805.0
+      ],
+      "xref": 65
+    },
+    {
+      "name": "p1_skill_blefar_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        815.0,
+        378.0,
+        842.0
+      ],
+      "xref": 66
+    },
+    {
+      "name": "p1_skill_blefar_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        813.0,
+        667.0,
+        842.0
+      ],
+      "xref": 67
+    },
+    {
+      "name": "p1_skill_historia_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        852.0,
+        378.0,
+        879.0
+      ],
+      "xref": 68
+    },
+    {
+      "name": "p1_skill_historia_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        850.0,
+        667.0,
+        879.0
+      ],
+      "xref": 69
+    },
+    {
+      "name": "p1_skill_intimidacao_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        889.0,
+        378.0,
+        916.0
+      ],
+      "xref": 70
+    },
+    {
+      "name": "p1_skill_intimidacao_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        887.0,
+        667.0,
+        916.0
+      ],
+      "xref": 71
+    },
+    {
+      "name": "p1_skill_investigacao_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        926.0,
+        378.0,
+        953.0
+      ],
+      "xref": 72
+    },
+    {
+      "name": "p1_skill_investigacao_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        924.0,
+        667.0,
+        953.0
+      ],
+      "xref": 73
+    },
+    {
+      "name": "p1_skill_medicina_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        351.0,
+        963.0,
+        378.0,
+        990.0
+      ],
+      "xref": 74
+    },
+    {
+      "name": "p1_skill_medicina_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        585.0,
+        961.0,
+        667.0,
+        990.0
+      ],
+      "xref": 75
+    },
+    {
+      "name": "p1_skill_natureza_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        667.0,
+        737.0,
+        694.0
+      ],
+      "xref": 76
+    },
+    {
+      "name": "p1_skill_natureza_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        665.0,
+        1058.0,
+        694.0
+      ],
+      "xref": 77
+    },
+    {
+      "name": "p1_skill_percepcao_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        704.0,
+        737.0,
+        731.0
+      ],
+      "xref": 79
+    },
+    {
+      "name": "p1_skill_percepcao_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        702.0,
+        1058.0,
+        731.0
+      ],
+      "xref": 80
+    },
+    {
+      "name": "p1_skill_persuasao_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        741.0,
+        737.0,
+        768.0
+      ],
+      "xref": 81
+    },
+    {
+      "name": "p1_skill_persuasao_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        739.0,
+        1058.0,
+        768.0
+      ],
+      "xref": 82
+    },
+    {
+      "name": "p1_skill_prestidigitacao_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        778.0,
+        737.0,
+        805.0
+      ],
+      "xref": 83
+    },
+    {
+      "name": "p1_skill_prestidigitacao_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        776.0,
+        1058.0,
+        805.0
+      ],
+      "xref": 84
+    },
+    {
+      "name": "p1_skill_religiao_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        815.0,
+        737.0,
+        842.0
+      ],
+      "xref": 85
+    },
+    {
+      "name": "p1_skill_religiao_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        813.0,
+        1058.0,
+        842.0
+      ],
+      "xref": 86
+    },
+    {
+      "name": "p1_skill_sobrevivencia_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        852.0,
+        737.0,
+        879.0
+      ],
+      "xref": 87
+    },
+    {
+      "name": "p1_skill_sobrevivencia_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        850.0,
+        1058.0,
+        879.0
+      ],
+      "xref": 88
+    },
+    {
+      "name": "p1_skill_furtividade_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        889.0,
+        737.0,
+        916.0
+      ],
+      "xref": 89
+    },
+    {
+      "name": "p1_skill_furtividade_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        887.0,
+        1058.0,
+        916.0
+      ],
+      "xref": 90
+    },
+    {
+      "name": "p1_skill_reflexos_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        926.0,
+        737.0,
+        953.0
+      ],
+      "xref": 91
+    },
+    {
+      "name": "p1_skill_reflexos_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        924.0,
+        1058.0,
+        953.0
+      ],
+      "xref": 92
+    },
+    {
+      "name": "p1_skill_vontade_prof",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        710.0,
+        963.0,
+        737.0,
+        990.0
+      ],
+      "xref": 93
+    },
+    {
+      "name": "p1_skill_vontade_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        968.0,
+        961.0,
+        1058.0,
+        990.0
+      ],
+      "xref": 94
+    },
+    {
+      "name": "p1_competencias",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        1094.0,
+        666.0,
+        1211.0,
+        987.0
+      ],
+      "xref": 95
+    },
+    {
+      "name": "p1_ataque_1_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        57.0,
+        1092.0,
+        290.0,
+        1120.0
+      ],
+      "xref": 97
+    },
+    {
+      "name": "p1_ataque_1_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        306.0,
+        1092.0,
+        455.0,
+        1120.0
+      ],
+      "xref": 99
+    },
+    {
+      "name": "p1_ataque_1_dano",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        474.0,
+        1092.0,
+        589.0,
+        1120.0
+      ],
+      "xref": 101
+    },
+    {
+      "name": "p1_ataque_1_alcance",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        611.0,
+        1092.0,
+        720.0,
+        1120.0
+      ],
+      "xref": 103
+    },
+    {
+      "name": "p1_ataque_1_descricao",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        740.0,
+        1092.0,
+        964.0,
+        1120.0
+      ],
+      "xref": 105
+    },
+    {
+      "name": "p1_ataque_2_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        57.0,
+        1126.0,
+        290.0,
+        1154.0
+      ],
+      "xref": 107
+    },
+    {
+      "name": "p1_ataque_2_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        306.0,
+        1126.0,
+        455.0,
+        1154.0
+      ],
+      "xref": 108
+    },
+    {
+      "name": "p1_ataque_2_dano",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        474.0,
+        1126.0,
+        589.0,
+        1154.0
+      ],
+      "xref": 109
+    },
+    {
+      "name": "p1_ataque_2_alcance",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        611.0,
+        1126.0,
+        720.0,
+        1154.0
+      ],
+      "xref": 110
+    },
+    {
+      "name": "p1_ataque_2_descricao",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        740.0,
+        1126.0,
+        964.0,
+        1154.0
+      ],
+      "xref": 111
+    },
+    {
+      "name": "p1_ataque_3_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        57.0,
+        1160.0,
+        290.0,
+        1188.0
+      ],
+      "xref": 112
+    },
+    {
+      "name": "p1_ataque_3_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        306.0,
+        1160.0,
+        455.0,
+        1188.0
+      ],
+      "xref": 113
+    },
+    {
+      "name": "p1_ataque_3_dano",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        474.0,
+        1160.0,
+        589.0,
+        1188.0
+      ],
+      "xref": 114
+    },
+    {
+      "name": "p1_ataque_3_alcance",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        611.0,
+        1160.0,
+        720.0,
+        1188.0
+      ],
+      "xref": 115
+    },
+    {
+      "name": "p1_ataque_3_descricao",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        740.0,
+        1160.0,
+        964.0,
+        1188.0
+      ],
+      "xref": 116
+    },
+    {
+      "name": "p1_ataque_4_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        57.0,
+        1194.0,
+        290.0,
+        1222.0
+      ],
+      "xref": 117
+    },
+    {
+      "name": "p1_ataque_4_bonus",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        306.0,
+        1194.0,
+        455.0,
+        1222.0
+      ],
+      "xref": 118
+    },
+    {
+      "name": "p1_ataque_4_dano",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        474.0,
+        1194.0,
+        589.0,
+        1222.0
+      ],
+      "xref": 119
+    },
+    {
+      "name": "p1_ataque_4_alcance",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        611.0,
+        1194.0,
+        720.0,
+        1222.0
+      ],
+      "xref": 120
+    },
+    {
+      "name": "p1_ataque_4_descricao",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        740.0,
+        1194.0,
+        964.0,
+        1222.0
+      ],
+      "xref": 121
+    },
+    {
+      "name": "p1_idiomas",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        1015.0,
+        1054.0,
+        1210.0,
+        1156.0
+      ],
+      "xref": 122
+    },
+    {
+      "name": "p1_historia_fundo",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        1008.0,
+        1213.0,
+        1213.0,
+        1406.0
+      ],
+      "xref": 124
+    },
+    {
+      "name": "p1_ideais",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        1008.0,
+        1435.0,
+        1212.0,
+        1480.0
+      ],
+      "xref": 126
+    },
+    {
+      "name": "p1_vinculos",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        1008.0,
+        1493.0,
+        1212.0,
+        1536.0
+      ],
+      "xref": 128
+    },
+    {
+      "name": "p1_fraquezas",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        1008.0,
+        1550.0,
+        1212.0,
+        1602.0
+      ],
+      "xref": 130
+    },
+    {
+      "name": "p1_magia_truques_1_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        60.0,
+        1313.0,
+        84.0,
+        1337.0
+      ],
+      "xref": 132
+    },
+    {
+      "name": "p1_magia_truques_1_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        100.0,
+        1310.0,
+        269.0,
+        1338.0
+      ],
+      "xref": 135
+    },
+    {
+      "name": "p1_magia_truques_2_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        60.0,
+        1342.0,
+        84.0,
+        1366.0
+      ],
+      "xref": 137
+    },
+    {
+      "name": "p1_magia_truques_2_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        100.0,
+        1339.0,
+        269.0,
+        1367.0
+      ],
+      "xref": 138
+    },
+    {
+      "name": "p1_magia_truques_3_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        60.0,
+        1371.0,
+        84.0,
+        1395.0
+      ],
+      "xref": 139
+    },
+    {
+      "name": "p1_magia_truques_3_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        100.0,
+        1368.0,
+        269.0,
+        1396.0
+      ],
+      "xref": 140
+    },
+    {
+      "name": "p1_magia_truques_4_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        60.0,
+        1400.0,
+        84.0,
+        1424.0
+      ],
+      "xref": 141
+    },
+    {
+      "name": "p1_magia_truques_4_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        100.0,
+        1397.0,
+        269.0,
+        1425.0
+      ],
+      "xref": 142
+    },
+    {
+      "name": "p1_magia_nivel1_1_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        291.0,
+        1313.0,
+        315.0,
+        1337.0
+      ],
+      "xref": 143
+    },
+    {
+      "name": "p1_magia_nivel1_1_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        329.0,
+        1310.0,
+        486.0,
+        1338.0
+      ],
+      "xref": 144
+    },
+    {
+      "name": "p1_magia_nivel1_2_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        291.0,
+        1342.0,
+        315.0,
+        1366.0
+      ],
+      "xref": 146
+    },
+    {
+      "name": "p1_magia_nivel1_2_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        329.0,
+        1339.0,
+        486.0,
+        1367.0
+      ],
+      "xref": 147
+    },
+    {
+      "name": "p1_magia_nivel1_3_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        291.0,
+        1371.0,
+        315.0,
+        1395.0
+      ],
+      "xref": 148
+    },
+    {
+      "name": "p1_magia_nivel1_3_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        329.0,
+        1368.0,
+        486.0,
+        1396.0
+      ],
+      "xref": 149
+    },
+    {
+      "name": "p1_magia_nivel1_4_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        291.0,
+        1400.0,
+        315.0,
+        1424.0
+      ],
+      "xref": 150
+    },
+    {
+      "name": "p1_magia_nivel1_4_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        329.0,
+        1397.0,
+        486.0,
+        1425.0
+      ],
+      "xref": 151
+    },
+    {
+      "name": "p1_magia_nivel2_1_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        516.0,
+        1313.0,
+        540.0,
+        1337.0
+      ],
+      "xref": 152
+    },
+    {
+      "name": "p1_magia_nivel2_1_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        555.0,
+        1310.0,
+        712.0,
+        1338.0
+      ],
+      "xref": 153
+    },
+    {
+      "name": "p1_magia_nivel2_2_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        516.0,
+        1342.0,
+        540.0,
+        1366.0
+      ],
+      "xref": 154
+    },
+    {
+      "name": "p1_magia_nivel2_2_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        555.0,
+        1339.0,
+        712.0,
+        1367.0
+      ],
+      "xref": 155
+    },
+    {
+      "name": "p1_magia_nivel2_3_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        516.0,
+        1371.0,
+        540.0,
+        1395.0
+      ],
+      "xref": 156
+    },
+    {
+      "name": "p1_magia_nivel2_3_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        555.0,
+        1368.0,
+        712.0,
+        1396.0
+      ],
+      "xref": 157
+    },
+    {
+      "name": "p1_magia_nivel2_4_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        516.0,
+        1400.0,
+        540.0,
+        1424.0
+      ],
+      "xref": 158
+    },
+    {
+      "name": "p1_magia_nivel2_4_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        555.0,
+        1397.0,
+        712.0,
+        1425.0
+      ],
+      "xref": 159
+    },
+    {
+      "name": "p1_magia_nivel3mais_1_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        735.0,
+        1313.0,
+        759.0,
+        1337.0
+      ],
+      "xref": 160
+    },
+    {
+      "name": "p1_magia_nivel3mais_1_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        775.0,
+        1310.0,
+        934.0,
+        1338.0
+      ],
+      "xref": 161
+    },
+    {
+      "name": "p1_magia_nivel3mais_2_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        735.0,
+        1342.0,
+        759.0,
+        1366.0
+      ],
+      "xref": 163
+    },
+    {
+      "name": "p1_magia_nivel3mais_2_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        775.0,
+        1339.0,
+        934.0,
+        1367.0
+      ],
+      "xref": 164
+    },
+    {
+      "name": "p1_magia_nivel3mais_3_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        735.0,
+        1371.0,
+        759.0,
+        1395.0
+      ],
+      "xref": 165
+    },
+    {
+      "name": "p1_magia_nivel3mais_3_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        775.0,
+        1368.0,
+        934.0,
+        1396.0
+      ],
+      "xref": 166
+    },
+    {
+      "name": "p1_magia_nivel3mais_4_check",
+      "type": "CheckBox",
+      "page": 1,
+      "rect": [
+        735.0,
+        1400.0,
+        759.0,
+        1424.0
+      ],
+      "xref": 167
+    },
+    {
+      "name": "p1_magia_nivel3mais_4_nome",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        775.0,
+        1397.0,
+        934.0,
+        1425.0
+      ],
+      "xref": 168
+    },
+    {
+      "name": "p1_equipamento",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        58.0,
+        1474.0,
+        561.0,
+        1598.0
+      ],
+      "xref": 169
+    },
+    {
+      "name": "p1_mochila",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        601.0,
+        1474.0,
+        965.0,
+        1598.0
+      ],
+      "xref": 171
+    },
+    {
+      "name": "p1_notas",
+      "type": "Text",
+      "page": 1,
+      "rect": [
+        267.0,
+        1641.0,
+        966.0,
+        1765.0
+      ],
+      "xref": 173
+    },
+    {
+      "name": "p2_rel_1_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        459.0,
+        386.0,
+        489.0
+      ],
+      "xref": 175
+    },
+    {
+      "name": "p2_rel_1_pontos",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        391.0,
+        459.0,
+        468.0,
+        489.0
+      ],
+      "xref": 177
+    },
+    {
+      "name": "p2_rel_1_relacao",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        476.0,
+        459.0,
+        792.0,
+        489.0
+      ],
+      "xref": 179
+    },
+    {
+      "name": "p2_rel_1_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        815.0,
+        458.0,
+        843.0,
+        486.0
+      ],
+      "xref": 181
+    },
+    {
+      "name": "p2_rel_1_bonus",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        854.0,
+        459.0,
+        1207.0,
+        489.0
+      ],
+      "xref": 184
+    },
+    {
+      "name": "p2_rel_2_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        510.0,
+        386.0,
+        540.0
+      ],
+      "xref": 186
+    },
+    {
+      "name": "p2_rel_2_pontos",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        391.0,
+        510.0,
+        468.0,
+        540.0
+      ],
+      "xref": 187
+    },
+    {
+      "name": "p2_rel_2_relacao",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        476.0,
+        510.0,
+        792.0,
+        540.0
+      ],
+      "xref": 188
+    },
+    {
+      "name": "p2_rel_2_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        815.0,
+        509.0,
+        843.0,
+        537.0
+      ],
+      "xref": 189
+    },
+    {
+      "name": "p2_rel_2_bonus",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        854.0,
+        510.0,
+        1207.0,
+        540.0
+      ],
+      "xref": 190
+    },
+    {
+      "name": "p2_rel_3_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        561.0,
+        386.0,
+        591.0
+      ],
+      "xref": 191
+    },
+    {
+      "name": "p2_rel_3_pontos",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        391.0,
+        561.0,
+        468.0,
+        591.0
+      ],
+      "xref": 192
+    },
+    {
+      "name": "p2_rel_3_relacao",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        476.0,
+        561.0,
+        792.0,
+        591.0
+      ],
+      "xref": 193
+    },
+    {
+      "name": "p2_rel_3_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        815.0,
+        560.0,
+        843.0,
+        588.0
+      ],
+      "xref": 194
+    },
+    {
+      "name": "p2_rel_3_bonus",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        854.0,
+        561.0,
+        1207.0,
+        591.0
+      ],
+      "xref": 195
+    },
+    {
+      "name": "p2_rel_4_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        612.0,
+        386.0,
+        642.0
+      ],
+      "xref": 196
+    },
+    {
+      "name": "p2_rel_4_pontos",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        391.0,
+        612.0,
+        468.0,
+        642.0
+      ],
+      "xref": 197
+    },
+    {
+      "name": "p2_rel_4_relacao",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        476.0,
+        612.0,
+        792.0,
+        642.0
+      ],
+      "xref": 198
+    },
+    {
+      "name": "p2_rel_4_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        815.0,
+        611.0,
+        843.0,
+        639.0
+      ],
+      "xref": 199
+    },
+    {
+      "name": "p2_rel_4_bonus",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        854.0,
+        612.0,
+        1207.0,
+        642.0
+      ],
+      "xref": 200
+    },
+    {
+      "name": "p2_rel_5_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        663.0,
+        386.0,
+        693.0
+      ],
+      "xref": 201
+    },
+    {
+      "name": "p2_rel_5_pontos",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        391.0,
+        663.0,
+        468.0,
+        693.0
+      ],
+      "xref": 202
+    },
+    {
+      "name": "p2_rel_5_relacao",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        476.0,
+        663.0,
+        792.0,
+        693.0
+      ],
+      "xref": 203
+    },
+    {
+      "name": "p2_rel_5_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        815.0,
+        662.0,
+        843.0,
+        690.0
+      ],
+      "xref": 204
+    },
+    {
+      "name": "p2_rel_5_bonus",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        854.0,
+        663.0,
+        1207.0,
+        693.0
+      ],
+      "xref": 205
+    },
+    {
+      "name": "p2_curso_1_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        817.0,
+        785.0,
+        848.0
+      ],
+      "xref": 206
+    },
+    {
+      "name": "p2_curso_1_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        793.0,
+        815.0,
+        821.0,
+        843.0
+      ],
+      "xref": 208
+    },
+    {
+      "name": "p2_curso_1_habilidades",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        870.0,
+        817.0,
+        1207.0,
+        848.0
+      ],
+      "xref": 209
+    },
+    {
+      "name": "p2_curso_2_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        867.0,
+        785.0,
+        898.0
+      ],
+      "xref": 211
+    },
+    {
+      "name": "p2_curso_2_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        793.0,
+        865.0,
+        821.0,
+        893.0
+      ],
+      "xref": 212
+    },
+    {
+      "name": "p2_curso_2_habilidades",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        870.0,
+        867.0,
+        1207.0,
+        898.0
+      ],
+      "xref": 213
+    },
+    {
+      "name": "p2_curso_3_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        917.0,
+        785.0,
+        948.0
+      ],
+      "xref": 214
+    },
+    {
+      "name": "p2_curso_3_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        793.0,
+        915.0,
+        821.0,
+        943.0
+      ],
+      "xref": 215
+    },
+    {
+      "name": "p2_curso_3_habilidades",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        870.0,
+        917.0,
+        1207.0,
+        948.0
+      ],
+      "xref": 216
+    },
+    {
+      "name": "p2_curso_4_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        967.0,
+        785.0,
+        998.0
+      ],
+      "xref": 217
+    },
+    {
+      "name": "p2_curso_4_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        793.0,
+        965.0,
+        821.0,
+        993.0
+      ],
+      "xref": 218
+    },
+    {
+      "name": "p2_curso_4_habilidades",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        870.0,
+        967.0,
+        1207.0,
+        998.0
+      ],
+      "xref": 219
+    },
+    {
+      "name": "p2_curso_5_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        54.0,
+        1017.0,
+        785.0,
+        1048.0
+      ],
+      "xref": 220
+    },
+    {
+      "name": "p2_curso_5_inspiracao",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        793.0,
+        1015.0,
+        821.0,
+        1043.0
+      ],
+      "xref": 221
+    },
+    {
+      "name": "p2_curso_5_habilidades",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        870.0,
+        1017.0,
+        1207.0,
+        1048.0
+      ],
+      "xref": 222
+    },
+    {
+      "name": "p2_boletim_ano1_linha1_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        100.0,
+        1220.0,
+        126.0,
+        1246.0
+      ],
+      "xref": 223
+    },
+    {
+      "name": "p2_boletim_ano1_linha1_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        137.0,
+        1220.0,
+        163.0,
+        1246.0
+      ],
+      "xref": 226
+    },
+    {
+      "name": "p2_boletim_ano1_linha1_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        174.0,
+        1220.0,
+        200.0,
+        1246.0
+      ],
+      "xref": 227
+    },
+    {
+      "name": "p2_boletim_ano1_linha2_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        100.0,
+        1262.0,
+        126.0,
+        1288.0
+      ],
+      "xref": 228
+    },
+    {
+      "name": "p2_boletim_ano1_linha2_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        137.0,
+        1262.0,
+        163.0,
+        1288.0
+      ],
+      "xref": 229
+    },
+    {
+      "name": "p2_boletim_ano1_linha2_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        174.0,
+        1262.0,
+        200.0,
+        1288.0
+      ],
+      "xref": 230
+    },
+    {
+      "name": "p2_boletim_ano1_linha3_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        100.0,
+        1304.0,
+        126.0,
+        1330.0
+      ],
+      "xref": 231
+    },
+    {
+      "name": "p2_boletim_ano1_linha3_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        137.0,
+        1304.0,
+        163.0,
+        1330.0
+      ],
+      "xref": 232
+    },
+    {
+      "name": "p2_boletim_ano1_linha3_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        174.0,
+        1304.0,
+        200.0,
+        1330.0
+      ],
+      "xref": 233
+    },
+    {
+      "name": "p2_boletim_ano2_linha1_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        455.0,
+        1220.0,
+        481.0,
+        1246.0
+      ],
+      "xref": 234
+    },
+    {
+      "name": "p2_boletim_ano2_linha1_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        492.0,
+        1220.0,
+        518.0,
+        1246.0
+      ],
+      "xref": 235
+    },
+    {
+      "name": "p2_boletim_ano2_linha1_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        529.0,
+        1220.0,
+        555.0,
+        1246.0
+      ],
+      "xref": 236
+    },
+    {
+      "name": "p2_boletim_ano2_linha2_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        455.0,
+        1262.0,
+        481.0,
+        1288.0
+      ],
+      "xref": 237
+    },
+    {
+      "name": "p2_boletim_ano2_linha2_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        492.0,
+        1262.0,
+        518.0,
+        1288.0
+      ],
+      "xref": 238
+    },
+    {
+      "name": "p2_boletim_ano2_linha2_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        529.0,
+        1262.0,
+        555.0,
+        1288.0
+      ],
+      "xref": 239
+    },
+    {
+      "name": "p2_boletim_ano2_linha3_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        455.0,
+        1304.0,
+        481.0,
+        1330.0
+      ],
+      "xref": 240
+    },
+    {
+      "name": "p2_boletim_ano2_linha3_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        492.0,
+        1304.0,
+        518.0,
+        1330.0
+      ],
+      "xref": 241
+    },
+    {
+      "name": "p2_boletim_ano2_linha3_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        529.0,
+        1304.0,
+        555.0,
+        1330.0
+      ],
+      "xref": 242
+    },
+    {
+      "name": "p2_boletim_ano3_linha1_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        100.0,
+        1443.0,
+        126.0,
+        1469.0
+      ],
+      "xref": 243
+    },
+    {
+      "name": "p2_boletim_ano3_linha1_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        137.0,
+        1443.0,
+        163.0,
+        1469.0
+      ],
+      "xref": 244
+    },
+    {
+      "name": "p2_boletim_ano3_linha1_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        174.0,
+        1443.0,
+        200.0,
+        1469.0
+      ],
+      "xref": 245
+    },
+    {
+      "name": "p2_boletim_ano3_linha2_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        100.0,
+        1485.0,
+        126.0,
+        1511.0
+      ],
+      "xref": 246
+    },
+    {
+      "name": "p2_boletim_ano3_linha2_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        137.0,
+        1485.0,
+        163.0,
+        1511.0
+      ],
+      "xref": 247
+    },
+    {
+      "name": "p2_boletim_ano3_linha2_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        174.0,
+        1485.0,
+        200.0,
+        1511.0
+      ],
+      "xref": 248
+    },
+    {
+      "name": "p2_boletim_ano3_linha3_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        100.0,
+        1527.0,
+        126.0,
+        1553.0
+      ],
+      "xref": 249
+    },
+    {
+      "name": "p2_boletim_ano3_linha3_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        137.0,
+        1527.0,
+        163.0,
+        1553.0
+      ],
+      "xref": 250
+    },
+    {
+      "name": "p2_boletim_ano3_linha3_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        174.0,
+        1527.0,
+        200.0,
+        1553.0
+      ],
+      "xref": 251
+    },
+    {
+      "name": "p2_boletim_ano4_linha1_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        455.0,
+        1443.0,
+        481.0,
+        1469.0
+      ],
+      "xref": 252
+    },
+    {
+      "name": "p2_boletim_ano4_linha1_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        492.0,
+        1443.0,
+        518.0,
+        1469.0
+      ],
+      "xref": 253
+    },
+    {
+      "name": "p2_boletim_ano4_linha1_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        529.0,
+        1443.0,
+        555.0,
+        1469.0
+      ],
+      "xref": 254
+    },
+    {
+      "name": "p2_boletim_ano4_linha2_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        455.0,
+        1485.0,
+        481.0,
+        1511.0
+      ],
+      "xref": 255
+    },
+    {
+      "name": "p2_boletim_ano4_linha2_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        492.0,
+        1485.0,
+        518.0,
+        1511.0
+      ],
+      "xref": 256
+    },
+    {
+      "name": "p2_boletim_ano4_linha2_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        529.0,
+        1485.0,
+        555.0,
+        1511.0
+      ],
+      "xref": 257
+    },
+    {
+      "name": "p2_boletim_ano4_linha3_col1",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        455.0,
+        1527.0,
+        481.0,
+        1553.0
+      ],
+      "xref": 258
+    },
+    {
+      "name": "p2_boletim_ano4_linha3_col2",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        492.0,
+        1527.0,
+        518.0,
+        1553.0
+      ],
+      "xref": 259
+    },
+    {
+      "name": "p2_boletim_ano4_linha3_col3",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        529.0,
+        1527.0,
+        555.0,
+        1553.0
+      ],
+      "xref": 260
+    },
+    {
+      "name": "p2_extra_1_check",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        765.0,
+        1188.0,
+        793.0,
+        1216.0
+      ],
+      "xref": 261
+    },
+    {
+      "name": "p2_extra_1_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        804.0,
+        1189.0,
+        1207.0,
+        1219.0
+      ],
+      "xref": 262
+    },
+    {
+      "name": "p2_extra_2_check",
+      "type": "CheckBox",
+      "page": 2,
+      "rect": [
+        765.0,
+        1231.0,
+        793.0,
+        1259.0
+      ],
+      "xref": 264
+    },
+    {
+      "name": "p2_extra_2_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        804.0,
+        1232.0,
+        1207.0,
+        1262.0
+      ],
+      "xref": 265
+    },
+    {
+      "name": "p2_extra_nome",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        756.0,
+        1300.0,
+        890.0,
+        1334.0
+      ],
+      "xref": 266
+    },
+    {
+      "name": "p2_extra_d4",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        895.0,
+        1300.0,
+        960.0,
+        1334.0
+      ],
+      "xref": 268
+    },
+    {
+      "name": "p2_extra_habilidades",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        968.0,
+        1300.0,
+        1105.0,
+        1334.0
+      ],
+      "xref": 270
+    },
+    {
+      "name": "p2_extra_membro",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        1110.0,
+        1300.0,
+        1215.0,
+        1334.0
+      ],
+      "xref": 272
+    },
+    {
+      "name": "p2_empregador",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        766.0,
+        1482.0,
+        1205.0,
+        1515.0
+      ],
+      "xref": 274
+    },
+    {
+      "name": "p2_trabalho",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        766.0,
+        1573.0,
+        995.0,
+        1606.0
+      ],
+      "xref": 276
+    },
+    {
+      "name": "p2_coworker",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        1012.0,
+        1573.0,
+        1210.0,
+        1606.0
+      ],
+      "xref": 278
+    },
+    {
+      "name": "p2_notas",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        205.0,
+        1641.0,
+        1049.0,
+        1764.0
+      ],
+      "xref": 280
+    },
+    {
+      "name": "p2_boletim_ano1_linha1_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        208.0,
+        1218.0,
+        354.0,
+        1249.0
+      ],
+      "xref": 284
+    },
+    {
+      "name": "p2_boletim_ano1_linha2_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        208.0,
+        1260.0,
+        354.0,
+        1291.0
+      ],
+      "xref": 286
+    },
+    {
+      "name": "p2_boletim_ano1_linha3_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        208.0,
+        1302.0,
+        354.0,
+        1333.0
+      ],
+      "xref": 288
+    },
+    {
+      "name": "p2_boletim_ano2_linha1_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        566.0,
+        1218.0,
+        696.0,
+        1249.0
+      ],
+      "xref": 290
+    },
+    {
+      "name": "p2_boletim_ano2_linha2_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        566.0,
+        1260.0,
+        696.0,
+        1291.0
+      ],
+      "xref": 292
+    },
+    {
+      "name": "p2_boletim_ano2_linha3_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        566.0,
+        1302.0,
+        696.0,
+        1333.0
+      ],
+      "xref": 294
+    },
+    {
+      "name": "p2_boletim_ano3_linha1_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        208.0,
+        1441.0,
+        354.0,
+        1472.0
+      ],
+      "xref": 296
+    },
+    {
+      "name": "p2_boletim_ano3_linha2_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        208.0,
+        1483.0,
+        354.0,
+        1514.0
+      ],
+      "xref": 298
+    },
+    {
+      "name": "p2_boletim_ano3_linha3_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        208.0,
+        1525.0,
+        354.0,
+        1556.0
+      ],
+      "xref": 300
+    },
+    {
+      "name": "p2_boletim_ano4_linha1_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        566.0,
+        1441.0,
+        696.0,
+        1472.0
+      ],
+      "xref": 302
+    },
+    {
+      "name": "p2_boletim_ano4_linha2_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        566.0,
+        1483.0,
+        696.0,
+        1514.0
+      ],
+      "xref": 304
+    },
+    {
+      "name": "p2_boletim_ano4_linha3_habilidade",
+      "type": "Text",
+      "page": 2,
+      "rect": [
+        566.0,
+        1525.0,
+        696.0,
+        1556.0
+      ],
+      "xref": 306
+    }
+  ],
+  "widgets": 228,
+  "validated": false,
+  "mapping": {},
+  "blockers": [
+    "Adaptação completa dos dados da ficha e prova visual final ainda não implementadas; teste AcroForm mínimo não habilita suporte."
+  ],
+  "minimalProof": {
+    "attempted": true,
+    "reopened": true,
+    "widgetsPreserved": 228,
+    "field": "p1_nome_personagem",
+    "value": "Prova: Orientação",
+    "semanticCoverage": "Apenas prova de edição de um campo; não representa uma ficha exportada."
+  },
+  "popplerReadable": true
+}

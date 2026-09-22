@@ -27,6 +27,8 @@ test('extra de círculo alto, identidade, recurso, academia, JSON e AcroForm', a
   await semear(page);
   await page.locator('#adicionar-magia-extra').click();
   await page.locator('#extra-busca').fill('Desejo');
+  await page.locator('#extra-todas').check();
+  await page.locator('#extra-origem-filtro').selectOption('2024');
   await page.screenshot({ path: new URL('extra-desktop.png', artefatos).pathname, animations: 'disabled' });
   await page.locator('.sh-opcao').filter({ hasText: 'Desejo' }).click();
   await page.locator('#extra-atributo').selectOption('sabedoria');
@@ -113,12 +115,17 @@ test('extra de círculo alto, identidade, recurso, academia, JSON e AcroForm', a
   const exemploAtual = await page.evaluate(async () => (await import('./js/store.js')).exportarPersonagem('estudante-teste'));
   await writeFile(new URL('personagem-exemplo.json', artefatos), exemploAtual);
   const download = page.waitForEvent('download');
-  await page.locator('#pdf-editavel').click();
+  await page.locator('#btn-print').click();
+  await page.locator('input[value="strixhaven-atual"]').check();
+  await page.locator('#pdf-gerar').click();
   const pdf = await download;
   await pdf.saveAs(new URL('estudante-editavel.pdf', artefatos).pathname);
   const descritivo = page.waitForEvent('download');
+  await page.locator('#pdf-cancelar').click();
   await page.locator('#btn-print').click();
+  await page.locator('#pdf-gerar').click();
   await (await descritivo).saveAs(new URL('estudante-descritivo.pdf', artefatos).pathname);
+  await page.locator('#pdf-cancelar').click();
   const arquivoEditavel = await readFile(new URL('estudante-editavel.pdf', artefatos));
   const pdfVerificado = await page.evaluate(async bytes => {
     const doc = await window.PDFLib.PDFDocument.load(new Uint8Array(bytes));
@@ -162,6 +169,9 @@ test('homônimas, cota opcional, benefício manual, ajustes e progressão preser
   const adicionar = async () => {
     await page.locator('#adicionar-magia-extra').click();
     await page.locator('#extra-busca').fill('Bênção');
+    await page.locator('#extra-todas').check();
+    await page.locator('#extra-origem-filtro').selectOption('2024');
+    page.once('dialog', dialog => dialog.accept()); // Bênção já existe pela origem Iniciado em Magia
     await page.locator('.sh-opcao').filter({ hasText: 'Bênção' }).first().click();
     await page.locator('#extra-atributo').selectOption('sabedoria');
     await page.locator('#extra-classe').selectOption('Mago');
@@ -252,7 +262,9 @@ test('PDFs com continuações preservam o último registro, notas e campos edit�
   const backupLongo = await page.evaluate(async () => (await import('./js/store.js')).exportarPersonagem('estudante-teste'));
   await writeFile(new URL('personagem-longo.json', artefatos), backupLongo);
   const dl = page.waitForEvent('download');
-  await page.locator('#pdf-editavel').click();
+  await page.locator('#btn-print').click();
+  await page.locator('input[value="strixhaven-atual"]').check();
+  await page.locator('#pdf-gerar').click();
   await (await dl).saveAs(new URL('longo-editavel.pdf', artefatos).pathname);
   const verificado = await page.evaluate(async () => {
     const s = await import('./js/store.js');
@@ -272,7 +284,9 @@ test('PDFs com continuações preservam o último registro, notas e campos edit�
   expect(verificado.detalhes).toContain('MARCADOR-FINAL-MAGIA');
   expect(verificado.detalhes).toContain('Relação 24');
   const dl2 = page.waitForEvent('download');
+  await page.locator('#pdf-cancelar').click();
   await page.locator('#btn-print').click();
+  await page.locator('#pdf-gerar').click();
   await (await dl2).saveAs(new URL('longo-descritivo.pdf', artefatos).pathname);
 });
 
@@ -357,7 +371,7 @@ test('recurso 2024 Sortudo continua consumindo pontos nas duas ações', async (
   expect(await page.evaluate(async () => (await import('./js/store.js')).getPersonagem('estudante-teste').recursos.sortudo.pontos_gastos)).toBe(2);
 });
 
-test('truque extra ocupa vaga por opção também no seletor normal da criação', async ({ page }) => {
+test('truque extra ocupa vaga, mas exceder a referência não bloqueia a criação', async ({ page }) => {
   await page.goto('');
   await page.evaluate(async () => {
     const { criarPersonagemVazio } = await import('./js/store.js');
@@ -369,13 +383,13 @@ test('truque extra ocupa vaga por opção também no seletor normal da criação
     definirPersonagem(p); await renderStepMagias(document.getElementById('app-content'));
   });
   await page.locator('[data-creator-check="Orientação"]').click();
-  expect(await page.evaluate(async () => (await import('./js/creator/wizard.js')).personagem.magias_conhecidas.length)).toBe(2);
+  expect(await page.evaluate(async () => (await import('./js/creator/wizard.js')).personagem.magias_conhecidas.length)).toBe(3);
   await page.locator('[data-cr-extra-editar="truque-extra"]').click();
   await page.locator('#mc-sempre-preparada').check();
   await page.locator('#btn-salvar-mc').click();
   await page.locator('[data-creator-check="Orientação"]').click();
   const p = await page.evaluate(async () => (await import('./js/creator/wizard.js')).personagem);
-  expect(p.magias_conhecidas).toHaveLength(3);
+  expect(p.magias_conhecidas).toHaveLength(2);
   expect(p.magias_customizadas).toHaveLength(1);
   expect(p.magias_customizadas[0].id).toBe('truque-extra');
   expect(p.magias_customizadas[0].sempre_preparada).toBe(true);
@@ -415,6 +429,8 @@ test('não conjurador registra utilitária sem atributo fictício e consome só 
   await page.locator('#char-nome-display').waitFor();
   await page.locator('#adicionar-magia-extra').click();
   await page.locator('#extra-busca').fill('Identificar');
+  await page.locator('#extra-todas').check();
+  await page.locator('#extra-origem-filtro').selectOption('2024');
   await page.locator('.sh-opcao').filter({ hasText: 'Identificar' }).click();
   await page.locator('#extra-sem-teste').check();
   await page.locator('#extra-usos_total').fill('1');

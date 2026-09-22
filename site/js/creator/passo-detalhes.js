@@ -3,7 +3,9 @@
 // Extraido de site/js/pages/creator.js sem alteracao de comportamento.
 // ============================================================
 import { ATRIBUTOS_NOMES, CLASSES_INFO, IDIOMAS_COMUNS } from '../dados-classes.js';
-import { calcMod, calcPVNivel1, descreverCapacidadeCarga, escHtml, getTamanho, processarImagemArquivo, toast } from '../utils.js';
+import { calcMod, calcPVNivel1, descreverCapacidadeCarga, escHtml, getTamanho, toast } from '../utils.js';
+import { abrirGerenciadorFotos, renderPreviewFoto } from '../fotos.js';
+import { definirFotoPrincipal } from '../fotos-modelo.js';
 import { dadosCache, personagem } from './wizard.js';
 
 // ============================================================
@@ -63,7 +65,7 @@ function sanitizarIdiomasSelecionados(listaIdiomas, regraIdiomas) {
     entrada.filter(i => !obrigatoriosSet.has(i) && opcoesSet.has(i))
   )].slice(0, regraIdiomas.maxAdicionais);
 
-  return [...regraIdiomas.obrigatorios, ...adicionais];
+  return [...new Set([...regraIdiomas.obrigatorios, ...adicionais, ...(personagem.idiomas_livres || []), ...(personagem.idiomas_personalizados || []).map(i => i.nome)])];
 }
 
 export function renderStepDetalhes(el) {
@@ -172,14 +174,11 @@ export function renderStepDetalhes(el) {
           </div>
         </div>
         <div class="col" style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
-          <div class="char-avatar" id="det-imagem-preview" style="width:56px;height:56px;font-size:1.4rem">
-            ${personagem.imagem ? `<img src="${escHtml(personagem.imagem)}" alt="">` : escHtml((personagem.nome || personagem.classe || '?').charAt(0).toUpperCase() || '?')}
-          </div>
+          <div id="det-imagem-preview" style="width:96px"></div>
           <div style="display:flex;gap:4px">
-            <button type="button" class="btn btn-sm btn-secondary" id="det-imagem-btn">Foto</button>
-            <button type="button" class="btn btn-sm btn-danger" id="det-imagem-remover" title="Remover imagem" style="${personagem.imagem ? '' : 'display:none'}">&times;</button>
+            <button type="button" class="btn btn-sm btn-secondary" id="det-imagem-btn">Fotos por URL</button>
+            <button type="button" class="btn btn-sm btn-danger" id="det-imagem-remover">Sem principal</button>
           </div>
-          <input type="file" accept="image/*" id="det-imagem-input" style="display:none">
         </div>
       </div>
 
@@ -199,6 +198,8 @@ export function renderStepDetalhes(el) {
     <!-- Idiomas -->
     <div class="card mb-2">
       <div class="card-header"><h3>Idiomas</h3></div>
+      <button type="button" class="btn btn-secondary" id="criacao-idioma-custom">Adicionar idioma personalizado / catálogo completo</button>
+      <div id="idiomas-livres-resumo">${(personagem.idiomas_livres || []).map(n => rotuloLocalizado(idiomaLocalizado(n, personagem))).join('')}</div>
       <div class="info-box info" style="font-size:0.85rem">
         Regra validada pelo Livro do Jogador 2024: idiomas da origem (Comum + adicionais).
         <div id="det-idiomas-contador" style="margin-top:4px">Selecionados: <strong>${personagem.idiomas.filter(i => !obrigatoriosIdiomasSet.has(i)).length}/${regraIdiomas.maxAdicionais}</strong></div>
@@ -210,7 +211,7 @@ export function renderStepDetalhes(el) {
           const atingiuLimite = personagem.idiomas.filter(i => !obrigatoriosIdiomasSet.has(i)).length >= regraIdiomas.maxAdicionais;
           return `
             <label class="form-check" style="min-width:160px;${ehObrigatorio ? 'opacity:0.6' : ''}">
-              <input type="checkbox" data-idioma="${escHtml(idioma)}" ${selecionado ? 'checked' : ''} ${ehObrigatorio ? 'disabled' : ''} ${(!ehObrigatorio && !selecionado && atingiuLimite) ? 'disabled' : ''}> ${escHtml(idioma)}
+              <input type="checkbox" data-idioma="${escHtml(idioma)}" ${selecionado ? 'checked' : ''} ${ehObrigatorio ? 'disabled' : ''} ${(!ehObrigatorio && !selecionado && atingiuLimite) ? 'disabled' : ''}> ${rotuloLocalizado(idiomaLocalizado(idioma, personagem))}
             </label>`;
         }).join('')}
       </div>
@@ -291,6 +292,10 @@ export function renderStepDetalhes(el) {
   `;
 
   // Validação interativa de idiomas por regra dinâmica
+  document.getElementById('criacao-idioma-custom').onclick = () => abrirIdiomas(personagem, () => {
+    personagem.idiomas_livres = [...personagem.idiomas];
+    document.getElementById('idiomas-livres-resumo').innerHTML = personagem.idiomas_livres.map(n => rotuloLocalizado(idiomaLocalizado(n, personagem))).join('');
+  });
   const atualizarEstadoIdiomas = () => {
     const checks = [...document.querySelectorAll('[data-idioma]')];
     const selecionadosAdicionais = checks.filter(c => !obrigatoriosIdiomasSet.has(c.dataset.idioma) && c.checked).length;
@@ -347,34 +352,13 @@ export function renderStepDetalhes(el) {
     });
   });
 
-  document.getElementById('det-imagem-btn')?.addEventListener('click', () => {
-    document.getElementById('det-imagem-input')?.click();
-  });
-
-  const detImagemInicial = () => (personagem.nome || personagem.classe || '?').charAt(0).toUpperCase() || '?';
-
-  document.getElementById('det-imagem-input')?.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    e.target.value = '';
-    if (!file) return;
-    const dataUrl = await processarImagemArquivo(file, 300);
-    if (!dataUrl) {
-      toast('Não foi possível processar essa imagem', 'error');
-      return;
-    }
-    personagem.imagem = dataUrl;
-    const preview = document.getElementById('det-imagem-preview');
-    if (preview) preview.innerHTML = `<img src="${escHtml(dataUrl)}" alt="">`;
-    const btnRemover = document.getElementById('det-imagem-remover');
-    if (btnRemover) btnRemover.style.display = '';
-  });
+  const atualizarFoto = () => renderPreviewFoto(personagem, document.getElementById('det-imagem-preview'));
+  atualizarFoto();
+  document.getElementById('det-imagem-btn')?.addEventListener('click', () => abrirGerenciadorFotos(personagem, atualizarFoto));
 
   document.getElementById('det-imagem-remover')?.addEventListener('click', () => {
-    personagem.imagem = '';
-    const preview = document.getElementById('det-imagem-preview');
-    if (preview) preview.textContent = detImagemInicial();
-    const btnRemover = document.getElementById('det-imagem-remover');
-    if (btnRemover) btnRemover.style.display = 'none';
+    if (!confirm('Deixar o cabeçalho sem foto principal? O álbum será preservado.')) return;
+    definirFotoPrincipal(personagem,null); atualizarFoto();
   });
 }
 
@@ -402,3 +386,5 @@ export function coletarDetalhes() {
   const tamanhoSel = document.querySelector('[name="det-tamanho"]:checked');
   if (tamanhoSel) personagem.tamanho = tamanhoSel.value;
 }
+import { abrirIdiomas, idiomaLocalizado } from '../idiomas-catalogo.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';

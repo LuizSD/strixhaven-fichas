@@ -599,10 +599,11 @@ test('a limpeza do grimório acerta a cópia da customizada homônima de uma mag
   await abrirTudo(page);
 
   // A MIRA DA LIMPEZA, antes de qualquer edição.
-  expect((await personagemSalvo(page)).grimorio,
+  const grimorioAntesDaEdicao = (await personagemSalvo(page)).grimorio;
+  expect(grimorioAntesDaEdicao,
     'sai a cópia da customizada -- e sai apesar de "Bola de Fogo" existir no acervo, porque a '
     + 'decisão é por nome E CÍRCULO. A magia do livro comprada continua no grimório')
-    .toEqual([{ nome: 'Mísseis Mágicos', circulo: 1 }]);
+    .toMatchObject([{ nome: 'Mísseis Mágicos', circulo: 1, catalogo_ref:'phb-2024-magic-missile' }]);
 
   await clicarSeletorFicha(page, '[data-editar-magia-custom]', { esperar: '#mc-nome' });
   await page.fill('#mc-nome', NOME_NOVO);
@@ -619,7 +620,7 @@ test('a limpeza do grimório acerta a cópia da customizada homônima de uma mag
   expect(salvo?.grimorio,
     'e o grimório não muda com o rename: nem a entrada do livro é tocada, nem o nome novo '
     + 'aparece -- a customizada não é magia de grimório desde a #46')
-    .toEqual([{ nome: 'Mísseis Mágicos', circulo: 1 }]);
+    .toEqual(grimorioAntesDaEdicao);
 
   await expect(page.locator('[data-details-id="magias-circulo-1"] .magia-personalizada',
     { hasText: NOME_NOVO }),
@@ -655,6 +656,8 @@ test('grimório do Mago: renomear personalizada com nome E círculo idênticos a
   }, 'regras-magia-custom-grimorio-renomear-ambigua');
   await assentar(page).catch(() => {});
   await abrirTudo(page);
+  const grimorioAntesDaEdicao = (await personagemSalvo(page)).grimorio;
+  expect(grimorioAntesDaEdicao).toMatchObject([{ nome:NOME_COLISAO,circulo:3,catalogo_ref:'phb-2024-fireball' }]);
 
   await clicarSeletorFicha(page, '[data-editar-magia-custom]', { esperar: '#mc-nome' });
   await page.fill('#mc-nome', NOME_NOVO);
@@ -677,7 +680,7 @@ test('grimório do Mago: renomear personalizada com nome E círculo idênticos a
   expect(grimorio,
     'ambíguo, o bloco de sincronia não pode mexer em NADA -- nem atualizar, nem remover: a entrada '
     + 'original continua exatamente como estava')
-    .toEqual([{ nome: NOME_COLISAO, circulo: 3 }]);
+    .toEqual(grimorioAntesDaEdicao);
 
   expect(erros, `erros de console/página: ${erros.join('; ')}`).toEqual([]);
 });

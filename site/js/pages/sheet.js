@@ -3,6 +3,7 @@
 // ============================================================
 import { getPersonagem } from '../store.js';
 import { getClasse, getIndiceMagias, getTalentos, getEspecies } from '../db.js';
+import { reconciliarMagias } from '../magias/modelo.js';
 import { getMagiaPreparadas, normalizarGrimorioMago } from '../utils.js';
 import { obterMagiasAutomaticasDoPersonagem } from '../levelup.js';
 import { getSyncStatus, onSyncStatusChange } from '../sync.js';
@@ -59,6 +60,7 @@ export async function renderSheet(container, charId) {
   // do personagem anterior visiveis neste.
   await garantirDadosDeClasses(char, true);
   const indiceData = await getIndiceMagias();
+  if (reconciliarMagias(char, (await getIndiceMagias({ incluirLegado: true })).magias)) salvar();
   definirIndiceMagias(indiceData?.magias || []);
   definirTalentos(await getTalentos());
   definirEspecies(await getEspecies());

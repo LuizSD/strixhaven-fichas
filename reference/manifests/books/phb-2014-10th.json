@@ -1,0 +1,114 @@
+{
+  "id": "phb-2014-10th",
+  "filename": "Player's Handbook [10th Print] (1).pdf",
+  "sha256": "c0d18ede598e55bc1759a0b64901a207fd24328b832637b2da60950c86b32412",
+  "pages": 322,
+  "alsoFoundAt": [
+    "assets-private/Player's Handbook [10th Print] (1).pdf"
+  ],
+  "kind": "book",
+  "title": "Player's Handbook",
+  "edition": "D&D 5e (2014)",
+  "printing": "10th (2018)",
+  "year": 2014,
+  "language": "en",
+  "rulesVersion": "2014-legacy",
+  "pageOffset": 1,
+  "anchors": [
+    {
+      "physicalPage": 202,
+      "printedPage": 201
+    },
+    {
+      "physicalPage": 209,
+      "printedPage": 208
+    },
+    {
+      "physicalPage": 213,
+      "printedPage": 212
+    }
+  ],
+  "sections": [
+    {
+      "section": "races",
+      "printedPages": [
+        17,
+        43
+      ],
+      "extractedCharacters": 89185,
+      "textSha256": "560d94f06ffb611245b4a93af9996f132e9a7df9e10ab4bc13350323b31824c4"
+    },
+    {
+      "section": "classes",
+      "printedPages": [
+        45,
+        119
+      ],
+      "extractedCharacters": 303366,
+      "textSha256": "876ec3e6a392382931f827dbcf46112242c4f085bd69f472451d3939a6609717"
+    },
+    {
+      "section": "backgrounds",
+      "printedPages": [
+        121,
+        141
+      ],
+      "extractedCharacters": 84727,
+      "textSha256": "330189e989a99b43637811169de4ed9a9e12dcbe88921a16bc9d9b0df73cee08"
+    },
+    {
+      "section": "equipment",
+      "printedPages": [
+        143,
+        161
+      ],
+      "extractedCharacters": 63811,
+      "textSha256": "92881cca43a4149632694c716d80cbe7394a695d77ccd1e09129f831bc2e3f3a"
+    },
+    {
+      "section": "multiclass-feats",
+      "printedPages": [
+        163,
+        170
+      ],
+      "extractedCharacters": 31333,
+      "textSha256": "6c07b115d9a6fc0ad8ac535d3e04fbdd42e20b27ece82e897a3de0cec8e68bb5"
+    },
+    {
+      "section": "spellcasting",
+      "printedPages": [
+        201,
+        205
+      ],
+      "extractedCharacters": 21607,
+      "textSha256": "f613c4338c47668be800cb645b8078d47131987785e40c56e596c2e38cf559f6"
+    },
+    {
+      "section": "spell-lists",
+      "printedPages": [
+        207,
+        211
+      ],
+      "extractedCharacters": 15751,
+      "textSha256": "8e7129c0fc57a4545300cfd829591771a81a939ac203d7ebb6224a64f943b444"
+    },
+    {
+      "section": "spell-descriptions",
+      "printedPages": [
+        211,
+        289
+      ],
+      "extractedCharacters": 357693,
+      "textSha256": "b3ae3c3c9b2c2f3ad71e154ef6528a0248c5b4b8496bc3874b7d70488246f18e"
+    },
+    {
+      "section": "conditions",
+      "printedPages": [
+        290,
+        292
+      ],
+      "extractedCharacters": 6071,
+      "textSha256": "7d58a6c2004e015623921efa14dd002660c9253041151589054bdc0fa1c641b4"
+    }
+  ]
+}

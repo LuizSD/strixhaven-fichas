@@ -1,0 +1,175 @@
+{
+  "sha256": "2ca3c21ee90d703ca5ab0e713540531d37893913afe2aef063d5f7fdb5adfcc3",
+  "pageOffset": 1,
+  "anchors": [
+    {
+      "physicalPage": 18,
+      "printedPage": 17
+    },
+    {
+      "physicalPage": 46,
+      "printedPage": 45
+    },
+    {
+      "physicalPage": 122,
+      "printedPage": 121
+    },
+    {
+      "physicalPage": 144,
+      "printedPage": 143
+    },
+    {
+      "physicalPage": 164,
+      "printedPage": 163
+    },
+    {
+      "physicalPage": 202,
+      "printedPage": 201
+    },
+    {
+      "physicalPage": 209,
+      "printedPage": 208
+    },
+    {
+      "physicalPage": 212,
+      "printedPage": 211
+    },
+    {
+      "physicalPage": 213,
+      "printedPage": 212
+    },
+    {
+      "physicalPage": 290,
+      "printedPage": 289
+    },
+    {
+      "physicalPage": 291,
+      "printedPage": 290
+    }
+  ],
+  "records": [
+    {
+      "id": "dmg-2014-ring-of-evasion",
+      "name": {
+        "ptBR": "Anel de Evasão",
+        "en": "Ring of Evasion",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 153,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-swimming",
+      "name": {
+        "ptBR": "Anel de Natação",
+        "en": "Ring of Swimming",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 153,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-protection",
+      "name": {
+        "ptBR": "Anel de Proteção",
+        "en": "Ring of Protection",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 153,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-feather-falling",
+      "name": {
+        "ptBR": "Anel de Queda Suave",
+        "en": "Ring of Feather Falling",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 153,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-regeneration",
+      "name": {
+        "ptBR": "Anel de Regeneração",
+        "en": "Ring of Regeneration",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-resistance",
+      "name": {
+        "ptBR": "Anel de Resistência",
+        "en": "Ring of Resistance",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Itens mágicos"
+      }
+    },
+    {
+      "id": "dmg-2014-ring-of-three-wishes",
+      "name": {
+        "ptBR": "Anel dos Três Desejos",
+        "en": "Ring of Three Wishes",
+        "ptBRStatus": "interface-translation",
+        "enStatus": "interface-translation"
+      },
+      "source": {
+        "sourceId": "dmg-2014-pt",
+        "sourceTitle": "Guia do Mestre (D&D 5e, tradução em português)",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Itens mágicos"
+      }
+    }
+  ],
+  "count": 7,
+  "examinedPrintedPages": [
+    153,
+    154
+  ],
+  "ignored": [
+    "Demais capítulos varridos por termos; não houve catalogação item a item.",
+    "Descrições extensas protegidas.",
+    "Opções de classe/raça e regras do Mestre não incorporadas automaticamente no motor 2024."
+  ],
+  "translationCaveat": "Nomes ingleses de interface; não conferidos contra PDF inglês do DMG."
+}

@@ -32,6 +32,7 @@ const BASE = {
 async function bytesDoPdf(page) {
   const espera = page.waitForEvent('download', { timeout: 60_000 });
   await clicarBotaoFicha(page, 'btn-print');
+  await page.locator('#pdf-gerar').click();
   const download = await espera;
   const caminho = await download.path();
   return readFileSync(caminho);

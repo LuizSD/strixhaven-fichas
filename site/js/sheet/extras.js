@@ -5,12 +5,15 @@ import { mostrarFormMagiaCustom } from './grimorio.js';
 import { renderFichaCompleta } from './ficha.js';
 import { reservasDeEspacos, gastarEspaco } from './reservas-espacos.js';
 import { getEstadoFuria } from './classes/barbaro.js';
+import { renderAlertasMagias, setupAlertasMagias, alertasDaFicha, identidadeAvisoMagia } from './alertas-magias.js';
+import { abrirBuscaGlobalMagias } from '../magias/busca-ui.js';
+import { abrirEditorMagia } from '../magias/editor.js';
 
 /** Uma visão ordenável da coleção existente, sem copiar concessões para outras listas. */
 export function renderExtrasDaFicha() {
   const extras = (char.magias_customizadas || []).filter(m => m.origem === 'extra');
-  if (!extras.length) return '';
-  return `<section class="card" id="magias-extras"><h3>Magias extras · regra da mesa</h3><p>Ordem manual, independente do círculo. Preparação, cota e recurso são decisões separadas.</p><div class="sh-grade">${extras.map(m => renderExtra(m, char)).join('')}</div></section>`;
+  const observacoes = new Set(alertasDaFicha().map(a => a.magiaId).filter(Boolean));
+  return `<section class="card" id="magias-extras"><h3>Magias registradas · escolhas livres</h3>${renderAlertasMagias(false, 'extras')}<p>Ordem manual, independente do círculo. Preparação, cota e recurso são decisões separadas.</p><div class="sh-acoes"><button class="btn btn-primary spell-search-action" id="pesquisar-todas-magias">Pesquisar em todas as magias<small lang="en">Search all spells</small></button><button class="btn btn-secondary" id="magia-manual-global">Adicionar magia manualmente</button><button class="btn btn-secondary" id="catalogo-todos">Mostrar todas as magias · círculos 0–9</button></div><div class="sh-grade">${extras.map(m => `<div>${observacoes.has(identidadeAvisoMagia(m)) ? `<button class="btn btn-sm btn-secondary observacao-magia-link no-print" data-observacoes-magia="${escHtml(identidadeAvisoMagia(m))}">${m.motivo || char.justificativa_magias ? 'ⓘ':'⚠'} Observações desta magia</button>` : ''}${renderExtra(m, char)}</div>`).join('')}</div></section>`;
 }
 
 /** Conjuração explícita: nenhuma reserva menor ou gratuita é inventada. */
@@ -26,7 +29,7 @@ function conjurarExtra(m) {
   if (getEstadoFuria()?.ativa) { toast('Não é possível conjurar durante a Fúria.', 'error'); return; }
   const reservas = reservasDeEspacos().filter(r => r.circulo >= m.circulo && r.disponiveis > 0);
   const opcoes = [];
-  if (m.circulo === 0 && m.estado_extra !== 'grimório') opcoes.push({ nome: 'Truque · sem espaço', tipo: 'truque' });
+  if (m.circulo === 0 && !['grimório', 'registrada'].includes(m.estado_extra)) opcoes.push({ nome: 'Truque · sem espaço', tipo: 'truque' });
   else if (['preparada', 'sempre preparada'].includes(m.estado_extra)) reservas.forEach(r => opcoes.push({ nome: `${r.circulo}º círculo · ${r.fonte} (${r.disponiveis} disponíveis)`, tipo: 'espaco', reserva: r }));
   if (m.usos_total > (m.usos_gastos || 0)) opcoes.push({ nome: `Uso especial (${m.usos_total - (m.usos_gastos || 0)} restantes)`, tipo: 'especial' });
   if (m.ritual) opcoes.push({ nome: 'Ritual · confirmar acesso ao ritual e tempo adicional', tipo: 'ritual' });
@@ -48,6 +51,11 @@ function conjurarExtra(m) {
 
 /** Eventos localizados por ID, inclusive depois de renomear ou reordenar. */
 export function setupExtras(container) {
+  setupAlertasMagias(container);
+  const atualizar = () => { salvar(); renderFichaCompleta(); };
+  container.querySelector('#pesquisar-todas-magias')?.addEventListener('click', () => abrirBuscaGlobalMagias({ personagem: char, aoSalvar: atualizar }));
+  container.querySelector('#magia-manual-global')?.addEventListener('click', () => abrirEditorMagia(char, { aoSalvar: atualizar }));
+  container.querySelector('#catalogo-todos')?.addEventListener('click', () => escolherExtra(char, inicial => mostrarFormMagiaCustom(null, { inicial }), true));
   container.querySelector('#adicionar-magia-extra')?.addEventListener('click', () => escolherExtra(char, inicial => mostrarFormMagiaCustom(null, { inicial })));
   container.querySelectorAll('[data-extra-acao]').forEach(b => { b.onclick = () => {
     const id = b.closest('[data-extra-id]').dataset.extraId;
@@ -56,6 +64,7 @@ export function setupExtras(container) {
     if (idx < 0) return;
     const m = lista[idx];
     const acao = b.dataset.extraAcao;
+    if (acao === 'editar-completa') { abrirEditorMagia(char, { magia: m, aoSalvar: atualizar }); return; }
     if (acao === 'editar') { mostrarFormMagiaCustom(idx); return; }
     if (acao === 'conjurar') { conjurarExtra(m); return; }
     if (acao === 'remover') {

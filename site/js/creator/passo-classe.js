@@ -8,6 +8,7 @@ import { abrirModal, mdParaHtml, toast } from '../utils.js';
 import { CLASSES_ESCOLHAS, NIVEL_SUBCLASSE } from './comum.js';
 import { rotuloPericia } from '../opcoes-dominio.js';
 import { dadosCache, personagem } from './wizard.js';
+import { NOMES_CLASSES, rotuloLocalizado, correspondeBusca } from '../catalogo-localizado.js';
 
 // ============================================================
 // PASSO 1: CLASSE
@@ -27,7 +28,7 @@ export function renderStepClasse(el) {
     resumoHtml = `
       <div class="selecao-resumo">
         <div class="resumo-info">
-          <div class="resumo-titulo">${personagem.classe}</div>
+          <div class="resumo-titulo">${rotuloLocalizado({ nome: personagem.classe, name: { en: NOMES_CLASSES[personagem.classe] } })}</div>
           <div class="resumo-detalhe">d${info.dado_vida} | ${info.atributo_primario} | ${info.conjurador ? 'Conjurador' : 'Marcial'}${extra}</div>
         </div>
         <button class="btn btn-outline btn-sm" id="btn-alterar-classe">Alterar</button>
@@ -36,13 +37,14 @@ export function renderStepClasse(el) {
 
   el.innerHTML = `
     <h3 style="margin-bottom:12px">Escolha sua Classe</h3>
+    <label>Buscar classe em português / inglês<input class="form-input" id="busca-classe-localizada"></label>
     <div class="opcao-grid ampla" id="grid-classes">
       ${classes.map(c => {
         const info = CLASSES_INFO[c];
         return `
           <div class="opcao-card ${personagem.classe === c ? 'selecionada' : ''}" data-classe="${c}">
             <span class="opcao-check"></span>
-            <div class="opcao-nome">${c}</div>
+            <div class="opcao-nome">${rotuloLocalizado({ nome: c, name: { en: NOMES_CLASSES[c] } })}</div>
             <div class="opcao-resumo">d${info.dado_vida} &middot; ${info.atributo_primario}</div>
             <div class="opcao-resumo">${info.conjurador ? 'Conjurador' : 'Marcial'}</div>
           </div>`;
@@ -52,6 +54,9 @@ export function renderStepClasse(el) {
   `;
 
   // Clicar num card abre popup com detalhes da classe
+  el.querySelector('#busca-classe-localizada').oninput = e => {
+    el.querySelectorAll('[data-classe]').forEach(card => { card.hidden = !correspondeBusca({ nome: card.dataset.classe, name: { en: NOMES_CLASSES[card.dataset.classe] } }, e.target.value); });
+  };
   el.querySelectorAll('[data-classe]').forEach(card => {
     card.addEventListener('click', () => abrirPopupClasse(card.dataset.classe));
   });
@@ -285,4 +290,4 @@ async function abrirPopupClasse(nome) {
     const wizContent = document.getElementById('wizard-content');
     if (wizContent) renderStepClasse(wizContent);
   });
-}
+}

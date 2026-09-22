@@ -1,0 +1,2176 @@
+{
+  "added": [],
+  "updated": [
+    {
+      "id": "phb-2014-acid-splash",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-aid",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-alarm",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-alter-self",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-animal-friendship",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-animal-messenger",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-animal-shapes",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-animate-dead",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-animate-objects",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-antilife-shell",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-antimagic-field",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-antipathy-sympathy",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-arcane-eye",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-arcane-gate",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-arcane-lock",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-armor-of-agathys",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-arms-of-hadar",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-astral-projection",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-augury",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-aura-of-life",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-aura-of-purity",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-aura-of-vitality",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-awaken",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-bane",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-banishing-smite",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-banishment",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-barkskin",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-beacon-of-hope",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-beast-sense",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-bestow-curse",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-bigby-s-hand",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-blade-barrier",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-blade-ward",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-bless",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-blight",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-blinding-smite",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-blindness-deafness",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-blink",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-blur",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-branding-smite",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-burning-hands",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-call-lightning",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-calm-emotions",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-chain-lightning",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-charm-person",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-chill-touch",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-chromatic-orb",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-circle-of-death",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-circle-of-power",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-clairvoyance",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-clone",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-cloud-of-daggers",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-cloudkill",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-color-spray",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-command",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-commune",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-commune-with-nature",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-compelled-duel",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-comprehend-languages",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-compulsion",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-cone-of-cold",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-confusion",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-conjure-animals",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-conjure-barrage",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-conjure-celestial",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-conjure-elemental",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-conjure-fey",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-conjure-minor-elementals",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-conjure-volley",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-conjure-woodland-beings",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-contact-other-plane",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-contagion",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-contingency",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-continual-flame",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-control-water",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-control-weather",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-cordon-of-arrows",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-counterspell",
+      "fields": [
+        "tempo_conjuracao",
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-create-food-and-water",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-create-or-destroy-water",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-create-undead",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-creation",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-crown-of-madness",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-crusader-s-mantle",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-cure-wounds",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dancing-lights",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-darkness",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-darkvision",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-daylight",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-death-ward",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-delayed-blast-fireball",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-demiplane",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-destructive-wave",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-detect-evil-and-good",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-detect-magic",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-detect-poison-and-disease",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-detect-thoughts",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dimension-door",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-disguise-self",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-disintegrate",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dispel-evil-and-good",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dispel-magic",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dissonant-whispers",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-divination",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-divine-favor",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-divine-word",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dominate-beast",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dominate-monster",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dominate-person",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-drawmij-s-instant-summons",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-dream",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-druidcraft",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-earthquake",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-eldritch-blast",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-elemental-weapon",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-enhance-ability",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-enlarge-reduce",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-ensnaring-strike",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-entangle",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-enthrall",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-etherealness",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-evard-s-black-tentacles",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-expeditious-retreat",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-eyebite",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-fabricate",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-faerie-fire",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-false-life",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-fear",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-feather-fall",
+      "fields": [
+        "tempo_conjuracao",
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-feeblemind",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-feign-death",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-find-familiar",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-find-steed",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-find-the-path",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-find-traps",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-finger-of-death",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-fireball",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-fire-bolt",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-fire-shield",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-fire-storm",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-flame-blade",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-flame-strike",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-flaming-sphere",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-flesh-to-stone",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-fly",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-fog-cloud",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-forbiddance",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-forcecage",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-foresight",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-freedom-of-movement",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-friends",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-gaseous-form",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-gate",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-geas",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-gentle-repose",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-giant-insect",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-glibness",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-globe-of-invulnerability",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-glyph-of-warding",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-goodberry",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-grasping-vine",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-grease",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-greater-invisibility",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-greater-restoration",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-guardian-of-faith",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-guards-and-wards",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-guidance",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-guiding-bolt",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-gust-of-wind",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hail-of-thorns",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hallow",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hallucinatory-terrain",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-harm",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-haste",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-heal",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-healing-word",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-heat-metal",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hellish-rebuke",
+      "fields": [
+        "tempo_conjuracao",
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-heroes-feast",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-heroism",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hex",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hold-monster",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hold-person",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-holy-aura",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hunger-of-hadar",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hunter-s-mark",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-hypnotic-pattern",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-ice-storm",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-identify",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-illusory-script",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-imprisonment",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-incendiary-cloud",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-inflict-wounds",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-insect-plague",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-invisibility",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-jump",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-knock",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-legend-lore",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-leomund-s-secret-chest",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-leomund-s-tiny-hut",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-lesser-restoration",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-levitate",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-light",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-lightning-arrow",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-lightning-bolt",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-locate-animals-or-plants",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-locate-creature",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-locate-object",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-longstrider",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mage-armor",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mage-hand",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-magic-circle",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-magic-jar",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-magic-missile",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-magic-mouth",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-magic-weapon",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-major-image",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mass-cure-wounds",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mass-heal",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mass-healing-word",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mass-suggestion",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-maze",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-meld-into-stone",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-melf-s-acid-arrow",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mending",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-message",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-meteor-swarm",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mind-blank",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-minor-illusion",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mirage-arcane",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mirror-image",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mislead",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-misty-step",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-modify-memory",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-moonbeam",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mordenkainen-s-faithful-hound",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mordenkainen-s-magnificent-mansion",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mordenkainen-s-private-sanctum",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-mordenkainen-s-sword",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-move-earth",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-nondetection",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-nystul-s-magic-aura",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-otiluke-s-freezing-sphere",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-otiluke-s-resilient-sphere",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-otto-s-irresistible-dance",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-pass-without-trace",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-passwall",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-phantasmal-force",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-phantasmal-killer",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-phantom-steed",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-planar-ally",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-planar-binding",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-plane-shift",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-plant-growth",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-poison-spray",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-polymorph",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-power-word-heal",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-power-word-kill",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-power-word-stun",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-prayer-of-healing",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-prestidigitation",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-prismatic-spray",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-prismatic-wall",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-produce-flame",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-programmed-illusion",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-project-image",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-protection-from-energy",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-protection-from-evil-and-good",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-protection-from-poison",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-purify-food-and-drink",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-raise-dead",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-rary-s-telepathic-bond",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-ray-of-enfeeblement",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-ray-of-frost",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-ray-of-sickness",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-regenerate",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-reincarnate",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-remove-curse",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-resistance",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-resurrection",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-reverse-gravity",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-revivify",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-rope-trick",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-sacred-flame",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-sanctuary",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-scorching-ray",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-scrying",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-searing-smite",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-see-invisibility",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-seeming",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-sending",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-sequester",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-shapechange",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-shatter",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-shield",
+      "fields": [
+        "tempo_conjuracao",
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-shield-of-faith",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-shillelagh",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-shocking-grasp",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-silence",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-silent-image",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-simulacrum",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-sleep",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-sleet-storm",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-slow",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-spare-the-dying",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-speak-with-animals",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-speak-with-dead",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-speak-with-plants",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-spider-climb",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-spike-growth",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-spirit-guardians",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-spiritual-weapon",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-staggering-smite",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-stinking-cloud",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-stone-shape",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-stoneskin",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-storm-of-vengeance",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-suggestion",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-sunbeam",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-sunburst",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-swift-quiver",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-symbol",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-tasha-s-hideous-laughter",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-telekinesis",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-telepathy",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-teleport",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-teleportation-circle",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-tenser-s-floating-disk",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-thaumaturgy",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-thorn-whip",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-thunderous-smite",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-thunderwave",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-time-stop",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-tongues",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-transport-via-plants",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-tree-stride",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-true-polymorph",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-true-resurrection",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-true-seeing",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-true-strike",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-tsunami",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-unseen-servant",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-vampiric-touch",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-vicious-mockery",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wall-of-fire",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wall-of-force",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wall-of-ice",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wall-of-stone",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wall-of-thorns",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-warding-bond",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-water-breathing",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-water-walk",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-web",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-weird",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wind-walk",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wind-wall",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wish",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-witch-bolt",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-word-of-recall",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-wrathful-smite",
+      "fields": [
+        "material_resumo"
+      ]
+    },
+    {
+      "id": "phb-2014-zone-of-truth",
+      "fields": [
+        "material_resumo"
+      ]
+    }
+  ],
+  "removedIds": []
+}

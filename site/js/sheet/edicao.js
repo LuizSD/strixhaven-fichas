@@ -7,7 +7,9 @@ import { validarAtributosEditados, validarAtributosManuais, validarListaUnica } 
 import { aplicarEdicao, consolidarEdicoesAtributos, deltaManualAtributos, registrarAjusteManualAtributos, reverterEdicao } from '../ficha-edicoes.js';
 import { abrirLevelUpCards } from '../levelup-ui.js';
 import { XP_POR_NIVEL, aplicarPvRetroativoPorCon, podeSubirDeNivel } from '../levelup.js';
-import { abrirModal, calcMod, escHtml, fmtMod, processarImagemArquivo, toast } from '../utils.js';
+import { abrirModal, calcMod, escHtml, fmtMod, toast } from '../utils.js';
+import { abrirGerenciadorFotos, renderPreviewFoto } from '../fotos.js';
+import { definirFotoPrincipal } from '../fotos-modelo.js';
 import { rotuloPericia } from '../opcoes-dominio.js';
 import { campoEstaEditado, char, salvar, seloEdicao, talentosCache } from './estado.js';
 import { renderFichaCompleta } from './ficha.js';
@@ -196,7 +198,7 @@ export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
       // porque o jogador o tinha antes.
       const catalogo = new Set([...IDIOMAS_COMUNS, ...IDIOMAS_RAROS]);
       const extrasJaSalvos = propostaIdiomas.filter(i => !catalogo.has(i));
-      const caixaIdioma = nome => `<label class="form-check" style="justify-content:flex-start;margin:0 0 6px"><input type="checkbox" data-edicao-idioma-toggle="${escHtml(nome)}" ${propostaIdiomas.includes(nome) ? 'checked' : ''}> ${escHtml(nome)}</label>`;
+      const caixaIdioma = nome => `<label class="form-check" style="justify-content:flex-start;margin:0 0 6px"><input type="checkbox" data-edicao-idioma-toggle="${escHtml(nome)}" ${propostaIdiomas.includes(nome) ? 'checked' : ''}> ${rotuloLocalizado(idiomaLocalizado(nome, char))}</label>`;
       return navegacao + `
         <div class="info-box info" style="font-size:0.8rem;margin-bottom:10px">Marque ou desmarque livremente -- não há limite de idiomas aqui.</div>
         <div class="section-divider" style="margin-top:0"><span>Idiomas Comuns</span></div>
@@ -227,10 +229,9 @@ export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
       <div class="form-group">
         <label class="form-label">Imagem${seloEdicao('imagem')}</label>
         <div style="display:flex;align-items:center;gap:10px">
-          <div class="char-avatar" id="edicao-imagem-preview" style="width:56px;height:56px;font-size:1.4rem">${imagemPendente ? `<img src="${imagemPendente}" alt="">` : inicialImagem}</div>
-          <button type="button" class="btn btn-sm btn-secondary" id="edicao-imagem-btn">Trocar foto</button>
-          <button type="button" class="btn btn-sm btn-danger" id="edicao-imagem-remover" style="${imagemPendente ? '' : 'display:none'}">&times;</button>
-          <input type="file" accept="image/*" id="edicao-imagem-input" style="display:none">
+          <div id="edicao-imagem-preview" style="width:96px"></div>
+          <button type="button" class="btn btn-sm btn-secondary" id="edicao-imagem-btn">Fotos por URL</button>
+          <button type="button" class="btn btn-sm btn-danger" id="edicao-imagem-remover">Sem principal</button>
         </div>
         ${campoEstaEditado('imagem') ? '<button class="btn btn-sm btn-secondary" data-reverter-campo="imagem">Reverter</button>' : ''}
       </div>
@@ -377,25 +378,12 @@ export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
       const corpo = document.getElementById('edicao-ficha-corpo');
       if (corpo) { corpo.innerHTML = render(); vincular(); }
     });
-    document.getElementById('edicao-imagem-btn')?.addEventListener('click', () => document.getElementById('edicao-imagem-input')?.click());
-    document.getElementById('edicao-imagem-input')?.addEventListener('change', async event => {
-      const arquivo = event.target.files?.[0];
-      event.target.value = '';
-      if (!arquivo) return;
-      const dataUrl = await processarImagemArquivo(arquivo, 300);
-      if (!dataUrl) { toast('Não foi possível processar essa imagem.', 'error'); return; }
-      imagemPendente = dataUrl;
-      const preview = document.getElementById('edicao-imagem-preview');
-      if (preview) preview.innerHTML = `<img src="${dataUrl}" alt="">`;
-      const remover = document.getElementById('edicao-imagem-remover');
-      if (remover) remover.style.display = '';
-    });
+    const atualizarFoto = () => { salvar(); renderPreviewFoto(char, document.getElementById('edicao-imagem-preview')); renderFichaCompleta(); };
+    renderPreviewFoto(char, document.getElementById('edicao-imagem-preview'));
+    document.getElementById('edicao-imagem-btn')?.addEventListener('click', () => abrirGerenciadorFotos(char, atualizarFoto));
     document.getElementById('edicao-imagem-remover')?.addEventListener('click', () => {
-      imagemPendente = '';
-      const preview = document.getElementById('edicao-imagem-preview');
-      if (preview) preview.textContent = (char.nome || char.classe || '?').charAt(0).toUpperCase() || '?';
-      const remover = document.getElementById('edicao-imagem-remover');
-      if (remover) remover.style.display = 'none';
+      if (!confirm('Remover a foto principal do cabeçalho? O álbum será preservado.')) return;
+      definirFotoPrincipal(char,null); atualizarFoto();
     });
     document.querySelector('[data-reverter-atributos]')?.addEventListener('click', () => {
       // Este handler é COMPARTILHADO com a redistribuição do método com
@@ -487,12 +475,9 @@ export function setupEventosEdicao() {
       <div class="form-group">
         <label class="form-label">Imagem</label>
         <div style="display:flex;align-items:center;gap:10px">
-          <div class="char-avatar" id="edit-imagem-preview" style="width:56px;height:56px;font-size:1.4rem">
-            ${char.imagem ? `<img src="${escHtml(char.imagem)}" alt="">` : escHtml((char.nome || char.classe || '?').charAt(0).toUpperCase() || '?')}
-          </div>
-          <button type="button" class="btn btn-sm btn-secondary" id="edit-imagem-btn">Trocar Foto</button>
-          <button type="button" class="btn btn-sm btn-danger" id="edit-imagem-remover" title="Remover imagem" style="${char.imagem ? '' : 'display:none'}">&times;</button>
-          <input type="file" accept="image/*" id="edit-imagem-input" style="display:none">
+          <div id="edit-imagem-preview" style="width:96px"></div>
+          <button type="button" class="btn btn-sm btn-secondary" id="edit-imagem-btn">Fotos por URL</button>
+          <button type="button" class="btn btn-sm btn-danger" id="edit-imagem-remover">Sem principal</button>
         </div>
       </div>
       <div class="form-group">
@@ -536,34 +521,13 @@ export function setupEventosEdicao() {
       </div>
     `, '<button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button><button class="btn btn-primary" id="btn-salvar-edit">Salvar</button>');
 
-    const editImagemInicial = () => (char.nome || char.classe || '?').charAt(0).toUpperCase() || '?';
-
-    document.getElementById('edit-imagem-btn')?.addEventListener('click', () => {
-      document.getElementById('edit-imagem-input')?.click();
-    });
-
-    document.getElementById('edit-imagem-input')?.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      e.target.value = '';
-      if (!file) return;
-      const dataUrl = await processarImagemArquivo(file, 300);
-      if (!dataUrl) {
-        toast('Não foi possível processar essa imagem', 'error');
-        return;
-      }
-      char.imagem = dataUrl;
-      const preview = document.getElementById('edit-imagem-preview');
-      if (preview) preview.innerHTML = `<img src="${dataUrl}" alt="">`;
-      const btnRemover = document.getElementById('edit-imagem-remover');
-      if (btnRemover) btnRemover.style.display = '';
-    });
+    const atualizarFotoAntiga = () => { salvar(); renderPreviewFoto(char, document.getElementById('edit-imagem-preview')); renderFichaCompleta(); };
+    renderPreviewFoto(char, document.getElementById('edit-imagem-preview'));
+    document.getElementById('edit-imagem-btn')?.addEventListener('click', () => abrirGerenciadorFotos(char, atualizarFotoAntiga));
 
     document.getElementById('edit-imagem-remover')?.addEventListener('click', () => {
-      char.imagem = '';
-      const preview = document.getElementById('edit-imagem-preview');
-      if (preview) preview.textContent = editImagemInicial();
-      const btnRemover = document.getElementById('edit-imagem-remover');
-      if (btnRemover) btnRemover.style.display = 'none';
+      if (!confirm('Remover a foto principal do cabeçalho? O álbum será preservado.')) return;
+      definirFotoPrincipal(char,null); atualizarFotoAntiga();
     });
 
     document.getElementById('btn-salvar-edit')?.addEventListener('click', () => {
@@ -663,3 +627,5 @@ async function abrirModalLevelUp() {
     toast('Não foi possível abrir o fluxo de level up. Tente novamente.', 'error');
   }
 }
+import { idiomaLocalizado } from '../idiomas-catalogo.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';

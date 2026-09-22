@@ -7,6 +7,9 @@
 // ============================================================
 import { getIndiceMagias, getMagiasPorCirculo, getListaExpandidaStrixhaven } from '../db.js';
 import { camposExtra, campoExtraSemTeste, lerExtra } from '../strixhaven/extras.js';
+import { nomesMagia, normalizarMagia } from '../magias/modelo.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';
+import { nomeMagiaHtml } from '../magias/apresentacao.js';
 import { VALOR_EM_COBRE, formatarCarteira, podePagar, retirarValor } from '../moedas.js';
 import { abrirModal, escHtml, getBonusTruquesOrdem, getEspacosMagia, getLimitesMagias, magiaMagoEstaNoGrimorio, mdParaHtml, semAcento, toast } from '../utils.js';
 import { montarSeletor } from '../ui-opcoes.js';
@@ -543,7 +546,7 @@ export async function mostrarBuscaMagia() {
         html += `<div class="opcao-grid densa">${filtradasDom.map(m => `
           <div class="opcao-card selecionada magia-dominio" style="opacity:0.7;cursor:default">
             <span class="opcao-check"></span>
-            <div class="opcao-nome" data-detalhe-magia="${escHtml(m.nome)}" data-detalhe-circ="${m.circulo}" style="cursor:pointer"><span class="badge-dominio">&#9733;</span> ${escHtml(m.nome)}</div>
+            <div class="opcao-nome" data-detalhe-magia="${escHtml(m.nome)}" data-detalhe-circ="${m.circulo}" style="cursor:pointer"><span class="badge-dominio">&#9733;</span> ${nomeMagiaHtml(m)}</div>
             <div class="opcao-resumo"><span>${rotuloOrigemMagia(m)}</span></div>
           </div>
         `).join('')}</div>`;
@@ -570,7 +573,7 @@ export async function mostrarBuscaMagia() {
         html += `<div class="opcao-grid densa">${filtradas.map(m => `
           <div class="opcao-card selecionada">
             <span class="opcao-check" ${!somenteConsulta ? `data-remover-check="${escHtml(m.nome)}" style="cursor:pointer"` : ''}></span>
-            <div class="opcao-nome" data-detalhe-magia="${escHtml(m.nome)}" data-detalhe-circ="${m.circulo}" style="cursor:pointer">${escHtml(m.nome)}</div>
+            <div class="opcao-nome" data-detalhe-magia="${escHtml(m.nome)}" data-detalhe-circ="${m.circulo}" style="cursor:pointer">${nomeMagiaHtml(m)}</div>
             <div class="opcao-resumo">
               <span>${m.circulo || 0}º Circulo</span>
             </div>
@@ -616,7 +619,7 @@ export async function mostrarBuscaMagia() {
         html += `<div class="opcao-grid densa">${listaEsp.map(m => `
           <div class="opcao-card selecionada magia-dominio" style="opacity:0.7;cursor:default">
             <span class="opcao-check"></span>
-            <div class="opcao-nome" data-detalhe-magia="${m.nome}" data-detalhe-circ="0" style="cursor:pointer"><span class="badge-dominio">&#9733;</span> ${m.nome}</div>
+            <div class="opcao-nome" data-detalhe-magia="${m.nome}" data-detalhe-circ="0" style="cursor:pointer"><span class="badge-dominio">&#9733;</span> ${nomeMagiaHtml(m)}</div>
             <div class="opcao-resumo"><span>Especie</span></div>
           </div>
         `).join('')}</div>`;
@@ -632,7 +635,7 @@ export async function mostrarBuscaMagia() {
         html += `<div class="opcao-grid densa">${listaConcedidos.map(m => `
           <div class="opcao-card selecionada magia-dominio" style="opacity:0.7;cursor:default">
             <span class="opcao-check"></span>
-            <div class="opcao-nome" data-detalhe-magia="${m.nome}" data-detalhe-circ="0" style="cursor:pointer"><span class="badge-dominio">&#9733;</span> ${m.nome}</div>
+            <div class="opcao-nome" data-detalhe-magia="${m.nome}" data-detalhe-circ="0" style="cursor:pointer"><span class="badge-dominio">&#9733;</span> ${nomeMagiaHtml(m)}</div>
             <div class="opcao-resumo"><span>${rotuloOrigemMagia(m)}</span></div>
           </div>
         `).join('')}</div>`;
@@ -660,7 +663,7 @@ export async function mostrarBuscaMagia() {
           <div class="opcao-card ${sel ? 'selecionada' : ''} ${bloqueado ? 'bloqueada' : ''}"
                ${somenteConsulta ? '' : `data-toggle-truque="${m.nome}"`} style="${bloqueado ? 'opacity:0.35;' : ''}">
             <span class="opcao-check" ${somenteConsulta ? '' : `data-truque-check="${m.nome}" style="cursor:pointer"`}></span>
-            <div class="opcao-nome" data-detalhe-magia="${m.nome}" data-detalhe-circ="0" style="cursor:pointer">${m.nome}</div>
+            <div class="opcao-nome" data-detalhe-magia="${m.nome}" data-detalhe-circ="0" style="cursor:pointer">${nomeMagiaHtml(m)}</div>
             <div class="opcao-resumo">
               <span>${m.escola || ''}</span>
               ${m.especial === 'C' ? '<span>Conc.</span>' : ''}
@@ -731,7 +734,7 @@ export async function mostrarBuscaMagia() {
           <div class="opcao-card ${sel ? 'selecionada' : ''} ${isDominio ? 'magia-dominio' : ''} ${bloqueado ? 'bloqueada' : ''}"
                style="${bloqueado ? 'opacity:0.35;' : ''}${isDominio ? 'opacity:0.7;' : ''}">
             <span class="opcao-check" ${!isDominio && !somenteConsulta ? `data-circ-check="${escHtml(m.nome)}" data-circ-check-val="${circ}" style="cursor:pointer"` : ''}></span>
-            <div class="opcao-nome" data-detalhe-magia="${escHtml(m.nome)}" data-detalhe-circ="${circ}" style="cursor:pointer">${isDominio ? '<span class="badge-dominio">&#9733;</span> ' : ''}${escHtml(m.nome)}</div>
+            <div class="opcao-nome" data-detalhe-magia="${escHtml(m.nome)}" data-detalhe-circ="${circ}" style="cursor:pointer">${isDominio ? '<span class="badge-dominio">&#9733;</span> ' : ''}${nomeMagiaHtml(m, circ)}</div>
             <div class="opcao-resumo">
               <span>${escHtml(m.escola || '')}</span>
               ${m.especial === 'C' ? '<span>Conc.</span>' : ''}
@@ -1143,7 +1146,7 @@ function abrirEscolhaVagaParaLiberar(sup, ehTruque, aoLiberar) {
     <div class="opcao-grid densa">
       ${candidatas.map((m, i) => `
         <div class="opcao-card">
-          <div class="opcao-nome">${escHtml(m.nome)}</div>
+          <div class="opcao-nome">${nomeMagiaHtml(m)}</div>
           <div class="opcao-resumo"><span>${ehTruque ? 'Truque' : `${m.circulo}º Círculo`}</span></div>
           <button class="btn btn-sm btn-secondary" data-liberar-vaga-indice="${i}">Liberar esta vaga</button>
         </div>
@@ -1172,7 +1175,7 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null, opcoesExtra = 
   if (Number.isInteger(indiceEdicao) && !magiaExistente) return;
   let indice = null;
   try {
-    indice = await getIndiceMagias();
+    indice = await getIndiceMagias({ incluirLegado: true });
   } catch (_) {
     // O cache carregado pela ficha ainda permite criar a magia sem bloquear a tela.
   }
@@ -1206,6 +1209,10 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null, opcoesExtra = 
     <div class="form-group">
       <label class="form-label" for="mc-nome">Nome</label>
       <input type="text" class="form-input" id="mc-nome" placeholder="Nome da magia">
+      <div id="mc-sugestoes-globais" class="spell-suggestions" aria-live="polite"></div>
+      <label>Nome em inglês (opcional)<input class="form-input" id="mc-nome-en" value="${escHtml(magiaExistente?.name?.en || '')}"></label>
+      <label>Aliases (separados por vírgula)<input class="form-input" id="mc-aliases" value="${escHtml((magiaExistente?.name?.aliases || []).join(', '))}"></label>
+      <label>Classes relacionadas<input class="form-input" id="mc-classes-relacionadas" value="${escHtml((magiaExistente?.classes || []).join(', '))}"></label>
     </div>
     <div class="row gap-1">
       <div class="col">
@@ -1282,6 +1289,18 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null, opcoesExtra = 
     select.addEventListener('change', atualizar);
     atualizar();
   };
+  document.getElementById('mc-nome').addEventListener('input', () => {
+    const termo = normalizarMagia(document.getElementById('mc-nome').value);
+    const achadas = termo ? magiasIndice.filter(m => nomesMagia(m).some(n => n.includes(termo))).slice(0, 8) : [];
+    const box = document.getElementById('mc-sugestoes-globais');
+    if (!box) return;
+    box.innerHTML = achadas.map((m,i) => `<button type="button" class="sh-opcao" data-mc-global="${i}">${rotuloLocalizado(m)}<span>${m.circulo}º círculo · ${escHtml(m.escola)} · ${escHtml((m.classes || []).join(', '))}</span><span>Usar magia do catálogo</span></button>`).join('');
+    box.querySelectorAll('[data-mc-global]').forEach(b => { b.onclick = async () => {
+      const m = achadas[Number(b.dataset.mcGlobal)];
+      window.fecharModal();
+      (await import('../magias/busca-ui.js')).abrirAdicaoMagia(personagemAlvo, m, concluirExtra);
+    }; });
+  });
   alternarPersonalizado('mc-escola', 'mc-escola-personalizada');
   alternarPersonalizado('mc-tempo', 'mc-tempo-personalizado');
   alternarPersonalizado('mc-duracao', 'mc-duracao-personalizada');
@@ -1380,6 +1399,8 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null, opcoesExtra = 
   document.getElementById('btn-salvar-mc')?.addEventListener('click', () => {
     const nome = document.getElementById('mc-nome')?.value?.trim();
     if (!nome) { toast('Informe um nome', 'error'); return; }
+    if (!Number.isInteger(indiceEdicao) && !magiaExistente?.catalogo_ref && magiasIndice.some(m => nomesMagia(m).includes(normalizarMagia(nome)))
+      && typeof window.confirm === 'function' && !window.confirm('Há uma magia correspondente no catálogo. Confirmar a criação de uma versão personalizada independente?')) return;
 
     const valorSelecionado = (selectId, personalizadoId) => {
       const selecionado = document.getElementById(selectId)?.value || '';
@@ -1430,6 +1451,9 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null, opcoesExtra = 
     const magiaSalva = {
       ...(magiaExistente || {}),
       nome,
+      name: { ...magiaExistente?.name, ptBR: nome, en: document.getElementById('mc-nome-en')?.value?.trim() ?? magiaExistente?.name?.en ?? '', ptBRStatus: 'interface-translation', aliases: document.getElementById('mc-aliases') ? document.getElementById('mc-aliases').value.split(',').map(a => a.trim()).filter(Boolean) : magiaExistente?.name?.aliases || [] },
+      classes: document.getElementById('mc-classes-relacionadas') ? document.getElementById('mc-classes-relacionadas').value.split(',').map(c => c.trim()).filter(Boolean) : magiaExistente?.classes || [],
+      source: magiaExistente?.source || { sourceId: 'local', sourceTitle: 'Magia personalizada', rulesVersion: 'custom' },
       circulo: circuloSalvo,
       escola,
       tempo_conjuracao: tempoConjuracao,
@@ -1449,7 +1473,10 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null, opcoesExtra = 
     };
     if (extra) {
       try {
+        const nomeLocalizado = magiaSalva.name;
         Object.assign(magiaSalva, lerExtra(magiaExistente, personagemAlvo));
+        magiaSalva.name = nomeLocalizado;
+        delete magiaSalva.restricoes_excedidas;
         if (magiaSalva.sempre_preparada === false && !magiaSalva.classe) {
           toast('Para ocupar vaga, escolha a classe da cota; ou mantenha “Não ocupa vaga”.', 'error'); return;
         }
@@ -1811,7 +1838,7 @@ export async function mostrarBuscaGrimorio() {
       // entraria como HTML.
       return `
       <div class="magia-item" style="cursor:pointer${!temPO ? ';opacity:0.5' : ''}" data-grim-nome="${escHtml(m.nome)}" data-grim-circ="${m.circulo}" data-grim-custo="${custo}">
-        <div class="magia-nome">${escHtml(m.nome)}</div>
+        <div class="magia-nome">${nomeMagiaHtml(m)}</div>
         <div class="magia-meta">
           <span>${m.circulo}º Círculo</span>
           <span>${escHtml(m.escola)}</span>
@@ -1960,7 +1987,7 @@ export async function abrirPreenchimentoSlotMagia(tipo = 'magia') {
           <div class="opcao-card ${m.nome === magiaSelecionada ? 'selecionada' : ''}"
                data-preencher-nome="${m.nome}" data-preencher-circ="${m.circulo}" style="cursor:pointer">
             <span class="opcao-check"></span>
-            <div class="opcao-nome" data-preencher-detalhe="${m.nome}" data-preencher-detalhe-circ="${m.circulo}" style="cursor:pointer">${m.nome}</div>
+            <div class="opcao-nome" data-preencher-detalhe="${m.nome}" data-preencher-detalhe-circ="${m.circulo}" style="cursor:pointer">${nomeMagiaHtml(m)}</div>
             <div class="opcao-resumo">
               <span>${m.escola || ''}</span>
               ${m.especial === 'C' ? '<span>Conc.</span>' : ''}
@@ -2192,7 +2219,7 @@ export async function mostrarTrocaMagiaConhecida(callbackPosTroca = null, opcoes
           return `
           <div class="opcao-card ${sel ? 'selecionada' : ''}" data-selecionar-troca="${escHtml(m.nome)}" data-selecionar-circ="${m.circulo}" style="cursor:pointer">
             <span class="opcao-check"></span>
-            <div class="opcao-nome" data-troca-detalhe="${escHtml(m.nome)}" data-troca-detalhe-circ="${m.circulo}" style="cursor:pointer">${escHtml(m.nome)}</div>
+            <div class="opcao-nome" data-troca-detalhe="${escHtml(m.nome)}" data-troca-detalhe-circ="${m.circulo}" style="cursor:pointer">${nomeMagiaHtml(m)}</div>
             <div class="opcao-resumo">
               <span>${escHtml(m.escola || '')}</span>
               ${m.especial === 'C' ? '<span>Conc.</span>' : ''}

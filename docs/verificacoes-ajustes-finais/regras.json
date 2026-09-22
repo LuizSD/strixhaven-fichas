@@ -1,0 +1,14 @@
+{
+  "command": "node node_modules/@playwright/test/cli.js test --config=regras/playwright.config.mjs --reporter=json",
+  "cwd": "testes/e2e",
+  "exitCode": 0,
+  "stats": {
+    "startTime": "2026-09-22T16:12:57.048Z",
+    "duration": 956284.386,
+    "expected": 452,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "failures": []
+}

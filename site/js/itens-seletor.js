@@ -14,7 +14,8 @@
 // desfez, e importar store.js impediria o criador de usar uma preferencia
 // de sessao em vez do localStorage.
 // ============================================================
-import { getArmaduras, getArmas, getEquipamentoAventura, getFerramentas } from './db.js';
+import { getArmaduras, getArmas, getEquipamentoAventura, getFerramentas, getEquipamentoLegado } from './db.js';
+import { correspondeBusca, rotuloLocalizado } from './catalogo-localizado.js';
 import { pagarCusto, parseCusto, podePagarCusto } from './moedas.js';
 import { abrirModal, escHtml, mdParaHtml, semAcento, toast } from './utils.js';
 import {
@@ -70,6 +71,7 @@ export async function carregarDadosEquipSheet() {
 /** Abre o seletor de itens dividido por categorias */
 export async function abrirSeletorItens(ctx) {
   const dados = await carregarDadosEquipSheet();
+  const legado = await getEquipamentoLegado();
 
   // Categorias de itens consumíveis / poções do equipamento de aventura
   const ITENS_CONSUMIVEIS = ['Ácido', 'Água Benta', 'Antitoxina', 'Fogo Alquímico', 'Óleo', 'Veneno Básico'];
@@ -85,7 +87,8 @@ export async function abrirSeletorItens(ctx) {
     { id: 'armaduras', label: 'Armaduras', icon: '&#128737;' },
     { id: 'consumiveis', label: 'Consumiveis', icon: '&#9878;' },
     { id: 'municao', label: 'Municao', icon: '&#10148;' },
-    { id: 'equipamento', label: 'Equipamento', icon: '&#128188;' }
+    { id: 'equipamento', label: 'Equipamento', icon: '&#128188;' },
+    ...[...new Set(legado.map(i => i.category))].map((c, i) => ({ id: `legado-${i}`, label: `${c} · Legado 2014`, icon: '' }))
   ];
 
   const html = `
@@ -225,6 +228,10 @@ export async function abrirSeletorItens(ctx) {
         }));
         break;
     }
+    if (cat.startsWith('legado-')) {
+      const categoria = [...new Set(legado.map(i => i.category))][Number(cat.slice(7))];
+      itens = legado.filter(i => i.category === categoria).map(i => ({ nome: i.nome, dados: i, tipo: 'equipamento', badge: '', badgeCat: '', detalhe: `${escHtml(i.custo || 'Custo desconhecido')} | ${escHtml(i.peso || 'Peso desconhecido')}`, detalhe2: escHtml(i.dano || (i.armor ? `CA ${i.armor.baseAC} · ${i.armor.dexterityRule}` : '')) }));
+    }
 
     // Filtrar por texto: nome + os dois campos de detalhe (dano/propriedades/
     // maestria/custo/peso, conforme a categoria) + o badge de categoria
@@ -241,7 +248,7 @@ export async function abrirSeletorItens(ctx) {
     // dois lados, como no resto do arquivo.
     if (filtroTexto) {
       itens = itens.filter(i =>
-        semAcento(i.nome).includes(filtroTexto)
+        correspondeBusca(i.dados || i, filtroTexto)
         || semAcento(i.detalhe || '').includes(filtroTexto)
         || semAcento(i.detalhe2 || '').includes(filtroTexto)
         || semAcento(i.badgeCat || '').includes(filtroTexto)
@@ -272,7 +279,7 @@ export async function abrirSeletorItens(ctx) {
       : itens.map((it, i) => `
         <div class="inv-item ${it.prof === false ? 'item-sem-prof' : ''}" style="cursor:pointer" data-add-cat="${i}">
           <div style="flex:1">
-            <div class="inv-item-nome">${escHtml(it.nome)} ${it.badge}</div>
+            <div class="inv-item-nome">${rotuloLocalizado(it.dados || it)} ${it.badge}</div>
             <div class="inv-item-detalhe">${it.detalhe}</div>
             ${it.detalhe2 ? `<div class="inv-item-detalhe" style="font-size:0.7rem;opacity:0.7">${it.detalhe2}</div>` : ''}
           </div>
@@ -308,6 +315,12 @@ export async function abrirSeletorItens(ctx) {
         // Construir descrição completa do item
         let descCorpo = '';
         const d = item.dados || {};
+        if (d.source?.rulesVersion === '2014-legacy') {
+          descCorpo += `<p>${escHtml(d.source.sourceTitle)} · p. ${escHtml(d.source.printedPage)}</p>`;
+          for (const [campo, rotulo] of [['weapon', 'Arma'], ['armor', 'Armadura'], ['capacity', 'Capacidade'], ['speed', 'Velocidade'], ['carryingCapacityLb', 'Capacidade de carga (lb)'], ['mechanics', 'Mecânica (controle manual)']]) {
+            if (d[campo] != null) descCorpo += `<p><strong>${rotulo}:</strong> ${escHtml(typeof d[campo] === 'object' ? Object.entries(d[campo]).map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v && typeof v === 'object' ? JSON.stringify(v) : v ?? '—'}`).join(' · ') : d[campo])}</p>`;
+          }
+        }
         if (item.tipo === 'arma') {
           descCorpo += `<div style="font-size:0.85rem;margin-bottom:6px">`;
           if (d.categoria) descCorpo += `<strong>Categoria:</strong> ${d.categoria}<br>`;
@@ -334,7 +347,7 @@ export async function abrirSeletorItens(ctx) {
         let quantidadeSelecionada = 1;
 
         abrirModal(item.nome,
-          descCorpo,
+          `${rotuloLocalizado(d)}${d.source?.rulesVersion === '2014-legacy' ? '<p>Dados legados para consulta. Equipar não substitui automaticamente cálculos 2024; ajustes de CA/dano são manuais.</p>' : ''}${descCorpo}`,
           `<button class="btn btn-secondary" onclick="fecharModal()">Voltar</button>
            <button class="btn btn-primary" id="btn-confirmar-add-item">${labelBtnConfirmar}</button>`
         );
@@ -406,6 +419,7 @@ export async function abrirSeletorItens(ctx) {
           }
 
           const novoItem = {
+            ...(item.dados?.source ? { catalogo_ref: item.dados.id, name: structuredClone(item.dados.name), source: structuredClone(item.dados.source) } : {}),
             nome: item.nome,
             tipo: item.tipo,
             quantidade: quantidadeSelecionada,
@@ -419,11 +433,11 @@ export async function abrirSeletorItens(ctx) {
             descricao: item.tipo === 'arma' ? `${item.dados.dano} - ${item.dados.propriedades || ''}`
               : (item.tipo === 'armadura' || item.tipo === 'escudo') ? `CA: ${item.dados.ca}`
               : '',
-            dados: { ...item.dados }
+            dados: structuredClone(item.dados)
           };
 
           // Verificar se já existe no inventário (agrupar)
-          const existente = ctx.personagem.inventario.find(inv => inv.nome === item.nome && inv.tipo === item.tipo);
+          const existente = ctx.personagem.inventario.find(inv => inv.nome === item.nome && inv.tipo === item.tipo && inv.catalogo_ref === novoItem.catalogo_ref);
           if (existente && ['equipamento', 'generico'].includes(item.tipo)) {
             existente.quantidade = (existente.quantidade || 1) + quantidadeSelecionada;
           } else {

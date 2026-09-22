@@ -1,0 +1,22 @@
+{
+  "changedExistingFiles": [
+    "site/index.html",
+    "site/sw.js",
+    "site/js/db.js",
+    "site/js/app.js",
+    "site/js/store.js",
+    "site/js/creator/passo-magias.js",
+    "site/js/sheet/grimorio.js",
+    "site/js/sheet/alertas-magias.js",
+    "site/js/sheet/magias.js",
+    "site/js/sheet/extras.js",
+    "site/js/strixhaven/modelo.js",
+    "site/js/strixhaven/extras.js",
+    "site/js/pages/sheet.js",
+    "dados/legacy/phb-spells.json",
+    "scripts/auditar_phb.py",
+    "scripts/amostrar_phb.py"
+  ],
+  "outOfScopeChanges": [],
+  "baseline": "hashes capturados no início desta execução (incluem o trabalho anterior)"
+}

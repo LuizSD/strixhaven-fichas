@@ -1,0 +1,203 @@
+# Transcrição mecânica das tabelas PHB 2014 p.149–150. Nome|interface|custo|lb|dano|tipo|propriedades
+# Armas simples corpo a corpo
+Club|Clava|1 sp|2|1d4|bludgeoning|Light
+Dagger|Adaga|2 gp|1|1d4|piercing|Finesse, light, thrown (20/60)
+Greatclub|Clava Grande|2 sp|10|1d8|bludgeoning|Two-handed
+Handaxe|Machadinha|5 gp|2|1d6|slashing|Light, thrown (20/60)
+Javelin|Azagaia|5 sp|2|1d6|piercing|Thrown (30/120)
+Light hammer|Martelo Leve|2 gp|2|1d4|bludgeoning|Light, thrown (20/60)
+Mace|Maça|5 gp|4|1d6|bludgeoning|
+Quarterstaff|Bordão|2 sp|4|1d6|bludgeoning|Versatile (1d8)
+Sickle|Foice|1 gp|2|1d4|slashing|Light
+Spear|Lança|1 gp|3|1d6|piercing|Thrown (20/60), versatile (1d8)
+# Armas simples à distância
+Crossbow, light|Besta Leve|25 gp|5|1d8|piercing|Ammunition (80/320), loading, two-handed
+Dart|Dardo|5 cp|0.25|1d4|piercing|Finesse, thrown (20/60)
+Shortbow|Arco Curto|25 gp|2|1d6|piercing|Ammunition (80/320), two-handed
+Sling|Funda|1 sp||1d4|bludgeoning|Ammunition (30/120)
+# Armas marciais corpo a corpo
+Battleaxe|Machado de Batalha|10 gp|4|1d8|slashing|Versatile (1d10)
+Flail|Mangual|10 gp|2|1d8|bludgeoning|
+Glaive|Glaive|20 gp|6|1d10|slashing|Heavy, reach, two-handed
+Greataxe|Machado Grande|30 gp|7|1d12|slashing|Heavy, two-handed
+Greatsword|Espada Grande|50 gp|6|2d6|slashing|Heavy, two-handed
+Halberd|Alabarda|20 gp|6|1d10|slashing|Heavy, reach, two-handed
+Lance|Lança de Montaria|10 gp|6|1d12|piercing|Reach, special
+Longsword|Espada Longa|15 gp|3|1d8|slashing|Versatile (1d10)
+Maul|Malho|10 gp|10|2d6|bludgeoning|Heavy, two-handed
+Morningstar|Maça Estrela|15 gp|4|1d8|piercing|
+Pike|Pique|5 gp|18|1d10|piercing|Heavy, reach, two-handed
+Rapier|Rapieira|25 gp|2|1d8|piercing|Finesse
+Scimitar|Cimitarra|25 gp|3|1d6|slashing|Finesse, light
+Shortsword|Espada Curta|10 gp|2|1d6|piercing|Finesse, light
+Trident|Tridente|5 gp|4|1d6|piercing|Thrown (20/60), versatile (1d8)
+War pick|Picareta de Guerra|5 gp|2|1d8|piercing|
+Warhammer|Martelo de Guerra|15 gp|2|1d8|bludgeoning|Versatile (1d10)
+Whip|Chicote|2 gp|3|1d4|slashing|Finesse, reach
+# Armas marciais à distância
+Blowgun|Zarabatana|10 gp|1|1|piercing|Ammunition (25/100), loading
+Crossbow, hand|Besta de Mão|75 gp|3|1d6|piercing|Ammunition (30/120), light, loading
+Crossbow, heavy|Besta Pesada|50 gp|18|1d10|piercing|Ammunition (100/400), heavy, loading, two-handed
+Longbow|Arco Longo|50 gp|2|1d8|piercing|Ammunition (150/600), heavy, two-handed
+Net|Rede|1 gp|3|||Special, thrown (5/15)
+# Equipamento de aventura
+Abacus|Ábaco|2 gp|2|||
+Acid (vial)|Ácido (frasco)|25 gp|1|||
+Alchemist's fire (flask)|Fogo Alquímico (frasco)|50 gp|1|||
+Arrows (20)|Flechas (20)|1 gp|1|||
+Blowgun needles (50)|Agulhas de Zarabatana (50)|1 gp|1|||
+Crossbow bolts (20)|Virotes (20)|1 gp|1.5|||
+Sling bullets (20)|Balas de Funda (20)|4 cp|1.5|||
+Antitoxin (vial)|Antitoxina (frasco)|50 gp||||
+Crystal|Cristal (foco arcano)|10 gp|1|||
+Orb|Orbe (foco arcano)|20 gp|3|||
+Rod|Bastão (foco arcano)|10 gp|2|||
+Staff|Cajado (foco arcano)|5 gp|4|||
+Wand|Varinha (foco arcano)|10 gp|1|||
+Backpack|Mochila|2 gp|5|||
+Ball bearings (bag of 1,000)|Esferas de Metal (1.000)|1 gp|2|||
+Barrel|Barril|2 gp|70|||
+Basket|Cesto|4 sp|2|||
+Bedroll|Saco de Dormir|1 gp|7|||
+Bell|Sino|1 gp||||
+Blanket|Cobertor|5 sp|3|||
+Block and tackle|Roldana e Polia|1 gp|5|||
+Book|Livro|25 gp|5|||
+Bottle, glass|Garrafa de Vidro|2 gp|2|||
+Bucket|Balde|5 cp|2|||
+Caltrops (bag of 20)|Estrepes (20)|1 gp|2|||
+Candle|Vela|1 cp||||
+Case, crossbow bolt|Estojo para Virotes|1 gp|1|||
+Case, map or scroll|Estojo para Mapas ou Pergaminhos|1 gp|1|||
+Chain (10 feet)|Corrente (3 m)|5 gp|10|||
+Chalk (1 piece)|Giz (1 pedaço)|1 cp||||
+Chest|Baú|5 gp|25|||
+Climber's kit|Kit de Escalada|25 gp|12|||
+Clothes, common|Roupas Comuns|5 sp|3|||
+Clothes, costume|Fantasia|5 gp|4|||
+Clothes, fine|Roupas Finas|15 gp|6|||
+Clothes, traveler's|Roupas de Viajante|2 gp|4|||
+Component pouch|Bolsa de Componentes|25 gp|2|||
+Crowbar|Pé de Cabra|2 gp|5|||
+Sprig of mistletoe|Ramo de Visco (foco druídico)|1 gp||||
+Totem|Totem (foco druídico)|1 gp||||
+Wooden staff|Cajado de Madeira (foco druídico)|5 gp|4|||
+Yew wand|Varinha de Teixo (foco druídico)|10 gp|1|||
+Fishing tackle|Equipamento de Pesca|1 gp|4|||
+Flask or tankard|Frasco ou Caneca|2 cp|1|||
+Grappling hook|Arpéu|2 gp|4|||
+Hammer|Martelo|1 gp|3|||
+Hammer, sledge|Marreta|2 gp|10|||
+Healer's kit|Kit de Curandeiro|5 gp|3|||
+Amulet|Amuleto (símbolo sagrado)|5 gp|1|||
+Emblem|Emblema (símbolo sagrado)|5 gp||||
+Reliquary|Relicário (símbolo sagrado)|5 gp|2|||
+Holy water (flask)|Água Benta (frasco)|25 gp|1|||
+Hourglass|Ampulheta|25 gp|1|||
+Hunting trap|Armadilha de Caça|5 gp|25|||
+Ink (1 ounce bottle)|Tinta (frasco de 30 ml)|10 gp||||
+Ink pen|Caneta de Tinta|2 cp||||
+Jug or pitcher|Jarra|2 cp|4|||
+Ladder (10-foot)|Escada (3 m)|1 sp|25|||
+Lamp|Lâmpada|5 sp|1|||
+Lantern, bullseye|Lanterna Foca-Facho|10 gp|2|||
+Lantern, hooded|Lanterna Coberta|5 gp|2|||
+Lock|Cadeado|10 gp|1|||
+Magnifying glass|Lupa|100 gp||||
+Manacles|Algemas|2 gp|6|||
+Mess kit|Kit de Refeição|2 sp|1|||
+Mirror, steel|Espelho de Aço|5 gp|0.5|||
+Oil (flask)|Óleo (frasco)|1 sp|1|||
+Paper (one sheet)|Papel (folha)|2 sp||||
+Parchment (one sheet)|Pergaminho (folha)|1 sp||||
+Perfume (vial)|Perfume (frasco)|5 gp||||
+Pick, miner's|Picareta de Mineiro|2 gp|10|||
+Piton|Pitão|5 cp|0.25|||
+Poison, basic (vial)|Veneno Básico (frasco)|100 gp||||
+Pole (10-foot)|Vara (3 m)|5 cp|7|||
+Pot, iron|Panela de Ferro|2 gp|10|||
+Potion of healing|Poção de Cura|50 gp|0.5|||
+Pouch|Algibeira|5 sp|1|||
+Quiver|Aljava|1 gp|1|||
+Ram, portable|Aríete Portátil|4 gp|35|||
+Rations (1 day)|Rações (1 dia)|5 sp|2|||
+Robes|Vestes|1 gp|4|||
+Rope, hempen (50 feet)|Corda de Cânhamo (15 m)|1 gp|10|||
+Rope, silk (50 feet)|Corda de Seda (15 m)|10 gp|5|||
+Sack|Saco|1 cp|0.5|||
+Scale, merchant's|Balança de Mercador|5 gp|3|||
+Sealing wax|Lacre|5 sp||||
+Shovel|Pá|2 gp|5|||
+Signal whistle|Apito|5 cp||||
+Signet ring|Anel de Sinete|5 gp||||
+Soap|Sabão|2 cp||||
+Spellbook|Grimório|50 gp|3|||
+Spikes, iron (10)|Pregos de Ferro (10)|1 gp|5|||
+Spyglass|Luneta|1000 gp|1|||
+Tent, two-person|Tenda para Duas Pessoas|2 gp|20|||
+Tinderbox|Caixa de Fogo|5 sp|1|||
+Torch|Tocha|1 cp|1|||
+Vial|Frasco Pequeno|1 gp||||
+Waterskin|Odre (cheio)|2 sp|5|||
+Whetstone|Pedra de Amolar|1 cp|1|||
+# Ferramentas (154)
+Alchemist's supplies|Suprimentos de Alquimista|50 gp|8|||
+Brewer's supplies|Suprimentos de Cervejeiro|20 gp|9|||
+Calligrapher's supplies|Suprimentos de Calígrafo|10 gp|5|||
+Carpenter's tools|Ferramentas de Carpinteiro|8 gp|6|||
+Cartographer's tools|Ferramentas de Cartógrafo|15 gp|6|||
+Cobbler's tools|Ferramentas de Sapateiro|5 gp|5|||
+Cook's utensils|Utensílios de Cozinheiro|1 gp|8|||
+Glassblower's tools|Ferramentas de Vidreiro|30 gp|5|||
+Jeweler's tools|Ferramentas de Joalheiro|25 gp|2|||
+Leatherworker's tools|Ferramentas de Coureiro|5 gp|5|||
+Mason's tools|Ferramentas de Pedreiro|10 gp|8|||
+Painter's supplies|Suprimentos de Pintor|10 gp|5|||
+Potter's tools|Ferramentas de Oleiro|10 gp|3|||
+Smith's tools|Ferramentas de Ferreiro|20 gp|8|||
+Tinker's tools|Ferramentas de Funileiro|50 gp|10|||
+Weaver's tools|Ferramentas de Tecelão|1 gp|5|||
+Woodcarver's tools|Ferramentas de Entalhador|1 gp|5|||
+Disguise kit|Kit de Disfarce|25 gp|3|||
+Forgery kit|Kit de Falsificação|15 gp|5|||
+Herbalism kit|Kit de Herbalismo|5 gp|3|||
+Navigator's tools|Ferramentas de Navegador|25 gp|2|||
+Poisoner's kit|Kit de Envenenador|50 gp|2|||
+Thieves' tools|Ferramentas de Ladrão|25 gp|1|||
+# Jogos (154)
+Dice set|Conjunto de Dados|1 sp||||
+Dragonchess set|Xadrez de Dragão|1 gp|0.5|||
+Playing card set|Baralho|5 sp||||
+Three-Dragon Ante set|Jogo de Três Dragões|1 gp||||
+# Instrumentos (154)
+Bagpipes|Gaita de Foles|30 gp|6|||
+Drum|Tambor|6 gp|3|||
+Dulcimer|Dulcimer|25 gp|10|||
+Flute|Flauta|2 gp|1|||
+Lute|Alaúde|35 gp|2|||
+Lyre|Lira|30 gp|2|||
+Horn|Trompa|3 gp|2|||
+Pan flute|Flauta de Pã|12 gp|2|||
+Shawm|Charamela|2 gp|1|||
+Viol|Viola|30 gp|1|||
+# Pacotes (151)
+Burglar's Pack|Pacote de Assaltante|16 gp||||
+Diplomat's Pack|Pacote de Diplomata|39 gp||||
+Dungeoneer's Pack|Pacote de Explorador de Masmorras|12 gp||||
+Entertainer's Pack|Pacote de Artista|40 gp||||
+Explorer's Pack|Pacote de Explorador|10 gp||||
+Priest's Pack|Pacote de Sacerdote|19 gp||||
+Scholar's Pack|Pacote de Estudioso|40 gp||||
+# Arreios e veículos (157)
+Bit and bridle|Freio e Rédea|2 gp|1|||
+Carriage|Carruagem|100 gp|600|||
+Cart|Carroça|15 gp|200|||
+Chariot|Biga|250 gp|100|||
+Feed (per day)|Ração Animal (dia)|5 cp|10|||
+Saddle, exotic|Sela Exótica|60 gp|40|||
+Saddle, military|Sela Militar|20 gp|30|||
+Saddle, pack|Sela de Carga|5 gp|15|||
+Saddle, riding|Sela de Montaria|10 gp|25|||
+Saddlebags|Alforjes|4 gp|8|||
+Sled|Trenó|20 gp|300|||
+Wagon|Carroção|35 gp|400|||

@@ -1004,9 +1004,9 @@ function ehEscritaDeEspelho(linha) {
 }
 
 const ESCRITAS_PERMITIDAS = new Set([
-  'site/js/creator/passo-classe.js:197',  // personagem.subclasse = e.target.value
-  'site/js/creator/passo-classe.js:263',  // personagem.subclasse = ''
-  'site/js/creator/passo-classe.js:273',  // personagem.classe = nome
+  'site/js/creator/passo-classe.js:202',  // personagem.subclasse = e.target.value; rótulos bilíngues deslocaram linhas
+  'site/js/creator/passo-classe.js:268',  // personagem.subclasse = ''
+  'site/js/creator/passo-classe.js:278',  // personagem.classe = nome
 
   // levelup.js SAIU INTEIRO desta lista no sub-projeto 5 (Tarefa 3a+3b).
   // Eram ONZE entradas: `personagem.nivel`, `personagem.subclasse`,
@@ -1028,9 +1028,9 @@ const ESCRITAS_PERMITIDAS = new Set([
   // saíram no 3e (gasto e reset passaram por gastarDadosVida()/
   // restaurarTodosDadosVida(), em regras-multiclasse.js, que está em
   // ARQUIVOS_AUTORIZADOS); o da subida de nível saiu no sub-projeto 5.
-  'site/js/creator/wizard.js:444',     // grava dados_vida_total na criação; cota extra deslocou linhas
-  'site/js/store.js:339',  // dados_vida_total: 1  (template de criação; migração acadêmica aditiva deslocou linhas)
-  'site/js/store.js:340',  // dados_vida_usados: 0 (template de criação)
+  'site/js/creator/wizard.js:440',     // grava dados_vida_total na criação; alertas não bloqueantes deslocaram linhas
+  'site/js/store.js:343',  // dados_vida_total: 1  (template de criação; reconciliação de magias deslocou linhas)
+  'site/js/store.js:344',  // dados_vida_usados: 0 (template de criação)
 
   // Escritores legados de espacos_magia que sobram depois da Tarefa 3
   // (sub-projeto 4): a rede de escrita fecha para o GASTO (gastarEspaco/
@@ -1038,7 +1038,7 @@ const ESCRITAS_PERMITIDAS = new Set([
   // sheet/reservas-espacos.js, agora ARQUIVOS_AUTORIZADOS). Sobra só a
   // CRIAÇÃO, que ainda inicializa o campo direto.
   'site/js/creator/wizard.js:94',   // personagem.espacos_magia = {} na criação -- sub-projeto 5
-  'site/js/creator/wizard.js:450',  // idem, grava a tabela da classe inicial -- sub-projeto 5
+  'site/js/creator/wizard.js:446',  // idem, grava a tabela da classe inicial -- sub-projeto 5
   // pages/sheet.js:100-158 era o reconciliador de render -- a Tarefa 4
   // removeu-o (deixando migrarEspacosMagia() no lugar, em
   // sheet/migracoes.js, ARQUIVOS_AUTORIZADOS) e as 9 entradas que
