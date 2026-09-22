@@ -18,6 +18,19 @@ Abra `http://localhost:8000/site/`. Sirva a raiz inteira: `site/` e `dados/` sã
 Publicação: [docs/DEPLOY-STRIXHAVEN.md](docs/DEPLOY-STRIXHAVEN.md).
 Verificação e limitações: [docs/STRIXHAVEN.md](docs/STRIXHAVEN.md).
 
+## Catálogo legado e referências locais
+
+O catálogo de escolha livre inclui magias PHB 2014 bilíngues, equipamentos
+legados e idiomas personalizados. “Mostrar todas as magias · círculos 0–9”
+permite registrar escolhas sem conceder espaços adicionais. Banners de cota e
+nível são não bloqueantes e aceitam justificativa manual.
+
+Auditoria, cobertura e pendências: [docs/PHB-CONTENT-AUDIT.md](docs/PHB-CONTENT-AUDIT.md).
+Preparação das referências e do modelo Bardo - Critical20:
+[reference/README.md](reference/README.md). Tetse permanece desabilitado; os
+motivos verificáveis constam do relatório. Livros privados não entram no
+artefato de `python3 scripts/preparar_dist.py`.
+
 ## Referência da aplicação original
 
 As informações a seguir documentam a base original. Os links abaixo são créditos

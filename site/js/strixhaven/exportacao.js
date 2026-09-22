@@ -30,6 +30,11 @@ export function htmlComplemento(p) {
     }
   }
   blocos.push(`<h2>Notas acadêmicas</h2><p>${escHtml(a.notas || '')}</p>`);
+  if (p.idiomas_personalizados?.length) {
+    blocos.push('<h2>Idiomas personalizados</h2>');
+    for (const i of p.idiomas_personalizados) blocos.push(`<h3>${escHtml(i.nome)}${i.name?.en ? ` (${escHtml(i.name.en)})` : ''}</h3><p>${escHtml(i.escrita)} · ${escHtml(i.origem)} · ${escHtml(i.observacoes)}</p>`);
+  }
+  if (p.justificativa_magias) blocos.push(`<h2>Quantidade fora do limite sugerido · justificativa manual</h2><p>${escHtml(p.justificativa_magias)}</p>`);
   const extras = (p.magias_customizadas || []).filter(m => m.origem === 'extra');
   for (const m of extras) {
     const valores = calcularConjuracaoExtra(m, p);
@@ -64,9 +69,9 @@ function linhasTexto(texto, fonte, largura, tamanho) {
 }
 
 /** PDF próprio AcroForm; páginas de continuação, sem achatar campos ou cortar listas. */
-export async function gerarPdfEditavel(p, PDFLib) {
+export async function gerarPdfEditavel(p, PDFLib, documento = null) {
   const { PDFDocument, StandardFonts, rgb } = PDFLib;
-  const doc = await PDFDocument.create();
+  const doc = documento || await PDFDocument.create();
   const fonte = await doc.embedFont(StandardFonts.Helvetica);
   const titulo = await doc.embedFont(StandardFonts.TimesRomanBold);
   const form = doc.getForm();

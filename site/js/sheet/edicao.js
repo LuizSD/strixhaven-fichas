@@ -196,7 +196,7 @@ export function abrirModalEdicaoFicha(secaoInicial = 'atributos') {
       // porque o jogador o tinha antes.
       const catalogo = new Set([...IDIOMAS_COMUNS, ...IDIOMAS_RAROS]);
       const extrasJaSalvos = propostaIdiomas.filter(i => !catalogo.has(i));
-      const caixaIdioma = nome => `<label class="form-check" style="justify-content:flex-start;margin:0 0 6px"><input type="checkbox" data-edicao-idioma-toggle="${escHtml(nome)}" ${propostaIdiomas.includes(nome) ? 'checked' : ''}> ${escHtml(nome)}</label>`;
+      const caixaIdioma = nome => `<label class="form-check" style="justify-content:flex-start;margin:0 0 6px"><input type="checkbox" data-edicao-idioma-toggle="${escHtml(nome)}" ${propostaIdiomas.includes(nome) ? 'checked' : ''}> ${rotuloLocalizado(idiomaLocalizado(nome, char))}</label>`;
       return navegacao + `
         <div class="info-box info" style="font-size:0.8rem;margin-bottom:10px">Marque ou desmarque livremente -- não há limite de idiomas aqui.</div>
         <div class="section-divider" style="margin-top:0"><span>Idiomas Comuns</span></div>
@@ -663,3 +663,5 @@ async function abrirModalLevelUp() {
     toast('Não foi possível abrir o fluxo de level up. Tente novamente.', 'error');
   }
 }
+import { idiomaLocalizado } from '../idiomas-catalogo.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';

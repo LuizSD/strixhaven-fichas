@@ -85,3 +85,11 @@ body[data-faculdade="witherbloom"] { --accent: #496331; }
   .sh-selo { background: white; color: black; }
   .sh-registro { break-inside: avoid; }
 }
+/* Rótulos bilíngues: duas linhas, sem altura fixa ou truncamento. */
+.localized-label { display: inline-block; min-width: 0; margin-right: .35rem; text-align: inherit; }
+.localized-label .localized-label__primary { display: block; color: var(--text); font-size: 1rem; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+[data-classe][hidden] { display: none; }
+.localized-label .localized-label__secondary { display: block; margin-top: .1rem; color: var(--text-muted); font-size: .8rem; font-weight: 400; line-height: 1.3; overflow-wrap: anywhere; }
+.catalogo-alerta { padding: 1rem; margin: .75rem 0; border: 2px solid currentColor; border-radius: .5rem; color: #fff; background: #72300c; }
+.catalogo-alerta.error { background: #851b28; }
+.catalogo-alerta.info { background: #124c6b; }

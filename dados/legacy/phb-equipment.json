@@ -1,0 +1,5857 @@
+{
+  "schemaVersion": 2,
+  "itens": [
+    {
+      "id": "phb-2014-item-club",
+      "nome": "Clava",
+      "name": {
+        "en": "Club",
+        "ptBR": "Clava",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 1.0,
+        "unit": "sp"
+      },
+      "custo": "1 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d4",
+        "damageType": "bludgeoning",
+        "properties": [
+          "Light"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d4 bludgeoning",
+      "propriedades": "Light"
+    },
+    {
+      "id": "phb-2014-item-dagger",
+      "nome": "Adaga",
+      "name": {
+        "en": "Dagger",
+        "ptBR": "Adaga",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d4",
+        "damageType": "piercing",
+        "properties": [
+          "Finesse",
+          "light",
+          "thrown (20/60)"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d4 piercing",
+      "propriedades": "Finesse, light, thrown (20/60)"
+    },
+    {
+      "id": "phb-2014-item-greatclub",
+      "nome": "Clava Grande",
+      "name": {
+        "en": "Greatclub",
+        "ptBR": "Clava Grande",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 2.0,
+        "unit": "sp"
+      },
+      "custo": "2 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d8",
+        "damageType": "bludgeoning",
+        "properties": [
+          "Two-handed"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d8 bludgeoning",
+      "propriedades": "Two-handed"
+    },
+    {
+      "id": "phb-2014-item-handaxe",
+      "nome": "Machadinha",
+      "name": {
+        "en": "Handaxe",
+        "ptBR": "Machadinha",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d6",
+        "damageType": "slashing",
+        "properties": [
+          "Light",
+          "thrown (20/60)"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d6 slashing",
+      "propriedades": "Light, thrown (20/60)"
+    },
+    {
+      "id": "phb-2014-item-javelin",
+      "nome": "Azagaia",
+      "name": {
+        "en": "Javelin",
+        "ptBR": "Azagaia",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d6",
+        "damageType": "piercing",
+        "properties": [
+          "Thrown (30/120)"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d6 piercing",
+      "propriedades": "Thrown (30/120)"
+    },
+    {
+      "id": "phb-2014-item-light-hammer",
+      "nome": "Martelo Leve",
+      "name": {
+        "en": "Light hammer",
+        "ptBR": "Martelo Leve",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d4",
+        "damageType": "bludgeoning",
+        "properties": [
+          "Light",
+          "thrown (20/60)"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d4 bludgeoning",
+      "propriedades": "Light, thrown (20/60)"
+    },
+    {
+      "id": "phb-2014-item-mace",
+      "nome": "Maça",
+      "name": {
+        "en": "Mace",
+        "ptBR": "Maça",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d6",
+        "damageType": "bludgeoning",
+        "properties": []
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d6 bludgeoning",
+      "propriedades": ""
+    },
+    {
+      "id": "phb-2014-item-quarterstaff",
+      "nome": "Bordão",
+      "name": {
+        "en": "Quarterstaff",
+        "ptBR": "Bordão",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 2.0,
+        "unit": "sp"
+      },
+      "custo": "2 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d6",
+        "damageType": "bludgeoning",
+        "properties": [
+          "Versatile (1d8)"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d6 bludgeoning",
+      "propriedades": "Versatile (1d8)"
+    },
+    {
+      "id": "phb-2014-item-sickle",
+      "nome": "Foice",
+      "name": {
+        "en": "Sickle",
+        "ptBR": "Foice",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d4",
+        "damageType": "slashing",
+        "properties": [
+          "Light"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d4 slashing",
+      "propriedades": "Light"
+    },
+    {
+      "id": "phb-2014-item-spear",
+      "nome": "Lança",
+      "name": {
+        "en": "Spear",
+        "ptBR": "Lança",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples corpo a corpo",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "melee",
+        "damage": "1d6",
+        "damageType": "piercing",
+        "properties": [
+          "Thrown (20/60)",
+          "versatile (1d8)"
+        ]
+      },
+      "categoria": "Armas simples corpo a corpo",
+      "dano": "1d6 piercing",
+      "propriedades": "Thrown (20/60), versatile (1d8)"
+    },
+    {
+      "id": "phb-2014-item-crossbow-light",
+      "nome": "Besta Leve",
+      "name": {
+        "en": "Crossbow, light",
+        "ptBR": "Besta Leve",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples à distância",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "ranged",
+        "damage": "1d8",
+        "damageType": "piercing",
+        "properties": [
+          "Ammunition (80/320)",
+          "loading",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas simples à distância",
+      "dano": "1d8 piercing",
+      "propriedades": "Ammunition (80/320), loading, two-handed"
+    },
+    {
+      "id": "phb-2014-item-dart",
+      "nome": "Dardo",
+      "name": {
+        "en": "Dart",
+        "ptBR": "Dardo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples à distância",
+      "cost": {
+        "amount": 5.0,
+        "unit": "cp"
+      },
+      "custo": "5 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 0.25,
+      "peso": "0.113 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "ranged",
+        "damage": "1d4",
+        "damageType": "piercing",
+        "properties": [
+          "Finesse",
+          "thrown (20/60)"
+        ]
+      },
+      "categoria": "Armas simples à distância",
+      "dano": "1d4 piercing",
+      "propriedades": "Finesse, thrown (20/60)"
+    },
+    {
+      "id": "phb-2014-item-shortbow",
+      "nome": "Arco Curto",
+      "name": {
+        "en": "Shortbow",
+        "ptBR": "Arco Curto",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples à distância",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "simple",
+        "usage": "ranged",
+        "damage": "1d6",
+        "damageType": "piercing",
+        "properties": [
+          "Ammunition (80/320)",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas simples à distância",
+      "dano": "1d6 piercing",
+      "propriedades": "Ammunition (80/320), two-handed"
+    },
+    {
+      "id": "phb-2014-item-sling",
+      "nome": "Funda",
+      "name": {
+        "en": "Sling",
+        "ptBR": "Funda",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas simples à distância",
+      "cost": {
+        "amount": 1.0,
+        "unit": "sp"
+      },
+      "custo": "1 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weapon": {
+        "category": "simple",
+        "usage": "ranged",
+        "damage": "1d4",
+        "damageType": "bludgeoning",
+        "properties": [
+          "Ammunition (30/120)"
+        ]
+      },
+      "categoria": "Armas simples à distância",
+      "dano": "1d4 bludgeoning",
+      "propriedades": "Ammunition (30/120)"
+    },
+    {
+      "id": "phb-2014-item-battleaxe",
+      "nome": "Machado de Batalha",
+      "name": {
+        "en": "Battleaxe",
+        "ptBR": "Machado de Batalha",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d8",
+        "damageType": "slashing",
+        "properties": [
+          "Versatile (1d10)"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d8 slashing",
+      "propriedades": "Versatile (1d10)"
+    },
+    {
+      "id": "phb-2014-item-flail",
+      "nome": "Mangual",
+      "name": {
+        "en": "Flail",
+        "ptBR": "Mangual",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d8",
+        "damageType": "bludgeoning",
+        "properties": []
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d8 bludgeoning",
+      "propriedades": ""
+    },
+    {
+      "id": "phb-2014-item-glaive",
+      "nome": "Glaive",
+      "name": {
+        "en": "Glaive",
+        "ptBR": "Glaive",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 20.0,
+        "unit": "gp"
+      },
+      "custo": "20 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d10",
+        "damageType": "slashing",
+        "properties": [
+          "Heavy",
+          "reach",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d10 slashing",
+      "propriedades": "Heavy, reach, two-handed"
+    },
+    {
+      "id": "phb-2014-item-greataxe",
+      "nome": "Machado Grande",
+      "name": {
+        "en": "Greataxe",
+        "ptBR": "Machado Grande",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 30.0,
+        "unit": "gp"
+      },
+      "custo": "30 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 7.0,
+      "peso": "3.175 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d12",
+        "damageType": "slashing",
+        "properties": [
+          "Heavy",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d12 slashing",
+      "propriedades": "Heavy, two-handed"
+    },
+    {
+      "id": "phb-2014-item-greatsword",
+      "nome": "Espada Grande",
+      "name": {
+        "en": "Greatsword",
+        "ptBR": "Espada Grande",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "2d6",
+        "damageType": "slashing",
+        "properties": [
+          "Heavy",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "2d6 slashing",
+      "propriedades": "Heavy, two-handed"
+    },
+    {
+      "id": "phb-2014-item-halberd",
+      "nome": "Alabarda",
+      "name": {
+        "en": "Halberd",
+        "ptBR": "Alabarda",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 20.0,
+        "unit": "gp"
+      },
+      "custo": "20 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d10",
+        "damageType": "slashing",
+        "properties": [
+          "Heavy",
+          "reach",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d10 slashing",
+      "propriedades": "Heavy, reach, two-handed"
+    },
+    {
+      "id": "phb-2014-item-lance",
+      "nome": "Lança de Montaria",
+      "name": {
+        "en": "Lance",
+        "ptBR": "Lança de Montaria",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d12",
+        "damageType": "piercing",
+        "properties": [
+          "Reach",
+          "special"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d12 piercing",
+      "propriedades": "Reach, special"
+    },
+    {
+      "id": "phb-2014-item-longsword",
+      "nome": "Espada Longa",
+      "name": {
+        "en": "Longsword",
+        "ptBR": "Espada Longa",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 15.0,
+        "unit": "gp"
+      },
+      "custo": "15 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d8",
+        "damageType": "slashing",
+        "properties": [
+          "Versatile (1d10)"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d8 slashing",
+      "propriedades": "Versatile (1d10)"
+    },
+    {
+      "id": "phb-2014-item-maul",
+      "nome": "Malho",
+      "name": {
+        "en": "Maul",
+        "ptBR": "Malho",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "2d6",
+        "damageType": "bludgeoning",
+        "properties": [
+          "Heavy",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "2d6 bludgeoning",
+      "propriedades": "Heavy, two-handed"
+    },
+    {
+      "id": "phb-2014-item-morningstar",
+      "nome": "Maça Estrela",
+      "name": {
+        "en": "Morningstar",
+        "ptBR": "Maça Estrela",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 15.0,
+        "unit": "gp"
+      },
+      "custo": "15 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d8",
+        "damageType": "piercing",
+        "properties": []
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d8 piercing",
+      "propriedades": ""
+    },
+    {
+      "id": "phb-2014-item-pike",
+      "nome": "Pique",
+      "name": {
+        "en": "Pike",
+        "ptBR": "Pique",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 18.0,
+      "peso": "8.165 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d10",
+        "damageType": "piercing",
+        "properties": [
+          "Heavy",
+          "reach",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d10 piercing",
+      "propriedades": "Heavy, reach, two-handed"
+    },
+    {
+      "id": "phb-2014-item-rapier",
+      "nome": "Rapieira",
+      "name": {
+        "en": "Rapier",
+        "ptBR": "Rapieira",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d8",
+        "damageType": "piercing",
+        "properties": [
+          "Finesse"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d8 piercing",
+      "propriedades": "Finesse"
+    },
+    {
+      "id": "phb-2014-item-scimitar",
+      "nome": "Cimitarra",
+      "name": {
+        "en": "Scimitar",
+        "ptBR": "Cimitarra",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d6",
+        "damageType": "slashing",
+        "properties": [
+          "Finesse",
+          "light"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d6 slashing",
+      "propriedades": "Finesse, light"
+    },
+    {
+      "id": "phb-2014-item-shortsword",
+      "nome": "Espada Curta",
+      "name": {
+        "en": "Shortsword",
+        "ptBR": "Espada Curta",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d6",
+        "damageType": "piercing",
+        "properties": [
+          "Finesse",
+          "light"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d6 piercing",
+      "propriedades": "Finesse, light"
+    },
+    {
+      "id": "phb-2014-item-trident",
+      "nome": "Tridente",
+      "name": {
+        "en": "Trident",
+        "ptBR": "Tridente",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d6",
+        "damageType": "piercing",
+        "properties": [
+          "Thrown (20/60)",
+          "versatile (1d8)"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d6 piercing",
+      "propriedades": "Thrown (20/60), versatile (1d8)"
+    },
+    {
+      "id": "phb-2014-item-war-pick",
+      "nome": "Picareta de Guerra",
+      "name": {
+        "en": "War pick",
+        "ptBR": "Picareta de Guerra",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d8",
+        "damageType": "piercing",
+        "properties": []
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d8 piercing",
+      "propriedades": ""
+    },
+    {
+      "id": "phb-2014-item-warhammer",
+      "nome": "Martelo de Guerra",
+      "name": {
+        "en": "Warhammer",
+        "ptBR": "Martelo de Guerra",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 15.0,
+        "unit": "gp"
+      },
+      "custo": "15 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d8",
+        "damageType": "bludgeoning",
+        "properties": [
+          "Versatile (1d10)"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d8 bludgeoning",
+      "propriedades": "Versatile (1d10)"
+    },
+    {
+      "id": "phb-2014-item-whip",
+      "nome": "Chicote",
+      "name": {
+        "en": "Whip",
+        "ptBR": "Chicote",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais corpo a corpo",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "melee",
+        "damage": "1d4",
+        "damageType": "slashing",
+        "properties": [
+          "Finesse",
+          "reach"
+        ]
+      },
+      "categoria": "Armas marciais corpo a corpo",
+      "dano": "1d4 slashing",
+      "propriedades": "Finesse, reach"
+    },
+    {
+      "id": "phb-2014-item-blowgun",
+      "nome": "Zarabatana",
+      "name": {
+        "en": "Blowgun",
+        "ptBR": "Zarabatana",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais à distância",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "ranged",
+        "damage": "1",
+        "damageType": "piercing",
+        "properties": [
+          "Ammunition (25/100)",
+          "loading"
+        ]
+      },
+      "categoria": "Armas marciais à distância",
+      "dano": "1 piercing",
+      "propriedades": "Ammunition (25/100), loading"
+    },
+    {
+      "id": "phb-2014-item-crossbow-hand",
+      "nome": "Besta de Mão",
+      "name": {
+        "en": "Crossbow, hand",
+        "ptBR": "Besta de Mão",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais à distância",
+      "cost": {
+        "amount": 75.0,
+        "unit": "gp"
+      },
+      "custo": "75 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "ranged",
+        "damage": "1d6",
+        "damageType": "piercing",
+        "properties": [
+          "Ammunition (30/120)",
+          "light",
+          "loading"
+        ]
+      },
+      "categoria": "Armas marciais à distância",
+      "dano": "1d6 piercing",
+      "propriedades": "Ammunition (30/120), light, loading"
+    },
+    {
+      "id": "phb-2014-item-crossbow-heavy",
+      "nome": "Besta Pesada",
+      "name": {
+        "en": "Crossbow, heavy",
+        "ptBR": "Besta Pesada",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais à distância",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 18.0,
+      "peso": "8.165 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "ranged",
+        "damage": "1d10",
+        "damageType": "piercing",
+        "properties": [
+          "Ammunition (100/400)",
+          "heavy",
+          "loading",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas marciais à distância",
+      "dano": "1d10 piercing",
+      "propriedades": "Ammunition (100/400), heavy, loading, two-handed"
+    },
+    {
+      "id": "phb-2014-item-longbow",
+      "nome": "Arco Longo",
+      "name": {
+        "en": "Longbow",
+        "ptBR": "Arco Longo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais à distância",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "ranged",
+        "damage": "1d8",
+        "damageType": "piercing",
+        "properties": [
+          "Ammunition (150/600)",
+          "heavy",
+          "two-handed"
+        ]
+      },
+      "categoria": "Armas marciais à distância",
+      "dano": "1d8 piercing",
+      "propriedades": "Ammunition (150/600), heavy, two-handed"
+    },
+    {
+      "id": "phb-2014-item-net",
+      "nome": "Rede",
+      "name": {
+        "en": "Net",
+        "ptBR": "Rede",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armas marciais à distância",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 149,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg",
+      "weapon": {
+        "category": "martial",
+        "usage": "ranged",
+        "damage": null,
+        "damageType": null,
+        "properties": [
+          "Special",
+          "thrown (5/15)"
+        ]
+      },
+      "categoria": "Armas marciais à distância",
+      "dano": "",
+      "propriedades": "Special, thrown (5/15)"
+    },
+    {
+      "id": "phb-2014-item-abacus",
+      "nome": "Ábaco",
+      "name": {
+        "en": "Abacus",
+        "ptBR": "Ábaco",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-acid-vial",
+      "nome": "Ácido (frasco)",
+      "name": {
+        "en": "Acid (vial)",
+        "ptBR": "Ácido (frasco)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-alchemist-s-fire-flask",
+      "nome": "Fogo Alquímico (frasco)",
+      "name": {
+        "en": "Alchemist's fire (flask)",
+        "ptBR": "Fogo Alquímico (frasco)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-arrows-20",
+      "nome": "Flechas (20)",
+      "name": {
+        "en": "Arrows (20)",
+        "ptBR": "Flechas (20)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-blowgun-needles-50",
+      "nome": "Agulhas de Zarabatana (50)",
+      "name": {
+        "en": "Blowgun needles (50)",
+        "ptBR": "Agulhas de Zarabatana (50)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-crossbow-bolts-20",
+      "nome": "Virotes (20)",
+      "name": {
+        "en": "Crossbow bolts (20)",
+        "ptBR": "Virotes (20)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.5,
+      "peso": "0.680 kg"
+    },
+    {
+      "id": "phb-2014-item-sling-bullets-20",
+      "nome": "Balas de Funda (20)",
+      "name": {
+        "en": "Sling bullets (20)",
+        "ptBR": "Balas de Funda (20)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 4.0,
+        "unit": "cp"
+      },
+      "custo": "4 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.5,
+      "peso": "0.680 kg"
+    },
+    {
+      "id": "phb-2014-item-antitoxin-vial",
+      "nome": "Antitoxina (frasco)",
+      "name": {
+        "en": "Antitoxin (vial)",
+        "ptBR": "Antitoxina (frasco)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-crystal",
+      "nome": "Cristal (foco arcano)",
+      "name": {
+        "en": "Crystal",
+        "ptBR": "Cristal (foco arcano)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-orb",
+      "nome": "Orbe (foco arcano)",
+      "name": {
+        "en": "Orb",
+        "ptBR": "Orbe (foco arcano)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 20.0,
+        "unit": "gp"
+      },
+      "custo": "20 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-rod",
+      "nome": "Bastão (foco arcano)",
+      "name": {
+        "en": "Rod",
+        "ptBR": "Bastão (foco arcano)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-staff",
+      "nome": "Cajado (foco arcano)",
+      "name": {
+        "en": "Staff",
+        "ptBR": "Cajado (foco arcano)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg"
+    },
+    {
+      "id": "phb-2014-item-wand",
+      "nome": "Varinha (foco arcano)",
+      "name": {
+        "en": "Wand",
+        "ptBR": "Varinha (foco arcano)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-backpack",
+      "nome": "Mochila",
+      "name": {
+        "en": "Backpack",
+        "ptBR": "Mochila",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg",
+      "capacity": {
+        "cubicFeet": 1,
+        "weightLb": 30,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-ball-bearings-bag-of-1-000",
+      "nome": "Esferas de Metal (1.000)",
+      "name": {
+        "en": "Ball bearings (bag of 1,000)",
+        "ptBR": "Esferas de Metal (1.000)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-barrel",
+      "nome": "Barril",
+      "name": {
+        "en": "Barrel",
+        "ptBR": "Barril",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 70.0,
+      "peso": "31.751 kg",
+      "capacity": {
+        "gallons": 40,
+        "cubicFeet": 4,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-basket",
+      "nome": "Cesto",
+      "name": {
+        "en": "Basket",
+        "ptBR": "Cesto",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 4.0,
+        "unit": "sp"
+      },
+      "custo": "4 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "capacity": {
+        "cubicFeet": 2,
+        "weightLb": 40,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-bedroll",
+      "nome": "Saco de Dormir",
+      "name": {
+        "en": "Bedroll",
+        "ptBR": "Saco de Dormir",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 7.0,
+      "peso": "3.175 kg"
+    },
+    {
+      "id": "phb-2014-item-bell",
+      "nome": "Sino",
+      "name": {
+        "en": "Bell",
+        "ptBR": "Sino",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-blanket",
+      "nome": "Cobertor",
+      "name": {
+        "en": "Blanket",
+        "ptBR": "Cobertor",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-block-and-tackle",
+      "nome": "Roldana e Polia",
+      "name": {
+        "en": "Block and tackle",
+        "ptBR": "Roldana e Polia",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-book",
+      "nome": "Livro",
+      "name": {
+        "en": "Book",
+        "ptBR": "Livro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-bottle-glass",
+      "nome": "Garrafa de Vidro",
+      "name": {
+        "en": "Bottle, glass",
+        "ptBR": "Garrafa de Vidro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "capacity": {
+        "pints": 1.5,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-bucket",
+      "nome": "Balde",
+      "name": {
+        "en": "Bucket",
+        "ptBR": "Balde",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "cp"
+      },
+      "custo": "5 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg",
+      "capacity": {
+        "gallons": 3,
+        "cubicFeet": 0.5,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-caltrops-bag-of-20",
+      "nome": "Estrepes (20)",
+      "name": {
+        "en": "Caltrops (bag of 20)",
+        "ptBR": "Estrepes (20)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-candle",
+      "nome": "Vela",
+      "name": {
+        "en": "Candle",
+        "ptBR": "Vela",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "cp"
+      },
+      "custo": "1 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-case-crossbow-bolt",
+      "nome": "Estojo para Virotes",
+      "name": {
+        "en": "Case, crossbow bolt",
+        "ptBR": "Estojo para Virotes",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-case-map-or-scroll",
+      "nome": "Estojo para Mapas ou Pergaminhos",
+      "name": {
+        "en": "Case, map or scroll",
+        "ptBR": "Estojo para Mapas ou Pergaminhos",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-chain-10-feet",
+      "nome": "Corrente (3 m)",
+      "name": {
+        "en": "Chain (10 feet)",
+        "ptBR": "Corrente (3 m)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg"
+    },
+    {
+      "id": "phb-2014-item-chalk-1-piece",
+      "nome": "Giz (1 pedaço)",
+      "name": {
+        "en": "Chalk (1 piece)",
+        "ptBR": "Giz (1 pedaço)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "cp"
+      },
+      "custo": "1 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-chest",
+      "nome": "Baú",
+      "name": {
+        "en": "Chest",
+        "ptBR": "Baú",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 25.0,
+      "peso": "11.340 kg",
+      "capacity": {
+        "cubicFeet": 12,
+        "weightLb": 300,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-climber-s-kit",
+      "nome": "Kit de Escalada",
+      "name": {
+        "en": "Climber's kit",
+        "ptBR": "Kit de Escalada",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 12.0,
+      "peso": "5.443 kg"
+    },
+    {
+      "id": "phb-2014-item-clothes-common",
+      "nome": "Roupas Comuns",
+      "name": {
+        "en": "Clothes, common",
+        "ptBR": "Roupas Comuns",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-clothes-costume",
+      "nome": "Fantasia",
+      "name": {
+        "en": "Clothes, costume",
+        "ptBR": "Fantasia",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg"
+    },
+    {
+      "id": "phb-2014-item-clothes-fine",
+      "nome": "Roupas Finas",
+      "name": {
+        "en": "Clothes, fine",
+        "ptBR": "Roupas Finas",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 15.0,
+        "unit": "gp"
+      },
+      "custo": "15 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg"
+    },
+    {
+      "id": "phb-2014-item-clothes-traveler-s",
+      "nome": "Roupas de Viajante",
+      "name": {
+        "en": "Clothes, traveler's",
+        "ptBR": "Roupas de Viajante",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg"
+    },
+    {
+      "id": "phb-2014-item-component-pouch",
+      "nome": "Bolsa de Componentes",
+      "name": {
+        "en": "Component pouch",
+        "ptBR": "Bolsa de Componentes",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-crowbar",
+      "nome": "Pé de Cabra",
+      "name": {
+        "en": "Crowbar",
+        "ptBR": "Pé de Cabra",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-sprig-of-mistletoe",
+      "nome": "Ramo de Visco (foco druídico)",
+      "name": {
+        "en": "Sprig of mistletoe",
+        "ptBR": "Ramo de Visco (foco druídico)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-totem",
+      "nome": "Totem (foco druídico)",
+      "name": {
+        "en": "Totem",
+        "ptBR": "Totem (foco druídico)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-wooden-staff",
+      "nome": "Cajado de Madeira (foco druídico)",
+      "name": {
+        "en": "Wooden staff",
+        "ptBR": "Cajado de Madeira (foco druídico)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg"
+    },
+    {
+      "id": "phb-2014-item-yew-wand",
+      "nome": "Varinha de Teixo (foco druídico)",
+      "name": {
+        "en": "Yew wand",
+        "ptBR": "Varinha de Teixo (foco druídico)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-fishing-tackle",
+      "nome": "Equipamento de Pesca",
+      "name": {
+        "en": "Fishing tackle",
+        "ptBR": "Equipamento de Pesca",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg"
+    },
+    {
+      "id": "phb-2014-item-flask-or-tankard",
+      "nome": "Frasco ou Caneca",
+      "name": {
+        "en": "Flask or tankard",
+        "ptBR": "Frasco ou Caneca",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "cp"
+      },
+      "custo": "2 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg",
+      "capacity": {
+        "pints": 1,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-grappling-hook",
+      "nome": "Arpéu",
+      "name": {
+        "en": "Grappling hook",
+        "ptBR": "Arpéu",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg"
+    },
+    {
+      "id": "phb-2014-item-hammer",
+      "nome": "Martelo",
+      "name": {
+        "en": "Hammer",
+        "ptBR": "Martelo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-hammer-sledge",
+      "nome": "Marreta",
+      "name": {
+        "en": "Hammer, sledge",
+        "ptBR": "Marreta",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg"
+    },
+    {
+      "id": "phb-2014-item-healer-s-kit",
+      "nome": "Kit de Curandeiro",
+      "name": {
+        "en": "Healer's kit",
+        "ptBR": "Kit de Curandeiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-amulet",
+      "nome": "Amuleto (símbolo sagrado)",
+      "name": {
+        "en": "Amulet",
+        "ptBR": "Amuleto (símbolo sagrado)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-emblem",
+      "nome": "Emblema (símbolo sagrado)",
+      "name": {
+        "en": "Emblem",
+        "ptBR": "Emblema (símbolo sagrado)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-reliquary",
+      "nome": "Relicário (símbolo sagrado)",
+      "name": {
+        "en": "Reliquary",
+        "ptBR": "Relicário (símbolo sagrado)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-holy-water-flask",
+      "nome": "Água Benta (frasco)",
+      "name": {
+        "en": "Holy water (flask)",
+        "ptBR": "Água Benta (frasco)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-hourglass",
+      "nome": "Ampulheta",
+      "name": {
+        "en": "Hourglass",
+        "ptBR": "Ampulheta",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-hunting-trap",
+      "nome": "Armadilha de Caça",
+      "name": {
+        "en": "Hunting trap",
+        "ptBR": "Armadilha de Caça",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 25.0,
+      "peso": "11.340 kg"
+    },
+    {
+      "id": "phb-2014-item-ink-1-ounce-bottle",
+      "nome": "Tinta (frasco de 30 ml)",
+      "name": {
+        "en": "Ink (1 ounce bottle)",
+        "ptBR": "Tinta (frasco de 30 ml)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-ink-pen",
+      "nome": "Caneta de Tinta",
+      "name": {
+        "en": "Ink pen",
+        "ptBR": "Caneta de Tinta",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "cp"
+      },
+      "custo": "2 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-jug-or-pitcher",
+      "nome": "Jarra",
+      "name": {
+        "en": "Jug or pitcher",
+        "ptBR": "Jarra",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "cp"
+      },
+      "custo": "2 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg",
+      "capacity": {
+        "gallons": 1,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-ladder-10-foot",
+      "nome": "Escada (3 m)",
+      "name": {
+        "en": "Ladder (10-foot)",
+        "ptBR": "Escada (3 m)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "sp"
+      },
+      "custo": "1 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 25.0,
+      "peso": "11.340 kg"
+    },
+    {
+      "id": "phb-2014-item-lamp",
+      "nome": "Lâmpada",
+      "name": {
+        "en": "Lamp",
+        "ptBR": "Lâmpada",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-lantern-bullseye",
+      "nome": "Lanterna Foca-Facho",
+      "name": {
+        "en": "Lantern, bullseye",
+        "ptBR": "Lanterna Foca-Facho",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-lantern-hooded",
+      "nome": "Lanterna Coberta",
+      "name": {
+        "en": "Lantern, hooded",
+        "ptBR": "Lanterna Coberta",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-lock",
+      "nome": "Cadeado",
+      "name": {
+        "en": "Lock",
+        "ptBR": "Cadeado",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-magnifying-glass",
+      "nome": "Lupa",
+      "name": {
+        "en": "Magnifying glass",
+        "ptBR": "Lupa",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 100.0,
+        "unit": "gp"
+      },
+      "custo": "100 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-manacles",
+      "nome": "Algemas",
+      "name": {
+        "en": "Manacles",
+        "ptBR": "Algemas",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg"
+    },
+    {
+      "id": "phb-2014-item-mess-kit",
+      "nome": "Kit de Refeição",
+      "name": {
+        "en": "Mess kit",
+        "ptBR": "Kit de Refeição",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "sp"
+      },
+      "custo": "2 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-mirror-steel",
+      "nome": "Espelho de Aço",
+      "name": {
+        "en": "Mirror, steel",
+        "ptBR": "Espelho de Aço",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 0.5,
+      "peso": "0.227 kg"
+    },
+    {
+      "id": "phb-2014-item-oil-flask",
+      "nome": "Óleo (frasco)",
+      "name": {
+        "en": "Oil (flask)",
+        "ptBR": "Óleo (frasco)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "sp"
+      },
+      "custo": "1 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-paper-one-sheet",
+      "nome": "Papel (folha)",
+      "name": {
+        "en": "Paper (one sheet)",
+        "ptBR": "Papel (folha)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "sp"
+      },
+      "custo": "2 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-parchment-one-sheet",
+      "nome": "Pergaminho (folha)",
+      "name": {
+        "en": "Parchment (one sheet)",
+        "ptBR": "Pergaminho (folha)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "sp"
+      },
+      "custo": "1 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-perfume-vial",
+      "nome": "Perfume (frasco)",
+      "name": {
+        "en": "Perfume (vial)",
+        "ptBR": "Perfume (frasco)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-pick-miner-s",
+      "nome": "Picareta de Mineiro",
+      "name": {
+        "en": "Pick, miner's",
+        "ptBR": "Picareta de Mineiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg"
+    },
+    {
+      "id": "phb-2014-item-piton",
+      "nome": "Pitão",
+      "name": {
+        "en": "Piton",
+        "ptBR": "Pitão",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "cp"
+      },
+      "custo": "5 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 0.25,
+      "peso": "0.113 kg"
+    },
+    {
+      "id": "phb-2014-item-poison-basic-vial",
+      "nome": "Veneno Básico (frasco)",
+      "name": {
+        "en": "Poison, basic (vial)",
+        "ptBR": "Veneno Básico (frasco)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 100.0,
+        "unit": "gp"
+      },
+      "custo": "100 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-pole-10-foot",
+      "nome": "Vara (3 m)",
+      "name": {
+        "en": "Pole (10-foot)",
+        "ptBR": "Vara (3 m)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "cp"
+      },
+      "custo": "5 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 7.0,
+      "peso": "3.175 kg"
+    },
+    {
+      "id": "phb-2014-item-pot-iron",
+      "nome": "Panela de Ferro",
+      "name": {
+        "en": "Pot, iron",
+        "ptBR": "Panela de Ferro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg",
+      "capacity": {
+        "gallons": 1,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-potion-of-healing",
+      "nome": "Poção de Cura",
+      "name": {
+        "en": "Potion of healing",
+        "ptBR": "Poção de Cura",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 0.5,
+      "peso": "0.227 kg"
+    },
+    {
+      "id": "phb-2014-item-pouch",
+      "nome": "Algibeira",
+      "name": {
+        "en": "Pouch",
+        "ptBR": "Algibeira",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg",
+      "capacity": {
+        "cubicFeet": 0.2,
+        "weightLb": 6,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-quiver",
+      "nome": "Aljava",
+      "name": {
+        "en": "Quiver",
+        "ptBR": "Aljava",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-ram-portable",
+      "nome": "Aríete Portátil",
+      "name": {
+        "en": "Ram, portable",
+        "ptBR": "Aríete Portátil",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 4.0,
+        "unit": "gp"
+      },
+      "custo": "4 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 35.0,
+      "peso": "15.876 kg"
+    },
+    {
+      "id": "phb-2014-item-rations-1-day",
+      "nome": "Rações (1 dia)",
+      "name": {
+        "en": "Rations (1 day)",
+        "ptBR": "Rações (1 dia)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-robes",
+      "nome": "Vestes",
+      "name": {
+        "en": "Robes",
+        "ptBR": "Vestes",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 4.0,
+      "peso": "1.814 kg"
+    },
+    {
+      "id": "phb-2014-item-rope-hempen-50-feet",
+      "nome": "Corda de Cânhamo (15 m)",
+      "name": {
+        "en": "Rope, hempen (50 feet)",
+        "ptBR": "Corda de Cânhamo (15 m)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg"
+    },
+    {
+      "id": "phb-2014-item-rope-silk-50-feet",
+      "nome": "Corda de Seda (15 m)",
+      "name": {
+        "en": "Rope, silk (50 feet)",
+        "ptBR": "Corda de Seda (15 m)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-sack",
+      "nome": "Saco",
+      "name": {
+        "en": "Sack",
+        "ptBR": "Saco",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "cp"
+      },
+      "custo": "1 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 0.5,
+      "peso": "0.227 kg",
+      "capacity": {
+        "cubicFeet": 1,
+        "weightLb": 30,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-scale-merchant-s",
+      "nome": "Balança de Mercador",
+      "name": {
+        "en": "Scale, merchant's",
+        "ptBR": "Balança de Mercador",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-sealing-wax",
+      "nome": "Lacre",
+      "name": {
+        "en": "Sealing wax",
+        "ptBR": "Lacre",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-shovel",
+      "nome": "Pá",
+      "name": {
+        "en": "Shovel",
+        "ptBR": "Pá",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-signal-whistle",
+      "nome": "Apito",
+      "name": {
+        "en": "Signal whistle",
+        "ptBR": "Apito",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "cp"
+      },
+      "custo": "5 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-signet-ring",
+      "nome": "Anel de Sinete",
+      "name": {
+        "en": "Signet ring",
+        "ptBR": "Anel de Sinete",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-soap",
+      "nome": "Sabão",
+      "name": {
+        "en": "Soap",
+        "ptBR": "Sabão",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "cp"
+      },
+      "custo": "2 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-spellbook",
+      "nome": "Grimório",
+      "name": {
+        "en": "Spellbook",
+        "ptBR": "Grimório",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-spikes-iron-10",
+      "nome": "Pregos de Ferro (10)",
+      "name": {
+        "en": "Spikes, iron (10)",
+        "ptBR": "Pregos de Ferro (10)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-spyglass",
+      "nome": "Luneta",
+      "name": {
+        "en": "Spyglass",
+        "ptBR": "Luneta",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1000.0,
+        "unit": "gp"
+      },
+      "custo": "1000 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-tent-two-person",
+      "nome": "Tenda para Duas Pessoas",
+      "name": {
+        "en": "Tent, two-person",
+        "ptBR": "Tenda para Duas Pessoas",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 20.0,
+      "peso": "9.072 kg"
+    },
+    {
+      "id": "phb-2014-item-tinderbox",
+      "nome": "Caixa de Fogo",
+      "name": {
+        "en": "Tinderbox",
+        "ptBR": "Caixa de Fogo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-torch",
+      "nome": "Tocha",
+      "name": {
+        "en": "Torch",
+        "ptBR": "Tocha",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "cp"
+      },
+      "custo": "1 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-vial",
+      "nome": "Frasco Pequeno",
+      "name": {
+        "en": "Vial",
+        "ptBR": "Frasco Pequeno",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "capacity": {
+        "fluidOunces": 4,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-waterskin",
+      "nome": "Odre (cheio)",
+      "name": {
+        "en": "Waterskin",
+        "ptBR": "Odre (cheio)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 2.0,
+        "unit": "sp"
+      },
+      "custo": "2 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg",
+      "capacity": {
+        "pints": 4,
+        "printedPage": 153
+      }
+    },
+    {
+      "id": "phb-2014-item-whetstone",
+      "nome": "Pedra de Amolar",
+      "name": {
+        "en": "Whetstone",
+        "ptBR": "Pedra de Amolar",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Equipamento de aventura",
+      "cost": {
+        "amount": 1.0,
+        "unit": "cp"
+      },
+      "custo": "1 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 150,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-alchemist-s-supplies",
+      "nome": "Suprimentos de Alquimista",
+      "name": {
+        "en": "Alchemist's supplies",
+        "ptBR": "Suprimentos de Alquimista",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 8.0,
+      "peso": "3.629 kg"
+    },
+    {
+      "id": "phb-2014-item-brewer-s-supplies",
+      "nome": "Suprimentos de Cervejeiro",
+      "name": {
+        "en": "Brewer's supplies",
+        "ptBR": "Suprimentos de Cervejeiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 20.0,
+        "unit": "gp"
+      },
+      "custo": "20 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 9.0,
+      "peso": "4.082 kg"
+    },
+    {
+      "id": "phb-2014-item-calligrapher-s-supplies",
+      "nome": "Suprimentos de Calígrafo",
+      "name": {
+        "en": "Calligrapher's supplies",
+        "ptBR": "Suprimentos de Calígrafo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-carpenter-s-tools",
+      "nome": "Ferramentas de Carpinteiro",
+      "name": {
+        "en": "Carpenter's tools",
+        "ptBR": "Ferramentas de Carpinteiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 8.0,
+        "unit": "gp"
+      },
+      "custo": "8 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg"
+    },
+    {
+      "id": "phb-2014-item-cartographer-s-tools",
+      "nome": "Ferramentas de Cartógrafo",
+      "name": {
+        "en": "Cartographer's tools",
+        "ptBR": "Ferramentas de Cartógrafo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 15.0,
+        "unit": "gp"
+      },
+      "custo": "15 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg"
+    },
+    {
+      "id": "phb-2014-item-cobbler-s-tools",
+      "nome": "Ferramentas de Sapateiro",
+      "name": {
+        "en": "Cobbler's tools",
+        "ptBR": "Ferramentas de Sapateiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-cook-s-utensils",
+      "nome": "Utensílios de Cozinheiro",
+      "name": {
+        "en": "Cook's utensils",
+        "ptBR": "Utensílios de Cozinheiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 8.0,
+      "peso": "3.629 kg"
+    },
+    {
+      "id": "phb-2014-item-glassblower-s-tools",
+      "nome": "Ferramentas de Vidreiro",
+      "name": {
+        "en": "Glassblower's tools",
+        "ptBR": "Ferramentas de Vidreiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 30.0,
+        "unit": "gp"
+      },
+      "custo": "30 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-jeweler-s-tools",
+      "nome": "Ferramentas de Joalheiro",
+      "name": {
+        "en": "Jeweler's tools",
+        "ptBR": "Ferramentas de Joalheiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-leatherworker-s-tools",
+      "nome": "Ferramentas de Coureiro",
+      "name": {
+        "en": "Leatherworker's tools",
+        "ptBR": "Ferramentas de Coureiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-mason-s-tools",
+      "nome": "Ferramentas de Pedreiro",
+      "name": {
+        "en": "Mason's tools",
+        "ptBR": "Ferramentas de Pedreiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 8.0,
+      "peso": "3.629 kg"
+    },
+    {
+      "id": "phb-2014-item-painter-s-supplies",
+      "nome": "Suprimentos de Pintor",
+      "name": {
+        "en": "Painter's supplies",
+        "ptBR": "Suprimentos de Pintor",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-potter-s-tools",
+      "nome": "Ferramentas de Oleiro",
+      "name": {
+        "en": "Potter's tools",
+        "ptBR": "Ferramentas de Oleiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-smith-s-tools",
+      "nome": "Ferramentas de Ferreiro",
+      "name": {
+        "en": "Smith's tools",
+        "ptBR": "Ferramentas de Ferreiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 20.0,
+        "unit": "gp"
+      },
+      "custo": "20 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 8.0,
+      "peso": "3.629 kg"
+    },
+    {
+      "id": "phb-2014-item-tinker-s-tools",
+      "nome": "Ferramentas de Funileiro",
+      "name": {
+        "en": "Tinker's tools",
+        "ptBR": "Ferramentas de Funileiro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg"
+    },
+    {
+      "id": "phb-2014-item-weaver-s-tools",
+      "nome": "Ferramentas de Tecelão",
+      "name": {
+        "en": "Weaver's tools",
+        "ptBR": "Ferramentas de Tecelão",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-woodcarver-s-tools",
+      "nome": "Ferramentas de Entalhador",
+      "name": {
+        "en": "Woodcarver's tools",
+        "ptBR": "Ferramentas de Entalhador",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-disguise-kit",
+      "nome": "Kit de Disfarce",
+      "name": {
+        "en": "Disguise kit",
+        "ptBR": "Kit de Disfarce",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-forgery-kit",
+      "nome": "Kit de Falsificação",
+      "name": {
+        "en": "Forgery kit",
+        "ptBR": "Kit de Falsificação",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 15.0,
+        "unit": "gp"
+      },
+      "custo": "15 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 5.0,
+      "peso": "2.268 kg"
+    },
+    {
+      "id": "phb-2014-item-herbalism-kit",
+      "nome": "Kit de Herbalismo",
+      "name": {
+        "en": "Herbalism kit",
+        "ptBR": "Kit de Herbalismo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-navigator-s-tools",
+      "nome": "Ferramentas de Navegador",
+      "name": {
+        "en": "Navigator's tools",
+        "ptBR": "Ferramentas de Navegador",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-poisoner-s-kit",
+      "nome": "Kit de Envenenador",
+      "name": {
+        "en": "Poisoner's kit",
+        "ptBR": "Kit de Envenenador",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 50.0,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-thieves-tools",
+      "nome": "Ferramentas de Ladrão",
+      "name": {
+        "en": "Thieves' tools",
+        "ptBR": "Ferramentas de Ladrão",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Ferramentas",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-dice-set",
+      "nome": "Conjunto de Dados",
+      "name": {
+        "en": "Dice set",
+        "ptBR": "Conjunto de Dados",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Jogos",
+      "cost": {
+        "amount": 1.0,
+        "unit": "sp"
+      },
+      "custo": "1 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-dragonchess-set",
+      "nome": "Xadrez de Dragão",
+      "name": {
+        "en": "Dragonchess set",
+        "ptBR": "Xadrez de Dragão",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Jogos",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 0.5,
+      "peso": "0.227 kg"
+    },
+    {
+      "id": "phb-2014-item-playing-card-set",
+      "nome": "Baralho",
+      "name": {
+        "en": "Playing card set",
+        "ptBR": "Baralho",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Jogos",
+      "cost": {
+        "amount": 5.0,
+        "unit": "sp"
+      },
+      "custo": "5 PP",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-three-dragon-ante-set",
+      "nome": "Jogo de Três Dragões",
+      "name": {
+        "en": "Three-Dragon Ante set",
+        "ptBR": "Jogo de Três Dragões",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Jogos",
+      "cost": {
+        "amount": 1.0,
+        "unit": "gp"
+      },
+      "custo": "1 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-bagpipes",
+      "nome": "Gaita de Foles",
+      "name": {
+        "en": "Bagpipes",
+        "ptBR": "Gaita de Foles",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 30.0,
+        "unit": "gp"
+      },
+      "custo": "30 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 6.0,
+      "peso": "2.722 kg"
+    },
+    {
+      "id": "phb-2014-item-drum",
+      "nome": "Tambor",
+      "name": {
+        "en": "Drum",
+        "ptBR": "Tambor",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 6.0,
+        "unit": "gp"
+      },
+      "custo": "6 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 3.0,
+      "peso": "1.361 kg"
+    },
+    {
+      "id": "phb-2014-item-dulcimer",
+      "nome": "Dulcimer",
+      "name": {
+        "en": "Dulcimer",
+        "ptBR": "Dulcimer",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 25.0,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg"
+    },
+    {
+      "id": "phb-2014-item-flute",
+      "nome": "Flauta",
+      "name": {
+        "en": "Flute",
+        "ptBR": "Flauta",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-lute",
+      "nome": "Alaúde",
+      "name": {
+        "en": "Lute",
+        "ptBR": "Alaúde",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 35.0,
+        "unit": "gp"
+      },
+      "custo": "35 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-lyre",
+      "nome": "Lira",
+      "name": {
+        "en": "Lyre",
+        "ptBR": "Lira",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 30.0,
+        "unit": "gp"
+      },
+      "custo": "30 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-horn",
+      "nome": "Trompa",
+      "name": {
+        "en": "Horn",
+        "ptBR": "Trompa",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 3.0,
+        "unit": "gp"
+      },
+      "custo": "3 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-pan-flute",
+      "nome": "Flauta de Pã",
+      "name": {
+        "en": "Pan flute",
+        "ptBR": "Flauta de Pã",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 12.0,
+        "unit": "gp"
+      },
+      "custo": "12 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 2.0,
+      "peso": "0.907 kg"
+    },
+    {
+      "id": "phb-2014-item-shawm",
+      "nome": "Charamela",
+      "name": {
+        "en": "Shawm",
+        "ptBR": "Charamela",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-viol",
+      "nome": "Viola",
+      "name": {
+        "en": "Viol",
+        "ptBR": "Viola",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Instrumentos",
+      "cost": {
+        "amount": 30.0,
+        "unit": "gp"
+      },
+      "custo": "30 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 154,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-burglar-s-pack",
+      "nome": "Pacote de Assaltante",
+      "name": {
+        "en": "Burglar's Pack",
+        "ptBR": "Pacote de Assaltante",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Pacotes",
+      "cost": {
+        "amount": 16.0,
+        "unit": "gp"
+      },
+      "custo": "16 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 151,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-diplomat-s-pack",
+      "nome": "Pacote de Diplomata",
+      "name": {
+        "en": "Diplomat's Pack",
+        "ptBR": "Pacote de Diplomata",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Pacotes",
+      "cost": {
+        "amount": 39.0,
+        "unit": "gp"
+      },
+      "custo": "39 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 151,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-dungeoneer-s-pack",
+      "nome": "Pacote de Explorador de Masmorras",
+      "name": {
+        "en": "Dungeoneer's Pack",
+        "ptBR": "Pacote de Explorador de Masmorras",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Pacotes",
+      "cost": {
+        "amount": 12.0,
+        "unit": "gp"
+      },
+      "custo": "12 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 151,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-entertainer-s-pack",
+      "nome": "Pacote de Artista",
+      "name": {
+        "en": "Entertainer's Pack",
+        "ptBR": "Pacote de Artista",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Pacotes",
+      "cost": {
+        "amount": 40.0,
+        "unit": "gp"
+      },
+      "custo": "40 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 151,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-explorer-s-pack",
+      "nome": "Pacote de Explorador",
+      "name": {
+        "en": "Explorer's Pack",
+        "ptBR": "Pacote de Explorador",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Pacotes",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 151,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-priest-s-pack",
+      "nome": "Pacote de Sacerdote",
+      "name": {
+        "en": "Priest's Pack",
+        "ptBR": "Pacote de Sacerdote",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Pacotes",
+      "cost": {
+        "amount": 19.0,
+        "unit": "gp"
+      },
+      "custo": "19 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 151,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-scholar-s-pack",
+      "nome": "Pacote de Estudioso",
+      "name": {
+        "en": "Scholar's Pack",
+        "ptBR": "Pacote de Estudioso",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Pacotes",
+      "cost": {
+        "amount": 40.0,
+        "unit": "gp"
+      },
+      "custo": "40 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 151,
+        "section": "Equipment"
+      }
+    },
+    {
+      "id": "phb-2014-item-bit-and-bridle",
+      "nome": "Freio e Rédea",
+      "name": {
+        "en": "Bit and bridle",
+        "ptBR": "Freio e Rédea",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 2.0,
+        "unit": "gp"
+      },
+      "custo": "2 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 1.0,
+      "peso": "0.454 kg"
+    },
+    {
+      "id": "phb-2014-item-carriage",
+      "nome": "Carruagem",
+      "name": {
+        "en": "Carriage",
+        "ptBR": "Carruagem",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 100.0,
+        "unit": "gp"
+      },
+      "custo": "100 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 600.0,
+      "peso": "272.155 kg"
+    },
+    {
+      "id": "phb-2014-item-cart",
+      "nome": "Carroça",
+      "name": {
+        "en": "Cart",
+        "ptBR": "Carroça",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 15.0,
+        "unit": "gp"
+      },
+      "custo": "15 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 200.0,
+      "peso": "90.718 kg"
+    },
+    {
+      "id": "phb-2014-item-chariot",
+      "nome": "Biga",
+      "name": {
+        "en": "Chariot",
+        "ptBR": "Biga",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 250.0,
+        "unit": "gp"
+      },
+      "custo": "250 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 100.0,
+      "peso": "45.359 kg"
+    },
+    {
+      "id": "phb-2014-item-feed-per-day",
+      "nome": "Ração Animal (dia)",
+      "name": {
+        "en": "Feed (per day)",
+        "ptBR": "Ração Animal (dia)",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 5.0,
+        "unit": "cp"
+      },
+      "custo": "5 PC",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 10.0,
+      "peso": "4.536 kg"
+    },
+    {
+      "id": "phb-2014-item-saddle-exotic",
+      "nome": "Sela Exótica",
+      "name": {
+        "en": "Saddle, exotic",
+        "ptBR": "Sela Exótica",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 60.0,
+        "unit": "gp"
+      },
+      "custo": "60 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 40.0,
+      "peso": "18.144 kg"
+    },
+    {
+      "id": "phb-2014-item-saddle-military",
+      "nome": "Sela Militar",
+      "name": {
+        "en": "Saddle, military",
+        "ptBR": "Sela Militar",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 20.0,
+        "unit": "gp"
+      },
+      "custo": "20 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 30.0,
+      "peso": "13.608 kg"
+    },
+    {
+      "id": "phb-2014-item-saddle-pack",
+      "nome": "Sela de Carga",
+      "name": {
+        "en": "Saddle, pack",
+        "ptBR": "Sela de Carga",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 5.0,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 15.0,
+      "peso": "6.804 kg"
+    },
+    {
+      "id": "phb-2014-item-saddle-riding",
+      "nome": "Sela de Montaria",
+      "name": {
+        "en": "Saddle, riding",
+        "ptBR": "Sela de Montaria",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 10.0,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 25.0,
+      "peso": "11.340 kg"
+    },
+    {
+      "id": "phb-2014-item-saddlebags",
+      "nome": "Alforjes",
+      "name": {
+        "en": "Saddlebags",
+        "ptBR": "Alforjes",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 4.0,
+        "unit": "gp"
+      },
+      "custo": "4 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 8.0,
+      "peso": "3.629 kg"
+    },
+    {
+      "id": "phb-2014-item-sled",
+      "nome": "Trenó",
+      "name": {
+        "en": "Sled",
+        "ptBR": "Trenó",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 20.0,
+        "unit": "gp"
+      },
+      "custo": "20 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 300.0,
+      "peso": "136.078 kg"
+    },
+    {
+      "id": "phb-2014-item-wagon",
+      "nome": "Carroção",
+      "name": {
+        "en": "Wagon",
+        "ptBR": "Carroção",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Arreios e veículos",
+      "cost": {
+        "amount": 35.0,
+        "unit": "gp"
+      },
+      "custo": "35 PO",
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Equipment"
+      },
+      "weightLb": 400.0,
+      "peso": "181.437 kg"
+    },
+    {
+      "id": "phb-2014-item-padded",
+      "nome": "Acolchoada",
+      "name": {
+        "en": "Padded",
+        "ptBR": "Acolchoada",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 5,
+        "unit": "gp"
+      },
+      "custo": "5 PO",
+      "armor": {
+        "category": "light",
+        "baseAC": 11,
+        "dexterityRule": "full",
+        "strengthRequirement": null,
+        "stealthDisadvantage": true
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 8,
+      "peso": "3.629 kg"
+    },
+    {
+      "id": "phb-2014-item-leather",
+      "nome": "Couro",
+      "name": {
+        "en": "Leather",
+        "ptBR": "Couro",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 10,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "armor": {
+        "category": "light",
+        "baseAC": 11,
+        "dexterityRule": "full",
+        "strengthRequirement": null,
+        "stealthDisadvantage": false
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 10,
+      "peso": "4.536 kg"
+    },
+    {
+      "id": "phb-2014-item-studded-leather",
+      "nome": "Couro Batido",
+      "name": {
+        "en": "Studded leather",
+        "ptBR": "Couro Batido",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 45,
+        "unit": "gp"
+      },
+      "custo": "45 PO",
+      "armor": {
+        "category": "light",
+        "baseAC": 12,
+        "dexterityRule": "full",
+        "strengthRequirement": null,
+        "stealthDisadvantage": false
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 13,
+      "peso": "5.897 kg"
+    },
+    {
+      "id": "phb-2014-item-hide",
+      "nome": "Gibão de Peles",
+      "name": {
+        "en": "Hide",
+        "ptBR": "Gibão de Peles",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 10,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "armor": {
+        "category": "medium",
+        "baseAC": 12,
+        "dexterityRule": "max-2",
+        "strengthRequirement": null,
+        "stealthDisadvantage": false
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 12,
+      "peso": "5.443 kg"
+    },
+    {
+      "id": "phb-2014-item-chain-shirt",
+      "nome": "Camisão de Malha",
+      "name": {
+        "en": "Chain shirt",
+        "ptBR": "Camisão de Malha",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 50,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "armor": {
+        "category": "medium",
+        "baseAC": 13,
+        "dexterityRule": "max-2",
+        "strengthRequirement": null,
+        "stealthDisadvantage": false
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 20,
+      "peso": "9.072 kg"
+    },
+    {
+      "id": "phb-2014-item-scale-mail",
+      "nome": "Brunea",
+      "name": {
+        "en": "Scale mail",
+        "ptBR": "Brunea",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 50,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "armor": {
+        "category": "medium",
+        "baseAC": 14,
+        "dexterityRule": "max-2",
+        "strengthRequirement": null,
+        "stealthDisadvantage": true
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 45,
+      "peso": "20.412 kg"
+    },
+    {
+      "id": "phb-2014-item-breastplate",
+      "nome": "Peitoral",
+      "name": {
+        "en": "Breastplate",
+        "ptBR": "Peitoral",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 400,
+        "unit": "gp"
+      },
+      "custo": "400 PO",
+      "armor": {
+        "category": "medium",
+        "baseAC": 14,
+        "dexterityRule": "max-2",
+        "strengthRequirement": null,
+        "stealthDisadvantage": false
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 20,
+      "peso": "9.072 kg"
+    },
+    {
+      "id": "phb-2014-item-half-plate",
+      "nome": "Meia Armadura",
+      "name": {
+        "en": "Half plate",
+        "ptBR": "Meia Armadura",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 750,
+        "unit": "gp"
+      },
+      "custo": "750 PO",
+      "armor": {
+        "category": "medium",
+        "baseAC": 15,
+        "dexterityRule": "max-2",
+        "strengthRequirement": null,
+        "stealthDisadvantage": true
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 40,
+      "peso": "18.144 kg"
+    },
+    {
+      "id": "phb-2014-item-ring-mail",
+      "nome": "Cota de Anéis",
+      "name": {
+        "en": "Ring mail",
+        "ptBR": "Cota de Anéis",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 30,
+        "unit": "gp"
+      },
+      "custo": "30 PO",
+      "armor": {
+        "category": "heavy",
+        "baseAC": 14,
+        "dexterityRule": "none",
+        "strengthRequirement": null,
+        "stealthDisadvantage": true
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 40,
+      "peso": "18.144 kg"
+    },
+    {
+      "id": "phb-2014-item-chain-mail",
+      "nome": "Cota de Malha",
+      "name": {
+        "en": "Chain mail",
+        "ptBR": "Cota de Malha",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 75,
+        "unit": "gp"
+      },
+      "custo": "75 PO",
+      "armor": {
+        "category": "heavy",
+        "baseAC": 16,
+        "dexterityRule": "none",
+        "strengthRequirement": 13,
+        "stealthDisadvantage": true
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 55,
+      "peso": "24.948 kg"
+    },
+    {
+      "id": "phb-2014-item-splint",
+      "nome": "Armadura de Talas",
+      "name": {
+        "en": "Splint",
+        "ptBR": "Armadura de Talas",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 200,
+        "unit": "gp"
+      },
+      "custo": "200 PO",
+      "armor": {
+        "category": "heavy",
+        "baseAC": 17,
+        "dexterityRule": "none",
+        "strengthRequirement": 15,
+        "stealthDisadvantage": true
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 60,
+      "peso": "27.216 kg"
+    },
+    {
+      "id": "phb-2014-item-plate",
+      "nome": "Armadura de Placas",
+      "name": {
+        "en": "Plate",
+        "ptBR": "Armadura de Placas",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 1500,
+        "unit": "gp"
+      },
+      "custo": "1500 PO",
+      "armor": {
+        "category": "heavy",
+        "baseAC": 18,
+        "dexterityRule": "none",
+        "strengthRequirement": 15,
+        "stealthDisadvantage": true
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 65,
+      "peso": "29.484 kg"
+    },
+    {
+      "id": "phb-2014-item-shield",
+      "nome": "Escudo",
+      "name": {
+        "en": "Shield",
+        "ptBR": "Escudo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Armaduras e escudos",
+      "cost": {
+        "amount": 10,
+        "unit": "gp"
+      },
+      "custo": "10 PO",
+      "armor": {
+        "category": "shield",
+        "baseAC": 2,
+        "dexterityRule": "bonus",
+        "strengthRequirement": null,
+        "stealthDisadvantage": false
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 145,
+        "section": "Armor"
+      },
+      "weightLb": 6,
+      "peso": "2.722 kg"
+    },
+    {
+      "id": "phb-2014-item-camel",
+      "nome": "Camelo",
+      "name": {
+        "en": "Camel",
+        "ptBR": "Camelo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Montarias",
+      "cost": {
+        "amount": 50,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "speed": {
+        "amount": 50,
+        "unit": "ft"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "carryingCapacityLb": 480
+    },
+    {
+      "id": "phb-2014-item-donkey-or-mule",
+      "nome": "Burro ou Mula",
+      "name": {
+        "en": "Donkey or mule",
+        "ptBR": "Burro ou Mula",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Montarias",
+      "cost": {
+        "amount": 8,
+        "unit": "gp"
+      },
+      "custo": "8 PO",
+      "speed": {
+        "amount": 40,
+        "unit": "ft"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "carryingCapacityLb": 420
+    },
+    {
+      "id": "phb-2014-item-elephant",
+      "nome": "Elefante",
+      "name": {
+        "en": "Elephant",
+        "ptBR": "Elefante",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Montarias",
+      "cost": {
+        "amount": 200,
+        "unit": "gp"
+      },
+      "custo": "200 PO",
+      "speed": {
+        "amount": 40,
+        "unit": "ft"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "carryingCapacityLb": 1320
+    },
+    {
+      "id": "phb-2014-item-horse-draft",
+      "nome": "Cavalo de Carga",
+      "name": {
+        "en": "Horse, draft",
+        "ptBR": "Cavalo de Carga",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Montarias",
+      "cost": {
+        "amount": 50,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "speed": {
+        "amount": 40,
+        "unit": "ft"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "carryingCapacityLb": 540
+    },
+    {
+      "id": "phb-2014-item-horse-riding",
+      "nome": "Cavalo de Montaria",
+      "name": {
+        "en": "Horse, riding",
+        "ptBR": "Cavalo de Montaria",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Montarias",
+      "cost": {
+        "amount": 75,
+        "unit": "gp"
+      },
+      "custo": "75 PO",
+      "speed": {
+        "amount": 60,
+        "unit": "ft"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "carryingCapacityLb": 480
+    },
+    {
+      "id": "phb-2014-item-mastiff",
+      "nome": "Mastim",
+      "name": {
+        "en": "Mastiff",
+        "ptBR": "Mastim",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Montarias",
+      "cost": {
+        "amount": 25,
+        "unit": "gp"
+      },
+      "custo": "25 PO",
+      "speed": {
+        "amount": 40,
+        "unit": "ft"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "carryingCapacityLb": 195
+    },
+    {
+      "id": "phb-2014-item-pony",
+      "nome": "Pônei",
+      "name": {
+        "en": "Pony",
+        "ptBR": "Pônei",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Montarias",
+      "cost": {
+        "amount": 30,
+        "unit": "gp"
+      },
+      "custo": "30 PO",
+      "speed": {
+        "amount": 40,
+        "unit": "ft"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "carryingCapacityLb": 225
+    },
+    {
+      "id": "phb-2014-item-warhorse",
+      "nome": "Cavalo de Guerra",
+      "name": {
+        "en": "Warhorse",
+        "ptBR": "Cavalo de Guerra",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Montarias",
+      "cost": {
+        "amount": 400,
+        "unit": "gp"
+      },
+      "custo": "400 PO",
+      "speed": {
+        "amount": 60,
+        "unit": "ft"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "carryingCapacityLb": 540
+    },
+    {
+      "id": "phb-2014-item-galley",
+      "nome": "Galé",
+      "name": {
+        "en": "Galley",
+        "ptBR": "Galé",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Veículos aquáticos",
+      "cost": {
+        "amount": 30000,
+        "unit": "gp"
+      },
+      "custo": "30000 PO",
+      "speed": {
+        "amount": 4,
+        "unit": "mph"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      }
+    },
+    {
+      "id": "phb-2014-item-keelboat",
+      "nome": "Barco de Quilha",
+      "name": {
+        "en": "Keelboat",
+        "ptBR": "Barco de Quilha",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Veículos aquáticos",
+      "cost": {
+        "amount": 3000,
+        "unit": "gp"
+      },
+      "custo": "3000 PO",
+      "speed": {
+        "amount": 1,
+        "unit": "mph"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      }
+    },
+    {
+      "id": "phb-2014-item-longship",
+      "nome": "Dracar",
+      "name": {
+        "en": "Longship",
+        "ptBR": "Dracar",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Veículos aquáticos",
+      "cost": {
+        "amount": 10000,
+        "unit": "gp"
+      },
+      "custo": "10000 PO",
+      "speed": {
+        "amount": 3,
+        "unit": "mph"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      }
+    },
+    {
+      "id": "phb-2014-item-rowboat",
+      "nome": "Barco a Remo",
+      "name": {
+        "en": "Rowboat",
+        "ptBR": "Barco a Remo",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Veículos aquáticos",
+      "cost": {
+        "amount": 50,
+        "unit": "gp"
+      },
+      "custo": "50 PO",
+      "speed": {
+        "amount": 1.5,
+        "unit": "mph"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      },
+      "weightLb": 100,
+      "peso": "45.359 kg"
+    },
+    {
+      "id": "phb-2014-item-sailing-ship",
+      "nome": "Navio à Vela",
+      "name": {
+        "en": "Sailing ship",
+        "ptBR": "Navio à Vela",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Veículos aquáticos",
+      "cost": {
+        "amount": 10000,
+        "unit": "gp"
+      },
+      "custo": "10000 PO",
+      "speed": {
+        "amount": 2,
+        "unit": "mph"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      }
+    },
+    {
+      "id": "phb-2014-item-warship",
+      "nome": "Navio de Guerra",
+      "name": {
+        "en": "Warship",
+        "ptBR": "Navio de Guerra",
+        "ptBRStatus": "interface-translation"
+      },
+      "category": "Veículos aquáticos",
+      "cost": {
+        "amount": 25000,
+        "unit": "gp"
+      },
+      "custo": "25000 PO",
+      "speed": {
+        "amount": 2.5,
+        "unit": "mph"
+      },
+      "source": {
+        "sourceId": "phb-2014-10th",
+        "sourceTitle": "Player’s Handbook (2014), 10th printing",
+        "rulesVersion": "2014-legacy",
+        "printedPage": 157,
+        "section": "Mounts and vehicles"
+      }
+    }
+  ]
+}

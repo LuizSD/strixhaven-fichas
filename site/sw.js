@@ -14,6 +14,7 @@ const STATIC_ASSETS = [
   './manifest.json',
   './css/app.css',
   './css/strixhaven.css',
+  './css/magias-catalogo.css',
   './img/strixhaven.svg',
   './img/strixhaven-192.png',
   './img/strixhaven-512.png',

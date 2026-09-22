@@ -1,0 +1,27 @@
+/* Exclusivo das superfícies de magia; os demais catálogos não são alterados. */
+#magias-nav { flex: 0 0 auto; margin-inline: .5rem; }
+#menu-todas-magias { display: inline-block; color: #fff5d8; text-decoration: none; padding: .3rem .5rem; border: 1px solid #bba16a; border-radius: 5px; line-height: 1.2; }
+#menu-todas-magias span, #menu-todas-magias small { display: block; }
+#menu-todas-magias small { font-size: .75rem; color: #e8dfcd; }
+.spell-browser { min-width: 0; }
+.spell-browser h2 small { display: block; font-size: .8rem; color: var(--text-muted); }
+.spell-browser label { display: block; margin-block: .5rem; }
+.spell-filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: .5rem 1rem; }
+.spell-filter-grid > *, .spell-results > * { min-width: 0; }
+.spell-results { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1rem; }
+.spell-result { border: 1px solid var(--border); border-radius: .5rem; padding: 1rem; background: var(--bg-card); overflow-wrap: anywhere; }
+.spell-classes { display: flex; gap: .3rem; flex-wrap: wrap; }
+.spell-classes small { display: block; }
+.spell-source { font-size: .8rem; color: var(--text-muted); }
+.spell-warning { padding: .5rem .75rem; border: 2px solid; border-radius: .3rem; margin: .5rem 0; }
+.spell-warning p { margin: .3rem 0; }
+.spell-warning.error { color: #fff; background: #851b28; border-color: #851b28; }
+.spell-warning.info { color: #fff; background: #124c6b; border-color: #124c6b; }
+.spell-compatible { font-weight: 600; }
+.spell-suggestions { max-height: 260px; overflow: auto; }
+.spell-browser button small, .spell-search-action small { display: block; font-size: .75rem; }
+.spell-browser .btn, .spell-search-action { max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+.spell-browser .btn:has(small), .spell-search-action { flex-direction: column; }
+.spell-browser [hidden] { display: none; }
+@media(max-width: 650px) { :root { --header-h: 104px; } #app-header:has(#magias-nav) { flex-wrap: wrap; } #magias-nav { order: 2; width: 100%; margin: 4px 0; } .spell-browser [id] { scroll-margin-top: 112px; } }
+@media print { #magias-nav { display: none; } }

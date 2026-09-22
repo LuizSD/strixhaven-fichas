@@ -6,10 +6,10 @@
 // e a que faltasse sumia em silencio. Aqui ele e uma peca so; os modais
 // de inventario.js montam o HTML e leem o resultado por estas funcoes.
 // ============================================================
-import { escHtml, fmtPeso, parsePeso } from '../utils.js';
+import { escHtml, parsePeso } from '../utils.js';
 
 // Formato aceito no campo Dano: 1d8, 2d6 Cortante, 1d4+2 Perfurante.
-const REGEX_DANO = /^\d+d\d+(\s*[+\-]\s*\d+)?(\s+\w+)?$/i;
+const REGEX_DANO = /^(?:\d+d\d+(\s*[+\-]\s*\d+)?(\s+[\p{L}-]+)?|\d+\s+[\p{L}-]+)$/iu;
 
 // As seis raridades do livro, na ordem crescente (Equipamento.md, capitulo
 // de Itens Magicos). A setima opcao do seletor e a VAZIA: item que nao e
@@ -76,8 +76,8 @@ export function htmlFormularioItemCustomizado(item = null) {
     </div>
     <div class="form-group" style="margin-top:8px">
       <label class="form-label" for="ic-peso">Peso (opcional)</label>
-      <input type="number" class="form-input" id="ic-peso" value="${parsePeso(d.peso) || ''}" placeholder="0" min="0" step="0.1" style="max-width:140px">
-      <div style="font-size:0.65rem;color:var(--text-muted)">em kg (ex: 0,5)</div>
+      <input type="number" class="form-input" id="ic-peso" value="${/\d/.test(String(d.peso ?? '')) ? parsePeso(d.peso) : ''}" placeholder="Desconhecido" min="0" step="any" style="max-width:140px">
+      <div style="font-size:0.65rem;color:var(--text-muted)">em kg (ex: 0,5); vazio = desconhecido, 0 = zero informado</div>
     </div>
     <div class="row gap-1" style="margin-top:8px">
       <div class="col">
@@ -90,7 +90,7 @@ export function htmlFormularioItemCustomizado(item = null) {
       </div>
       <div class="col">
         <label class="form-label" for="ic-preco">Preco</label>
-        <input type="text" class="form-input" id="ic-preco" value="${attr(d.preco || '')}" placeholder="150 PO">
+        <input type="text" class="form-input" id="ic-preco" value="${attr(d.preco ?? d.custo ?? '')}" placeholder="150 PO">
         <div style="font-size:0.65rem;color:var(--text-muted)">texto livre (ex.: 150 PO)</div>
       </div>
     </div>
@@ -125,6 +125,7 @@ export function lerFormularioItemCustomizado() {
   const pesoNum = pesoRaw ? parseFloat(pesoRaw.replace(',', '.')) : 0;
 
   const erros = validarItemCustomizado({ nome, dano });
+  if (pesoRaw && (!Number.isFinite(pesoNum) || pesoNum < 0)) erros.push('Peso: informe um número não negativo ou deixe vazio.');
   const errosEl = document.getElementById('ic-erros');
   if (erros.length > 0) {
     if (errosEl) { errosEl.style.display = 'block'; errosEl.innerHTML = erros.join('<br>'); }
@@ -143,7 +144,7 @@ export function lerFormularioItemCustomizado() {
         ca_base: caBase,
         dano,
         bonus_ataque: String(atq),
-        peso: pesoNum > 0 ? `${fmtPeso(pesoNum)} kg` : '',
+        peso: pesoRaw !== '' ? `${String(pesoNum).replace('.', ',')} kg` : '',
         raridade: val('ic-raridade'),
         preco: val('ic-preco'),
         requer_sintonizacao: !!document.getElementById('ic-sintonizacao')?.checked,

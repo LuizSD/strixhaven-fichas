@@ -1,0 +1,33 @@
+{
+  "command": "node --test ../regras/unidade/*.test.mjs",
+  "exitCode": 1,
+  "counts": {
+    "tests": 2521,
+    "pass": 2253,
+    "fail": 12,
+    "skipped": 256
+  },
+  "failures": [
+    "✖ ../regras/unidade/antecedentes.test.mjs (151.5576ms)",
+    "✖ getDeslocamentoFinal: Monge \"Movimento sem Armadura\" -- bônus por nível conforme a tabela de Classes.md (1.2727ms)",
+    "✖ ../regras/unidade/classes.test.mjs (161.5017ms)",
+    "✖ ../regras/unidade/completude.test.mjs (253.702401ms)",
+    "✖ ../regras/unidade/especies.test.mjs (342.396ms)",
+    "✖ toda citação de CITACOES resolve para um trecho real do livro (1.0833ms)",
+    "✖ ../regras/unidade/magias-por-classe.test.mjs (208.388045ms)",
+    "✖ ../regras/unidade/magias.test.mjs (145.125831ms)",
+    "✖ a tabela bate célula a célula com a tabela lida do livro em tempo de teste (1.0417ms)",
+    "✖ congelamento: nenhuma das 12 listas \"Como um Personagem Multiclasse\" concede salvaguarda (0.856301ms)",
+    "✖ o par: as 12 tabelas \"Traços Básicos\" (lista completa da inicial) CONCEDEM salvaguarda (0.5838ms)",
+    "✖ ../regras/unidade/subclasses.test.mjs (116.067882ms)"
+  ],
+  "missingReferences": [
+    "Informacoes Separadas/Antecedente.md",
+    "Informacoes Separadas/Classes.md",
+    "Informacoes Separadas/Criação de Personagens.md",
+    "Informacoes Separadas/D&D 5.5 - Livro do Jogador (2024) 5.3.7.md",
+    "Informacoes Separadas/Espécies.md",
+    "Informacoes Separadas/Magias.md",
+    "Informacoes Separadas/Talentos.md"
+  ]
+}

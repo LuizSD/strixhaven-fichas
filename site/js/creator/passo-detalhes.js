@@ -63,7 +63,7 @@ function sanitizarIdiomasSelecionados(listaIdiomas, regraIdiomas) {
     entrada.filter(i => !obrigatoriosSet.has(i) && opcoesSet.has(i))
   )].slice(0, regraIdiomas.maxAdicionais);
 
-  return [...regraIdiomas.obrigatorios, ...adicionais];
+  return [...new Set([...regraIdiomas.obrigatorios, ...adicionais, ...(personagem.idiomas_livres || []), ...(personagem.idiomas_personalizados || []).map(i => i.nome)])];
 }
 
 export function renderStepDetalhes(el) {
@@ -199,6 +199,8 @@ export function renderStepDetalhes(el) {
     <!-- Idiomas -->
     <div class="card mb-2">
       <div class="card-header"><h3>Idiomas</h3></div>
+      <button type="button" class="btn btn-secondary" id="criacao-idioma-custom">Adicionar idioma personalizado / catálogo completo</button>
+      <div id="idiomas-livres-resumo">${(personagem.idiomas_livres || []).map(n => rotuloLocalizado(idiomaLocalizado(n, personagem))).join('')}</div>
       <div class="info-box info" style="font-size:0.85rem">
         Regra validada pelo Livro do Jogador 2024: idiomas da origem (Comum + adicionais).
         <div id="det-idiomas-contador" style="margin-top:4px">Selecionados: <strong>${personagem.idiomas.filter(i => !obrigatoriosIdiomasSet.has(i)).length}/${regraIdiomas.maxAdicionais}</strong></div>
@@ -210,7 +212,7 @@ export function renderStepDetalhes(el) {
           const atingiuLimite = personagem.idiomas.filter(i => !obrigatoriosIdiomasSet.has(i)).length >= regraIdiomas.maxAdicionais;
           return `
             <label class="form-check" style="min-width:160px;${ehObrigatorio ? 'opacity:0.6' : ''}">
-              <input type="checkbox" data-idioma="${escHtml(idioma)}" ${selecionado ? 'checked' : ''} ${ehObrigatorio ? 'disabled' : ''} ${(!ehObrigatorio && !selecionado && atingiuLimite) ? 'disabled' : ''}> ${escHtml(idioma)}
+              <input type="checkbox" data-idioma="${escHtml(idioma)}" ${selecionado ? 'checked' : ''} ${ehObrigatorio ? 'disabled' : ''} ${(!ehObrigatorio && !selecionado && atingiuLimite) ? 'disabled' : ''}> ${rotuloLocalizado(idiomaLocalizado(idioma, personagem))}
             </label>`;
         }).join('')}
       </div>
@@ -291,6 +293,10 @@ export function renderStepDetalhes(el) {
   `;
 
   // Validação interativa de idiomas por regra dinâmica
+  document.getElementById('criacao-idioma-custom').onclick = () => abrirIdiomas(personagem, () => {
+    personagem.idiomas_livres = [...personagem.idiomas];
+    document.getElementById('idiomas-livres-resumo').innerHTML = personagem.idiomas_livres.map(n => rotuloLocalizado(idiomaLocalizado(n, personagem))).join('');
+  });
   const atualizarEstadoIdiomas = () => {
     const checks = [...document.querySelectorAll('[data-idioma]')];
     const selecionadosAdicionais = checks.filter(c => !obrigatoriosIdiomasSet.has(c.dataset.idioma) && c.checked).length;
@@ -402,3 +408,5 @@ export function coletarDetalhes() {
   const tamanhoSel = document.querySelector('[name="det-tamanho"]:checked');
   if (tamanhoSel) personagem.tamanho = tamanhoSel.value;
 }
+import { abrirIdiomas, idiomaLocalizado } from '../idiomas-catalogo.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';

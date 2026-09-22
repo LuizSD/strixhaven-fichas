@@ -5,9 +5,9 @@
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
 import { CLASSES_INFO } from '../dados-classes.js';
-import { DENOMINACOES, ICONE_MOEDA, NOMES_MOEDA, adicionarMoeda, converterParaMaior, formatarCarteira, proximaDenominacaoMaior, removerQuantidadeMoeda, taxasSaoPadrao } from '../moedas.js';
+import { DENOMINACOES, ICONE_MOEDA, NOMES_MOEDA, adicionarMoeda, converterParaMaior, formatarCarteira, parseCusto, proximaDenominacaoMaior, removerQuantidadeMoeda, taxasSaoPadrao } from '../moedas.js';
 import { carregarComprarAtivoPadrao, resetarTaxasMoeda, salvarComprarAtivoPadrao, salvarTaxasMoeda } from '../store.js';
-import { abrirModal, bonusProficiencia, calcMod, escHtml, fmtMod, fmtPeso, getCapacidadeCarga, getPesoTotalInventario, mdParaHtml, semAcento, toast } from '../utils.js';
+import { abrirModal, bonusProficiencia, calcMod, escHtml, fmtMod, fmtPeso, parsePeso, getCapacidadeCarga, getPesoTotalInventario, mdParaHtml, semAcento, toast } from '../utils.js';
 import { abrirSeletorItens, carregarDadosEquipSheet } from '../itens-seletor.js';
 import { getEstadoFuria } from './classes/barbaro.js';
 import { getEstadoRecursosGuardiao } from './classes/guardiao.js';
@@ -18,16 +18,18 @@ import { char, passivosTalentosCache, salvar } from './estado.js';
 import { renderFichaCompleta } from './ficha.js';
 import { htmlFormularioItemCustomizado, lerFormularioItemCustomizado } from './item-customizado-form.js';
 import { TETO_SINTONIZACAO, itensSintonizados, podeSintonizar } from '../regras-sintonizacao.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';
 
 // --- Inventário na ficha ---
 /** Estado de carga do personagem: peso atual, capacidade e flag de sobrecarga. */
 export function getEstadoCarga() {
   const forca = char?.atributos?.forca || 0;
   const tamanho = char?.tamanho || 'Médio';
-  const pesoAtual = getPesoTotalInventario(char?.inventario || []);
+  const pesoAtual = Number.isFinite(char?.peso_total_manual) ? char.peso_total_manual : getPesoTotalInventario(char?.inventario || []);
   const capacidade = getCapacidadeCarga(forca, tamanho);
   const sobrecarregado = capacidade > 0 && pesoAtual > capacidade;
-  return { pesoAtual, capacidade, sobrecarregado };
+  const semPeso = (char?.inventario || []).filter(i => (i.quantidade ?? 1) > 0 && !/\d/.test(String(i.dados?.peso ?? i.peso ?? ''))).length;
+  return { pesoAtual, capacidade, sobrecarregado, semPeso };
 }
 
 /**
@@ -74,6 +76,8 @@ export function renderSecaoInventario() {
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:6px 0;border-bottom:1px solid var(--border-light);margin-bottom:6px">
         <span id="sheet-peso-valor" style="font-size:0.8rem;cursor:pointer;color:${_corCarga}" onclick="window.mostrarCalculoCarga()" title="Ver cálculo da capacidade de carga">
           Peso: <strong>${fmtPeso(_carga.pesoAtual)}</strong> / ${fmtPeso(_carga.capacidade)} kg
+          ${Number.isFinite(char.peso_total_manual) ? '<strong> · Total manual</strong>' : ''}
+          ${_carga.semPeso ? `<strong>⚠ Peso calculado parcial: ${_carga.semPeso} item(ns) sem peso informado.</strong>` : ''}
           ${_mostrarSobrecarga ? '<span style="font-weight:700;margin-left:4px">&#9888; Sobrecarregado</span>' : ''}
         </span>
         <label class="no-print" style="display:flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--text-muted);cursor:pointer" title="Se ligado, sobrecarga reduz o Deslocamento para 1,5 m">
@@ -81,6 +85,7 @@ export function renderSecaoInventario() {
           Sobrecarga afeta deslocamento
         </label>
         <span id="sheet-sintonizados-valor">${htmlContadorSintonizados()}</span>
+        <button class="btn btn-sm btn-secondary no-print" id="peso-total-manual">Corrigir peso total</button>
       </div>
       <div id="sheet-inventario">
         ${inv.length === 0
@@ -304,7 +309,7 @@ function renderSheetInvItem(item, idx) {
       <div class="inv-drag-handle no-print" title="Arrastar para reordenar">&#9776;</div>
       <div style="flex:1;min-width:0;cursor:pointer" data-info-inv-sheet="${idx}" title="Ver detalhes">
         <div class="inv-item-nome">
-          ${escHtml(item.nome)} ${profBadge}
+          ${rotuloLocalizado(item)} ${profBadge}${item.editado_localmente ? '<span class="sh-selo">Correção local</span>' : ''}
         </div>
         ${(ataqueInfo || danoAutoInfo || vantagemInfo || estiloLutaInfo || maestriaBadge || tipoBadge || customBadges)
           ? `<div class="inv-item-badges" style="display:flex;flex-wrap:wrap;gap:3px;margin-top:2px">${ataqueInfo}${danoAutoInfo}${vantagemInfo}${estiloLutaInfo}${maestriaBadge}${tipoBadge}${customBadges}</div>`
@@ -314,7 +319,7 @@ function renderSheetInvItem(item, idx) {
           ${item.tipo === 'arma' ? `${danoExibicao} | ${item.dados?.propriedades || ''}` : ''}
           ${item.tipo === 'armadura' ? `CA: ${item.dados?.ca || ''} | ${item.dados?.categoria || ''}` : ''}
           ${item.tipo === 'escudo' ? `CA: ${item.dados?.ca || ''} | Escudo` : ''}
-          ${item.tipo === 'equipamento' ? `${item.dados?.custo || ''} ${item.dados?.peso ? '| ' + item.dados.peso : ''}` : ''}
+          ${item.tipo === 'equipamento' ? `${escHtml(item.dados?.custo || '')} ${item.dados?.peso ? '| ' + escHtml(item.dados.peso) : ''}` : ''}
           ${item.tipo === 'customizado' ? escHtml(item.descricao ? (item.descricao.length > 60 ? item.descricao.substring(0, 60) + '...' : item.descricao) : '') : ''}
           ${item.tipo === 'generico' ? escHtml(item.descricao || '') : ''}
         </div>
@@ -342,6 +347,17 @@ function renderSheetInvItem(item, idx) {
 }
 
 export function setupEventosInventarioSheet() {
+  const pesoTotalBotao = document.getElementById('peso-total-manual');
+  if (pesoTotalBotao) pesoTotalBotao.onclick = () => {
+    abrirModal('Peso total · correção manual', `<p>Peso calculado com dados disponíveis: ${fmtPeso(getPesoTotalInventario(char.inventario || []))} kg. Vazio restaura o cálculo automático.</p><label>Total manual em kg<input id="peso-total-valor" class="form-input" type="number" min="0" step="any" value="${escHtml(char.peso_total_manual ?? '')}"></label>`, '<button class="btn btn-primary" id="peso-total-salvar">Salvar correção</button>');
+    document.getElementById('peso-total-salvar').onclick = () => {
+      const texto = document.getElementById('peso-total-valor').value.trim();
+      const n = Number(texto);
+      if (texto && (!Number.isFinite(n) || n < 0)) { toast('Informe peso não negativo em kg.', 'error'); return; }
+      if (texto) char.peso_total_manual = n; else delete char.peso_total_manual;
+      salvar(); window.fecharModal(); renderFichaCompleta();
+    };
+  };
   // Toggle de sobrecarga (fora do container da lista)
   const cfgSobrecarga = document.getElementById('cfg-sobrecarga');
   if (cfgSobrecarga) {
@@ -670,11 +686,22 @@ function abrirModalEditarItemCustomizado(item, idx) {
     const { ok, valores } = lerFormularioItemCustomizado();
     if (!ok) return;
     const alvo = char.inventario[idx];
+    const pesoAnterior = alvo.dados?.peso;
     alvo.nome = valores.nome;
+    if (alvo.name) alvo.name.ptBR = valores.nome;
     alvo.descricao = valores.descricao;
     // Merge, nao substituicao: `dados` pode carregar chaves que o
     // formulario nao edita, e trocar o objeto inteiro as perderia.
     alvo.dados = { ...(alvo.dados || {}), ...valores.dados };
+    alvo.editado_localmente = true;
+    if (!valores.dados.peso) delete alvo.dados.weightLb;
+    else if (!/\d/.test(String(pesoAnterior ?? '')) || parsePeso(pesoAnterior) !== parsePeso(valores.dados.peso)) alvo.dados.weightLb = parsePeso(valores.dados.peso) / .45359237;
+    if (alvo.dados.custo !== undefined) alvo.dados.custo = valores.dados.preco;
+    if (alvo.dados.cost) {
+      const custo = parseCusto(valores.dados.preco);
+      if (custo) alvo.dados.cost = { amount: custo.qtd, unit: { pc: 'cp', pp: 'sp', pe: 'ep', po: 'gp', pl: 'pp' }[custo.tipo] };
+      else delete alvo.dados.cost;
+    }
     // Desmarcar "Requer Sintonizacao" nesta edicao libera a vaga: sem isto
     // `sintonizado: true` ficava gravado sem caixa na tela para desmarcar,
     // e o item prendia o teto para sempre (issue #57). Grava `false` em vez
@@ -720,6 +747,8 @@ function reRenderSheetInv() {
     const _mostrarSobrecarga = _carga.sobrecarregado && !!char?.config?.sobrecarga_afeta_deslocamento;
     pesoEl.style.color = _mostrarSobrecarga ? 'var(--danger)' : 'var(--text-muted)';
     pesoEl.innerHTML = `Peso: <strong>${fmtPeso(_carga.pesoAtual)}</strong> / ${fmtPeso(_carga.capacidade)} kg`
+      + (Number.isFinite(char.peso_total_manual) ? ' · Total manual' : '')
+      + (_carga.semPeso ? ` · ⚠ Peso calculado parcial: ${_carga.semPeso} item(ns) sem peso informado.` : '')
       + (_mostrarSobrecarga ? ' <span style="font-weight:700;margin-left:4px">&#9888; Sobrecarregado</span>' : '');
   }
 
@@ -896,7 +925,7 @@ async function mostrarDetalheItemSheet(item) {
     corpo += `</div>`;
 
     if (d.maestria) corpo += `<div style="font-size:0.85rem;margin-bottom:6px"><strong>Maestria:</strong> ${d.maestria}</div>`;
-    if (d.custo || d.peso) corpo += `<div style="font-size:0.85rem;margin-bottom:6px"><strong>Custo:</strong> ${d.custo || '—'} | <strong>Peso:</strong> ${d.peso || '—'}</div>`;
+    if (d.custo || d.peso) corpo += `<div style="font-size:0.85rem;margin-bottom:6px"><strong>Custo:</strong> ${escHtml(d.custo || '—')} | <strong>Peso:</strong> ${escHtml(d.peso || '—')}</div>`;
 
     // Descrições das propriedades
     if (d.propriedades) {
@@ -933,7 +962,7 @@ async function mostrarDetalheItemSheet(item) {
     if (d.ca) corpo += `<strong>Classe de Armadura:</strong> ${d.ca}<br>`;
     if (d.requisito_forca && d.requisito_forca !== '—') corpo += `<strong>Requisito de Força:</strong> ${d.requisito_forca}<br>`;
     if (d.furtividade && d.furtividade !== '—') corpo += `<strong>Furtividade:</strong> ${d.furtividade}<br>`;
-    if (d.custo || d.peso) corpo += `<strong>Custo:</strong> ${d.custo || '—'} | <strong>Peso:</strong> ${d.peso || '—'}`;
+    if (d.custo || d.peso) corpo += `<strong>Custo:</strong> ${escHtml(d.custo || '—')} | <strong>Peso:</strong> ${escHtml(d.peso || '—')}`;
     corpo += `</div>`;
   } else if (item.tipo === 'customizado') {
     const d = item.dados || {};
@@ -961,7 +990,7 @@ async function mostrarDetalheItemSheet(item) {
       corpo += `<div style="font-size:0.85rem;margin-bottom:6px"><span class="badge" style="font-size:0.7rem;background:${d.tipo_uso === 'consumivel' ? '#e8f5e9;color:#2e7d32' : '#e3f2fd;color:#1565c0'}">${tipoLabel}</span></div>`;
     }
     if (d.custo || d.peso) {
-      corpo += `<div style="font-size:0.85rem"><strong>Custo:</strong> ${d.custo || '—'} | <strong>Peso:</strong> ${d.peso || '—'}</div>`;
+      corpo += `<div style="font-size:0.85rem"><strong>Custo:</strong> ${escHtml(d.custo || '—')} | <strong>Peso:</strong> ${escHtml(d.peso || '—')}</div>`;
     }
     if (d.descricao) {
       corpo += `<div class="md-content" style="margin-top:6px;font-size:0.85rem">${mdParaHtml(d.descricao)}</div>`;
@@ -972,8 +1001,10 @@ async function mostrarDetalheItemSheet(item) {
   }
 
   if (!corpo.trim()) corpo = '<div style="color:var(--text-muted)">Sem informações adicionais disponíveis.</div>';
+  const mecanica = Object.fromEntries(['weapon', 'armor', 'capacity', 'mechanics', 'speed', 'carryingCapacityLb'].filter(k => item.dados?.[k] != null).map(k => [k, item.dados[k]]));
+  corpo = `${rotuloLocalizado(item)}${item.source ? `<p>${escHtml(item.source.sourceTitle)}${item.source.printedPage ? ` · p. ${escHtml(item.source.printedPage)}` : ''}</p>` : ''}${corpo}${Object.keys(mecanica).length ? `<details><summary>Dados mecânicos de referência</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escHtml(JSON.stringify(mecanica, null, 2))}</pre></details>` : ''}`;
 
-  if (item.tipo === 'customizado') {
+  {
     const _idxItem = char.inventario.indexOf(item);
     abrirModal(item.nome, corpo,
       `<button class="btn btn-secondary" onclick="fecharModal()">Fechar</button>
@@ -983,8 +1014,5 @@ async function mostrarDetalheItemSheet(item) {
       window.fecharModal();
       abrirModalEditarItemCustomizado(item, _idxItem);
     });
-  } else {
-    abrirModal(item.nome, corpo);
   }
 }
-

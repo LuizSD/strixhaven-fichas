@@ -1,4 +1,6 @@
 // ============================================================
+import { correspondeBusca, normalizarBusca, NOMES_CLASSES } from './catalogo-localizado.js';
+import { registrarCatalogoMagias, correspondeConsultaMagia, normalizarMagia } from './magias/modelo.js';
 // Carregador de dados JSON (acessa ../dados/)
 // Cache em memória para evitar re-fetch
 // ============================================================
@@ -50,6 +52,10 @@ export async function getClasse(nome) {
   const dados = await fetchJSON(`classes/${nomeArq}.json`);
   if (!dados) return null;
 
+  if (!NOMES_CLASSES[nome]) return dados;
+  // A identidade do objeto em cache faz parte do contrato das superfícies de classe.
+  dados.name ??= { ptBR: nome, en: NOMES_CLASSES[nome], ptBRStatus: 'interface-translation' };
+  dados.source ??= { sourceId: 'phb-2024-base', sourceTitle: 'Livro do Jogador 2024 · catálogo existente', rulesVersion: '2024', section: 'Classes' };
   return dados;
 }
 
@@ -124,17 +130,20 @@ export async function getTalentos() {
 
 /** Carrega armas */
 export async function getArmas() {
-  return fetchJSON('equipamento/armas.json');
+  const base = await fetchJSON('equipamento/armas.json');
+  return base ? { ...base, armas: await localizarEquipamento(base.armas) } : null;
 }
 
 /** Carrega armaduras */
 export async function getArmaduras() {
-  return fetchJSON('equipamento/armaduras.json');
+  const base = await fetchJSON('equipamento/armaduras.json');
+  return base ? { ...base, armaduras: await localizarEquipamento(base.armaduras) } : null;
 }
 
 /** Carrega equipamento de aventura */
 export async function getEquipamentoAventura() {
-  return fetchJSON('equipamento/equipamento_aventura.json');
+  const base = await fetchJSON('equipamento/equipamento_aventura.json');
+  return base ? { ...base, itens: await localizarEquipamento(base.itens) } : null;
 }
 
 /** Carrega ferramentas */
@@ -142,13 +151,23 @@ export async function getFerramentas() {
   return fetchJSON('equipamento/ferramentas.json');
 }
 
+export async function getEquipamentoLegado() {
+  return [...((await fetchJSON('legacy/phb-equipment.json'))?.itens || []), ...((await fetchJSON('legacy/dmg-items.json'))?.itens || [])];
+}
+
+async function localizarEquipamento(itens = []) {
+  const nomes = new Map((await getEquipamentoLegado()).map(i => [normalizarBusca(i.nome), i.name]));
+  return itens.map(i => ({ ...i, name: i.name || { ptBR: i.nome, en: nomes.get(normalizarBusca(i.nome))?.en || '', ptBRStatus: nomes.has(normalizarBusca(i.nome)) ? 'interface-translation' : 'missing', original: i.nome }, source: i.source || { sourceId: 'phb-2024-base', sourceTitle: 'Livro do Jogador 2024 · catálogo existente', rulesVersion: '2024', section: 'Equipamento' } }));
+}
+
 // --- Magias ---
 
 /** Carrega índice de todas as magias (resumido) */
-export async function getIndiceMagias() {
+export async function getIndiceMagias({ incluirLegado = false } = {}) {
   const base = await fetchJSON('magias/_indice.json');
   if (!base) return null;
-  const magias = [...base.magias, ...await magiasStrixhaven()];
+  const magias = [...await localizarMagias(base.magias), ...await localizarMagias(await magiasStrixhaven(), 'strixhaven'), ...(incluirLegado ? await getMagiasLegado() : [])];
+  registrarCatalogoMagias(magias);
   return { ...base, magias, total_magias: magias.length };
 }
 
@@ -157,7 +176,7 @@ export async function getMagiasPorCirculo(circulo) {
   const nome = circulo === 0 ? 'truques' : `circulo_${circulo}`;
   const base = await fetchJSON(`magias/${nome}.json`);
   if (!base) return null;
-  const magias = [...base.magias, ...(await magiasStrixhaven()).filter(m => m.circulo === Number(circulo))];
+  const magias = [...await localizarMagias(base.magias), ...await localizarMagias((await magiasStrixhaven()).filter(m => m.circulo === Number(circulo)), 'strixhaven')];
   return { ...base, magias, total_magias: magias.length };
 }
 
@@ -198,19 +217,37 @@ export async function getMagiasRituais(circulo) {
 
 /** Busca uma magia específica pelo nome (carrega o círculo inteiro) */
 export async function getMagia(nome, circulo, id = null) {
+  if (id?.startsWith('phb-2014-')) return (await getMagiasLegado()).find(m => m.id === id) || null;
   const dados = await getMagiasPorCirculo(circulo);
   if (!dados) return null;
-  return dados.magias.find(m => id ? m.id === id : m.nome === nome) || null;
+  return dados.magias.find(m => id ? m.id === id : m.nome === nome || m.name?.en === nome || m.name?.ptBR === nome || m.name?.aliases?.includes(nome)) || null;
 }
 
 /** Busca magias por nome (busca no índice, retorna matches) */
 export async function buscarMagias(termo) {
-  const indice = await getIndiceMagias();
+  const indice = await getIndiceMagias({ incluirLegado: true });
   if (!indice) return [];
-  const termoNorm = termo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  return indice.magias.filter(m => {
-    const nomeNorm = m.nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    return nomeNorm.includes(termoNorm);
+  return indice.magias.filter(m => correspondeConsultaMagia(m, termo));
+}
+
+/** Alternativas explícitas: não entram nas tabelas de classe/círculo 2024. */
+export async function getMagiasLegado() {
+  return (await fetchJSON('legacy/phb-spells.json'))?.magias || [];
+}
+
+async function localizarMagias(magias, versao = '2024') {
+  const legado = await getMagiasLegado();
+  const nomes = new Map(legado.map(m => [normalizarBusca(m.nome), m.name]));
+  const ingles = (await fetchJSON('magias/nomes-en.json'))?.nomes || {};
+  const scc = { 'Silvery Barbs': 'Farpas Prateadas', 'Borrowed Knowledge': 'Conhecimento Emprestado', 'Kinetic Jaunt': 'Passo Cinético', 'Vortex Warp': 'Distorção de Vórtice', 'Wither and Bloom': 'Murchar e Florescer' };
+  return magias.map(m => {
+    const en = m.name?.en || (versao === 'strixhaven' ? m.nome : ingles[m.nome] || nomes.get(normalizarBusca(m.nome))?.en || '');
+    const alternativa = legado.find(l => normalizarMagia(l.name.en) === normalizarMagia(en));
+    const name = { ptBR: scc[m.nome] || m.nome, en, ptBRStatus: en ? 'interface-translation' : 'missing', original: m.nome, ...m.name,
+      aliases: [...new Set([...(m.name?.aliases || []), alternativa?.nome, m.nome].filter(Boolean))] };
+    return { ...m, id: m.id || `phb-2024-${en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`, name,
+      ritual: m.ritual ?? /ritual/i.test(m.tempo_conjuracao || ''), concentracao: m.concentracao ?? /concentra/i.test(m.duracao || ''),
+      source: m.source || { sourceId: versao === '2024' ? 'phb-2024-base' : 'scc-2021', sourceTitle: versao === '2024' ? 'Livro do Jogador 2024 · catálogo existente' : 'Strixhaven: Curriculum of Chaos', rulesVersion: versao, section: 'Magias' } };
   });
 }
 

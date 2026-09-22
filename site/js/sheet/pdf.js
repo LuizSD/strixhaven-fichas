@@ -9,7 +9,9 @@ import { char, especiesCache, passivosTalentosCache } from './estado.js';
 import { classesDe } from '../regras-multiclasse.js';
 import { ehProficienteEmSalvaguarda } from '../regras-salvaguardas.js';
 import { gerarHtmlImpressao } from './impressao.js';
-import { gerarPdfEditavel } from '../strixhaven/exportacao.js';
+import { exportarModeloPdf } from '../pdf-templates.js';
+import { alertasDaFicha } from './alertas-magias.js';
+import { reservasDeEspacos } from './reservas-espacos.js';
 
 /* ===========================================================================
    GERACAO DE PDF (pdf-lib)
@@ -21,7 +23,7 @@ import { gerarPdfEditavel } from '../strixhaven/exportacao.js';
    =========================================================================== */
 
 let _pdfLibPromise = null;
-function carregarPdfLib() {
+export function carregarPdfLib() {
   if (window.PDFLib) return Promise.resolve(window.PDFLib);
   if (!_pdfLibPromise) {
     _pdfLibPromise = new Promise((resolve, reject) => {
@@ -526,7 +528,7 @@ function resumoParaFormulario(dados) {
 export async function baixarPdfFicha(editavel = false) {
   toast('Gerando PDF...', 'info');
   try {
-    const bytes = editavel ? await gerarPdfEditavel({ resumo_calculado: resumoParaFormulario(_montarDadosCartao()), ...char }, await carregarPdfLib()) : await gerarPdfFicha();
+    const bytes = editavel ? await exportarModeloPdf(document.getElementById('modelo-pdf')?.value || 'strixhaven-atual', { resumo_calculado: resumoParaFormulario(_montarDadosCartao()), ...char, avisos_calculados: alertasDaFicha(), espacos_calculados: reservasDeEspacos() }, await carregarPdfLib()) : await gerarPdfFicha();
     const blob = new Blob([bytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     const nome = `Ficha ${char.nome || 'personagem'}.pdf`.replace(/[\\/:*?"<>|]/g, '-');

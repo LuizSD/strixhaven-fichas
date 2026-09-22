@@ -1,0 +1,14 @@
+{
+  "pages": 8,
+  "widgets": 168,
+  "editable": true,
+  "appearances": true,
+  "expectedValues": [
+    "Auditoria PHB",
+    "Silvestre",
+    "Linguagem Estelar",
+    "Desejo",
+    "Recompensa futura"
+  ],
+  "renderedPages": 8
+}

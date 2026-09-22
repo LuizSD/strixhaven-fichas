@@ -1,0 +1,362 @@
+# Traduções de interface, não traduções oficiais verificadas. Chaves inglesas independem da apresentação.
+Acid Splash|Respingo Ácido
+Aid|Auxílio
+Alarm|Alarme
+Alter Self|Alterar-se
+Animal Friendship|Amizade Animal
+Animal Messenger|Mensageiro Animal
+Animal Shapes|Formas Animais
+Animate Dead|Animar Mortos
+Animate Objects|Animar Objetos
+Antilife Shell|Cúpula Antivida
+Antimagic Field|Campo Antimagia
+Antipathy/Sympathy|Antipatia/Simpatia
+Arcane Eye|Olho Arcano
+Arcane Gate|Portal Arcano
+Arcane Lock|Tranca Arcana
+Armor of Agathys|Armadura de Agathys
+Arms of Hadar|Braços de Hadar
+Astral Projection|Projeção Astral
+Augury|Augúrio
+Aura of Life|Aura de Vida
+Aura of Purity|Aura de Pureza
+Aura of Vitality|Aura de Vitalidade
+Awaken|Despertar
+Bane|Perdição
+Banishing Smite|Golpe Banidor
+Banishment|Banimento
+Barkskin|Pele de Árvore
+Beacon of Hope|Farol de Esperança
+Beast Sense|Sentido Bestial
+Bestow Curse|Rogar Maldição
+Bigby's Hand|Mão de Bigby
+Blade Barrier|Barreira de Lâminas
+Blade Ward|Proteção contra Lâminas
+Bless|Bênção
+Blight|Malogro
+Blinding Smite|Golpe Cegante
+Blindness/Deafness|Cegueira/Surdez
+Blink|Piscar
+Blur|Nublar
+Branding Smite|Golpe Marcante
+Burning Hands|Mãos Flamejantes
+Call Lightning|Convocar Relâmpagos
+Calm Emotions|Acalmar Emoções
+Chain Lightning|Relâmpago em Cadeia
+Charm Person|Enfeitiçar Pessoa
+Chill Touch|Toque Arrepiante
+Chromatic Orb|Orbe Cromático
+Circle of Death|Círculo da Morte
+Circle of Power|Círculo de Poder
+Clairvoyance|Clarividência
+Clone|Clone
+Cloudkill|Névoa Mortal
+Cloud of Daggers|Nuvem de Adagas
+Color Spray|Leque Cromático
+Command|Comando
+Commune|Comunhão
+Commune with Nature|Comunhão com a Natureza
+Compelled Duel|Duelo Compelido
+Comprehend Languages|Compreender Idiomas
+Compulsion|Compulsão
+Cone of Cold|Cone de Frio
+Confusion|Confusão
+Conjure Animals|Conjurar Animais
+Conjure Barrage|Conjurar Rajada
+Conjure Celestial|Conjurar Celestial
+Conjure Elemental|Conjurar Elemental
+Conjure Fey|Conjurar Feérico
+Conjure Minor Elementals|Conjurar Elementais Menores
+Conjure Volley|Conjurar Saraivada
+Conjure Woodland Beings|Conjurar Seres da Floresta
+Contact Other Plane|Contatar Outro Plano
+Contagion|Contágio
+Contingency|Contingência
+Continual Flame|Chama Contínua
+Control Water|Controlar Água
+Control Weather|Controlar o Clima
+Cordon of Arrows|Cordão de Flechas
+Counterspell|Contramágica
+Create Food and Water|Criar Comida e Água
+Create or Destroy Water|Criar ou Destruir Água
+Create Undead|Criar Mortos-vivos
+Creation|Criação
+Crown of Madness|Coroa da Loucura
+Crusader's Mantle|Manto do Cruzado
+Cure Wounds|Curar Ferimentos
+Dancing Lights|Luzes Dançantes
+Darkness|Escuridão
+Darkvision|Visão no Escuro
+Daylight|Luz do Dia
+Death Ward|Proteção contra a Morte
+Delayed Blast Fireball|Bola de Fogo Adiada
+Demiplane|Semiplano
+Destructive Wave|Onda Destrutiva
+Detect Evil and Good|Detectar o Bem e o Mal
+Detect Magic|Detectar Magia
+Detect Poison and Disease|Detectar Veneno e Doença
+Detect Thoughts|Detectar Pensamentos
+Dimension Door|Porta Dimensional
+Disguise Self|Disfarçar-se
+Disintegrate|Desintegrar
+Dispel Evil and Good|Dissipar o Bem e o Mal
+Dispel Magic|Dissipar Magia
+Dissonant Whispers|Sussurros Dissonantes
+Divination|Adivinhação
+Divine Favor|Favor Divino
+Divine Word|Palavra Divina
+Dominate Beast|Dominar Besta
+Dominate Monster|Dominar Monstro
+Dominate Person|Dominar Pessoa
+Drawmij's Instant Summons|Invocação Instantânea de Drawmij
+Dream|Sonho
+Druidcraft|Arte Druídica
+Earthquake|Terremoto
+Eldritch Blast|Rajada Mística
+Elemental Weapon|Arma Elemental
+Enhance Ability|Aprimorar Atributo
+Enlarge/Reduce|Aumentar/Reduzir
+Ensnaring Strike|Golpe Enredante
+Entangle|Constrição
+Enthrall|Cativar
+Etherealness|Forma Etérea
+Evard's Black Tentacles|Tentáculos Negros de Evard
+Expeditious Retreat|Recuo Acelerado
+Eyebite|Mau-Olhado
+Fabricate|Fabricar
+Faerie Fire|Fogo das Fadas
+False Life|Vida Falsa
+Fear|Medo
+Feather Fall|Queda Suave
+Feeblemind|Enfraquecer Intelecto
+Feign Death|Simular Morte
+Find Familiar|Encontrar Familiar
+Find Steed|Encontrar Montaria
+Find the Path|Encontrar o Caminho
+Find Traps|Encontrar Armadilhas
+Finger of Death|Dedo da Morte
+Fireball|Bola de Fogo
+Fire Bolt|Raio de Fogo
+Fire Shield|Escudo de Fogo
+Fire Storm|Tempestade de Fogo
+Flame Blade|Lâmina Flamejante
+Flame Strike|Coluna de Chamas
+Flaming Sphere|Esfera Flamejante
+Flesh to Stone|Carne em Pedra
+Fly|Voo
+Fog Cloud|Névoa Obscurecente
+Forbiddance|Proibição
+Forcecage|Prisão de Energia
+Foresight|Premonição
+Freedom of Movement|Movimentação Livre
+Friends|Amigos
+Gaseous Form|Forma Gasosa
+Gate|Portal
+Geas|Missão
+Gentle Repose|Repouso Tranquilo
+Giant Insect|Inseto Gigante
+Glibness|Loquacidade
+Globe of Invulnerability|Globo de Invulnerabilidade
+Glyph of Warding|Glifo de Proteção
+Goodberry|Bom Fruto
+Grasping Vine|Vinha Esmagadora
+Grease|Área Escorregadia
+Greater Invisibility|Invisibilidade Maior
+Greater Restoration|Restauração Maior
+Guardian of Faith|Guardião da Fé
+Guards and Wards|Proteções e Barreiras
+Guidance|Orientação
+Guiding Bolt|Raio Guiador
+Gust of Wind|Lufada de Vento
+Hail of Thorns|Chuva de Espinhos
+Hallow|Consagrar
+Hallucinatory Terrain|Terreno Alucinógeno
+Harm|Ferir
+Haste|Velocidade
+Heal|Cura Completa
+Healing Word|Palavra Curativa
+Heat Metal|Aquecer Metal
+Hellish Rebuke|Repreensão Infernal
+Heroes' Feast|Banquete de Heróis
+Heroism|Heroísmo
+Hex|Bruxaria
+Hold Monster|Imobilizar Monstro
+Hold Person|Imobilizar Pessoa
+Holy Aura|Aura Sagrada
+Hunger of Hadar|Fome de Hadar
+Hunter's Mark|Marca do Caçador
+Hypnotic Pattern|Padrão Hipnótico
+Ice Storm|Tempestade de Gelo
+Identify|Identificação
+Illusory Script|Escrita Ilusória
+Imprisonment|Aprisionamento
+Incendiary Cloud|Nuvem Incendiária
+Inflict Wounds|Infligir Ferimentos
+Insect Plague|Praga de Insetos
+Invisibility|Invisibilidade
+Jump|Salto
+Knock|Arrombar
+Legend Lore|Conhecimento Lendário
+Leomund's Secret Chest|Baú Secreto de Leomund
+Leomund's Tiny Hut|Pequena Cabana de Leomund
+Lesser Restoration|Restauração Menor
+Levitate|Levitação
+Light|Luz
+Lightning Arrow|Flecha Relampejante
+Lightning Bolt|Relâmpago
+Locate Animals or Plants|Localizar Animais ou Plantas
+Locate Creature|Localizar Criatura
+Locate Object|Localizar Objeto
+Longstrider|Passos Longos
+Mage Armor|Armadura Arcana
+Mage Hand|Mãos Mágicas
+Magic Circle|Círculo Mágico
+Magic Jar|Recipiente Arcano
+Magic Missile|Mísseis Mágicos
+Magic Mouth|Boca Encantada
+Magic Weapon|Arma Mágica
+Major Image|Imagem Maior
+Mass Cure Wounds|Curar Ferimentos em Massa
+Mass Heal|Cura Completa em Massa
+Mass Healing Word|Palavra Curativa em Massa
+Mass Suggestion|Sugestão em Massa
+Maze|Labirinto
+Meld into Stone|Mesclar-se às Rochas
+Melf's Acid Arrow|Flecha Ácida de Melf
+Mending|Consertar
+Message|Mensagem
+Meteor Swarm|Chuva de Meteoros
+Mind Blank|Mente Vazia
+Minor Illusion|Ilusão Menor
+Mirage Arcane|Miragem Arcana
+Mirror Image|Reflexos
+Mislead|Despistar
+Misty Step|Passo Nebuloso
+Modify Memory|Modificar Memória
+Moonbeam|Raio Lunar
+Mordenkainen's Faithful Hound|Cão Fiel de Mordenkainen
+Mordenkainen's Magnificent Mansion|Mansão Magnífica de Mordenkainen
+Mordenkainen's Private Sanctum|Santuário Particular de Mordenkainen
+Mordenkainen's Sword|Espada de Mordenkainen
+Move Earth|Mover Terra
+Nondetection|Indetectabilidade
+Nystul's Magic Aura|Aura Mágica de Nystul
+Otiluke's Freezing Sphere|Esfera Congelante de Otiluke
+Otiluke's Resilient Sphere|Esfera Resiliente de Otiluke
+Otto's Irresistible Dance|Dança Irresistível de Otto
+Passwall|Criar Passagem
+Pass without Trace|Passos sem Pegadas
+Phantasmal Force|Força Fantasmagórica
+Phantasmal Killer|Assassino Fantasmagórico
+Phantom Steed|Montaria Fantasmagórica
+Planar Ally|Aliado Planar
+Planar Binding|Âncora Planar
+Plane Shift|Viagem Planar
+Plant Growth|Ampliar Plantas
+Poison Spray|Rajada de Veneno
+Polymorph|Metamorfose
+Power Word Heal|Palavra de Poder: Cura
+Power Word Kill|Palavra de Poder: Matar
+Power Word Stun|Palavra de Poder: Atordoar
+Prayer of Healing|Prece de Cura
+Prestidigitation|Prestidigitação
+Prismatic Spray|Rajada Prismática
+Prismatic Wall|Muralha Prismática
+Produce Flame|Criar Chamas
+Programmed Illusion|Ilusão Programada
+Project Image|Projetar Imagem
+Protection from Energy|Proteção contra Energia
+Protection from Evil and Good|Proteção contra o Bem e o Mal
+Protection from Poison|Proteção contra Veneno
+Purify Food and Drink|Purificar Comida e Bebida
+Raise Dead|Reviver os Mortos
+Rary's Telepathic Bond|Ligação Telepática de Rary
+Ray of Enfeeblement|Raio do Enfraquecimento
+Ray of Frost|Raio de Gelo
+Ray of Sickness|Raio Adoecente
+Regenerate|Regeneração
+Reincarnate|Reencarnação
+Remove Curse|Remover Maldição
+Resistance|Resistência
+Resurrection|Ressurreição
+Reverse Gravity|Inverter Gravidade
+Revivify|Revivificar
+Rope Trick|Truque de Corda
+Sacred Flame|Chama Sagrada
+Sanctuary|Santuário
+Scorching Ray|Raio Ardente
+Scrying|Vidência
+Searing Smite|Golpe Abrasador
+See Invisibility|Ver o Invisível
+Seeming|Semelhança
+Sending|Enviar Mensagem
+Sequester|Isolamento
+Shapechange|Alterar Forma
+Shatter|Despedaçar
+Shield|Escudo Arcano
+Shield of Faith|Escudo da Fé
+Shillelagh|Bordão Místico
+Shocking Grasp|Toque Chocante
+Silence|Silêncio
+Silent Image|Imagem Silenciosa
+Simulacrum|Simulacro
+Sleep|Sono
+Sleet Storm|Tempestade de Granizo
+Slow|Lentidão
+Spare the Dying|Acudir os Moribundos
+Speak with Animals|Falar com Animais
+Speak with Dead|Falar com os Mortos
+Speak with Plants|Falar com Plantas
+Spider Climb|Patas de Aranha
+Spike Growth|Crescer Espinhos
+Spirit Guardians|Guardiões Espirituais
+Spiritual Weapon|Arma Espiritual
+Staggering Smite|Golpe Cambaleante
+Stinking Cloud|Nuvem Fétida
+Stone Shape|Moldar Rochas
+Stoneskin|Pele Rochosa
+Storm of Vengeance|Tempestade da Vingança
+Suggestion|Sugestão
+Sunbeam|Raio Solar
+Sunburst|Explosão Solar
+Swift Quiver|Aljava Veloz
+Symbol|Símbolo
+Tasha's Hideous Laughter|Riso Histérico de Tasha
+Telekinesis|Telecinese
+Telepathy|Telepatia
+Teleport|Teletransporte
+Teleportation Circle|Círculo de Teletransporte
+Tenser's Floating Disk|Disco Flutuante de Tenser
+Thaumaturgy|Taumaturgia
+Thorn Whip|Chicote de Espinhos
+Thunderous Smite|Golpe Trovejante
+Thunderwave|Onda Trovejante
+Time Stop|Parar o Tempo
+Tongues|Idiomas
+Transport via Plants|Transporte por Plantas
+Tree Stride|Caminhar por Árvores
+True Polymorph|Metamorfose Verdadeira
+True Resurrection|Ressurreição Verdadeira
+True Seeing|Visão da Verdade
+True Strike|Golpe Certeiro
+Tsunami|Tsunami
+Unseen Servant|Servo Invisível
+Vampiric Touch|Toque Vampírico
+Vicious Mockery|Zombaria Viciosa
+Wall of Fire|Muralha de Fogo
+Wall of Force|Muralha de Energia
+Wall of Ice|Muralha de Gelo
+Wall of Stone|Muralha de Pedra
+Wall of Thorns|Muralha de Espinhos
+Warding Bond|Vínculo Protetor
+Water Breathing|Respirar na Água
+Water Walk|Caminhar sobre a Água
+Web|Teia
+Weird|Encarnação Fantasmagórica
+Wind Walk|Caminhar no Vento
+Wind Wall|Muralha de Vento
+Wish|Desejo
+Witch Bolt|Raio de Bruxa
+Word of Recall|Palavra de Recordação
+Wrathful Smite|Golpe Colérico
+Zone of Truth|Zona da Verdade

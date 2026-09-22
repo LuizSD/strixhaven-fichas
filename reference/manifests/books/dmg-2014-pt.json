@@ -1,0 +1,63 @@
+{
+  "id": "dmg-2014-pt",
+  "filename": "dd-5e-guia-do-mestre-biblioteca-elfica.pdf",
+  "sha256": "2ca3c21ee90d703ca5ab0e713540531d37893913afe2aef063d5f7fdb5adfcc3",
+  "pages": 322,
+  "alsoFoundAt": [
+    "assets-private/dd-5e-guia-do-mestre-biblioteca-elfica.pdf"
+  ],
+  "kind": "book",
+  "title": "Guia do Mestre",
+  "edition": "D&D 5e (2014)",
+  "printing": "não confirmada",
+  "year": 2014,
+  "language": "pt-BR",
+  "rulesVersion": "2014-legacy",
+  "pageOffset": 1,
+  "anchors": [
+    {
+      "physicalPage": 18,
+      "printedPage": 17
+    },
+    {
+      "physicalPage": 46,
+      "printedPage": 45
+    },
+    {
+      "physicalPage": 122,
+      "printedPage": 121
+    },
+    {
+      "physicalPage": 144,
+      "printedPage": 143
+    },
+    {
+      "physicalPage": 164,
+      "printedPage": 163
+    },
+    {
+      "physicalPage": 202,
+      "printedPage": 201
+    },
+    {
+      "physicalPage": 209,
+      "printedPage": 208
+    },
+    {
+      "physicalPage": 212,
+      "printedPage": 211
+    },
+    {
+      "physicalPage": 213,
+      "printedPage": 212
+    },
+    {
+      "physicalPage": 290,
+      "printedPage": 289
+    },
+    {
+      "physicalPage": 291,
+      "printedPage": 290
+    }
+  ]
+}

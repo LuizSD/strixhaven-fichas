@@ -8,6 +8,11 @@
 import { ATRIBUTOS_KEYS, ATRIBUTOS_NOMES, ATRIBUTO_NOME_PARA_KEY, CLASSES_INFO, PERICIAS } from '../dados-classes.js';
 import { renderAcademia, setupAcademia } from '../strixhaven/academia.js';
 import { setupExtras, renderExtrasDaFicha } from './extras.js';
+import { renderAlertasMagias } from './alertas-magias.js';
+import { rotuloLocalizado, NOMES_CLASSES } from '../catalogo-localizado.js';
+import { idiomaLocalizado } from '../idiomas-catalogo.js';
+import { modeloPdfHtml, setupModelosPdf } from '../pdf-templates.js';
+import { carregarPdfLib } from './pdf.js';
 import { baixarPdfFicha } from './pdf.js';
 import { renderManual, setupManual } from './manual.js';
 import { XP_POR_NIVEL } from '../levelup.js';
@@ -282,7 +287,9 @@ export function renderFichaCompleta() {
               })()} &middot; Nível ${char.nivel}
             </div>
             <div style="font-size:0.8rem;color:var(--text-muted)">Antecedente: ${escHtml(char.antecedente || '–')}${char.alinhamento ? ' | Alinhamento: ' + escHtml(char.alinhamento) : ''}</div>
-            <div style="font-size:0.8rem;color:var(--text-muted)">Tamanho: ${escHtml(_tamanho)}${(char.idiomas && char.idiomas.length) ? ' | Idiomas: ' + char.idiomas.map(escHtml).join(', ') : ''}</div>
+            <div style="font-size:0.8rem;color:var(--text-muted)">Tamanho: ${escHtml(_tamanho)}${(char.idiomas && char.idiomas.length) ? '<div>Idiomas: ' + char.idiomas.map(n => rotuloLocalizado(idiomaLocalizado(n, char))).join(' ') + '</div>' : ''}</div>
+            ${classesDe(char).map(c => rotuloLocalizado({ nome: c.classe, name: { en: NOMES_CLASSES[c.classe] } })).join('')}
+            ${renderAlertasMagias(true)}
             ${(estadoGuardiao && estadoGuardiao.sentidosSelvagensAtivo) ? '<div style="font-size:0.8rem;color:var(--text-muted)">Sentidos: Visão às Cegas 9 m</div>' : ''}
             ${(estadoGuardiao && estadoGuardiao.exaustao > 0) ? `<div style="font-size:0.8rem;color:var(--danger)">Exaustão: ${estadoGuardiao.exaustao}</div>` : ''}
             <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px">
@@ -1062,6 +1069,7 @@ export function renderFichaCompleta() {
     <div id="sh-inventario">${renderSecaoInventario()}</div>
 
     <!-- Detalhes pessoais -->
+    <div class="no-print">${modeloPdfHtml()}</div>
     <button class="btn btn-secondary no-print" id="pdf-editavel">Exportar PDF editável (AcroForm)</button>
     ${renderSecaoDetalhes()}
     ${renderManual()}
@@ -1081,6 +1089,7 @@ export function renderFichaCompleta() {
   setupManual(containerRef);
   container.querySelector('#btn-print')?.addEventListener('click', () => baixarPdfFicha());
   container.querySelector('#pdf-editavel')?.addEventListener('click', () => baixarPdfFicha(true));
+  setupModelosPdf(container, carregarPdfLib);
   container.querySelectorAll('[data-sh-alvo]').forEach(b => { b.onclick = e => { e.preventDefault(); document.getElementById(b.dataset.shAlvo)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }; });
   setupEventosHP();
   setupEventosDescanso();

@@ -6,7 +6,10 @@
 // ============================================================
 import { ATRIBUTO_NOME_PARA_KEY, CLASSES_INFO } from '../dados-classes.js';
 import { renderExtra } from '../strixhaven/extras.js';
-import { getMagiasClasse, getMagiasPorCirculo } from '../db.js';
+import { renderAlertasMagias } from './alertas-magias.js';
+import { rotuloLocalizado } from '../catalogo-localizado.js';
+import { resolverReferenciaMagia } from '../magias/modelo.js';
+import { getMagiasClasse, getMagiasPorCirculo, getMagia } from '../db.js';
 import { abrirModal, bonusProficiencia, calcMod, escHtml, getBonusTruquesOrdem, getLimitesMagias, getMagiaPreparadas, mdParaHtml, semAcento, toast } from '../utils.js';
 import { getEstadoFuria } from './classes/barbaro.js';
 import { renderSecaoPactoBruxo } from './classes/bruxo.js';
@@ -31,7 +34,7 @@ import { abrirPreenchimentoSlotMagia, mostrarBuscaGrimorio, mostrarBuscaMagia, m
 // seletor de classe (`tabs-superficie-magia`, em renderSecaoMagias) e o
 // estado compartilhado que ele escreve.
 import { dadosDe, definirSuperficieSelecionada, superficiesDaFicha, superficieAtivaDaFicha } from './contexto-classe.js';
-import { nivelNa, temClasse } from '../regras-multiclasse.js';
+import { nivelNa, temClasse, classeInicial } from '../regras-multiclasse.js';
 // reservasDeEspacos/gastarEspaco/recuperarUmEspaco (Tarefa 4, sub-projeto 4):
 // os pontos deste arquivo que liam/escreviam `char.espacos_magia[circulo]`
 // direto, na forma antiga, passam a ler/escrever pelo acessador derivado e
@@ -73,6 +76,10 @@ export { magiaContaNoLimite, magiaEhEspecial, truqueContaNoLimite };
  */
 function superficieAtiva() {
   return superficieAtivaDaFicha(char);
+}
+
+function rotuloMagia(m) {
+  return rotuloLocalizado(m.name ? m : resolverReferenciaMagia(m) || (indiceMagiasCache || []).find(i => i.nome === m.nome && i.circulo === m.circulo) || m);
 }
 
 /**
@@ -420,7 +427,7 @@ function renderLinhaMagiaPersonalizada(magia, indice) {
     <div class="magia-item magia-personalizada${rotuloOrigem ? ' magia-dominio' : ''}" data-magia-custom-index="${indice}" data-magia-circ="${magia.circulo}">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div>
-          <div class="magia-nome">${rotuloOrigem ? '<span class="badge-dominio">&#9733;</span> ' : ''}${escHtml(magia.nome)} <span class="badge badge-secondary" style="font-size:0.6rem">Personalizada</span>${ritual}</div>
+          <div class="magia-nome">${rotuloOrigem ? '<span class="badge-dominio">&#9733;</span> ' : ''}${rotuloMagia(magia)} <span class="badge badge-secondary" style="font-size:0.6rem">Personalizada</span>${ritual}</div>
           <div class="magia-meta"><span>${magia.circulo === 0 ? 'Truque' : `${magia.circulo}º Círculo`}</span></div>
           ${rotuloOrigem ? `<div style="font-size:0.65rem;color:var(--secondary);font-weight:600;margin-top:1px">${escHtml(rotuloOrigem)}</div>` : ''}
           ${magia.naoPreparada ? '<div style="font-size:0.65rem;color:var(--text-muted);font-style:italic">Não preparada</div>' : ''}
@@ -853,7 +860,7 @@ export function renderSecaoMagias() {
   let maxPreparadas = _limites.preparadas;
   let maxTruques = _limites.truques;
   // Truques extras de Combatente Druídico / Abençoado
-  maxTruques += getTruquesExtraEstiloLuta();
+  maxTruques += sup?.classe === classeInicial(char)?.classe ? getTruquesExtraEstiloLuta() : 0;
   // Truques extras do Clérigo Taumaturgo / Druida Xamã (utils.js, mesma
   // função que o criador usa -- antes só o criador somava esse bônus, e a
   // ficha calculava o limite sem ele). `sup?.classe` (Tarefa 3): sem isso a
@@ -957,6 +964,7 @@ export function renderSecaoMagias() {
           <button class="btn btn-sm btn-secondary" id="btn-add-magia-custom">Magia Personalizada</button>
         </div>
       </div>
+      ${renderAlertasMagias()}
       ${(char._slots_truque_livre || 0) > 0 && tipoConj === 'conhecidas' ? `
         <div class="info-box warning no-print" style="margin:0 0 8px;font-size:0.85rem;display:flex;align-items:center;justify-content:space-between;gap:8px">
           <span>Você tem <strong>${char._slots_truque_livre}</strong> vaga(s) de truque em aberto para o seu nível.</span>
@@ -1228,11 +1236,11 @@ export function renderSecaoMagias() {
               // NENHUMA fonte do circulo tem espaco, nao so a prioritaria.
               const todosEsgotados = circulos.every(c => !circulosComEspacoDisponivel.has(parseInt(c)));
               return `
-              <div class="magia-item preparada ${ehEspecial ? 'magia-dominio' : ''}" data-magia-nome="${m.nome}" data-magia-circ="${m.circulo}">
+              <div class="magia-item preparada ${ehEspecial ? 'magia-dominio' : ''}" data-magia-nome="${m.nome}" data-magia-circ="${m.circulo}" data-magia-ref="${escHtml(m.catalogo_ref || m.id || '')}">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                   <div>
                     <div class="magia-nome">
-                      ${ehEspecial ? `<span class="badge-dominio">&#9733;</span> ` : ''}${m.nome}
+                      ${ehEspecial ? `<span class="badge-dominio">&#9733;</span> ` : ''}${rotuloMagia(m)}
                     </div>
                     ${badgesMagiaRapidos(m.nome)}
                     ${ehEspecial ? `<div style="font-size:0.65rem;color:var(--secondary);font-weight:600;margin-top:1px">${origemLabel}</div>` : ''}
@@ -1265,10 +1273,10 @@ export function renderSecaoMagias() {
           </summary>
           <div style="padding-top:4px">
             ${truquesEspecie.slice().sort((a, b) => prioridadeConjuracao(a.nome) - prioridadeConjuracao(b.nome)).map(m => `
-              <div class="magia-item magia-dominio" data-magia-nome="${m.nome}" data-magia-circ="0">
+              <div class="magia-item magia-dominio" data-magia-nome="${m.nome}" data-magia-circ="0" data-magia-ref="${escHtml(m.catalogo_ref || m.id || '')}">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                   <div>
-                    <div class="magia-nome"><span class="badge-dominio">&#9733;</span> ${m.nome}</div>
+                    <div class="magia-nome"><span class="badge-dominio">&#9733;</span> ${rotuloMagia(m)}</div>
                     ${badgesMagiaRapidos(m.nome)}
                     <div style="font-size:0.65rem;color:var(--secondary);font-weight:600;margin-top:1px">Espécie</div>
                   </div>
@@ -1278,10 +1286,10 @@ export function renderSecaoMagias() {
               </div>
             `).join('')}
             ${truquesTalento.slice().sort((a, b) => prioridadeConjuracao(a.nome) - prioridadeConjuracao(b.nome)).map(m => `
-              <div class="magia-item magia-dominio" data-magia-nome="${m.nome}" data-magia-circ="0">
+              <div class="magia-item magia-dominio" data-magia-nome="${m.nome}" data-magia-circ="0" data-magia-ref="${escHtml(m.catalogo_ref || m.id || '')}">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                   <div>
-                    <div class="magia-nome"><span class="badge-dominio">&#9733;</span> ${m.nome}</div>
+                    <div class="magia-nome"><span class="badge-dominio">&#9733;</span> ${rotuloMagia(m)}</div>
                     ${badgesMagiaRapidos(m.nome)}
                     <div style="font-size:0.65rem;color:var(--secondary);font-weight:600;margin-top:1px">${rotuloOrigemMagia(m)}</div>
                   </div>
@@ -1291,10 +1299,10 @@ export function renderSecaoMagias() {
               </div>
             `).join('')}
             ${truquesSempre.slice().sort((a, b) => prioridadeConjuracao(a.nome) - prioridadeConjuracao(b.nome)).map(m => `
-              <div class="magia-item magia-dominio" data-magia-nome="${m.nome}" data-magia-circ="0">
+              <div class="magia-item magia-dominio" data-magia-nome="${m.nome}" data-magia-circ="0" data-magia-ref="${escHtml(m.catalogo_ref || m.id || '')}">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                   <div>
-                    <div class="magia-nome"><span class="badge-dominio">&#9733;</span> ${m.nome}</div>
+                    <div class="magia-nome"><span class="badge-dominio">&#9733;</span> ${rotuloMagia(m)}</div>
                     ${badgesMagiaRapidos(m.nome)}
                     <div style="font-size:0.65rem;color:var(--secondary);font-weight:600;margin-top:1px">Subclasse</div>
                   </div>
@@ -1309,10 +1317,10 @@ export function renderSecaoMagias() {
                 ? `<div style="font-size:0.6rem;color:var(--accent);font-weight:600;margin-top:1px">${mods.map(mod => `${mod.invocacao}: ${mod.efeito}`).join(' | ')}</div>`
                 : '';
               return `
-              <div class="magia-item ${mods.length > 0 ? 'magia-dominio' : ''}" data-magia-nome="${m.nome}" data-magia-circ="0">
+              <div class="magia-item ${mods.length > 0 ? 'magia-dominio' : ''}" data-magia-nome="${m.nome}" data-magia-circ="0" data-magia-ref="${escHtml(m.catalogo_ref || m.id || '')}">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                   <div>
-                    <div class="magia-nome">${mods.length > 0 ? '<span class="badge-dominio">&#9889;</span> ' : ''}${m.nome}</div>
+                    <div class="magia-nome">${mods.length > 0 ? '<span class="badge-dominio">&#9889;</span> ' : ''}${rotuloMagia(m)}</div>
                     ${badgesMagiaRapidos(m.nome)}
                     ${modHtml}
                   </div>
@@ -1367,12 +1375,12 @@ export function renderSecaoMagias() {
               // Preparadas usa) em vez de reescrever a busca de descrição aqui.
               const atributoMagia = custom
                 ? `data-magia-custom-index="${custom.indicePersonalizada}"`
-                : `data-magia-nome="${m.nome}"`;
+                : `data-magia-nome="${m.nome}" data-magia-ref="${escHtml(m.catalogo_ref || m.id || '')}"`;
               return `
               <div class="magia-item ${jaPreparada ? 'preparada' : ''} ${ehRitual && !jaPreparada ? 'magia-dominio' : ''}" ${atributoMagia} data-magia-circ="${m.circulo}">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                   <div style="opacity:${jaPreparada || ehRitual ? '1' : '0.7'}">
-                    <div class="magia-nome">${m.nome} ${jaPreparada ? '<span class="badge badge-success" style="font-size:0.6rem">Preparada</span>' : ''}${ehRitual ? ' <span class="badge" style="font-size:0.6rem;background:var(--secondary);color:#fff">Ritual</span>' : ''}</div>
+                    <div class="magia-nome">${rotuloMagia(m)} ${jaPreparada ? '<span class="badge badge-success" style="font-size:0.6rem">Preparada</span>' : ''}${ehRitual ? ' <span class="badge" style="font-size:0.6rem;background:var(--secondary);color:#fff">Ritual</span>' : ''}</div>
                     <div class="magia-meta"><span>${m.circulo}º Círculo</span></div>
                     ${!jaPreparada && !ehRitual ? '<div style="font-size:0.65rem;color:var(--text-muted);font-style:italic">Não preparada</div>' : ''}
                   </div>
@@ -2930,14 +2938,17 @@ export function setupEventosEspacosMagia() {
 
       // Carregar descrição se vazia
       if (!descEl.innerHTML.trim()) {
-        const dados = await getMagiasPorCirculo(circ);
-        const magia = dados?.magias?.find(m => m.nome === nome);
+        const ref = item.dataset.magiaRef;
+        const salvo = [...(char.magias_conhecidas || []), ...(char.magias_preparadas || []), ...(char.grimorio || [])].find(m => m.nome === nome && Number(m.circulo) === circ && (!ref || m.catalogo_ref === ref || m.id === ref));
+        const base = await getMagia(nome, circ, resolverReferenciaMagia(salvo || { nome, circulo: circ })?.id || ref || null);
+        const magia = base ? { ...base, ...salvo } : salvo;
         if (magia) {
           descEl.innerHTML = `
+            ${magia.name ? rotuloMagia(magia) : ''}
             <div class="magia-meta" style="margin-bottom:4px">
-              <span>${magia.escola}</span> | <span>${magia.tempo_conjuracao}</span> |
-              <span>${magia.alcance}</span> | <span>${magia.componentes}</span> |
-              <span>${magia.duracao}</span>
+              <span>${escHtml(magia.escola)}</span> | <span>${escHtml(magia.tempo_conjuracao)}</span> |
+              <span>${escHtml(magia.alcance)}</span> | <span>${escHtml(magia.componentes)}</span> |
+              <span>${escHtml(magia.duracao)}</span>
             </div>
             <div class="md-content">${mdParaHtml(magia.descricao)}</div>
             ${magia.circulo_superior ? `<div class="info-box info" style="margin-top:4px"><strong>Circulos superiores:</strong><div class="md-content">${mdParaHtml(magia.circulo_superior)}</div></div>` : ''}

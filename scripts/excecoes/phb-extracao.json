@@ -1,0 +1,12 @@
+[
+  {"pass":"descriptions","rawName":"Acrn SPLASH","canonicalName":"Acid Splash","printedPage":211,"reason":"OCR lê o d em versalete como rn; confirmado pelo título visual e pela lista p.209."},
+  {"pass":"descriptions","rawName":"Arn","canonicalName":"Aid","printedPage":211,"reason":"OCR lê id em versalete como rn; lista p.207 confirma Aid."},
+  {"pass":"descriptions","rawName":"DISPEL EVIL AND Goon","canonicalName":"Dispel Evil and Good","printedPage":233,"reason":"OCR troca d por n em versalete; lista de Clérigo p.208 confirma Good."},
+  {"pass":"descriptions","rawName":"LEOMUNn's TINY HuT","canonicalName":"Leomund's Tiny Hut","printedPage":255,"reason":"OCR troca d por n no nome próprio; lista p.207 confirma Leomund."},
+  {"pass":"descriptions","rawName":"MELF's Acrn ARROW","canonicalName":"Melf's Acid Arrow","printedPage":259,"reason":"OCR lê d em versalete como rn; lista p.210 confirma Acid."},
+  {"pass":"descriptions","rawName":"MoRDENKAINEN's SwoRo","canonicalName":"Mordenkainen's Sword","printedPage":262,"reason":"OCR troca o d final por o; lista p.211 confirma Sword."},
+  {"pass":"descriptions","rawName":"0TILUKE'S FREEZING SPHERE","canonicalName":"Otiluke's Freezing Sphere","printedPage":263,"reason":"OCR usa zero em vez de O no nome próprio; lista p.211 confirma Otiluke."},
+  {"pass":"descriptions","rawName":"0TILUKE's RESILIENT SPHERE","canonicalName":"Otiluke's Resilient Sphere","printedPage":264,"reason":"OCR usa zero em vez de O no nome próprio; lista p.211 confirma Otiluke."},
+  {"pass":"metadata","rawName":"Jllusion cantrip","canonicalName":"Minor Illusion","printedPage":260,"reason":"OCR troca I por J no rótulo da escola. O detector reconhece Jllusion como illusion; título visual, nível e escola conferidos em recorte renderizado."},
+  {"pass":"metadata","rawName":"Component: V, S","canonicalName":"Contagion","printedPage":227,"reason":"Cabeçalho no singular Component na página do livro; interpretado como o campo Components, com V e S. Não exclui a magia nem inventa componente."}
+]

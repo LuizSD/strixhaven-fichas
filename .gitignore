@@ -128,3 +128,8 @@ docs/PERGUNTAS-PENDENTES.txt
 .ai/
 assets-private/
 _dist/
+reference/**/*.pdf
+reference/**/*.PDF
+reference/**/*.png
+reference/**/*.jpg
+reference/**/*.txt
