@@ -1004,9 +1004,9 @@ function ehEscritaDeEspelho(linha) {
 }
 
 const ESCRITAS_PERMITIDAS = new Set([
-  'site/js/creator/passo-classe.js:202',  // personagem.subclasse = e.target.value; rótulos bilíngues deslocaram linhas
-  'site/js/creator/passo-classe.js:268',  // personagem.subclasse = ''
-  'site/js/creator/passo-classe.js:278',  // personagem.classe = nome
+  'site/js/creator/passo-classe.js:203',  // personagem.subclasse = e.target.value; teclado do seletor deslocou linhas
+  'site/js/creator/passo-classe.js:269',  // personagem.subclasse = ''
+  'site/js/creator/passo-classe.js:279',  // personagem.classe = nome
 
   // levelup.js SAIU INTEIRO desta lista no sub-projeto 5 (Tarefa 3a+3b).
   // Eram ONZE entradas: `personagem.nivel`, `personagem.subclasse`,
@@ -1052,7 +1052,7 @@ const ESCRITAS_PERMITIDAS = new Set([
   // de Fonte de Magia são efêmeros por natureza (concedidos e limpos a
   // cada Descanso Longo), e nenhuma tarefa do sub-projeto 4 lhes dá um
   // escritor único.
-  'site/js/sheet/hp-descanso.js:1017',      // char.espacos_magia_extras = {} (limpa no Longo); recuperação de extras deslocou linhas
+  'site/js/sheet/hp-descanso.js:1019',      // char.espacos_magia_extras = {} (limpa no Longo); integração de descanso UA deslocou linhas
   'site/js/sheet/habilidades.js:933',       // if (!extras) extras = {}  (Fonte de Magia) -- número de linha reapontado pela rodada 1 de correção da Tarefa 6 (import de superficieAtivaDaFicha e comentário do portão de Memorizar Magia acrescentados acima)
   'site/js/sheet/habilidades.js:934',       // extras[c] = (extras[c] || 0) + 1  (Fonte de Magia) -- idem
   // habilidades.js: Resplendor Sagrado (Paladino/Devoção), Fonte de Magia

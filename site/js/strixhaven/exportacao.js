@@ -1,6 +1,7 @@
 import { escHtml } from '../utils.js';
 import { CAMPOS_ACADEMICOS } from './modelo.js';
 import { calcularConjuracaoExtra } from './extras.js';
+import { resumoExportacaoUA, nivelUA } from '../artificer-ua/modelo.js';
 
 /** Percorre todos os subcampos, incluindo extensões desconhecidas; IDs ficam no caminho. */
 export function camposExportaveis(valor, caminho = '', resultado = []) {
@@ -12,6 +13,14 @@ export function camposExportaveis(valor, caminho = '', resultado = []) {
     }
   } else if (valor != null) resultado.push({ caminho, valor: String(valor) });
   return resultado;
+}
+
+// Somente a projeção visual omite a etiqueta e a versão interna do Artífice.
+// A serialização completa e os dados originais continuam disponíveis sem alteração.
+function camposVisiveis(valor) {
+  return camposExportaveis(valor).filter(c =>
+    !(c.caminho.endsWith('sourceTitle') && c.valor === 'UA 2019 · Playtest') &&
+    !(c.caminho.endsWith('rulesVersion') && c.valor === 'ua-2019-playtest'));
 }
 
 /** Blocos de impressão também alimentam o PDF descritivo existente. */
@@ -41,15 +50,19 @@ export function htmlComplemento(p) {
     blocos.push(`<h2>Magia Extra</h2><h3>${escHtml(m.nome)}</h3><p>${m.sempre_preparada === false ? 'Ocupa vaga' : 'Não ocupa vaga'} · Regra da mesa</p>`);
     const semValor = m.sem_teste === true ? 'não se aplica' : 'não definido';
     blocos.push(`<p>CD calculada: ${escHtml(valores.cd_calculada ?? semValor)} · CD efetiva: ${escHtml(valores.cd_efetiva ?? semValor)} · Ataque calculado: ${escHtml(valores.ataque_calculado ?? semValor)} · Ataque efetivo: ${escHtml(valores.ataque_efetivo ?? semValor)}</p>`);
-    for (const c of camposExportaveis(m)) blocos.push(`<p>${escHtml(c.caminho)}: ${escHtml(c.valor)}</p>`);
+    for (const c of camposVisiveis(m)) blocos.push(`<p>${escHtml(c.caminho)}: ${escHtml(c.valor)}</p>`);
   }
   if (p.edicoes || p.ajustes_manuais) {
     blocos.push('<h2>Ajustes manuais identificados</h2>');
-    for (const c of camposExportaveis({ edicoes: p.edicoes, ajustes_manuais: p.ajustes_manuais })) blocos.push(`<p>${escHtml(c.caminho)}: ${escHtml(c.valor)}</p>`);
+    for (const c of camposVisiveis({ edicoes: p.edicoes, ajustes_manuais: p.ajustes_manuais })) blocos.push(`<p>${escHtml(c.caminho)}: ${escHtml(c.valor)}</p>`);
   }
   if (p.beneficios_manuais?.length) {
     blocos.push('<h2>Habilidades e benefícios manuais · Extra</h2>');
-    for (const c of camposExportaveis(p.beneficios_manuais)) blocos.push(`<p>${escHtml(c.caminho)}: ${escHtml(c.valor)}</p>`);
+    for (const c of camposVisiveis(p.beneficios_manuais)) blocos.push(`<p>${escHtml(c.caminho)}: ${escHtml(c.valor)}</p>`);
+  }
+  if (nivelUA(p)) {
+    blocos.push('<h2>Artífice / Artificer</h2>');
+    for (const c of camposVisiveis({resumo:resumoExportacaoUA(p),estado:p.artificerUA})) blocos.push(`<p>${escHtml(c.caminho)}: ${escHtml(c.valor)}</p>`);
   }
   return `<section class="sh-impressao">${blocos.join('\n')}</section>`;
 }
@@ -80,14 +93,14 @@ export async function gerarPdfEditavel(p, PDFLib, documento = null) {
   const novaPagina = () => {
     pagina = doc.addPage([595, 842]); numero++; y = 760; coluna = 0; alturaLinha = 0;
     pagina.drawText('STRIXHAVEN', { x: 36, y: 799, font: titulo, size: 20, color: rgb(.08, .17, .27) });
-    pagina.drawText(`Registro editável próprio · D&D 2024 · ${numero}`, { x: 36, y: 779, font: fonte, size: 9 });
+    pagina.drawText(`Registro editável próprio · ${nivelUA(p)?'Artífice / Artificer':'D&D 2024'} · ${numero}`, { x: 36, y: 779, font: fonte, size: 9 });
     pagina.drawLine({ start: { x: 36, y: 770 }, end: { x: 559, y: 770 }, color: rgb(.62, .47, .2) });
   };
   novaPagina();
   let seq = 0;
   const rotulos = { resumo_calculado: 'Resumo calculado', strixhaven: 'Vida acadêmica', magias_customizadas: 'Magias manuais e extras', atributos_base: 'Atributos de base', pv_max: 'PV máximos', pv_atual: 'PV atuais', pv_temporario: 'PV temporários', beneficios_manuais: 'Habilidades e benefícios manuais', ajustes_manuais: 'Ajustes manuais', edicoes: 'Histórico de ajustes', estado_extra: 'Estado da magia extra', cd_manual: 'CD manual', ataque_manual: 'Ataque manual', usos_total: 'Uso especial: quantidade', usos_gastos: 'Uso especial: gastos' };
-  const projecao = { ...p, magias_customizadas: (p.magias_customizadas || []).map(m => m.origem === 'extra' ? { ...m, calculos_conjuracao: calcularConjuracaoExtra(m, p) } : m) };
-  for (const c of camposExportaveis(projecao)) {
+  const projecao = { ...p, ...(nivelUA(p)?{artificer_ua_resumo:resumoExportacaoUA(p)}:{}), magias_customizadas: (p.magias_customizadas || []).map(m => m.origem === 'extra' ? { ...m, calculos_conjuracao: calcularConjuracaoExtra(m, p) } : m) };
+  for (const c of camposVisiveis(projecao)) {
     const compacto = c.valor.length <= 60 && !c.valor.includes('\n') && c.caminho.length < 105;
     const largura = compacto ? 253 : 523;
     const linhas = linhasTexto(seguro(c.valor), fonte, largura - 23, 10);

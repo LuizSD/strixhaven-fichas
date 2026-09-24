@@ -343,6 +343,7 @@ test('CA base sem armadura é 10 + mod. Destreza, para toda Destreza de 1 a 30',
 // plano deste domínio afirmam.
 const CLASSES_CONJURADORAS_ESPERADAS = [
   'Bardo', 'Bruxo', 'Clérigo', 'Druida', 'Feiticeiro', 'Guardião', 'Mago', 'Paladino',
+  'artificer-ua-2019', // UA p.3: INT, mesma fórmula; adiciona a classe à varredura exaustiva.
 ].sort();
 
 test('CD e ataque de magia batem com 8+BP+mod. / BP+mod., em toda classe conjuradora × nível 1-20 × atributo de conjuração 1-30', () => {

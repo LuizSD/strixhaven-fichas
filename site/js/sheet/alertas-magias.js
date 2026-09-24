@@ -42,7 +42,7 @@ export function divergenciaQuantidade(real, esperado, rotulo) {
 export function alertasDaFicha() {
   const avisos = [];
   for (const sup of superficiesDaFicha(char)) {
-    const limites = getLimitesMagias(sup.tabela, sup.nivelClasse, getConjuracaoSubclasse(sup.classe, sup.subclasse, sup.nivelClasse));
+    const limites = getLimitesMagias(sup.tabela, sup.nivelClasse, getConjuracaoSubclasse(sup.classe, sup.subclasse, sup.nivelClasse), char);
     const truques = truquesComExtrasPorClasse(char, sup.classe, classesData);
     const preparadas = preparadasComExtrasPorClasse(char, sup.classe, classesData);
     for (const [real, esperado, titulo] of [

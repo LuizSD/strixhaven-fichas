@@ -73,8 +73,8 @@ function montarConjuracao(char, classeData, info, helpers, sub, subclasseEfetiva
   const tabela = classeData?.tabela_caracteristicas;
   let truquesAtual = tabela ? getTruquesConhecidos(tabela, nivelNaClasseAnterior) : 0;
   let truquesNovo = tabela ? getTruquesConhecidos(tabela, nivelNaClasseNovo) : 0;
-  let magiasAtual = tabela ? getMagiaPreparadas(tabela, nivelNaClasseAnterior) : 0;
-  let magiasNovo = tabela ? getMagiaPreparadas(tabela, nivelNaClasseNovo) : 0;
+  let magiasAtual = tabela ? getMagiaPreparadas(tabela, nivelNaClasseAnterior, char) : 0;
+  let magiasNovo = tabela ? getMagiaPreparadas(tabela, nivelNaClasseNovo, char) : 0;
 
   // Para subclasses conjuradoras, os limites vêm da tabela da subclasse
   if (ehSubConj) {

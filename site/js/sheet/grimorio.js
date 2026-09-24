@@ -6,6 +6,7 @@
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
 import { getIndiceMagias, getMagiasPorCirculo, getListaExpandidaStrixhaven } from '../db.js';
+import { ARTIFICER_ID } from '../artificer-ua/dados.js';
 import { camposExtra, campoExtraSemTeste, lerExtra } from '../strixhaven/extras.js';
 import { nomesMagia, normalizarMagia } from '../magias/modelo.js';
 import { rotuloLocalizado } from '../catalogo-localizado.js';
@@ -236,6 +237,10 @@ function avisoSuperficieAtiva(superficies, sup, labelMg, semClasse) {
 
 export async function mostrarBuscaMagia() {
   const sup = superficieAtiva();
+  if (sup?.classe===ARTIFICER_ID) {
+    const {abrirBuscaMagiasUA}=await import('../artificer-ua/ui.js');
+    return abrirBuscaMagiasUA(char,(await getIndiceMagias({incluirLegado:true})).magias,()=>{salvar();renderFichaCompleta();});
+  }
   const subConj = subConjDaSuperficie(sup);
   const tipoConj = sup ? sup.tipo : (subConj ? 'conhecidas' : 'preparadas');
   const labelMg = tipoConj === 'conhecidas' ? 'Conhecida' : 'Preparada';
@@ -306,7 +311,7 @@ export async function mostrarBuscaMagia() {
   // "à vontade" é o único valor coerente para o pouco que aparece (magias
   // de origem talento/espécie/personalizada, que não contam neste limite).
   const semLimiteConhecido = !tabela && !subConj;
-  const limites = getLimitesMagias(tabela, sup?.nivelClasse ?? 0, subConj);
+  const limites = getLimitesMagias(tabela, sup?.nivelClasse ?? 0, subConj, char);
   let maxPrep = semLimiteConhecido ? 99 : limites.preparadas;
   let maxTruq = semLimiteConhecido ? 99 : limites.truques;
   // Truques extras de Combatente Druídico / Abençoado
@@ -1524,14 +1529,14 @@ export async function mostrarFormMagiaCustom(indiceEdicao = null, opcoesExtra = 
       const semLimiteConhecido = !sup.tabela && !subConj;
       if (ehTruqueSalvo) {
         if (semLimiteConhecido) return true;
-        const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj);
+        const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj, char);
         const maxTruq = limites.truques + getTruquesExtraEstiloLuta() + getBonusTruquesOrdem(char, sup.classe);
         const classificacao = truquesComExtrasPorClasse(char, sup.classe);
         return classificacao.desta.length < maxTruq;
       }
       if (ehMagoAgora) return true;
       if (semLimiteConhecido) return true;
-      const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj);
+      const limites = getLimitesMagias(sup.tabela, sup.nivelClasse ?? 0, subConj, char);
       const classificacao = preparadasComExtrasPorClasse(char, sup.classe);
       return classificacao.desta.length < limites.preparadas;
     };

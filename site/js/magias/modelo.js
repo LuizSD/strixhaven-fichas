@@ -2,6 +2,7 @@
 import { novoId } from '../strixhaven/modelo.js';
 
 export const CLASSES_MAGIA_EN = { Bardo: 'Bard', Clérigo: 'Cleric', Druida: 'Druid', Paladino: 'Paladin', Guardião: 'Ranger', Feiticeiro: 'Sorcerer', Bruxo: 'Warlock', Mago: 'Wizard', Guerreiro: 'Fighter', Ladino: 'Rogue', Bárbaro: 'Barbarian', Monge: 'Monk', Artífice: 'Artificer' };
+CLASSES_MAGIA_EN['artificer-ua-2019']='Artífice Artificer UA 2019';
 export const ESCOLAS_MAGIA_EN = { Abjuração: 'Abjuration', Conjuração: 'Conjuration', Invocação: 'Conjuration', Adivinhação: 'Divination', Encantamento: 'Enchantment', Evocação: 'Evocation', Ilusão: 'Illusion', Necromancia: 'Necromancy', Transmutação: 'Transmutation' };
 export const normalizarMagia = valor => String(valor ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
 export const nomesMagia = m => [...new Set([m?.nome, typeof m?.name === 'string' ? m.name : m?.name?.ptBR, m?.name?.en, ...(m?.name?.aliases || [])].filter(Boolean).map(normalizarMagia))];
@@ -94,7 +95,7 @@ export function correspondeConsultaMagia(m, consulta) {
     ESCOLAS_MAGIA_EN[m.escola], ...(m.classes || []), ...(m.classes || []).map(c => CLASSES_MAGIA_EN[c]),
     m.circulo === 0 ? 'truque truques cantrip cantrips' : `${m.circulo}º círculo nível level ${m.circulo}`,
     m.source?.sourceTitle, m.source?.sourceId, m.source?.rulesVersion, m.source?.printedPage,
-    m.source?.rulesVersion === '2014-legacy' ? 'PHB Legado 2014 Players Handbook' : m.source?.rulesVersion === '2024' ? 'PHB 2024' : 'Strixhaven',
+    m.source?.rulesVersion === '2014-legacy' ? 'PHB Legado 2014 Players Handbook' : m.source?.rulesVersion === '2024' ? 'PHB 2024' : m.source?.rulesVersion === 'strixhaven' ? 'Strixhaven' : m.source?.sourceTitle,
     m.ritual ? 'ritual' : '', m.concentracao ? 'concentração concentration' : ''].filter(v => v != null).join(' ');
   const alvo = normalizarMagia(texto);
   // Preserva a frase: “Mage Hand” não pode casar “Mage Armor” + “Handbook”.

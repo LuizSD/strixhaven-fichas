@@ -29,6 +29,7 @@ import assert from 'node:assert/strict';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { RAIZ } from './harness.mjs';
+import { ESPECIALIZACOES_UA } from '../../../site/js/artificer-ua/dados.js';
 
 /**
  * Lê os 48 nomes de subclasse declarados em dados/classes/*.json.
@@ -83,6 +84,7 @@ function literaisDeSubclasse() {
 }
 
 const NOMES_REAIS = nomesReaisDeSubclasse();
+const IDS_UA = new Set(ESPECIALIZACOES_UA.map(s=>s.id));
 const LITERAIS = literaisDeSubclasse();
 
 test('sanity: dados/classes/*.json declara as 48 subclasses', () => {
@@ -99,7 +101,7 @@ test('sanity: a varredura encontra literais de subclasse em site/js/', () => {
 });
 
 test('todo literal de subclasse em site/js/ corresponde a uma subclasse real', () => {
-  const orfaos = LITERAIS.filter((l) => !NOMES_REAIS.has(l.nome));
+  const orfaos = LITERAIS.filter((l) => !NOMES_REAIS.has(l.nome) && !IDS_UA.has(l.nome));
   const detalhe = orfaos.map((l) => `${l.arquivo}:${l.linha} -> '${l.nome}'`).join('\n  ');
   assert.deepEqual(orfaos, [],
     'literal(is) de subclasse que nenhuma entrada de dados/classes/*.json declara -- ' +

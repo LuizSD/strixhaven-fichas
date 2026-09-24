@@ -5,6 +5,7 @@
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
 import { CLASSES_INFO } from '../dados-classes.js';
+import { battleReadyUA, efeitosItemUA } from '../artificer-ua/modelo.js';
 import { DENOMINACOES, ICONE_MOEDA, NOMES_MOEDA, adicionarMoeda, converterParaMaior, formatarCarteira, parseCusto, proximaDenominacaoMaior, removerQuantidadeMoeda, taxasSaoPadrao } from '../moedas.js';
 import { carregarComprarAtivoPadrao, resetarTaxasMoeda, salvarComprarAtivoPadrao, salvarTaxasMoeda } from '../store.js';
 import { abrirModal, bonusProficiencia, calcMod, escHtml, fmtMod, fmtPeso, parsePeso, getCapacidadeCarga, getPesoTotalInventario, mdParaHtml, semAcento, toast } from '../utils.js';
@@ -17,8 +18,8 @@ import { sheetBadgeProf, sheetTemProfArma, sheetTemProfArmadura } from './condic
 import { char, passivosTalentosCache, salvar } from './estado.js';
 import { renderFichaCompleta } from './ficha.js';
 import { htmlFormularioItemCustomizado, lerFormularioItemCustomizado } from './item-customizado-form.js';
-import { TETO_SINTONIZACAO, itensSintonizados, podeSintonizar } from '../regras-sintonizacao.js';
-import { rotuloLocalizado } from '../catalogo-localizado.js';
+import { tetoSintonizacao, itensSintonizados, podeSintonizar } from '../regras-sintonizacao.js';
+import { rotuloLocalizado, tituloFonteLocalizado } from '../catalogo-localizado.js';
 
 // --- Inventário na ficha ---
 /** Estado de carga do personagem: peso atual, capacidade e flag de sobrecarga. */
@@ -43,7 +44,7 @@ function htmlContadorSintonizados() {
   const temAlgumQuePede = itensSintonizados(char).length > 0
     || (char.inventario || []).some(i => i?.dados?.requer_sintonizacao);
   if (!temAlgumQuePede) return '';
-  return `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:10px">Sintonizados: <strong>${itensSintonizados(char).length}</strong> / ${TETO_SINTONIZACAO}</span>`;
+  return `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:10px">Sintonizados: <strong>${itensSintonizados(char).length}</strong> / ${tetoSintonizacao(char)}</span>`;
 }
 
 export function renderSecaoInventario() {
@@ -142,7 +143,7 @@ function renderSheetInvItem(item, idx) {
   // Badge de proficiência
   let profBadge = '';
   if (item.tipo === 'arma' && item.dados?.categoria) {
-    profBadge = sheetBadgeProf(sheetTemProfArma({ categoria: item.dados.categoria, propriedades: item.dados.propriedades || '' }));
+    profBadge = sheetBadgeProf(sheetTemProfArma({ nome:item.nome, categoria: item.dados.categoria, propriedades: item.dados.propriedades || '' }));
   }
   if ((item.tipo === 'armadura' || item.tipo === 'escudo') && item.dados?.categoria) {
     profBadge = sheetBadgeProf(sheetTemProfArmadura({ categoria: item.dados.categoria, nome: item.nome }));
@@ -183,8 +184,10 @@ function renderSheetInvItem(item, idx) {
       usaForcaNoAtaque = true;
     }
 
-    const temProf = sheetTemProfArma({ categoria: item.dados.categoria, propriedades: item.dados.propriedades || '' });
-    const bonusAtq = modAtq + (temProf ? prof : 0);
+    const temProf = sheetTemProfArma({ nome:item.nome, categoria: item.dados.categoria, propriedades: item.dados.propriedades || '' });
+    if (battleReadyUA(char,item) && calcMod(char.atributos.inteligencia)>modAtq) { modAtq=calcMod(char.atributos.inteligencia); usaForcaNoAtaque=false; }
+    const efeitoUA=efeitosItemUA(char,item);
+    const bonusAtq = modAtq + (temProf ? prof : 0) + efeitoUA.ataque;
     // Bônus de ataque de talentos
     let bonusAtqTalento = 0;
     const _passivos = passivosTalentosCache || {};
@@ -242,7 +245,7 @@ function renderSheetInvItem(item, idx) {
       const sufixo = matchDano[3] || '';
       const estadoFuria = getEstadoFuria();
       const bonusFuria = estadoFuria?.ativa && usaForcaNoAtaque ? (estadoFuria.dano || 0) : 0;
-      const bonusTotalDano = modAtq + bonusFuria;
+       const bonusTotalDano = modAtq + bonusFuria + efeitoUA.dano;
       // Bônus de dano de talentos
       let bonusDanoTalento = 0;
       const ehArremesso = props.includes('arremesso');
@@ -253,7 +256,7 @@ function renderSheetInvItem(item, idx) {
 
       if (modExistente) {
         const modBase = parseInt(String(modExistente).replace(/\s+/g, '')) || 0;
-        const modFinal = modBase + bonusFuria + bonusDanoTalento;
+        const modFinal = modBase + bonusFuria + bonusDanoTalento + efeitoUA.dano;
         const sinal = modFinal >= 0 ? `+${modFinal}` : `${modFinal}`;
         danoExibicao = `${dado}${sinal}${sufixo}`.replace(/\s+/g, ' ').trim();
       } else if (bonusTotalDanoFinal !== 0) {
@@ -327,7 +330,7 @@ function renderSheetInvItem(item, idx) {
       </div>
       <div class="inv-item-acoes no-print" style="align-items:center">
         ${item.dados?.requer_sintonizacao ? `
-          <label class="inv-sintonia" title="${podeSintonizar(char, idx) ? 'Sintonizar com este item' : `Limite de ${TETO_SINTONIZACAO} itens sintonizados atingido`}"
+          <label class="inv-sintonia" title="${podeSintonizar(char, idx) ? 'Sintonizar com este item' : `Limite de ${tetoSintonizacao(char)} itens sintonizados atingido`}"
                  style="display:flex;align-items:center;gap:3px;font-size:0.65rem;${podeSintonizar(char, idx) ? '' : 'opacity:0.45;cursor:not-allowed'}">
             <input type="checkbox" data-sintonizar="${idx}" ${item.sintonizado ? 'checked' : ''} ${podeSintonizar(char, idx) ? '' : 'disabled'}>
             Sint.
@@ -463,7 +466,7 @@ export function setupEventosInventarioSheet() {
       if (!item) return;
       if (!item.sintonizado && !podeSintonizar(char, idx)) {
         caixa.checked = false;
-        toast(`Voce ja esta sintonizado com ${TETO_SINTONIZACAO} itens.`, 'error');
+        toast(`Voce ja esta sintonizado com ${tetoSintonizacao(char)} itens.`, 'error');
         return;
       }
       item.sintonizado = caixa.checked;
@@ -1002,7 +1005,7 @@ async function mostrarDetalheItemSheet(item) {
 
   if (!corpo.trim()) corpo = '<div style="color:var(--text-muted)">Sem informações adicionais disponíveis.</div>';
   const mecanica = Object.fromEntries(['weapon', 'armor', 'capacity', 'mechanics', 'speed', 'carryingCapacityLb'].filter(k => item.dados?.[k] != null).map(k => [k, item.dados[k]]));
-  corpo = `${rotuloLocalizado(item)}${item.source ? `<p>${escHtml(item.source.sourceTitle)}${item.source.printedPage ? ` · p. ${escHtml(item.source.printedPage)}` : ''}</p>` : ''}${corpo}${Object.keys(mecanica).length ? `<details><summary>Dados mecânicos de referência</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escHtml(JSON.stringify(mecanica, null, 2))}</pre></details>` : ''}`;
+  corpo = `${rotuloLocalizado(item)}${item.source ? `<p>${escHtml(tituloFonteLocalizado(item.source))}${item.source.printedPage ? ` · p. ${escHtml(item.source.printedPage)}` : ''}</p>` : ''}${corpo}${Object.keys(mecanica).length ? `<details><summary>Dados mecânicos de referência</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escHtml(JSON.stringify(mecanica, null, 2))}</pre></details>` : ''}`;
 
   {
     const _idxItem = char.inventario.indexOf(item);

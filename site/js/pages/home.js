@@ -5,6 +5,8 @@ import { listarPersonagens, removerPersonagem, duplicarPersonagem, exportarTodos
 import { enfileirarSync, obterIdsPendentesRemocao } from '../sync.js';
 import { toast, abrirModal, fmtData, escHtml } from '../utils.js';
 import { CLASSES_INFO } from '../dados-classes.js';
+import { nomeClasseLocalizado, rotuloLocalizado } from '../catalogo-localizado.js';
+import { ARTIFICER_ID } from '../artificer-ua/dados.js';
 import { classesDe } from '../regras-multiclasse.js';
 import { sincronizacaoConfigurada } from '../campanha-config.js';
 import { copiarFichasOriginais } from '../store.js';
@@ -378,7 +380,7 @@ function montarTextoClassesCartao(p) {
   const cs = classesDe(p);
   if (!cs.length) return '';
   return cs.map((c) =>
-    `${escHtml(c.classe)}${c.subclasse ? ` (${escHtml(c.subclasse)})` : ''}${cs.length > 1 ? ` ${escHtml(c.nivel)}` : ''}`
+    `${c.classe===ARTIFICER_ID?rotuloLocalizado({nome:c.classe}):escHtml(c.classe)}${c.subclasse ? ` (${escHtml(nomeClasseLocalizado(c.subclasse))})` : ''}${cs.length > 1 ? ` ${escHtml(c.nivel)}` : ''}`
   ).join(' / ');
 }
 

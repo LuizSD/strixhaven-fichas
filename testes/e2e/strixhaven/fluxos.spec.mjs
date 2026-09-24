@@ -338,9 +338,12 @@ test('catálogo aditivo e escolhas de Iniciado são explícitos e idempotentes',
     p.antecedente = 'Estudante de Witherbloom (adaptação)';
     p.talentos = ['Iniciado de Strixhaven (adaptação)'];
     s.salvarPersonagem(p);
-    return { tamanhoOwlin: getTamanho((await db.getEspecies()).especies.find(e => e.id === 'scc-owlin-2024').texto_completo), especies: (await db.getEspecies()).especies.length, antecedentes: (await db.getAntecedentes()).antecedentes.length, talentos: (await db.getTalentos()).todos.length, talentos2: (await db.getTalentos()).todos.length, magias: (await db.getIndiceMagias()).magias.length, lista: (await db.getMagiasClasse('Mago', p)).lista_magias['1º Círculo'].map(m => m.nome) };
+    const magias = (await db.getIndiceMagias()).magias;
+    const acrescimosUA = magias.filter(m => ['xge-2017', 'artificer-ua-2019'].includes(m.source?.sourceId));
+    return { tamanhoOwlin: getTamanho((await db.getEspecies()).especies.find(e => e.id === 'scc-owlin-2024').texto_completo), especies: (await db.getEspecies()).especies.length, antecedentes: (await db.getAntecedentes()).antecedentes.length, talentos: (await db.getTalentos()).todos.length, talentos2: (await db.getTalentos()).todos.length, magias: magias.length - acrescimosUA.length, acrescimosUA: acrescimosUA.length, lista: (await db.getMagiasClasse('Mago', p)).lista_magias['1º Círculo'].map(m => m.nome) };
   });
   expect(catalogos).toMatchObject({ especies: 12, antecedentes: 21, talentos: 77, talentos2: 77, magias: 396 });
+  expect(catalogos.acrescimosUA).toBe(17);
   expect(catalogos.lista).toContain('Curar Ferimentos');
   expect(catalogos.tamanhoOwlin).toBe('Médio ou Pequeno');
   await page.reload();

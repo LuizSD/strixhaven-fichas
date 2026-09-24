@@ -856,7 +856,7 @@ export function renderSecaoMagias() {
   // Ladino, `getLimitesMagias` caía para a tabela da subclasse (nenhuma
   // aqui) e devolvia 0/0, mesmo com a superfície de conjuração ativa
   // (Mago) tendo limite de verdade.
-  const _limites = getLimitesMagias(sup?.tabela, sup?.nivelClasse ?? 0, subConj);
+  const _limites = getLimitesMagias(sup?.tabela, sup?.nivelClasse ?? 0, subConj, char);
   let maxPreparadas = _limites.preparadas;
   let maxTruques = _limites.truques;
   // Truques extras de Combatente Druídico / Abençoado

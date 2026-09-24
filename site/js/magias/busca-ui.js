@@ -1,7 +1,7 @@
 import { getIndiceMagias, getMagia } from '../db.js';
 import { listarPersonagens, salvarPersonagem } from '../store.js';
 import { abrirModal, escHtml, toast } from '../utils.js';
-import { rotuloLocalizado } from '../catalogo-localizado.js';
+import { rotuloLocalizado, tituloFonteLocalizado } from '../catalogo-localizado.js';
 import { filtrarMagias, magiaSelecionada, conflitosMagia, adicionarMagiaRegistrada, reconciliarMagias, componentesMagia, CLASSES_MAGIA_EN, ESCOLAS_MAGIA_EN } from './modelo.js';
 import { contextoDeMagias, compatibilidadeMagia } from './contexto.js';
 import { abrirEditorMagia } from './editor.js';
@@ -15,7 +15,7 @@ function metadados(m) {
   return `<p><strong>${m.circulo === 0 ? 'Truque · nível 0' : m.circulo+'º círculo'}</strong> · ${escHtml(m.escola)}${ESCOLAS_MAGIA_EN[m.escola] ? ` / ${escHtml(ESCOLAS_MAGIA_EN[m.escola])}` : ''}</p>
     <div class="spell-classes">${(m.classes || []).map(c => `<span class="badge">${escHtml(c)}${CLASSES_MAGIA_EN[c] ? ` <small lang="en">${escHtml(CLASSES_MAGIA_EN[c])}</small>` : ''}</span>`).join('')}</div>
     <p><span class="badge">Ritual: ${m.ritual ? 'Sim' : 'Não'}</span> <span class="badge">Concentração: ${m.concentracao ? 'Sim' : 'Não'}</span></p>
-    <p class="spell-source">${escHtml(m.source?.sourceTitle || 'Fonte personalizada')} · ${escHtml(m.source?.rulesVersion || 'custom')}${m.source?.printedPage ? ' · p. '+escHtml(m.source.printedPage) : ' · página não informada'}</p>`;
+    <p class="spell-source">${escHtml(tituloFonteLocalizado(m.source) || 'Fonte personalizada')}${m.source?.rulesVersion === 'ua-2019-playtest' ? '' : ' · '+escHtml(m.source?.rulesVersion || 'custom')}${m.source?.printedPage ? ' · p. '+escHtml(m.source.printedPage) : ' · página não informada'}</p>`;
 }
 export async function abrirDetalhesMagia(m, p = null) {
   const completa = m.source?.rulesVersion === 'custom' ? m : await getMagia(m.nome, m.circulo, m.id) || m;

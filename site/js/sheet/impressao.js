@@ -15,6 +15,7 @@ import { conjuraPorAlgumaClasse } from '../regras-multiclasse-conjuracao.js';
 import { armadurasDoPersonagem, armasDoPersonagem } from '../regras-multiclasse-proficiencias.js';
 import { classesDe, reservasDadosVida, temClasse } from '../regras-multiclasse.js';
 import { ehProficienteEmSalvaguarda } from '../regras-salvaguardas.js';
+import { bonusSalvaguardasUA, defesasUA } from '../artificer-ua/modelo.js';
 // fundirPreparadasComPersonalizadas (issues #49/#50/#54): a MESMA fusao que
 // a secao Magias da ficha usa. Esta folha tinha uma copia propria que
 // empurrava toda personalizada de circulo como "sempre preparada" e nao
@@ -400,7 +401,7 @@ export async function gerarHtmlImpressao() {
           const mod = calcMod(char.atributos[key]);
           // Mesma fonte única da ficha (sheet/ficha.js).
           const proficiente = ehProficienteEmSalvaguarda(char, nome);
-          const bonus = mod + (proficiente ? prof : 0);
+          const bonus = mod + (proficiente ? prof : 0) + bonusSalvaguardasUA(char);
           return `
             <div class="print-save-item">
               <div class="print-save-prof ${proficiente ? 'ativo' : ''}"></div>
@@ -441,9 +442,9 @@ export async function gerarHtmlImpressao() {
   `;
 
   // --- Defesas ---
-  const resistencias = [...(char.resistencias || [])];
+  const resistencias = [...new Set([...(char.resistencias || []),...defesasUA(char).resistencias])];
   const vulnerabilidades = char.vulnerabilidades || [];
-  const imunidades = char.imunidades || [];
+  const imunidades = [...new Set([...(char.imunidades || []),...defesasUA(char).imunidades])];
   if (resistencias.length > 0 || vulnerabilidades.length > 0 || imunidades.length > 0) {
     pag1 += `<div class="print-section"><div class="print-section-title">Defesas</div><div class="print-defenses">`;
     if (resistencias.length > 0) pag1 += `<div><strong>Resistencias:</strong> ${resistencias.join(', ')}</div>`;

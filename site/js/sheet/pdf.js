@@ -12,6 +12,9 @@ import { gerarHtmlImpressao } from './impressao.js';
 import { exportarModeloPdf } from '../pdf-templates.js';
 import { alertasDaFicha } from './alertas-magias.js';
 import { reservasDeEspacos } from './reservas-espacos.js';
+import { bonusSalvaguardasUA } from '../artificer-ua/modelo.js';
+import { ARTIFICER_ID } from '../artificer-ua/dados.js';
+import { nomeClasseLocalizado } from '../catalogo-localizado.js';
 
 /* ===========================================================================
    GERACAO DE PDF (pdf-lib)
@@ -75,11 +78,11 @@ function _sanitizePdfText(t) {
 export function montarSubtituloCartaoPdf(c) {
   const cs = classesDe(c);
   const classes = cs.map((cl) => {
-    const subclasse = cl.subclasse ? ` (${cl.subclasse})` : '';
+    const subclasse = cl.subclasse ? ` (${nomeClasseLocalizado(cl.subclasse)})` : '';
     const nivel = cs.length > 1 ? ` ${cl.nivel}` : '';
     const dispensado = c?.edicoes?.campos?.[`prerequisitoDispensado.${cl.classe}`]
       ? ' (pré-requisito dispensado)' : '';
-    return `${cl.classe}${subclasse}${nivel}${dispensado}`;
+    return `${cl.classe===ARTIFICER_ID?'Artífice / Artificer':cl.classe}${subclasse}${nivel}${dispensado}`;
   }).join(' / ');
   return `${c.especie || ''} ${classes} — Nível ${c.nivel}` +
     `${c.antecedente ? ` | ${c.antecedente}` : ''}${c.alinhamento ? ` | ${c.alinhamento}` : ''}`;
@@ -137,7 +140,7 @@ function _montarDadosCartao() {
     const m = calcMod(char.atributos[k]);
     // Mesma fonte única da ficha e da impressão.
     const p = ehProficienteEmSalvaguarda(char, ATRIBUTOS_NOMES[k]);
-    return { nome: ATRIBUTOS_NOMES[k], bonus: fmtMod(m + (p ? prof : 0)), prof: p };
+    return { nome: ATRIBUTOS_NOMES[k], bonus: fmtMod(m + (p ? prof : 0) + bonusSalvaguardasUA(char)), prof: p };
   });
 
   const listaBase = ['Percepção','Intuição','Investigação','Religião','História','Prestidigitação','Furtividade','Persuasão','Atletismo','Medicina','Acrobacia','Enganação','Arcanismo','Sobrevivência','Natureza','Atuação','Intimidação','Lidar com Animais'];

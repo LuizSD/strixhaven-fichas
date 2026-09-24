@@ -1,6 +1,7 @@
 // Extensão da ficha 2024. Nunca projeta o personagem em um schema menor.
 import { CLASSES_INFO } from '../dados-classes.js';
 import { migrarFotos } from '../fotos-modelo.js';
+import { migrarUA } from '../artificer-ua/modelo.js';
 export const FACULDADES = ['Lorehold', 'Prismari', 'Quandrix', 'Silverquill', 'Witherbloom'];
 
 /** Fonte única de cota extra; não grava cópias em preparadas ou grimório. */
@@ -54,6 +55,7 @@ export function migrarAcademia(p) {
   if (!p || typeof p !== 'object') return p;
   p.schemaVersion = Math.max(Number(p.schemaVersion) || 0, 2);
   migrarFotos(p);
+  migrarUA(p);
   for (const chave of ['idiomas_personalizados', 'magias_customizadas', 'inventario', 'beneficios_manuais']) colecaoImportada(p, p, chave);
   if (p.idiomas != null && !Array.isArray(p.idiomas)) { guardarImportacaoPendente(p, 'idiomas', p.idiomas); p.idiomas = []; }
   for (const idioma of p.idiomas_personalizados) {

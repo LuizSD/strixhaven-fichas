@@ -2,6 +2,7 @@
 // Sistema de Level-Up D&D 2024
 // ============================================================
 import { CLASSES_INFO, ESCOLAS_SUBCLASSE_MAGO } from './dados-classes.js';
+import { ARTIFICER_ID, ASI_UA } from './artificer-ua/dados.js';
 import { getClasse, getEspecies, getIndiceMagias, getTalentos, getMagiasRituais } from './db.js';
 import { getTruquesFixosSubclasse } from './regras-conjuracao-subclasse.js';
 import { calcMod, bonusProficiencia, getEspacosMagia, getTruquesConhecidos, getMagiaPreparadas } from './utils.js';
@@ -398,6 +399,7 @@ export async function obterCaracteristicasNivel(classe, nivel) {
  * Verifica se o nível concede Aumento de Atributo
  */
 export function concedeAumentoAtributo(classe, nivel) {
+  if (classe===ARTIFICER_ID) return ASI_UA.includes(nivel);
   const aumentos = {
     'Clérigo': [4, 8, 12, 16, 19],
     'Bárbaro': [4, 8, 12, 16, 19],
@@ -450,6 +452,7 @@ export function aplicarCapstoneAtributo(personagem, atributos, ganho) {
  * Verifica se o nível exige seleção de subclasse
  */
 export function exigeSubclasse(classe, nivel) {
+  if (classe===ARTIFICER_ID) return nivel===3;
   // A maioria das classes escolhe subclasse no nível 3
   const niveisSubclasse = {
     'Clérigo': 3,

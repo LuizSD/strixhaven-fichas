@@ -24,6 +24,7 @@
 // ============================================================
 import { CLASSES_INFO, PERICIAS } from './dados-classes.js';
 import { classesDe, classeInicial } from './regras-multiclasse.js';
+import { nivelUA, subclasseUA } from './artificer-ua/modelo.js';
 
 /**
  * Concessoes de UMA classe da ficha, ja decidindo entre o conjunto
@@ -143,6 +144,7 @@ function descartarVariantesEnglobadas(lista) {
  * nao ha variante qualificada que possa se contradizer.
  */
 export function armasDoPersonagem(personagem) {
+  if (nivelUA(personagem)>=3 && subclasseUA(personagem)==='battle-smith') return descartarVariantesEnglobadas([...new Set([...unirEntreClasses(personagem,'armas'),'Marcial'])]);
   return descartarVariantesEnglobadas(unirEntreClasses(personagem, 'armas'));
 }
 

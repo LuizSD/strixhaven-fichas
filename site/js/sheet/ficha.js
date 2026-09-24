@@ -9,7 +9,9 @@ import { ATRIBUTOS_KEYS, ATRIBUTOS_NOMES, ATRIBUTO_NOME_PARA_KEY, CLASSES_INFO, 
 import { renderAcademia, setupAcademia } from '../strixhaven/academia.js';
 import { setupExtras, renderExtrasDaFicha } from './extras.js';
 import { renderAlertasMagias } from './alertas-magias.js';
-import { rotuloLocalizado, NOMES_CLASSES } from '../catalogo-localizado.js';
+import { rotuloLocalizado, NOMES_CLASSES, nomeClasseLocalizado } from '../catalogo-localizado.js';
+import { renderArtificerUA } from '../artificer-ua/ui.js';
+import { nivelUA, migrarUA, estadoUA } from '../artificer-ua/modelo.js';
 import { idiomaLocalizado } from '../idiomas-catalogo.js';
 import { abrirModalPdf } from '../pdf-modal.js';
 import { carregarPdfLib } from './pdf.js';
@@ -283,7 +285,7 @@ export function renderFichaCompleta() {
               ${escHtml(char.especie || '')} ${(() => {
                 const cs = classesDe(char);
                 return cs.map((c) =>
-                  `${escHtml(c.classe)}${c.subclasse ? ` (${escHtml(c.subclasse)})` : ''}${cs.length > 1 ? ` ${c.nivel}` : ''}${seloPrerequisitoDispensado(c.classe, { comBotaoRemover: true })}`
+                  `${escHtml(nomeClasseLocalizado(c.classe))}${c.subclasse ? ` (${escHtml(nomeClasseLocalizado(c.subclasse))})` : ''}${cs.length > 1 ? ` ${c.nivel}` : ''}${seloPrerequisitoDispensado(c.classe, { comBotaoRemover: true })}`
                 ).join(' / ');
               })()} &middot; Nível ${char.nivel}
             </div>
@@ -907,7 +909,7 @@ export function renderFichaCompleta() {
           // exibida como texto 250 linhas acima, em ficha.js:480 -- nunca
           // marcava salvaguarda nenhuma (issue #21).
           const proficiente = ehProficienteEmSalvaguarda(char, nome);
-          const bonus = mod + (proficiente ? prof : 0);
+          const bonus = mod + (proficiente ? prof : 0) + (nivelUA(char)>=20 ? estadoUA(char).bonusSalvaguardas : 0);
           const condicoes = char.condicoes || [];
           const incapacitado = condicoes.includes('Incapacitado');
 
@@ -1066,6 +1068,7 @@ export function renderFichaCompleta() {
     ${(conjuraPorAlgumaClasse(char) || getTruquesExtraEstiloLuta() > 0 || char.iniciado_em_magia?.lista || (char.iniciado_em_magia_instancias?.length > 0) || possuiAlgumaMagia({ ...char, magias_customizadas: (char.magias_customizadas || []).filter(m => m.origem !== 'extra') })) ? renderSecaoMagias() : ''}
     ${renderExtrasDaFicha()}
 
+    ${nivelUA(char) ? '<section id="artificer-ua-painel"></section>' : ''}
     <!-- Inventário -->
     <div id="sh-inventario">${renderSecaoInventario()}</div>
 
@@ -1089,6 +1092,7 @@ export function renderFichaCompleta() {
   setupExtras(containerRef);
   setupManual(containerRef);
   const salvarFotos = () => { salvar(); renderFichaCompleta(); };
+  if (nivelUA(char)) { migrarUA(char); renderArtificerUA(char,container.querySelector('#artificer-ua-painel'),salvarFotos); }
   renderRetratoFotos(char, container.querySelector('#retrato-personagem'), salvarFotos);
   renderAlbumFotos(char, container.querySelector('#album-fotos'), salvarFotos);
   container.querySelector('#btn-print')?.addEventListener('click', () => abrirModalPdf(carregarPdfLib, id => baixarPdfFicha(id !== 'descritivo', id, true)));

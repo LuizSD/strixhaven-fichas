@@ -218,10 +218,10 @@ export function reservasDeEspacos() {
  *   dados de classe), mas fica registrado para quem depurar um `false`
  *   inesperado.
  */
-export function gastarEspaco(p, fonte, circulo) {
+export function gastarEspaco(p, fonte, circulo, mapaDados = classesData) {
   if (!p || typeof p !== 'object') return false;
   migrarEspacosDeMagia(p);
-  const alvo = montarReservasDeEspacos(p, classesData)
+  const alvo = montarReservasDeEspacos(p, mapaDados)
     .find((r) => r.fonte === fonte && r.circulo === Number(circulo));
   if (!alvo || alvo.disponiveis <= 0) return false;
   if (!p.espacos_magia || typeof p.espacos_magia !== 'object') p.espacos_magia = { conjuracao: {}, pacto: {} };

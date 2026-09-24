@@ -3,8 +3,8 @@
   "cwd": "testes/e2e",
   "exitCode": 0,
   "stats": {
-    "startTime": "2026-09-22T16:30:01.024Z",
-    "duration": 189968.077,
+    "startTime": "2026-09-24T12:18:34.051Z",
+    "duration": 123610.193,
     "expected": 25,
     "skipped": 0,
     "unexpected": 0,
