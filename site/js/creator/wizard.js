@@ -327,7 +327,7 @@ function validarStep() {
         if (!tabelaCaract) return true;
 
         let truquesNecessarios = getTruquesConhecidos(tabelaCaract, personagem.nivel);
-        const preparadasNecessarias = getMagiaPreparadas(tabelaCaract, personagem.nivel);
+        const preparadasNecessarias = getMagiaPreparadas(tabelaCaract, personagem.nivel, personagem);
 
         // Bonus de truques do Clerigo Taumaturgo / Druida Xama (utils.js,
         // mesma função que o resto do app -- ver getBonusTruquesOrdem)

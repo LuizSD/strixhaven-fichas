@@ -16,6 +16,7 @@ export function temProficienciaArma(personagem, arma) {
   // espelho `personagem.classe`. Num Mago 5/Guerreiro 1 o espelho aponta
   // para o Mago e o Guerreiro nao concedia arma nenhuma.
   const armasClasse = armasDoPersonagem(personagem);
+  if (arma?.nome && armasClasse.some(n=>n.toLowerCase()===arma.nome.toLowerCase())) return true;
   if (!armasClasse.length && !(personagem?.proficiencias_extra || []).length) return false;
   const cat = (arma?.categoria || '').toLowerCase();
   const extras = (personagem?.proficiencias_extra || []).map(p => p.toLowerCase());

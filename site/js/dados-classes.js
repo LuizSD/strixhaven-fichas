@@ -2,7 +2,9 @@
 // Dados de referência das 12 classes do D&D 5.5 (2024)
 // Informações hard-coded para cálculos e automação
 // ============================================================
+import { ARTIFICER_ID, ARTIFICER_INFO } from './artificer-ua/dados.js';
 export const CLASSES_INFO = {
+  [ARTIFICER_ID]: ARTIFICER_INFO,
   "Bárbaro": {
     dado_vida: 12,
     atributo_primario: "Força",

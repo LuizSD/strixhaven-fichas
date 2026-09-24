@@ -119,6 +119,8 @@ export const PV_NIVEL_1 = [
   { classes: ['Guardião', 'Guerreiro', 'Paladino'], base: 10 },
   { classes: ['Bardo', 'Bruxo', 'Clérigo', 'Druida', 'Ladino', 'Monge'], base: 8 },
   { classes: ['Feiticeiro', 'Mago'], base: 6 },
+  // Fonte separada: UA-Artificer2-2019.pdf p.1, nunca atribuído ao PHB 2024.
+  { classes: ['artificer-ua-2019'], base: 8, fonte: 'UA 2019 p.1' },
 ];
 
 // Tabela "Pontos de Vida Fixos por Classe" (Criação de Personagens.md:503-510),
@@ -136,4 +138,5 @@ export const PV_NIVEL_SEGUINTE = [
   { classes: ['Guardião', 'Guerreiro', 'Paladino'], incremento: 6 },
   { classes: ['Bardo', 'Bruxo', 'Clérigo', 'Druida', 'Ladino', 'Monge'], incremento: 5 },
   { classes: ['Feiticeiro', 'Mago'], incremento: 4 },
+  { classes: ['artificer-ua-2019'], incremento: 5, fonte: 'UA 2019 p.1' },
 ];

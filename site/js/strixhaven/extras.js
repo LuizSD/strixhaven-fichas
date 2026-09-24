@@ -1,7 +1,7 @@
 import { getIndiceMagias, getMagia, getClasse } from '../db.js';
 import { abrirModal, escHtml, semAcento, toast, bonusProficiencia, calcMod, getEspacosMagia } from '../utils.js';
 import { novoId, numeroInformado } from './modelo.js';
-import { correspondeBusca, rotuloLocalizado, normalizarBusca } from '../catalogo-localizado.js';
+import { correspondeBusca, rotuloLocalizado, normalizarBusca, tituloFonteLocalizado } from '../catalogo-localizado.js';
 import { getConjuracaoSubclasse } from '../regras-conjuracao-subclasse.js';
 
 /** Avisos não bloqueantes: seleção extra nunca filtra o catálogo por elegibilidade. */
@@ -130,6 +130,6 @@ export function renderExtra(m, p) {
   return `<article class="magia-item sh-extra" data-extra-id="${escHtml(m.id)}"><h4>${rotuloLocalizado(m)} <span class="sh-selo">Extra</span></h4><p>${m.circulo ? `${escHtml(m.circulo)}º círculo` : 'Truque'} · ${escHtml(m.estado_extra)} · ${escHtml(cota)}</p>
     ${m.estado_extra === 'registrada' ? '<p><strong>Registrada, ainda não conhecida/preparada. Não conjurável atualmente pelo registro.</strong></p>' : ''}
     <p>CD ${escHtml(cd)} · Ataque ${escHtml(ataque)} · ${escHtml(m.atributo_extra || 'Atributo não definido')}${m.cd_manual != null || m.ataque_manual != null ? ' · <span class="sh-selo">Ajuste manual</span>' : ''}</p><p>Uso especial: ${Math.max(0, (m.usos_total || 0) - (m.usos_gastos || 0))}/${escHtml(m.usos_total || 0)} · ${escHtml(m.recuperacao || 'manual')}</p>
-    <details><summary>Detalhes e origem</summary><p>${escHtml(m.source?.sourceTitle || 'Conteúdo personalizado')} ${m.source?.printedPage ? `· p. ${escHtml(m.source.printedPage)}` : ''}</p><p>Regra da mesa: ${escHtml(m.motivo || 'sem motivo informado')}</p><p>${escHtml(m.tempo_conjuracao)} · ${escHtml(m.alcance)} · ${escHtml(m.componentes)} · ${escHtml(m.duracao)}${m.concentracao ? ' · Concentração' : ''}${m.ritual ? ' · Ritual' : ''}</p><p>${escHtml(m.dano)}</p><p class="sh-texto">${escHtml(m.descricao)}</p>${avisosExtra(p, m).map(a => `<p>${escHtml(a)}</p>`).join('')}</details>
+    <details><summary>Detalhes e origem</summary><p>${escHtml(tituloFonteLocalizado(m.source) || 'Conteúdo personalizado')} ${m.source?.printedPage ? `· p. ${escHtml(m.source.printedPage)}` : ''}</p><p>Regra da mesa: ${escHtml(m.motivo || 'sem motivo informado')}</p><p>${escHtml(m.tempo_conjuracao)} · ${escHtml(m.alcance)} · ${escHtml(m.componentes)} · ${escHtml(m.duracao)}${m.concentracao ? ' · Concentração' : ''}${m.ritual ? ' · Ritual' : ''}</p><p>${escHtml(m.dano)}</p><p class="sh-texto">${escHtml(m.descricao)}</p>${avisosExtra(p, m).map(a => `<p>${escHtml(a)}</p>`).join('')}</details>
     <div class="sh-acoes no-print"><button class="btn btn-sm btn-primary" data-extra-acao="conjurar">Conjurar</button><button class="btn btn-sm btn-secondary" data-extra-acao="editar-completa">Editar nomes e dados</button><button class="btn btn-sm btn-secondary" data-extra-acao="editar">Editar conjuração / usos</button><button class="btn btn-sm btn-secondary" data-extra-acao="subir" aria-label="Mover extra para cima">↑</button><button class="btn btn-sm btn-secondary" data-extra-acao="descer" aria-label="Mover extra para baixo">↓</button><button class="btn btn-sm btn-secondary" data-extra-acao="remover">Remover extra</button></div></article>`;
 }

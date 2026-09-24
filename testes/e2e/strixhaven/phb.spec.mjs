@@ -25,7 +25,8 @@ test('catálogo reconcilia auditoria e busca Guidance nos três termos sem conta
   expect(dados.legado).toHaveLength(audit.passes.descriptions.normalized);
   expect(new Set(dados.legado.map(m => m.id)).size).toBe(dados.legado.length);
   expect(dados.ids).toEqual(Array(3).fill(['phb-2014-guidance']));
-  expect(dados.legado.find(m => m.id === 'phb-2014-guidance')).toMatchObject({ nome: 'Orientação', circulo: 0, escola: 'Adivinhação', classes: ['Clérigo', 'Druida'], source: { rulesVersion: '2014-legacy', printedPage: 248 } });
+  // O vínculo UA é aditivo; a edição e a página originais da magia não mudam.
+  expect(dados.legado.find(m => m.id === 'phb-2014-guidance')).toMatchObject({ nome: 'Orientação', circulo: 0, escola: 'Adivinhação', classes: ['Clérigo', 'Druida', 'artificer-ua-2019'], source: { rulesVersion: '2014-legacy', printedPage: 248 } });
   for (const m of dados.legado) for (const k of ['tempo_conjuracao', 'alcance', 'componentes', 'duracao']) expect(m[k], `${m.id}: ${k}`).toBeTruthy();
   expect(dados.legado.find(m => m.name.en === 'Branding Smite').concentracao).toBe(true);
   expect(dados.legado.find(m => m.name.en === 'Delayed Blast Fireball').concentracao).toBe(true);
@@ -230,11 +231,11 @@ test('Critical20 usa mapa próprio, limpa dados anteriores e mantém complemento
   const dir = new URL('../../../assets-private/entrega/', import.meta.url);
   await mkdir(dir, { recursive: true });
   await (await download).saveAs(new URL('bardo-phb-editavel.pdf', dir).pathname);
-  const bytes = [...await readFile(new URL('bardo-phb-editavel.pdf', dir))];
+  const bytes = (await readFile(new URL('bardo-phb-editavel.pdf', dir))).toString('base64');
   const r = await page.evaluate(async ({ bytes, manifest }) => {
-    const d = await window.PDFLib.PDFDocument.load(new Uint8Array(bytes));
+    const d = await window.PDFLib.PDFDocument.load(bytes);
     const f = d.getForm();
-    return { nome: f.getTextField('CharacterName').getText(), classe: f.getTextField('ClassLevel').getText(), idiomas: f.getTextField('ProficienciesLang').getText(), faculdade: f.getTextField('FactionName').getText(), forca: f.getTextField('ST Strength').getText(), medicina: f.getTextField('Medicine').getText(), antigas: f.getFields().filter(x => x instanceof window.PDFLib.PDFTextField).map(x => x.getText()), nomes: f.getFields().map(x => x.getName()), paginas: d.getPageCount(), mappedEditable: Object.keys(manifest.mapping).every(n => !f.getField(n).isReadOnly() && f.getField(n).acroField.getWidgets().every(w => !!w.getAppearances()?.normal)) };
+    return { nome: f.getTextField('CharacterName').getText(), classe: f.getTextField('ClassLevel').getText(), idiomas: f.getTextField('ProficienciesLang').getText(), faculdade: f.getTextField('FactionName').getText(), forca: f.getTextField('ST Strength').getText(), medicina: f.getTextField('Medicine').getText(), espacos: f.getTextField('SlotsTotal 19').getText(), antigas: f.getFields().filter(x => x instanceof window.PDFLib.PDFTextField).map(x => x.getText()), nomes: f.getFields().map(x => x.getName()), paginas: d.getPageCount(), mappedEditable: Object.keys(manifest.mapping).every(n => !f.getField(n).isReadOnly() && f.getField(n).acroField.getWidgets().every(w => !!w.getAppearances()?.normal)) };
   }, { bytes, manifest });
   expect(r.nome).toBe('Auditoria PHB');
   expect(r.classe).toBe('Clérigo 1');
@@ -242,10 +243,7 @@ test('Critical20 usa mapa próprio, limpa dados anteriores e mantém complemento
   expect(r.faculdade).toBe('Quandrix');
   expect(r.forca).toBe('+0');
   expect(r.medicina).toBe('+0');
-  expect(await page.evaluate(async ({ bytes }) => {
-    const d = await window.PDFLib.PDFDocument.load(new Uint8Array(bytes));
-    return d.getForm().getTextField('SlotsTotal 19').getText();
-  }, { bytes })).toBe('2');
+  expect(r.espacos).toBe('2');
   expect(r.antigas).not.toContain('Bardo 1');
   expect(r.antigas).toEqual(expect.arrayContaining(['Orientação', 'Desejo', 'Idioma da Prova']));
   expect(r.mappedEditable).toBe(true);

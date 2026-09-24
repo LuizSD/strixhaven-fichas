@@ -9,9 +9,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
-parser.add_argument('suite', choices=['unidade','regras','regras-reexecucao','strixhaven','magias','offline','novos'])
+parser.add_argument('suite', choices=['unidade','regras','regras-reexecucao','strixhaven','magias','offline','novos','artificer'])
 args = parser.parse_args()
-configs = {'regras':'regras/playwright.config.mjs','regras-reexecucao':'regras/playwright.config.mjs','strixhaven':'strixhaven.config.mjs','magias':'magias.config.mjs','offline':'playwright.config.mjs','novos':'ajustes-finais.config.mjs'}
+configs = {'regras':'regras/playwright.config.mjs','regras-reexecucao':'regras/playwright.config.mjs','strixhaven':'strixhaven.config.mjs','magias':'magias.config.mjs','offline':'playwright.config.mjs','novos':'ajustes-finais.config.mjs','artificer':'artificer.config.mjs'}
 cmd = ['node','--test','../regras/unidade/*.test.mjs'] if args.suite == 'unidade' else ['node','node_modules/@playwright/test/cli.js','test','--config='+configs[args.suite],'--reporter=json']
 if args.suite == 'regras-reexecucao': cmd += ['itens-seletor-ficha.spec.mjs','magias-customizadas.spec.mjs','--grep','preserva as 5|OUTRO círculo|nome E círculo']
 env = os.environ.copy()

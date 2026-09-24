@@ -4,6 +4,7 @@
 // ============================================================
 import { abrirModal, calcIntuicaoPassiva, calcInvestigacaoPassiva, calcPercepcaoPassiva, toast } from '../utils.js';
 import { getEstadoFuria } from './classes/barbaro.js';
+import { defesasUA } from '../artificer-ua/modelo.js';
 import { getEstadoRecursosGuardiao } from './classes/guardiao.js';
 import { getEstadoRecursosPaladino } from './classes/paladino.js';
 import { char, especiesCache, salvar } from './estado.js';
@@ -172,9 +173,9 @@ export function renderSecaoCondicoes() {
 
 /** Renderiza secao de defesas (resistencias, vulnerabilidades, imunidades) */
 export function renderSecaoDefesas() {
-  const resistencias = [...(char.resistencias || [])];
+  const resistencias = [...new Set([...(char.resistencias || []),...defesasUA(char).resistencias])];
   const vulnerabilidades = char.vulnerabilidades || [];
-  const imunidades = [...(char.imunidades || [])];
+  const imunidades = [...new Set([...(char.imunidades || []),...defesasUA(char).imunidades])];
 
   // Resistencias dinamicas da Furia ativa
   const _efDef = getEstadoFuria();
@@ -509,4 +510,4 @@ export function setupEventosDefesas() {
       renderFichaCompleta();
     });
   });
-}
+}

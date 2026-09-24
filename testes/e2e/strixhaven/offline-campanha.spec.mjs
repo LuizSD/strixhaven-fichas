@@ -32,10 +32,13 @@ test('artefato sob prefixo de fork, precache acadêmico, atualização e armazen
   await expect(page.locator('#app-content')).toContainText('Modo local');
   const dados = await page.evaluate(async () => {
     const db = await import('./js/db.js');
-    return { faculdades: (await db.getStrixhaven()).faculdades.length, magias: (await db.getIndiceMagias()).magias.length, originais: localStorage.getItem('dnd_personagens'), icone: !!(await caches.match(new URL('img/strixhaven-192.png', location.href).href)) };
+    const magias = (await db.getIndiceMagias()).magias;
+    const acrescimosUA = magias.filter(m => ['xge-2017', 'artificer-ua-2019'].includes(m.source?.sourceId));
+    return { faculdades: (await db.getStrixhaven()).faculdades.length, magias: magias.length - acrescimosUA.length, acrescimosUA: acrescimosUA.length, originais: localStorage.getItem('dnd_personagens'), icone: !!(await caches.match(new URL('img/strixhaven-192.png', location.href).href)) };
   });
   expect(dados.faculdades).toBe(5);
   expect(dados.magias).toBe(396);
+  expect(dados.acrescimosUA).toBe(17); // Arma Arcana + 16 referências XGE também disponíveis offline.
   expect(dados.icone).toBe(true);
   expect(dados.originais).toContain('Não apagar');
   await page.locator('#copiar-originais').click();

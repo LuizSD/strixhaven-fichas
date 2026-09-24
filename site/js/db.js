@@ -1,6 +1,13 @@
 // ============================================================
 import { correspondeBusca, normalizarBusca, NOMES_CLASSES } from './catalogo-localizado.js';
 import { registrarCatalogoMagias, correspondeConsultaMagia, normalizarMagia } from './magias/modelo.js';
+import { ARTIFICER_ID, CLASSE_UA } from './artificer-ua/dados.js';
+import { MAGIAS_UA } from './artificer-ua/magias-dados.js';
+
+const vincularUA = m => {
+  const associacoes = MAGIAS_UA.associacoes.filter(a=>a.spellId===m.id);
+  return associacoes.length ? {...m,classes:[...new Set([...(m.classes || []),ARTIFICER_ID])],classAssociations:[...(m.classAssociations || []).filter(a=>a.classId!==ARTIFICER_ID),...associacoes]} : m;
+};
 // Carregador de dados JSON (acessa ../dados/)
 // Cache em memória para evitar re-fetch
 // ============================================================
@@ -46,6 +53,7 @@ async function fetchJSON(caminho) {
 
 /** Carrega dados de uma classe específica */
 export async function getClasse(nome) {
+  if (nome === ARTIFICER_ID) return CLASSE_UA;
   const nomeArq = nome.toLowerCase()
     .replace(/á/g, 'a').replace(/ã/g, 'a').replace(/é/g, 'e')
     .replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u');
@@ -61,6 +69,13 @@ export async function getClasse(nome) {
 
 /** Carrega lista de magias de uma classe conjuradora */
 export async function getMagiasClasse(nomeClasse, personagem = null) {
+  if (nomeClasse === ARTIFICER_ID) {
+    const catalogo = await getIndiceMagias({incluirLegado:true});
+    const ids = new Set(MAGIAS_UA.associacoes.map(a=>a.spellId));
+    const lista_magias = {};
+    for (const m of catalogo?.magias || []) if(ids.has(m.id)) (lista_magias[m.circulo ? `${m.circulo}º Círculo` : 'Truques'] ||= []).push(m);
+    return {classe:ARTIFICER_ID,lista_magias};
+  }
   const nomeArq = nomeClasse.toLowerCase()
     .replace(/á/g, 'a').replace(/ã/g, 'a').replace(/é/g, 'e')
     .replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u');
@@ -166,7 +181,7 @@ async function localizarEquipamento(itens = []) {
 export async function getIndiceMagias({ incluirLegado = false } = {}) {
   const base = await fetchJSON('magias/_indice.json');
   if (!base) return null;
-  const magias = [...await localizarMagias(base.magias), ...await localizarMagias(await magiasStrixhaven(), 'strixhaven'), ...(incluirLegado ? await getMagiasLegado() : [])];
+  const magias = [...await localizarMagias(base.magias), ...await localizarMagias(await magiasStrixhaven(), 'strixhaven'), ...(incluirLegado ? await getMagiasLegado() : []), ...MAGIAS_UA.novas].map(vincularUA);
   registrarCatalogoMagias(magias);
   return { ...base, magias, total_magias: magias.length };
 }
@@ -182,6 +197,7 @@ export async function getMagiasPorCirculo(circulo) {
 
 /** Carrega magias de uma classe (lista resumida: nome, circulo, escola) */
 export async function getMagiasPorClasseLista(nomeClasse) {
+  if (nomeClasse === ARTIFICER_ID) { const dados=await getMagiasClasse(nomeClasse); const magias=Object.values(dados.lista_magias).flat(); return {magias,total_magias:magias.length}; }
   const nomeArq = nomeClasse.toLowerCase()
     .replace(/á/g, 'a').replace(/ã/g, 'a').replace(/é/g, 'e')
     .replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u');
@@ -217,6 +233,8 @@ export async function getMagiasRituais(circulo) {
 
 /** Busca uma magia específica pelo nome (carrega o círculo inteiro) */
 export async function getMagia(nome, circulo, id = null) {
+  const nova = MAGIAS_UA.novas.find(m=>id ? m.id===id : m.nome===nome || m.name.en===nome);
+  if (nova) return vincularUA(nova);
   if (id?.startsWith('phb-2014-')) return (await getMagiasLegado()).find(m => m.id === id) || null;
   const dados = await getMagiasPorCirculo(circulo);
   if (!dados) return null;
@@ -232,7 +250,7 @@ export async function buscarMagias(termo) {
 
 /** Alternativas explícitas: não entram nas tabelas de classe/círculo 2024. */
 export async function getMagiasLegado() {
-  return (await fetchJSON('legacy/phb-spells.json'))?.magias || [];
+  return ((await fetchJSON('legacy/phb-spells.json'))?.magias || []).map(vincularUA);
 }
 
 async function localizarMagias(magias, versao = '2024') {

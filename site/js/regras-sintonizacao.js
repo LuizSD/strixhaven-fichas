@@ -10,6 +10,8 @@
 // itens magicos ao mesmo tempo. Qualquer tentativa de sintonizar um quarto
 // item falha". O numero e do livro; nao e configuravel.
 export const TETO_SINTONIZACAO = 3;
+import { nivelUA, sintonizadosUA } from './artificer-ua/modelo.js';
+export const tetoSintonizacao=p=>nivelUA(p)>=20?6:TETO_SINTONIZACAO;
 
 /**
  * Os itens do inventario que estao sintonizados agora. So conta quem AINDA
@@ -35,5 +37,5 @@ export function podeSintonizar(p, idx) {
   const item = (p?.inventario || [])[idx];
   if (!item?.dados?.requer_sintonizacao) return false;
   if (item.sintonizado === true) return true;
-  return itensSintonizados(p).length < TETO_SINTONIZACAO;
+  return (nivelUA(p)?sintonizadosUA(p).length:itensSintonizados(p).length) < tetoSintonizacao(p);
 }

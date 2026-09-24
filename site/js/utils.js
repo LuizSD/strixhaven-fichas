@@ -14,6 +14,8 @@ import { classesDe, temClasse } from './regras-multiclasse.js';
 // para o porque desta importacao (issue #62).
 import { preparadasPorClasse } from './regras-magia-classe.js';
 import { prepararModalAcessivel, liberarModalAcessivel } from './modal-acessivel.js';
+import { ARTIFICER_ID } from './artificer-ua/dados.js';
+import { limitePreparadasUA, periciasMenteUA, bonusAtaqueMagiaUA, bonusCaUA } from './artificer-ua/modelo.js';
 
 // --- Cálculos D&D ---
 
@@ -555,7 +557,7 @@ export function calcCA(personagem, passivos = null) {
   // Bônus genérico de CA de talentos
   ca += passivos?.bonusCA || 0;
 
-  return valorComAjuste(personagem, 'ca', ca);
+  return valorComAjuste(personagem, 'ca', ca + bonusCaUA(personagem));
 }
 
 /**
@@ -596,7 +598,7 @@ export function calcAtaqueMagia(personagem) {
   if (!atributo) return 0;
   const key = ATRIBUTO_NOME_PARA_KEY[atributo];
   const modAttr = calcMod(personagem.atributos[key]);
-  return bonusProficiencia(personagem.nivel) + modAttr;
+  return bonusProficiencia(personagem.nivel) + modAttr + bonusAtaqueMagiaUA(personagem);
 }
 
 /**
@@ -656,7 +658,7 @@ export function conjuracoesPorClasse(personagem) {
       subclasse: c.subclasse || null,
       atributo,
       cd: 8 + prof + modAttr + (inata ? 1 : 0),
-      ataque: prof + modAttr,
+      ataque: prof + modAttr + bonusAtaqueMagiaUA(personagem),
     });
   }
   return saida;
@@ -665,7 +667,7 @@ export function conjuracoesPorClasse(personagem) {
 /** Calcula Percepção Passiva */
 export function calcPercepcaoPassiva(personagem) {
   const modSab = calcMod(personagem.atributos.sabedoria);
-  const prof = (personagem.pericias_proficientes || []).includes('Percepção');
+  const prof = (personagem.pericias_proficientes || []).includes('Percepção') || periciasMenteUA(personagem).includes('Percepção');
   const exp = (personagem.pericias_expertise || []).includes('Percepção');
   let bonus = modSab;
   if (prof) bonus += bonusProficiencia(personagem.nivel);
@@ -708,7 +710,7 @@ export function calcBonusPericia(personagem, nomePericia, opcoes = {}) {
     && PERICIAS_CONHECIMENTO_PRIMORDIAL.includes(nomePericia);
   const key = usarForcaPrimordial ? 'forca' : ATRIBUTO_NOME_PARA_KEY[pericia.atributo];
   const mod = calcMod(personagem.atributos[key]);
-  const prof = (personagem.pericias_proficientes || []).includes(nomePericia);
+  const prof = (personagem.pericias_proficientes || []).includes(nomePericia) || periciasMenteUA(personagem).includes(nomePericia);
   const exp = (personagem.pericias_expertise || []).includes(nomePericia);
   let bonus = mod;
   if (prof) bonus += bonusProficiencia(personagem.nivel);
@@ -813,8 +815,9 @@ export function getBonusTruquesOrdem(personagem, nomeClasse = personagem?.classe
 }
 
 /** Magias preparadas por nível (da tabela da classe) */
-export function getMagiaPreparadas(tabelaCaracteristicas, nivel) {
+export function getMagiaPreparadas(tabelaCaracteristicas, nivel, personagem = null) {
   if (!tabelaCaracteristicas) return 0;
+  if (tabelaCaracteristicas[0]?.classId === ARTIFICER_ID) return limitePreparadasUA(nivel,Number(personagem?.atributos?.inteligencia) || 10);
   const row = tabelaCaracteristicas.find(r => parseInt(r['Nível']) === nivel);
   return row ? (parseInt(row['Magias Preparadas']) || 0) : 0;
 }
@@ -837,9 +840,9 @@ export function getMagiaPreparadas(tabelaCaracteristicas, nivel) {
  * @param {Object|null} conjSubclasse - Tabela da subclasse conjuradora
  *   ({ truques, preparadas }), ou null quando não há
  */
-export function getLimitesMagias(tabelaCaracteristicas, nivel, conjSubclasse = null) {
+export function getLimitesMagias(tabelaCaracteristicas, nivel, conjSubclasse = null, personagem = null) {
   const truquesTabela = getTruquesConhecidos(tabelaCaracteristicas, nivel);
-  const preparadasTabela = getMagiaPreparadas(tabelaCaracteristicas, nivel);
+  const preparadasTabela = getMagiaPreparadas(tabelaCaracteristicas, nivel, personagem);
   return {
     truques: truquesTabela || conjSubclasse?.truques || 0,
     preparadas: preparadasTabela || conjSubclasse?.preparadas || 0

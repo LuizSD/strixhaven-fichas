@@ -3,6 +3,8 @@
 // Fase 3: Render de cards
 // ============================================================
 import { CLASSES_INFO, ATRIBUTOS_KEYS, ATRIBUTOS_NOMES, ATRIBUTO_NOME_PARA_KEY } from './dados-classes.js';
+import { rotuloLocalizado, nomeClasseLocalizado } from './catalogo-localizado.js';
+import { ARTIFICER_ID } from './artificer-ua/dados.js';
 import { getMagiasClasse, getMagiasPorCirculo } from './db.js';
 import { calcMod, bonusProficiencia, escHtml, mdParaHtml, semAcento, toast, abrirModal } from './utils.js';
 import { rotuloPericia } from './opcoes-dominio.js';
@@ -78,7 +80,7 @@ export function renderCardEscolhaClasse(ctx, state) {
     return `
       <label class="levelup-check-label levelup-opcao${travada ? ' levelup-opcao-travada' : ''}">
         <input type="radio" name="classe-que-sobe" data-classe="${escHtml(nome)}"${marcado}${travada ? ' disabled' : ''}>
-        <span>${escHtml(rotulo)}</span>
+        <span>${nome===ARTIFICER_ID?rotuloLocalizado({nome})+` ${classesDe(ctx.char).find(c=>c.classe===nome)?.nivel || ''}`:escHtml(rotulo)}</span>
         ${dispensada ? `<span class="levelup-motivo" data-prerequisito-dispensado="${escHtml(nome)}">⚠️ pré-requisito dispensado (${escHtml(motivoBloqueio(faltando))})</span>` : ''}
         ${travada && !dispensada ? `<span class="levelup-motivo">🔒 ${escHtml(motivoBloqueio(faltando))}</span>
                      <button class="btn btn-sm btn-secondary" data-dispensar="${escHtml(nome)}">usar mesmo assim</button>` : ''}
@@ -224,7 +226,7 @@ export function renderCardSubclasse(ctx, state) {
             // necessario para bater com a aparencia de antes da migracao.
             return `
               <div class="opcao-card ${selecionada ? 'selecionada' : ''}" data-subclasse="${sc.nome}" data-idx="${idx}" style="padding:10px 12px">
-                <div style="font-weight:700;font-size:1rem;margin-bottom:4px">${sc.nome}</div>
+                <div style="font-weight:700;font-size:1rem;margin-bottom:4px">${sc.source?.rulesVersion==='ua-2019-playtest'?rotuloLocalizado(sc):escHtml(sc.nome)}</div>
                 <div style="font-size:0.82rem;color:var(--text-muted)">
                   ${featsNivel3.map(f => {
                     const descPlain = f.descricao.replace(/\|[^|]*\|/g, '').replace(/\*\*/g, '').trim();
@@ -1232,4 +1234,3 @@ export function renderCardRevisao(ctx, state, steps) {
 
   return html;
 }
-

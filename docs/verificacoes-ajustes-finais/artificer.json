@@ -1,0 +1,14 @@
+{
+  "command": "node node_modules/@playwright/test/cli.js test --config=artificer.config.mjs --reporter=json",
+  "cwd": "testes/e2e",
+  "exitCode": 0,
+  "stats": {
+    "startTime": "2026-09-24T12:15:29.629Z",
+    "duration": 36505.875,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "failures": []
+}

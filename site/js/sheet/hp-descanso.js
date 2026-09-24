@@ -6,6 +6,7 @@
 // Extraido de site/js/pages/sheet.js sem alteracao de comportamento.
 // ============================================================
 import { restaurarRecursosTalentos } from '../regras-cobertura.js';
+import { descansarUA } from '../artificer-ua/modelo.js';
 import { gastarDadosVida, nivelNa, reservasDadosVida, restaurarTodosDadosVida, subclasseDe, temClasse } from '../regras-multiclasse.js';
 import { trocasDoDescansoLongo } from '../regras-preparo-magias.js';
 // SUBCLASSES_CONJURADORAS: a MESMA constante que trocasDoDescansoLongo usa
@@ -489,6 +490,7 @@ export function setupEventosHP() {
 // clique do botão de descanso) -- ela nunca precisou de escopo de módulo,
 // só não havia consumidor fora daqui até este ponto.
 export function restaurarHabilidades(tipoDescanso) {
+  descansarUA(char,tipoDescanso);
   for (const m of char.magias_customizadas || []) {
     if (m.origem === 'extra' && (m.recuperacao === `descanso ${tipoDescanso}` || tipoDescanso === 'longo' && m.recuperacao === 'descanso curto')) m.usos_gastos = 0;
   }

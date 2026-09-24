@@ -13,6 +13,7 @@ import { nivelNa, subclasseDe } from '../regras-multiclasse.js';
 import { getEstadoFuria } from './classes/barbaro.js';
 import { getProgressaoMonge } from './classes/monge.js';
 import { char, passivosTalentosCache } from './estado.js';
+import { nivelUA, efeitosItemUA } from '../artificer-ua/modelo.js';
 import { getEstadoCarga } from './inventario.js';
 
 export function ehBardoComSegredosMagicos() {
@@ -343,6 +344,7 @@ export function getAtaquesPorAcao() {
     }
   }
 
+  if (nivelUA(char)>=5 && (char.inventario || []).some(i=>i.equipado && i.tipo==='arma' && efeitosItemUA(char,i).magico)) ataques=Math.max(ataques,2);
   return ataques;
 }
 

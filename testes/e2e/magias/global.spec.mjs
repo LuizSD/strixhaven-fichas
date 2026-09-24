@@ -173,7 +173,8 @@ test('IDs antigos reconciliam sem perder overrides nem remover versões', async 
     return { p, idempotente: antes === JSON.stringify(p) };
   });
   expect(r.idempotente).toBe(true);
-  expect(r.p.magias_preparadas[0]).toMatchObject({ id:'referencia-antiga', catalogo_ref:'phb-2014-guidance', alcance:'999 m', overrides:{ livre:true }, motivo:'Recompensa', classes:['Clérigo','Druida'] });
+  // A associação UA é aditiva ao registro canônico; os overrides continuam intactos.
+  expect(r.p.magias_preparadas[0]).toMatchObject({ id:'referencia-antiga', catalogo_ref:'phb-2014-guidance', alcance:'999 m', overrides:{ livre:true }, motivo:'Recompensa', classes:['Clérigo','Druida','artificer-ua-2019'] });
   expect(r.p.magias_conhecidas[0].catalogo_ref).toBe('phb-2024-guidance');
 });
 

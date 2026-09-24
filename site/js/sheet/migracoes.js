@@ -74,7 +74,7 @@ export function migrarSlotsMagiaLivre() {
   // Cavaleiro Místico era lido como 0 e a vaga nunca era oferecida -- foi o
   // que deixou sem saída os personagens que subiram para o nível 3 antes da
   // correção do fluxo de subida (que não pedia truque nem magia nenhuma).
-  const limites = getLimitesMagias(tabela, sup.nivelClasse, subConj);
+  const limites = getLimitesMagias(tabela, sup.nivelClasse, subConj, char);
   let alterado = false;
 
   if (limites.preparadas > 0) {

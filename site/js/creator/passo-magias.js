@@ -10,6 +10,8 @@ import { dadosCache, personagem } from './wizard.js';
 import { escolherExtra } from '../strixhaven/extras.js';
 import { mostrarFormMagiaCustom } from '../sheet/grimorio.js';
 import { contarExtrasCriacao } from '../strixhaven/modelo.js';
+import { ARTIFICER_ID } from '../artificer-ua/dados.js';
+import { renderArtificerUA } from '../artificer-ua/ui.js';
 import { rotuloLocalizado } from '../catalogo-localizado.js';
 import { abrirBuscaGlobalMagias } from '../magias/busca-ui.js';
 import { abrirEditorMagia } from '../magias/editor.js';
@@ -45,12 +47,16 @@ function temMarcador(magia, sigla) {
 // PASSO 6: MAGIAS
 // ============================================================
 export async function renderStepMagias(el) {
+  if (personagem.classe === ARTIFICER_ID) {
+    el.innerHTML='<section id="ua-criacao"></section>';
+    return renderArtificerUA(personagem,el.querySelector('#ua-criacao'),()=>renderStepMagias(el));
+  }
   await renderStepMagiasBase(el);
   const tabela = (dadosCache.classeData || await getClasse(personagem.classe))?.tabela_caracteristicas;
   const maxCirculo = Math.max(0, ...Object.keys(getEspacosMagia(tabela, personagem.nivel) || {}).map(Number));
   const alerta = document.createElement('aside'); alerta.id = 'criacao-alertas-magias'; alerta.dataset.maxCirculo = maxCirculo;
   el.prepend(alerta);
-  atualizarAvisosCriacao(alerta, getTruquesConhecidos(tabela, personagem.nivel) + getBonusTruquesOrdem(personagem), getMagiaPreparadas(tabela, personagem.nivel));
+  atualizarAvisosCriacao(alerta, getTruquesConhecidos(tabela, personagem.nivel) + getBonusTruquesOrdem(personagem), getMagiaPreparadas(tabela, personagem.nivel, personagem));
   const botao = document.createElement('button');
   botao.className = 'btn btn-accent'; botao.textContent = 'Adicionar magia extra'; botao.type = 'button';
   botao.onclick = () => escolherExtra(personagem, inicial => mostrarFormMagiaCustom(null, { inicial, personagem, concluir: () => renderStepMagias(el) }));
@@ -123,7 +129,7 @@ async function renderStepMagiasBase(el) {
 
   const tabelaCaract = classeData?.tabela_caracteristicas;
   let numTruques = getTruquesConhecidos(tabelaCaract, personagem.nivel);
-  const numPreparadas = getMagiaPreparadas(tabelaCaract, personagem.nivel);
+  const numPreparadas = getMagiaPreparadas(tabelaCaract, personagem.nivel, personagem);
   const extrasTruques = contarExtrasCriacao(personagem, true);
   const extrasPreparadas = contarExtrasCriacao(personagem, false);
   const espacos = getEspacosMagia(tabelaCaract, personagem.nivel);

@@ -1,0 +1,15 @@
+.ua-painel { overflow-wrap:anywhere; }
+.ua-painel details { margin:.6rem 0; }
+.ua-painel details > summary { cursor:pointer; font-weight:600; }
+.ua-painel p { margin:.5rem 0; }
+.ua-painel .btn { margin:.2rem; white-space:normal; }
+.ua-form { display:grid; gap:.65rem; }
+.ua-form label { display:block; min-width:0; }
+.ua-form input:not([type="checkbox"]), .ua-form select, .ua-form textarea { width:100%; min-width:0; max-width:100%; }
+.ua-registro { display:flex; flex-wrap:wrap; align-items:center; gap:.4rem; padding:.6rem 0; border-bottom:1px solid var(--border); }
+.ua-registro > div { flex:1 1 220px; min-width:0; }
+.ua-registro small { display:block; }
+.ua-painel pre { white-space:pre-wrap; overflow-wrap:anywhere; font-size:.75rem; }
+#ua-editor-aviso { border-left:3px solid var(--danger); padding:.5rem; font-weight:600; }
+.ua-painel select { width:100%; max-width:100%; }
+@media(max-width:600px) { .ua-painel h2 { font-size:1.1rem; } .ua-form { grid-template-columns:minmax(0,1fr); } }

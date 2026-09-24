@@ -8,7 +8,7 @@ import { abrirModal, mdParaHtml, toast } from '../utils.js';
 import { CLASSES_ESCOLHAS, NIVEL_SUBCLASSE } from './comum.js';
 import { rotuloPericia } from '../opcoes-dominio.js';
 import { dadosCache, personagem } from './wizard.js';
-import { NOMES_CLASSES, rotuloLocalizado, correspondeBusca } from '../catalogo-localizado.js';
+import { NOMES_CLASSES, rotuloLocalizado, correspondeBusca, nomeClasseLocalizado } from '../catalogo-localizado.js';
 
 // ============================================================
 // PASSO 1: CLASSE
@@ -42,7 +42,7 @@ export function renderStepClasse(el) {
       ${classes.map(c => {
         const info = CLASSES_INFO[c];
         return `
-          <div class="opcao-card ${personagem.classe === c ? 'selecionada' : ''}" data-classe="${c}">
+          <div class="opcao-card ${personagem.classe === c ? 'selecionada' : ''}" data-classe="${c}" role="button" tabindex="0">
             <span class="opcao-check"></span>
             <div class="opcao-nome">${rotuloLocalizado({ nome: c, name: { en: NOMES_CLASSES[c] } })}</div>
             <div class="opcao-resumo">d${info.dado_vida} &middot; ${info.atributo_primario}</div>
@@ -55,10 +55,11 @@ export function renderStepClasse(el) {
 
   // Clicar num card abre popup com detalhes da classe
   el.querySelector('#busca-classe-localizada').oninput = e => {
-    el.querySelectorAll('[data-classe]').forEach(card => { card.hidden = !correspondeBusca({ nome: card.dataset.classe, name: { en: NOMES_CLASSES[card.dataset.classe] } }, e.target.value); });
+    el.querySelectorAll('[data-classe]').forEach(card => { card.hidden = !correspondeBusca({ nome: nomeClasseLocalizado(card.dataset.classe), name: { en: NOMES_CLASSES[card.dataset.classe] } }, e.target.value); });
   };
   el.querySelectorAll('[data-classe]').forEach(card => {
     card.addEventListener('click', () => abrirPopupClasse(card.dataset.classe));
+    card.addEventListener('keydown', e => { if(['Enter',' '].includes(e.key)){e.preventDefault();abrirPopupClasse(card.dataset.classe);} });
   });
 
   document.getElementById('btn-alterar-classe')?.addEventListener('click', () => {
@@ -85,13 +86,13 @@ async function abrirPopupClasse(nome) {
         <label class="form-label">Subclasse (obrigatória no nível ${nivelSub})</label>
         <select class="form-select" id="sel-subclasse">
           <option value="">Selecione uma subclasse</option>
-          ${classeData.subclasses.map(s => `<option value="${s.nome}" ${personagem.subclasse === s.nome ? 'selected' : ''}>${s.nome}</option>`).join('')}
+            ${classeData.subclasses.map(s => `<option value="${s.nome}" ${personagem.subclasse === s.nome ? 'selected' : ''}>${nomeClasseLocalizado(s.nome)}${s.name?.en ? ' / '+s.name.en : ''}</option>`).join('')}
         </select>
       </div>`;
   } else if (classeData?.subclasses?.length) {
     subclassesHtml = `
       <div class="info-box" style="font-size:0.85rem;margin-top:8px">
-        Subclasse disponível a partir do nível ${nivelSub}. Subclasses: ${classeData.subclasses.map(s => s.nome).join(', ')}
+        Subclasse disponível a partir do nível ${nivelSub}. Subclasses: ${classeData.subclasses.map(s => nomeClasseLocalizado(s.nome)).join(', ')}
       </div>`;
   }
 
@@ -192,9 +193,9 @@ async function abrirPopupClasse(nome) {
     ${caracteristicas1}
   `;
 
-  abrirModal(nome, corpoHtml, `
+  abrirModal(nomeClasseLocalizado(nome), corpoHtml, `
     <button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
-    <button class="btn btn-primary" id="popup-confirmar-classe">Selecionar ${nome}</button>
+    <button class="btn btn-primary" id="popup-confirmar-classe">Selecionar ${nomeClasseLocalizado(nome)}</button>
   `);
 
   // Evento subclasse
