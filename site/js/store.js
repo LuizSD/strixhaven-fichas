@@ -2,6 +2,8 @@
 // Persistencia de personagens no localStorage + Firestore (se logado)
 // ============================================================
 import { gerarId, normalizarGrimorioMago } from './utils.js';
+import { migrarDocumento, serializarDocumento, LIMITE_JSON } from './documento-json.js';
+import { migrarEladrin } from './eladrin.js';
 import { enfileirarSync, enfileirarRemocao } from './sync.js';
 import { criarCarteiraVazia, normalizarCarteira, definirTaxas, resetarTaxas } from './moedas.js';
 
@@ -56,6 +58,7 @@ export function listarPersonagens() {
     let grimorioAlterado = false;
     const personagens = lista.map(p => {
       const antes = JSON.stringify(p);
+      migrarDocumento(p); migrarEladrin(p);
       const personagem = migrarAcademia(migrarEdicoesLegado(migrarMoedasLegado(p)));
       reconciliarMagias(personagem);
       if (JSON.stringify(personagem) !== antes) grimorioAlterado = true;
@@ -86,7 +89,11 @@ export function salvarPersonagem(personagem) {
   reconciliarMagias(personagem);
   const lista = listarPersonagens();
   const idx = lista.findIndex(p => p.id === personagem.id);
-  personagem.atualizado_em = new Date().toISOString();
+  const semMeta = p => JSON.stringify(Object.fromEntries(Object.entries(p || {}).filter(([k]) => !['atualizado_em', 'updatedAt', 'revision', 'name'].includes(k))));
+  const mudou = semMeta(personagem) !== semMeta(lista[idx]);
+  personagem.atualizado_em = mudou ? new Date().toISOString() : lista[idx].atualizado_em;
+  personagem.revision = mudou ? Math.max(personagem.revision || 0, lista[idx]?.revision || 0) + 1 : lista[idx].revision;
+  migrarDocumento(personagem); migrarEladrin(personagem);
 
   if (idx >= 0) {
     lista[idx] = personagem;
@@ -140,7 +147,7 @@ export function exportarTodos() {
 export function exportarPersonagem(id) {
   const p = getPersonagem(id);
   if (!p) return null;
-  return JSON.stringify([p], null, 2);
+  return serializarDocumento(p);
 }
 
 /** Substitui toda a lista local (usado apos sincronizacao com nuvem) */
@@ -198,7 +205,7 @@ export function migrarEdicoesLegado(p) {
 
 /**
  * Valida que um objeto tem a estrutura minima de personagem.
- * Campos exigidos: id (string nao vazia), nome (string nao vazia), atributos (objeto), e nivel
+ * Campos exigidos: id (string nao vazia), nome (string; vazio exporta como Personagem.json), atributos (objeto), e nivel
  * num de dois formatos: o escalar legado `nivel` (numero inteiro 1-20) OU `classes[]` (array nao
  * vazio de entradas cada uma com `nivel` inteiro >= 1, cuja SOMA tem de ser um inteiro entre 1 e 20).
  * @param {object} p - Objeto a validar.
@@ -207,7 +214,7 @@ export function migrarEdicoesLegado(p) {
 export function _validarPersonagem(p) {
   if (!p || typeof p !== 'object' || Array.isArray(p)) return false;
   if (typeof p.id !== 'string' || !p.id.trim()) return false;
-  if (typeof p.nome !== 'string' || !p.nome.trim()) return false;
+  if (typeof p.nome !== 'string') return false;
   // Nível: aceita o escalar legado OU a soma de classes[]. A validação
   // roda no import, ANTES de qualquer migração, então precisa entender
   // os dois formatos -- senão a ficha é descartada em silêncio.
@@ -258,6 +265,7 @@ export function _validarPersonagem(p) {
 /** Importa personagens de um JSON string (merge com existentes) */
 export function importarPersonagens(jsonStr) {
   try {
+    if (new TextEncoder().encode(jsonStr).length > LIMITE_JSON) throw new Error('JSON excede 10 MB');
     const importados = JSON.parse(jsonStr);
     if (!Array.isArray(importados)) throw new Error('Formato inválido');
     const lista = listarPersonagens();

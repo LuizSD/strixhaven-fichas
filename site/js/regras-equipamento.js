@@ -12,6 +12,7 @@ import { temClasse } from './regras-multiclasse.js';
 
 /** Verifica se o personagem tem proficiencia com uma arma especifica */
 export function temProficienciaArma(personagem, arma) {
+  if (personagem?.especie === 'Eladrin' && personagem.eladrin?.proficienciasTranse?.some(p => p.tipo === 'arma' && p.nome === arma?.nome)) return true;
   // As categorias vem da UNIAO das classes da ficha (livro:2051), nao do
   // espelho `personagem.classe`. Num Mago 5/Guerreiro 1 o espelho aponta
   // para o Mago e o Guerreiro nao concedia arma nenhuma.

@@ -7,6 +7,8 @@
 // ============================================================
 import { ATRIBUTOS_KEYS, ATRIBUTOS_NOMES, ATRIBUTO_NOME_PARA_KEY, CLASSES_INFO, PERICIAS } from '../dados-classes.js';
 import { renderAcademia, setupAcademia } from '../strixhaven/academia.js';
+import { exportarFichaJSON } from '../exportar-json.js';
+import { renderEladrin, setupEladrin } from '../eladrin-ui.js';
 import { setupExtras, renderExtrasDaFicha } from './extras.js';
 import { renderAlertasMagias } from './alertas-magias.js';
 import { rotuloLocalizado, NOMES_CLASSES, nomeClasseLocalizado } from '../catalogo-localizado.js';
@@ -303,8 +305,9 @@ export function renderFichaCompleta() {
           <div id="retrato-personagem"></div>
         </div>
         <div class="no-print" style="display:flex;gap:4px;flex-direction:column">
-          <div style="display:flex;gap:4px">
+          <div style="display:flex;gap:4px;flex-wrap:wrap">
             <button class="btn btn-sm btn-secondary" id="btn-editar-ficha">Editar ficha</button>
+            <button class="btn btn-sm btn-secondary" id="btn-exportar-json">Exportar JSON</button>
             <button class="btn btn-sm btn-primary" id="btn-print" title="Gerar PDF da ficha" style="gap:4px">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6M9 18h6M9 12h2"/></svg> Gerar PDF
             </button>
@@ -328,6 +331,7 @@ export function renderFichaCompleta() {
       </div>
     ` : ''}
 
+    ${renderEladrin(char)}
     <!-- Stats combate -->
     <div class="card">
       ${estadoFuria ? `
@@ -927,7 +931,7 @@ export function renderFichaCompleta() {
           // Gnomo: Astucia de Gnomo - Vantagem em salv. INT, SAB, CAR
           if (char.especie === 'Gnomo' && ['Inteligência', 'Sabedoria', 'Carisma'].includes(nome)) fontsVant.push('Astucia de Gnomo');
           // Elfo: Ancestralidade Feerica - Vantagem em salv. contra Enfeiticado
-          if (char.especie === 'Elfo' && condicoes.includes('Enfeitiçado')) fontsVant.push('Ancestralidade Feerica');
+          if (['Elfo', 'Eladrin'].includes(char.especie) && condicoes.includes('Enfeitiçado')) fontsVant.push('Ancestralidade Feerica');
           // Anao: Resistencia a Toxinas - Vantagem em salv. contra Envenenado
           if (char.especie === 'Anão' && condicoes.includes('Envenenado')) fontsVant.push('Resistencia a Toxinas');
           // Pequenino: Corajoso - Vantagem em salv. contra Amedrontado
@@ -1096,6 +1100,8 @@ export function renderFichaCompleta() {
   renderRetratoFotos(char, container.querySelector('#retrato-personagem'), salvarFotos);
   renderAlbumFotos(char, container.querySelector('#album-fotos'), salvarFotos);
   container.querySelector('#btn-print')?.addEventListener('click', () => abrirModalPdf(carregarPdfLib, id => baixarPdfFicha(id !== 'descritivo', id, true)));
+  container.querySelector('#btn-exportar-json')?.addEventListener('click', () => exportarFichaJSON(char));
+  setupEladrin(char, container, () => { salvar(); renderFichaCompleta(); });
   container.querySelectorAll('[data-sh-alvo]').forEach(b => { b.onclick = e => { e.preventDefault(); document.getElementById(b.dataset.shAlvo)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }; });
   setupEventosHP();
   setupEventosDescanso();

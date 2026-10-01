@@ -7,6 +7,7 @@
 // ============================================================
 import { restaurarRecursosTalentos } from '../regras-cobertura.js';
 import { descansarUA } from '../artificer-ua/modelo.js';
+import { descansarEladrin } from '../eladrin.js';
 import { gastarDadosVida, nivelNa, reservasDadosVida, restaurarTodosDadosVida, subclasseDe, temClasse } from '../regras-multiclasse.js';
 import { trocasDoDescansoLongo } from '../regras-preparo-magias.js';
 // SUBCLASSES_CONJURADORAS: a MESMA constante que trocasDoDescansoLongo usa
@@ -971,6 +972,7 @@ export function setupEventosDescanso() {
   });
 
   document.getElementById('btn-descanso-longo')?.addEventListener('click', () => {
+    descansarEladrin(char);
     // Reverter bonus de PV maximo de efeitos magicos antes de limpar
     const efsPVMax = (char.efeitos_magicos || []).filter(e => e.tipo === 'bonus_pv_max');
     for (const ef of efsPVMax) {
