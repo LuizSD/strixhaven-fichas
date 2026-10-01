@@ -1029,8 +1029,8 @@ const ESCRITAS_PERMITIDAS = new Set([
   // restaurarTodosDadosVida(), em regras-multiclasse.js, que está em
   // ARQUIVOS_AUTORIZADOS); o da subida de nível saiu no sub-projeto 5.
   'site/js/creator/wizard.js:440',     // grava dados_vida_total na criação; alertas não bloqueantes deslocaram linhas
-  'site/js/store.js:343',  // dados_vida_total: 1  (template de criação; reconciliação de magias deslocou linhas)
-  'site/js/store.js:344',  // dados_vida_usados: 0 (template de criação)
+  'site/js/store.js:351',  // dados_vida_total: 1 (template; metadados JSON deslocaram linhas)
+  'site/js/store.js:352',  // dados_vida_usados: 0 (template de criação)
 
   // Escritores legados de espacos_magia que sobram depois da Tarefa 3
   // (sub-projeto 4): a rede de escrita fecha para o GASTO (gastarEspaco/
@@ -1052,7 +1052,7 @@ const ESCRITAS_PERMITIDAS = new Set([
   // de Fonte de Magia são efêmeros por natureza (concedidos e limpos a
   // cada Descanso Longo), e nenhuma tarefa do sub-projeto 4 lhes dá um
   // escritor único.
-  'site/js/sheet/hp-descanso.js:1019',      // char.espacos_magia_extras = {} (limpa no Longo); integração de descanso UA deslocou linhas
+  'site/js/sheet/hp-descanso.js:1021',      // char.espacos_magia_extras = {} (limpa no Longo); descanso Eladrin deslocou linhas
   'site/js/sheet/habilidades.js:933',       // if (!extras) extras = {}  (Fonte de Magia) -- número de linha reapontado pela rodada 1 de correção da Tarefa 6 (import de superficieAtivaDaFicha e comentário do portão de Memorizar Magia acrescentados acima)
   'site/js/sheet/habilidades.js:934',       // extras[c] = (extras[c] || 0) + 1  (Fonte de Magia) -- idem
   // habilidades.js: Resplendor Sagrado (Paladino/Devoção), Fonte de Magia

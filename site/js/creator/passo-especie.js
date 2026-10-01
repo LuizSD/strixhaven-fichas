@@ -3,6 +3,7 @@
 // Extraido de site/js/pages/creator.js sem alteracao de comportamento.
 // ============================================================
 import { PERICIAS } from '../dados-classes.js';
+import { migrarEladrin, ESTACOES } from '../eladrin.js';
 import { getEspecies, getTalentos } from '../db.js';
 import { abrirModal, getDeslocamento, mdParaHtml, toast } from '../utils.js';
 import { montarSeletor } from '../ui-opcoes.js';
@@ -63,7 +64,7 @@ export async function renderStepEspecie(el) {
       ${especies.map(e => `
         <div class="opcao-card ${personagem.especie === e.nome ? 'selecionada' : ''}" data-especie="${e.nome}">
           <span class="opcao-check"></span>
-          <div class="opcao-nome">${e.nome}</div>
+          <div class="opcao-nome">${e.nome}${e.name?.en ? `<small style="display:block;color:var(--text-muted)">${e.name.en}</small>` : ''}</div>
           <div class="opcao-resumo">${e.tracos?.length || 0} tracos</div>
         </div>
       `).join('')}
@@ -228,13 +229,14 @@ function abrirPopupEspecie(nome) {
   const corpoHtml = `
     <p style="font-size:0.85rem;margin-bottom:12px">${esp.descricao?.split('\n')[0] || ''}</p>
     <div style="font-size:0.85rem;margin-bottom:8px"><strong>Deslocamento:</strong> ${deslocamento}</div>
+    ${nome === 'Eladrin' ? `<label>Estação<select id="eladrin-estacao">${Object.entries(ESTACOES).map(([k,v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></label><label>Atributo da CD<select id="eladrin-cd"><option value="inteligencia">Inteligência</option><option value="sabedoria">Sabedoria</option><option value="carisma">Carisma</option></select></label><details><summary>Origem</summary>Mordenkainen Presents: Monsters of the Multiverse</details>` : ''}
     ${escolhaHtml}
     ${periciaEspecieHtml}
     ${versatilHtml}
     <div class="section-divider"><span>Traços da Espécie${escolhaConfig ? ' (Fixos)' : ''}</span></div>
     ${tracosFixos.map(t => `
       <details style="margin-bottom:6px">
-        <summary style="font-weight:600;cursor:pointer;font-size:0.9rem">${t.nome}</summary>
+        <summary style="font-weight:600;cursor:pointer;font-size:0.9rem">${t.nome}${t.name?.en ? `<small style="display:block;color:var(--text-muted)">${t.name.en}</small>` : ''}</summary>
         <div class="md-content" style="padding:6px 0;font-size:0.85rem">${mdParaHtml(t.descricao)}</div>
       </details>
     `).join('')}
@@ -245,6 +247,10 @@ function abrirPopupEspecie(nome) {
     <button class="btn btn-primary" id="popup-confirmar-especie">Selecionar ${esp.nome}</button>
   `);
 
+  if (nome === 'Eladrin') {
+    document.getElementById('eladrin-estacao').value = personagem.eladrin?.estacao || 'outono';
+    document.getElementById('eladrin-cd').value = personagem.eladrin?.atributoCD || 'carisma';
+  }
   if (nome === 'Kenku') {
     const primeiraPericia = document.getElementById('select-kenku-pericia-1');
     const segundaPericia = document.getElementById('select-kenku-pericia-2');
@@ -483,6 +489,11 @@ function abrirPopupEspecie(nome) {
       if (nome !== 'Kenku') delete personagem.pericias_especie;
     }
     personagem.especie = nome;
+    if (nome === 'Eladrin') {
+      migrarEladrin(personagem);
+      personagem.eladrin.estacao = document.getElementById('eladrin-estacao').value;
+      personagem.eladrin.atributoCD = document.getElementById('eladrin-cd').value;
+    }
     personagem.tracos_escolhidos = [...selecionadosTemp];
     // Purga truques escolhidos manualmente na etapa de Magias que passam a ser
     // concedidos de graça pela nova espécie/legado (ex.: escolher "Rajada de Veneno"
@@ -503,4 +514,4 @@ function abrirPopupEspecie(nome) {
     const wizContent = document.getElementById('wizard-content');
     if (wizContent) renderStepEspecie(wizContent);
   });
-}
+}

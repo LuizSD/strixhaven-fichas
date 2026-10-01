@@ -21,11 +21,13 @@ export function renderDistribuicaoInline() {
   const ant = dadosCache.antecedentes.find(a => a.nome === personagem.antecedente);
   if (!ant) return;
 
-  const atributosDisponiveis = ant.valores_atributo.split(',').map(a => a.trim()).filter(Boolean);
+  const atributosDisponiveis = personagem.especie === 'Eladrin' && personagem.eladrin?.origemAtributos === 'linhagem'
+    ? Object.values(ATRIBUTOS_NOMES) : ant.valores_atributo.split(',').map(a => a.trim()).filter(Boolean);
 
   distEl.innerHTML = `
     <div class="card">
       <div class="section-divider"><span>Distribuicao de Atributos</span></div>
+      ${personagem.especie === 'Eladrin' ? `<label>Origem dos aumentos de atributo<select id="origem-eladrin"><option value="antecedente" ${personagem.eladrin.origemAtributos === 'antecedente' ? 'selected' : ''}>Antecedente — regras 2024</option><option value="linhagem" ${personagem.eladrin.origemAtributos === 'linhagem' ? 'selected' : ''}>Linhagem Eladrin — regra da fonte</option></select></label>` : ''}
       <div class="info-box info">Distribua +2 e +1 entre os atributos listados, ou +1/+1/+1.</div>
       <div style="display:flex;gap:8px;margin-bottom:12px">
         <label class="form-check">
@@ -40,6 +42,12 @@ export function renderDistribuicaoInline() {
   `;
 
   renderDistribuicaoAtributos(atributosDisponiveis);
+  distEl.querySelector('#origem-eladrin')?.addEventListener('change', e => {
+    personagem.eladrin.origemAtributos = e.target.value;
+    personagem.bonus_antecedente = {}; dadosCache.bonus1 = ''; dadosCache.bonus2 = '';
+    dadosCache.bonus111 = [];
+    renderDistribuicaoInline();
+  });
 
   distEl.querySelectorAll('[name="dist-mode"]').forEach(radio => {
     radio.addEventListener('change', () => {

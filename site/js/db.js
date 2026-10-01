@@ -1,5 +1,6 @@
 // ============================================================
 import { correspondeBusca, normalizarBusca, NOMES_CLASSES } from './catalogo-localizado.js';
+import { ELADRIN } from './eladrin.js';
 import { registrarCatalogoMagias, correspondeConsultaMagia, normalizarMagia } from './magias/modelo.js';
 import { ARTIFICER_ID, CLASSE_UA } from './artificer-ua/dados.js';
 import { MAGIAS_UA } from './artificer-ua/magias-dados.js';
@@ -123,7 +124,7 @@ export async function getAntecedentes() {
 export async function getEspecies() {
   const base = await fetchJSON('origens/especies.json');
   const modulo = await getStrixhaven();
-  return base ? { ...base, especies: [...base.especies, ...(modulo?.especies || [])], total: base.especies.length + (modulo?.especies.length || 0) } : null;
+  return base ? { ...base, especies: [...base.especies, ...(modulo?.especies || []), ELADRIN], total: base.especies.length + (modulo?.especies.length || 0) + 1 } : null;
 }
 
 // --- Talentos ---

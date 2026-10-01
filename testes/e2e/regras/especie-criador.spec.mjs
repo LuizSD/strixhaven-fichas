@@ -51,7 +51,7 @@ test('criador: o passo de espécie oferece todas as espécies de dados/', async 
 
   const oferecidas = (await cards.evaluateAll((els) => els.map((e) => e.dataset.especie))).sort();
   expect(oferecidas, 'a tela deve preservar todas as espécies da base e acrescentar as da campanha')
-    .toEqual([...ESPECIES_NO_DADO].sort());
+    .toEqual([...ESPECIES_NO_DADO, 'Eladrin'].sort());
 
   expect(erros, `erros de console/página: ${erros.join('; ')}`).toEqual([]);
 });
